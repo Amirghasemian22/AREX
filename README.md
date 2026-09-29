@@ -320,9 +320,10 @@ Trading financial markets involves substantial risk. Always conduct your own res
 
 ## 👨‍💻 Author
 
-Created and maintained by **Amir Ghasemian**.
+Created and maintained by **Amir Ghasemian Moghadam**.
 
 * GitHub: [@Amirghasemian22](https://github.com/Amirghasemian22)
+* Linkedin: https://www.linkedin.com/in/amirghasemiian-ai-vision/
 
 ---
 
