@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://amirghasemian22.github.io/AREX/sitemap.xml
