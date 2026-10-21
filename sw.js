@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v5-6-arex-v52-visual-qa';
+const CACHE_VERSION = 'v5-5-arex-v55-workspace-auth';
 const CACHE_NAME = 'fx-bootcamp-' + CACHE_VERSION;
 const APP_SHELL = [
   './',
