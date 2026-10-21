@@ -1396,6 +1396,72 @@ input[type="number"],.arex-kpi strong,.arex-limit-item b{font-variant-numeric:ta
 @keyframes arexBotFloat{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-5px) rotate(1deg)}}@keyframes arexEye{0%,45%,48%,100%{transform:scaleY(1)}46%,47%{transform:scaleY(.15)}}
 @media(max-width:700px){.top-quick-tools{gap:4px;padding:4px}.top-clock{min-width:75px;padding:3px 7px}.top-clock span{font-size:13px}.top-usdt{gap:4px;padding:4px 6px}.top-usdt b{font-size:9px}.top-usdt span{font-size:10px}.top-language{min-width:42px}.top-actions{gap:5px}.mascot{right:14px;bottom:14px}.fc-api-row{grid-template-columns:55px minmax(0,1fr);gap:8px}.fc-api-row .fc-impact{grid-column:2;justify-self:start}.arex-tour-card{padding:20px}}
 
+/* V5.5.1 usability refinement: spacious assistant, RTL-aware placement, compact settings, clock and calendar */
+.top-quick-tools{gap:10px;padding:7px 10px;border-radius:18px}
+.top-clock{min-width:150px;padding:6px 12px;border-inline-start:1px solid var(--border);gap:4px}
+.top-clock:before{display:none}
+.top-clock-line{display:flex;align-items:center;gap:7px;direction:ltr;white-space:nowrap}
+.top-clock-line i{width:7px;height:7px;flex:0 0 7px;border-radius:50%;background:#48d9a0;box-shadow:0 0 0 4px rgba(72,217,160,.11),0 0 12px rgba(72,217,160,.5);animation:clockPulse 2s ease-in-out infinite}
+.top-clock-line span{font:800 17px/1.1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.055em;color:var(--text);font-variant-numeric:tabular-nums}
+.top-clock-line b{font:800 8px/1 Inter,Arial,sans-serif;letter-spacing:.13em;color:var(--muted);padding:4px 5px;border:1px solid var(--border);border-radius:5px}
+.top-clock small{font:500 9px/1.2 Inter,Arial,sans-serif;color:var(--muted);padding-left:14px;letter-spacing:.03em}
+@keyframes clockPulse{50%{opacity:.55;box-shadow:0 0 0 6px rgba(72,217,160,.04),0 0 5px rgba(72,217,160,.2)}}
+/* A roomy floating assistant panel: a usable chat window rather than a tiny popover. */
+.mascot{z-index:500;bottom:22px;top:auto;align-items:flex-start}
+html[lang="fa"] .mascot,html[dir="rtl"] .mascot{left:22px;right:auto}
+html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto;right:22px}
+.mascot-panel{width:min(520px,calc(100vw - 36px));max-height:min(78vh,760px);overflow:auto;padding:20px;border-radius:24px;overscroll-behavior:contain}
+.mascot.open .mascot-panel{animation:arexPanelRise .22s cubic-bezier(.2,.75,.25,1)}
+.arex-bot-head{position:sticky;top:-20px;z-index:2;background:var(--panel);padding:4px 0 14px}
+.arex-bot-avatar{width:44px;height:44px;border-radius:15px;font-size:23px}
+.arex-bot-head b{font-size:15px}.arex-bot-head small{font-size:11px}
+.mascot-panel-msg{font-size:14px;line-height:1.9}
+.arex-chat-history{max-height:min(38vh,340px);min-height:90px;padding:4px 2px;scrollbar-width:thin}
+.arex-chat-msg{max-width:96%;font-size:13px;padding:12px 14px;border-radius:15px}
+.arex-chat-form{position:sticky;bottom:-20px;background:var(--panel);padding:12px 0 3px;z-index:2}
+.arex-chat-form textarea{font-size:13px;min-height:52px;resize:vertical}
+.mascot-disclaimer{font-size:10px!important}
+@keyframes arexPanelRise{from{opacity:0;transform:translateY(10px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+/* Settings: reduce vertical bulk and make common controls denser without hiding functionality. */
+#view-settings .grid.g3{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;align-items:start}
+#view-settings .card{padding:14px 15px;margin-bottom:10px;border-radius:15px}
+#view-settings .section-title{font-size:13px;line-height:1.5;margin-bottom:3px}
+#view-settings .section-title:before{height:15px}
+#view-settings .section-sub{font-size:10px;line-height:1.65;margin:4px 0 9px}
+#view-settings .bg-preset-row{gap:6px;flex-wrap:wrap}
+#view-settings .bg-preset{min-height:42px!important;max-width:100%;font-size:10px}
+#view-settings .settings-jumpbar{margin-bottom:8px;padding:7px;gap:6px}
+#view-settings .settings-jumpbar .chip{min-height:31px;padding:5px 9px;font-size:10px}
+#view-settings .txt-input,#view-settings input:not([type=checkbox]),#view-settings select{min-height:36px;padding:7px 9px}
+#view-settings .btn{min-height:34px;padding:7px 10px;font-size:10px}
+/* API calendar refresh */
+.fc-calendar-filters{display:grid;grid-template-columns:minmax(180px,1fr) minmax(145px,.55fr) auto;gap:9px;align-items:center;margin:10px 0 14px}
+.fc-calendar-filters input,.fc-calendar-filters select{width:100%;min-width:0;min-height:39px;padding:8px 11px;border:1px solid var(--border);border-radius:11px;background:var(--panel);color:var(--text);font:inherit;font-size:11px}
+.fc-calendar-filters .chip-row{display:flex;gap:5px;flex-wrap:wrap}
+.fc-api-row{grid-template-columns:90px minmax(0,1fr) auto;gap:14px;padding:15px 16px;border-radius:15px;transition:border-color .18s,transform .18s}
+.fc-api-row:hover{border-color:color-mix(in srgb,var(--gold) 50%,var(--border));transform:translateY(-1px)}
+.fc-api-time strong{display:block;font:800 16px/1.3 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;direction:ltr}
+.fc-api-time small{font-size:10px;margin-top:5px}
+.fc-event-topline{display:flex;align-items:center;gap:7px;margin-bottom:4px}
+.fc-country-code{font:800 9px Inter,Arial,sans-serif;letter-spacing:.08em;border:1px solid var(--border);border-radius:6px;padding:3px 5px;color:var(--muted);direction:ltr}
+.fc-countdown{font-size:9px;color:var(--muted)}
+.fc-api-title{font-size:13px;line-height:1.65}
+.fc-api-meta{font-size:10px;line-height:1.7}
+.fc-source-link{display:inline-block;margin-top:5px;font-size:10px;color:var(--gold);text-decoration:none}
+.fc-source-link:hover{text-decoration:underline}
+.fc-loading,.fc-empty-state{display:flex;min-height:150px;flex-direction:column;align-items:center;justify-content:center;gap:9px;text-align:center;border:1px dashed var(--border);border-radius:17px;padding:22px;color:var(--muted)}
+.fc-loading b,.fc-empty-state b{font-size:13px;color:var(--text)}.fc-loading small,.fc-empty-state p{font-size:10px;line-height:1.8;margin:0}
+.fc-loader{width:27px;height:27px;border:2px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:fcSpin .8s linear infinite}
+.fc-empty-state>div{font-size:25px;color:var(--gold)}
+.fc-error-card{display:flex;align-items:center;gap:13px;padding:17px;border:1px solid rgba(235,100,110,.22);border-radius:15px;background:rgba(235,100,110,.04)}
+.fc-error-icon{display:grid;place-items:center;flex:0 0 34px;width:34px;height:34px;border-radius:12px;background:rgba(235,100,110,.1);color:#ef8a94;font-weight:900}
+.fc-error-card p,.fc-error-card small{display:block;margin:4px 0;color:var(--muted);font-size:10px;line-height:1.7}
+.fc-error-card .btn{margin-inline-start:auto;flex-shrink:0}
+@keyframes fcSpin{to{transform:rotate(360deg)}}
+@media(max-width:1000px){#view-settings .grid.g3{grid-template-columns:repeat(2,minmax(0,1fr))}.fc-calendar-filters{grid-template-columns:1fr 1fr}.fc-calendar-filters .chip-row{grid-column:1/-1}}
+@media(max-width:700px){.top-clock{min-width:120px;padding:5px 7px}.top-clock-line span{font-size:14px}.top-clock-line b{display:none}.top-clock small{font-size:8px;padding-left:14px}.mascot-panel{width:calc(100vw - 24px);max-height:78vh;padding:15px}.arex-chat-history{max-height:34vh}.arex-chat-form{bottom:-15px}.fc-calendar-filters{grid-template-columns:1fr}.fc-calendar-filters .chip-row{grid-column:auto}.fc-api-row{grid-template-columns:70px minmax(0,1fr);gap:9px;padding:12px}.fc-api-row .fc-impact{grid-column:2;justify-self:start}.fc-api-time strong{font-size:14px}.fc-error-card{align-items:flex-start;flex-wrap:wrap}.fc-error-card .btn{margin-inline-start:47px}}
+@media(max-width:480px){html[lang="fa"] .mascot,html[dir="rtl"] .mascot{left:12px}html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{right:12px}.mascot-panel{width:calc(100vw - 24px)}#view-settings .grid.g3{grid-template-columns:1fr}.top-clock{min-width:108px}.top-clock-line span{font-size:12px}}
+
 </style>
 </head>
 <body>
@@ -1423,6 +1489,10 @@ input[type="number"],.arex-kpi strong,.arex-limit-item b{font-variant-numeric:ta
     <input id="navSearch" type="search" autocomplete="off" spellcheck="false" data-i18n-placeholder="nav.search" placeholder="جست‌وجوی بخش‌ها…" aria-label="جست‌وجوی بخش‌های برنامه">
     <kbd aria-hidden="true">/</kbd>
   </label>
+  <div class="nav-group" data-nav-group="overview">
+    <div class="nav-group-title" data-i18n="nav.group.overview"></div>
+  <button class="navbtn active" data-view="dashboard"><span class="ic"><svg class="nav-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span> <span data-i18n="nav.dashboard">داشبورد</span></button>
+  </div>
   <div class="nav-group arex-core-nav" data-nav-group="workflow">
     <div class="nav-group-title">فضای معاملاتی</div>
     <button class="navbtn" data-view="roadmap"><span class="ic"><svg class="nav-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span>برنامه روزانه</span></button>
@@ -1430,10 +1500,6 @@ input[type="number"],.arex-kpi strong,.arex-limit-item b{font-variant-numeric:ta
     <button class="navbtn" data-view="risk"><span class="ic"><svg class="nav-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v5c0 5 3.4 8 8 10 4.6-2 8-5 8-10V6z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg></span><span>مدیریت ریسک</span></button>
     <button class="navbtn" data-view="strategy"><span class="ic"><svg class="nav-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></span><span>استراتژی و قوانین</span></button>
     <button class="navbtn" data-view="analytics"><span class="ic"><svg class="nav-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20V5M3 20h18"/><path d="m6 15 4-4 3 2 5-7 3 2"/></svg></span><span>تحلیل عملکرد</span></button>
-  </div>
-  <div class="nav-group" data-nav-group="overview">
-    <div class="nav-group-title" data-i18n="nav.group.overview"></div>
-  <button class="navbtn active" data-view="dashboard"><span class="ic"><svg class="nav-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span> <span data-i18n="nav.dashboard">داشبورد</span></button>
   </div>
   <div class="nav-group" data-nav-group="trading">
     <div class="nav-group-title" data-i18n="nav.group.trading"></div>
@@ -1479,7 +1545,7 @@ input[type="number"],.arex-kpi strong,.arex-limit-item b{font-variant-numeric:ta
     </div>
     <div class="top-actions">
       <div class="top-quick-tools" aria-label="ابزارهای سریع">
-        <div class="top-clock"><span id="topClockTime">--:--</span><small id="topClockDate">—</small></div>
+        <div class="top-clock" aria-label="ساعت زنده تهران"><div class="top-clock-line"><i aria-hidden="true"></i><span id="topClockTime">--:--:--</span><b>TEHRAN</b></div><small id="topClockDate">—</small></div>
         <div class="top-usdt" title="قیمت لحظه‌ای تتر"><b>USDT</b><span id="tkPriceTop">—</span><button class="top-refresh" id="tkRefreshTop" aria-label="بروزرسانی قیمت تتر" title="بروزرسانی قیمت تتر">↻</button></div>
         <select class="top-language" id="topLangSelect" aria-label="تغییر زبان" title="تغییر زبان"><option value="fa">فا</option><option value="en">EN</option><option value="de">DE</option></select><button class="icon-btn" id="accountTopBtn" title="حساب کاربری" style="font-size:12px">👤</button>
       </div>
@@ -2000,7 +2066,7 @@ input[type="number"],.arex-kpi strong,.arex-limit-item b{font-variant-numeric:ta
 
         <div id="calPaneFreeApi" style="display:none;">
           <div class="section-sub">تقویم اقتصادی از Finance Calendar API؛ رویدادها و زمان‌ها با منطقه زمانی تهران نمایش داده می‌شوند. داده‌ها برای تصمیم معاملاتی باید با منبع رسمی رویداد بررسی شوند.</div>
-          <div class="arex-calendar-toolbar"><div id="fcApiStatus" role="status">برای دریافت رویدادها روی «بروزرسانی» بزن.</div><div class="chip-row"><button class="chip active" data-fc-impact="all">همه</button><button class="chip" data-fc-impact="high">🔴 بالا</button><button class="chip" data-fc-impact="medium">🟠 متوسط</button></div><button class="btn ghost" type="button" id="fcApiRefresh">↻ بروزرسانی</button></div>
+          <div class="arex-calendar-toolbar"><div id="fcApiStatus" role="status">تقویم برای دریافت رویدادها آماده است.</div><button class="btn ghost" type="button" id="fcApiRefresh">↻ بروزرسانی</button></div><div class="fc-calendar-filters"><input id="fcSearch" type="search" placeholder="جست‌وجوی رویداد یا کشور…" aria-label="جست‌وجوی رویداد"><select id="fcCountryFilter" aria-label="فیلتر کشور"><option value="all">همه کشورها</option><option value="US">USD · آمریکا</option><option value="EU">EUR · منطقه یورو</option><option value="DE">EUR · آلمان</option><option value="GB">GBP · بریتانیا</option><option value="JP">JPY · ژاپن</option><option value="CA">CAD · کانادا</option><option value="AU">AUD · استرالیا</option><option value="CH">CHF · سوئیس</option><option value="NZ">NZD · نیوزیلند</option><option value="NO">NOK · نروژ</option><option value="SE">SEK · سوئد</option><option value="CN">CNY · چین</option></select><div class="chip-row"><button class="chip active" data-fc-impact="all">همه اهمیت‌ها</button><button class="chip" data-fc-impact="high">🔴 بالا</button><button class="chip" data-fc-impact="medium">🟠 متوسط</button></div></div>
           <div id="fcApiEvents" class="fc-api-events"><div class="empty">رویدادها هنوز دریافت نشده‌اند.</div></div>
           <div class="fc-attribution">منبع داده: <a href="https://www.financecalendar.com" target="_blank" rel="noopener noreferrer">Finance Calendar</a> · داده رایگان با ذکر منبع. پوشش شامل رویدادهای مهم اقتصادهای اصلی است و تمام اخبار جهان/سخنرانی‌ها را تضمین نمی‌کند.</div>
         </div>
@@ -3988,12 +4054,12 @@ function tickClock(){
   const ss = String(now.getSeconds()).padStart(2,'0');
   const timeEl = document.getElementById('clockTime');
   if(timeEl) timeEl.textContent = faDigits(hh)+':'+faDigits(mm)+':'+faDigits(ss);
-  const topTime=document.getElementById('topClockTime'); if(topTime) topTime.textContent=faDigits(hh)+':'+faDigits(mm);
+  const topTime=document.getElementById('topClockTime'); if(topTime) topTime.textContent=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Tehran',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).format(now);
   const p = persianDateFor(now);
   const wd = PERSIAN_WEEKDAYS[now.getDay()];
   const dateEl = document.getElementById('clockDate');
   if(dateEl) dateEl.textContent = wd+'، '+faDigits(p.day)+' '+p.month+' '+faDigits(p.year);
-  const topDate=document.getElementById('topClockDate'); if(topDate) topDate.textContent=wd+' '+faDigits(p.day)+' '+p.month;
+  const topDate=document.getElementById('topClockDate'); if(topDate) topDate.textContent=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Tehran',weekday:'short',day:'2-digit',month:'short'}).format(now)+' · UTC+3:30';
   tickWorldClocks(now);
   renderSessionWidget(now);
   tickAnalogClock(now);
@@ -5314,7 +5380,7 @@ document.getElementById('tradeReportBtn').addEventListener('click', ()=>{
   const totalR = rValues.reduce((a,b)=>a+b,0).toFixed(1);
   const win = window.open('', '_blank');
   win.document.write('<html dir="rtl" lang="fa"><head><meta charset="utf-8"><title>گزارش معاملات AREX</title>'+
-    '<style>body{font-family:Tahoma,sans-serif;padding:30px;color:#111} h1{margin-bottom:4px} table{width:100%;border-collapse:collapse;margin-top:16px;font-size:13px} td,th{border:1px solid #ccc;padding:6px 8px;text-align:right}</style></head><body>'+
+    '<style>body{font-family:Tahoma,sans-serif;padding:30px;color:#111} h1{margin-bottom:4px} table{width:100%;border-collapse:collapse;margin-top:16px;font-size:13px} td,th{border:1px solid #ccc;padding:6px 8px;text-align:right}\n</style></head><body>'+
     '<h1>گزارش عملکرد معاملاتی — AREX</h1><p>تاریخ تهیه: '+new Date().toLocaleDateString('fa-IR')+'</p>'+
     '<p>تعداد معاملات: '+rValues.length+' | درصد برد: '+winRate+'٪ | مجموع R: '+totalR+'</p>'+
     '<table><tr><th>تاریخ</th><th>نماد</th><th>جهت</th><th>R</th><th>$</th><th>ستاپ</th></tr>'+
@@ -5753,15 +5819,14 @@ function renderArexDailyRoadmap(){
  renderArexDashboardSummary();
 }
 function setCalTab(tab){
-  document.querySelectorAll('#calTabs .chip').forEach(b=>b.classList.toggle('active', b.dataset.caltab===tab));
-  document.getElementById('calPaneWidget').style.display = tab==='widget' ? 'block' : 'none';
-  document.getElementById('calPaneFeed').style.display = tab==='feed' ? 'block' : 'none';
-  if(tab==='widget') loadTvCalendar(false); else { document.getElementById('ffFeedUrl').value = state.calendarFeedUrl||''; fetchFFCalendar(false); }
+  document.querySelectorAll('#calTabs [data-caltab]').forEach(b=>b.classList.toggle('active', b.dataset.caltab===tab));
+  const panes={widget:'calPaneWidget',feed:'calPaneFeed',freeapi:'calPaneFreeApi'};
+  Object.entries(panes).forEach(([key,id])=>{const el=document.getElementById(id);if(el)el.style.display=key===tab?'block':'none';});
+  if(tab==='widget') loadTvCalendar(false);
+  else if(tab==='feed'){const input=document.getElementById('ffFeedUrl');if(input)input.value=state.calendarFeedUrl||'';fetchFFCalendar(false);}
+  else if(tab==='freeapi' && typeof window.arexLoadFreeCalendar==='function') window.arexLoadFreeCalendar(false);
 }
-function initCalendarTab(){
-  const active = document.querySelector('#calTabs .chip.active');
-  setCalTab('widget');
-}
+function initCalendarTab(){ setCalTab('freeapi'); }
 
 function ffTimeLeft(ms){
   if(ms <= 0) return 'گذشته';
@@ -6403,7 +6468,8 @@ const arexOriginalInitV5Assistant=initV5Assistant;
 initV5Assistant=function(){arexOriginalInitV5Assistant();initArexV52Workspace();};
 
 </script>
-<script type="module" src="auth-client.js">
+<script type="module" src="auth-client.js"></script>
+<script>
 
 /* ================= V5.5: onboarding, free calendar, conversational AREX ================= */
 (function arexV55(){
@@ -6419,32 +6485,46 @@ initV5Assistant=function(){arexOriginalInitV5Assistant();initArexV52Workspace();
    const gate=$('arexAuthGate'); if(gate){gate.classList.remove('visible');gate.style.display='none';gate.setAttribute('aria-hidden','true');document.body.classList.remove('arex-auth-locked');}
    if(typeof window.arexEnterApp==='function') window.arexEnterApp();
  }
- // Finance Calendar API: no browser key, attribution shown beside the data. Cache for 5 minutes.
- let fcEvents=[], fcImpact='all', fcLast=0, fcBusy=false;
+ // Finance Calendar API. Its documented response separates ISO event time from local clock-only fields.
+ // Use time_utc as the canonical timestamp; this avoids invalid Date("09:30") parsing and missing rows.
+ let fcEvents=[], fcImpact='all', fcCountry='all', fcQuery='', fcLast=0, fcBusy=false;
  const fcEndpoint='https://www.financecalendar.com/wp-json/fc/v1/calendar?country=US,EU,DE,GB,JP,CA,AU,CH,NZ,NO,SE,CN&tz=Asia%2FTehran';
+ const fcCountries={US:'USD · آمریکا',EU:'EUR · منطقه یورو',DE:'EUR · آلمان',GB:'GBP · بریتانیا',JP:'JPY · ژاپن',CA:'CAD · کانادا',AU:'AUD · استرالیا',CH:'CHF · سوئیس',NZ:'NZD · نیوزیلند',NO:'NOK · نروژ',SE:'SEK · سوئد',CN:'CNY · چین'};
+ function fcDate(e){const v=e.time_utc||e.datetime_utc||e.datetime||e.date_time||'';if(v){const d=new Date(v);if(!Number.isNaN(d.getTime()))return d;}const date=e.date||'';const local=e.time_local||'';if(date&&/^\d{1,2}:\d{2}/.test(local)){const d=new Date(date+'T'+local+':00+03:30');if(!Number.isNaN(d.getTime()))return d;}if(date){const d=new Date(date);if(!Number.isNaN(d.getTime()))return d;}return null;}
  async function loadFc(force=false){
-   const status=$('fcApiStatus'), box=$('fcApiEvents'); if(!status||!box||fcBusy)return;
+   const status=$('fcApiStatus'),box=$('fcApiEvents');if(!status||!box||fcBusy)return;
    if(!force&&fcEvents.length&&Date.now()-fcLast<300000){renderFc();return;}
-   fcBusy=true; status.textContent='در حال دریافت رویدادهای اقتصادی…'; box.innerHTML='<div class="empty">در حال دریافت داده از منبع تقویم…</div>';
+   fcBusy=true;status.textContent='در حال دریافت رویدادهای اقتصادی…';box.innerHTML='<div class="fc-loading"><span class="fc-loader"></span><b>در حال همگام‌سازی تقویم</b><small>داده‌ها مستقیماً از Finance Calendar دریافت می‌شوند.</small></div>';
    try{
-     const ctrl=new AbortController(),timer=setTimeout(()=>ctrl.abort(),12000);
+     const ctrl=new AbortController(),timer=setTimeout(()=>ctrl.abort(),15000);
      const res=await fetch(fcEndpoint,{headers:{Accept:'application/json'},signal:ctrl.signal,cache:'no-store'});clearTimeout(timer);
      if(!res.ok)throw new Error('HTTP '+res.status);
-     const data=await res.json(); const raw=Array.isArray(data)?data:(data.events||data.data||[]);
-     if(!Array.isArray(raw))throw new Error('ساختار پاسخ قابل تشخیص نیست');
-     fcEvents=raw.map((e,i)=>{const dt=e.time_local||e.time_utc||e.datetime||e.date||'';return {id:e.id||String(i),name:e.name||e.event||e.title||'رویداد اقتصادی',country:e.country||e.currency||'',impact:String(e.impact||e.importance||'low').toLowerCase(),time:dt,source:e.source_url||e.url||'',period:e.period||'',consensus:e.consensus||e.forecast||'',prior:e.prior||e.previous||'',actual:e.actual||'',status:e.status||''}}).filter(e=>e.time).sort((a,b)=>new Date(a.time)-new Date(b.time));
-     fcLast=Date.now();status.textContent='آخرین دریافت موفق: '+new Date(fcLast).toLocaleTimeString('fa-IR',{hour:'2-digit',minute:'2-digit'})+' · '+fcEvents.length+' رویداد';renderFc();
-   }catch(err){status.textContent='دریافت زنده انجام نشد ('+err.message+'). ممکن است سرویس یا اتصال شبکه موقتاً در دسترس نباشد.';box.innerHTML='<div class="arex-calendar-fallback"><b>فید API در دسترس نیست</b><p>این خطا به معنی نبود خبر نیست. دوباره تلاش کن یا از ویجت رسمی/فید شخصی استفاده کن.</p><button type="button" class="btn ghost" id="fcApiRetry">تلاش دوباره</button></div>';const retry=$('fcApiRetry');if(retry)retry.onclick=()=>loadFc(true);}
+     const data=await res.json();const raw=Array.isArray(data)?data:(Array.isArray(data.events)?data.events:Array.isArray(data.data)?data.data:[]);
+     if(!raw.length&&data&&data.events===undefined)throw new Error('پاسخ API ساختار رویداد قابل تشخیص ندارد');
+     fcEvents=raw.map((e,i)=>{const dt=fcDate(e);return{id:e.id||e.series_code||String(i),name:e.name||e.event||e.title||'رویداد اقتصادی',country:e.country||e.currency||'',impact:String(e.impact||e.importance||'low').toLowerCase(),date:dt,source:e.source_url||e.url||'',period:e.period||'',consensus:e.consensus||e.forecast||'',prior:e.prior||e.previous||'',actual:e.actual||'',status:e.status||''};}).filter(e=>e.date&&!Number.isNaN(e.date.getTime())).sort((a,b)=>a.date-b.date);
+     fcLast=Date.now();const last=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Tehran',hour:'2-digit',minute:'2-digit'}).format(new Date(fcLast));status.textContent=fcEvents.length?`به‌روزرسانی ${last} · ${fcEvents.length} رویداد · زمان تهران`:'اتصال برقرار شد، اما API رویدادی برای بازه برنگرداند.';renderFc();
+   }catch(err){status.textContent='اتصال تقویم ناموفق بود؛ این خطا به معنی نبود خبر نیست.';box.innerHTML='<div class="fc-error-card"><div class="fc-error-icon">!</div><div><b>داده‌های تقویم دریافت نشد</b><p>'+safeText(err.name==='AbortError'?'درخواست بیش از حد طول کشید.':err.message||'خطای شبکه')+'</p><small>اتصال شبکه، دسترسی CORS یا وضعیت سرویس را بررسی کن.</small></div><button type="button" class="btn ghost" id="fcApiRetry">تلاش دوباره</button></div>';const retry=$('fcApiRetry');if(retry)retry.onclick=()=>loadFc(true);}
    finally{fcBusy=false;}
  }
- function renderFc(){const box=$('fcApiEvents');if(!box)return;const now=Date.now();let ev=fcEvents.filter(e=>{const imp=e.impact.includes('high')||e.impact==='3'?'high':e.impact.includes('med')||e.impact==='2'?'medium':'low';e._impact=imp;return fcImpact==='all'||imp===fcImpact;});ev=ev.filter(e=>!e.time||new Date(e.time).getTime()>now-6*3600000).slice(0,120);if(!ev.length){box.innerHTML='<div class="empty">در بازه انتخابی رویدادی برای نمایش نیست یا داده‌ای از سرویس دریافت نشده است.</div>';return;}box.innerHTML=ev.map(e=>{const dt=new Date(e.time);const time=Number.isNaN(dt.getTime())?e.time:dt.toLocaleString('fa-IR',{timeZone:'Asia/Tehran',weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});const impact=e._impact;return '<article class="fc-api-row"><div class="fc-api-time">'+safeText(Number.isNaN(dt.getTime())? '—':dt.toLocaleTimeString('fa-IR',{timeZone:'Asia/Tehran',hour:'2-digit',minute:'2-digit'}))+'<small>'+safeText(Number.isNaN(dt.getTime())?'':dt.toLocaleDateString('fa-IR',{timeZone:'Asia/Tehran',month:'short',day:'numeric'}))+'</small></div><div><div class="fc-api-title">'+safeText(e.name)+'</div><div class="fc-api-meta">'+safeText(e.country)+' '+(e.period?'· '+safeText(e.period):'')+(e.consensus?' · پیش‌بینی: '+safeText(e.consensus):'')+(e.prior?' · قبلی: '+safeText(e.prior):'')+(e.actual?' · واقعی: '+safeText(e.actual):'')+'</div>'+(e.source?'<div class="fc-api-meta"><a href="'+safeText(e.source)+'" target="_blank" rel="noopener noreferrer">منبع رویداد ↗</a></div>':'')+'</div><span class="fc-impact '+impact+'">'+(impact==='high'?'تأثیر بالا':impact==='medium'?'متوسط':'کم')+'</span></article>';}).join('');}
- document.querySelectorAll('[data-fc-impact]').forEach(b=>b.addEventListener('click',()=>{fcImpact=b.dataset.fcImpact;document.querySelectorAll('[data-fc-impact]').forEach(x=>x.classList.toggle('active',x===b));renderFc()}));
+ function renderFc(){
+   const box=$('fcApiEvents');if(!box)return;const now=Date.now();
+   const rows=fcEvents.filter(e=>{const imp=e.impact.includes('high')||e.impact==='3'?'high':e.impact.includes('med')||e.impact==='2'?'medium':'low';e._impact=imp;const country=String(e.country||'').toUpperCase();const q=(e.name+' '+country+' '+(fcCountries[country]||'')).toLowerCase();return (fcImpact==='all'||imp===fcImpact)&&(fcCountry==='all'||country===fcCountry)&&(!fcQuery||q.includes(fcQuery.toLowerCase()))&&e.date.getTime()>now-6*3600000;}).slice(0,150);
+   if(!rows.length){box.innerHTML='<div class="fc-empty-state"><div>◷</div><b>رویدادی مطابق فیلترها پیدا نشد</b><p>فیلتر اهمیت یا کشور را تغییر بده، یا دوباره داده‌ها را دریافت کن.</p><button type="button" class="btn ghost" id="fcEmptyRefresh">بروزرسانی تقویم</button></div>';const r=$('fcEmptyRefresh');if(r)r.onclick=()=>loadFc(true);return;}
+   const fmtTime=d=>new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Tehran',hour:'2-digit',minute:'2-digit'}).format(d);
+   const fmtDate=d=>new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Tehran',weekday:'short',day:'2-digit',month:'short'}).format(d);
+   box.innerHTML=rows.map(e=>{const c=String(e.country||'').toUpperCase();const diff=e.date.getTime()-now;const countdown=diff<0?'منتشر شده':diff<3600000?`${Math.max(1,Math.round(diff/60000))} دقیقه دیگر`:diff<86400000?`${Math.floor(diff/3600000)} ساعت دیگر`:fmtDate(e.date);const imp=e._impact;return '<article class="fc-api-row"><div class="fc-api-time"><strong>'+safeText(fmtTime(e.date))+'</strong><small>'+safeText(fmtDate(e.date))+'</small></div><div class="fc-event-main"><div class="fc-event-topline"><span class="fc-country-code">'+safeText(c||'—')+'</span><span class="fc-countdown">'+safeText(countdown)+'</span></div><div class="fc-api-title">'+safeText(e.name)+'</div><div class="fc-api-meta">'+(e.period?safeText(e.period)+' · ':'')+(e.consensus?'پیش‌بینی: '+safeText(e.consensus)+' · ':'')+(e.prior?'قبلی: '+safeText(e.prior)+' · ':'')+(e.actual?'واقعی: '+safeText(e.actual):'')+'</div>'+(e.source?'<a class="fc-source-link" href="'+safeText(e.source)+'" target="_blank" rel="noopener noreferrer">منبع رسمی رویداد ↗</a>':'')+'</div><span class="fc-impact '+imp+'">'+(imp==='high'?'تأثیر بالا':imp==='medium'?'متوسط':'کم')+'</span></article>';}).join('');
+ }
+ document.querySelectorAll('[data-fc-impact]').forEach(b=>b.addEventListener('click',()=>{fcImpact=b.dataset.fcImpact;document.querySelectorAll('[data-fc-impact]').forEach(x=>x.classList.toggle('active',x===b));renderFc();}));
  if($('fcApiRefresh'))$('fcApiRefresh').addEventListener('click',()=>loadFc(true));
- const oldSetCalTab=window.setCalTab;
- // Wrap the existing tab switcher so all legacy calendar features remain intact.
- const setTabButtons=document.querySelectorAll('#calTabs [data-caltab]');setTabButtons.forEach(b=>b.addEventListener('click',()=>{const tab=b.dataset.caltab;const w=$('calPaneWidget'),f=$('calPaneFeed'),a=$('calPaneFreeApi');if(!w||!f||!a)return;w.style.display=tab==='widget'?'block':'none';f.style.display=tab==='feed'?'block':'none';a.style.display=tab==='freeapi'?'block':'none';setTabButtons.forEach(x=>x.classList.toggle('active',x===b));if(tab==='widget'&&typeof loadTvCalendar==='function')loadTvCalendar(false);else if(tab==='feed'){if($('ffFeedUrl'))$('ffFeedUrl').value=(window.state&&state.calendarFeedUrl)||'';if(typeof fetchFFCalendar==='function')fetchFFCalendar(false)}else if(tab==='freeapi')loadFc(false);}));
- // Keep the manual refresh control helpful even if the TradingView iframe is blocked.
- if($('refreshEconomicCalendar'))$('refreshEconomicCalendar').addEventListener('dblclick',()=>loadFc(true));
+ if($('fcCountryFilter'))$('fcCountryFilter').addEventListener('change',e=>{fcCountry=e.target.value;renderFc();});
+ if($('fcSearch'))$('fcSearch').addEventListener('input',e=>{fcQuery=e.target.value.trim();renderFc();});
+ window.arexLoadFreeCalendar=loadFc;
+ // Make the structured API calendar the default view, with the licensed attribution visible.
+ const setTabButtons=document.querySelectorAll('#calTabs [data-caltab]');setTabButtons.forEach(b=>b.addEventListener('click',()=>{const tab=b.dataset.caltab;const panes={widget:'calPaneWidget',feed:'calPaneFeed',freeapi:'calPaneFreeApi'};Object.entries(panes).forEach(([k,id])=>{const el=$(id);if(el)el.style.display=k===tab?'block':'none';});setTabButtons.forEach(x=>x.classList.toggle('active',x===b));if(tab==='widget'&&typeof loadTvCalendar==='function')loadTvCalendar(false);else if(tab==='feed'){if($('ffFeedUrl'))$('ffFeedUrl').value=(window.state&&state.calendarFeedUrl)||'';if(typeof fetchFFCalendar==='function')fetchFFCalendar(false);}else if(tab==='freeapi')loadFc(false);}));
+ if($('refreshEconomicCalendar'))$('refreshEconomicCalendar').addEventListener('click',()=>loadFc(true));
+ // Ensure API calendar is initialized when the economic-calendar view is opened.
+ const originalCalendarTabInit=window.initCalendarTab;
+ window.initCalendarTab=function(){const panes={widget:'calPaneWidget',feed:'calPaneFeed',freeapi:'calPaneFreeApi'};Object.entries(panes).forEach(([k,id])=>{const el=$(id);if(el)el.style.display=k==='freeapi'?'block':'none';});setTabButtons.forEach(x=>x.classList.toggle('active',x.dataset.caltab==='freeapi'));loadFc(false);};
  // Chat UI. Backend contract: POST {messages:[{role,content}],context:{...}} -> {answer:"..."}.
  const history=[];let chatBusy=false;
  const endpointKey='arex_v55_ai_endpoint';
