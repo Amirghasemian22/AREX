@@ -60,26 +60,6 @@ async function fetchQuotes(request, env){
   return json({fetchedAt:new Date().toISOString(),source:'Twelve Data',quotes},200,{'Cache-Control':'no-store'});
 }
 
-async function mt5Ingest(request,env){
-  const expected=env.MT5_BRIDGE_SECRET;
-  if(!expected||!env.MT5_TRADES)return json({error:'mt5_bridge_not_configured',message:'Configure MT5_BRIDGE_SECRET and bind the MT5_TRADES KV namespace.'},503,{'Cache-Control':'no-store'});
-  const auth=request.headers.get('Authorization')||'';
-  if(auth!=='Bearer '+expected)return json({error:'unauthorized'},401,{'Cache-Control':'no-store'});
-  let trade;try{trade=await request.json()}catch{return json({error:'invalid_json'},400,{'Cache-Control':'no-store'});}
-  const ticket=String(trade.ticket||'');if(!/^\d{1,24}$/.test(ticket)||!trade.symbol||!trade.closeTime)return json({error:'invalid_trade_payload'},400,{'Cache-Control':'no-store'});
-  const clean={ticket,symbol:String(trade.symbol).slice(0,32),type:String(trade.type||'').slice(0,8),entry:Number(trade.entry)||0,exit:Number(trade.exit)||0,sl:Number(trade.sl)||0,profit:Number(trade.profit)||0,closeTime:String(trade.closeTime).slice(0,32),comment:String(trade.comment||'').slice(0,120),account:String(trade.account||'').slice(0,64),updatedAt:new Date().toISOString()};
-  await env.MT5_TRADES.put('trade:'+ticket,JSON.stringify(clean),{expirationTtl:60*60*24*180});
-  return json({ok:true,ticket},200,{'Cache-Control':'no-store'});
-}
-async function mt5List(request,env){
-  if(!env.MT5_BRIDGE_SECRET||!env.MT5_TRADES)return json({error:'mt5_bridge_not_configured'},503,{'Cache-Control':'no-store'});
-  if((request.headers.get('Authorization')||'')!=='Bearer '+env.MT5_BRIDGE_SECRET)return json({error:'unauthorized'},401,{'Cache-Control':'no-store'});
-  const listed=await env.MT5_TRADES.list({prefix:'trade:',limit:1000});
-  const trades=[];for(const key of listed.keys){const raw=await env.MT5_TRADES.get(key.name);if(raw){try{trades.push(JSON.parse(raw))}catch{}}}
-  trades.sort((a,b)=>String(b.closeTime).localeCompare(String(a.closeTime)));
-  return json({ok:true,source:'MetaTrader 5',trades:trades.slice(0,500)},200,{'Cache-Control':'no-store'});
-}
-
 async function sendAlerts(request, env){
   const projectId=env.FIREBASE_PROJECT_ID||'arex-a1853';
   const authorization=request.headers.get('Authorization')||'';
@@ -104,11 +84,9 @@ export default {
   async fetch(request,env,ctx){
     const url=new URL(request.url);
     if(request.method==='OPTIONS')return new Response(null,{status:204,headers:cors});
-    if(url.pathname==='/health'&&request.method==='GET')return json({ok:true,service:'AREX Edge Worker',routes:['/calendar','/market','/notify','/mt5/ingest','/mt5/trades'],calendarSource:'Forex Factory weekly export',marketSource:env.TWELVEDATA_API_KEY?'Twelve Data configured':'not configured',telegramConfigured:!!(env.TELEGRAM_BOT_TOKEN&&env.TELEGRAM_CHAT_ID),emailConfigured:!!(env.RESEND_API_KEY&&env.ALERT_EMAIL_TO&&env.ALERT_EMAIL_FROM)},200,{'Cache-Control':'no-store'});
+    if(url.pathname==='/health'&&request.method==='GET')return json({ok:true,service:'AREX Edge Worker',routes:['/calendar','/market','/notify'],calendarSource:'Forex Factory weekly export',marketSource:env.TWELVEDATA_API_KEY?'Twelve Data configured':'not configured',telegramConfigured:!!(env.TELEGRAM_BOT_TOKEN&&env.TELEGRAM_CHAT_ID),emailConfigured:!!(env.RESEND_API_KEY&&env.ALERT_EMAIL_TO&&env.ALERT_EMAIL_FROM)},200,{'Cache-Control':'no-store'});
     if((url.pathname==='/'||url.pathname==='/calendar')&&request.method==='GET'){try{return await fetchCalendar(ctx);}catch(e){return json({error:'calendar_unavailable',message:String(e?.message||e)},502,{'Cache-Control':'no-store'});}}
     if(url.pathname==='/market'&&request.method==='GET')return fetchQuotes(request,env);
-    if(url.pathname==='/mt5/ingest'&&request.method==='POST')return mt5Ingest(request,env);
-    if(url.pathname==='/mt5/trades'&&request.method==='GET')return mt5List(request,env);
     if(url.pathname==='/notify'&&request.method==='POST')return sendAlerts(request,env);
     return json({error:'not_found'},404,{'Cache-Control':'no-store'});
   }

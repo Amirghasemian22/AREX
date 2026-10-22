@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AREX V5.5</title>
+<title>AREX V5.2 — دستیار هوشمند مدیریت معاملات</title>
 <meta name="description" content="AREX دستیار شخصی مدیریت معاملات است: ژورنال معاملاتی، مدیریت ریسک، قوانین استراتژی، تقویم اقتصادی، سشن‌های بازار، ثبت روان‌شناسی و تحلیل عملکرد در یک فضای کاری نصب‌شدنی.">
 <meta name="keywords" content="ژورنال معاملات فارکس, تریدینگ ژورنال, چک‌لیست بهبود عملکرد معاملاتی, مدیریت ریسک معاملات, ردیاب پراپ فرم, تقویم اقتصادی فارکس, forex trading journal, prop firm tracker">
 <meta name="robots" content="index, follow">
@@ -1463,6 +1463,9 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
 @media(max-width:480px){html[lang="fa"] .mascot,html[dir="rtl"] .mascot{left:12px}html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{right:12px}.mascot-panel{width:calc(100vw - 24px)}#view-settings .grid.g3{grid-template-columns:1fr}.top-clock{min-width:108px}.top-clock-line span{font-size:12px}}
 
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Markazi+Text:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -1480,9 +1483,9 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
 <div class="backdrop" id="backdrop"></div>
 
 <aside class="sidebar" id="sidebar">
-  <div class="brand">
+  <div class="brand" id="brandMenuToggle" role="button" tabindex="0" aria-label="باز و بسته کردن منوی AREX" title="برای باز و بسته کردن منو کلیک کن">
     <div class="brand-mark"><img src="icon-192.png" alt="لوگوی AREX" width="34" height="34" decoding="async"></div>
-    <div class="brand-text"><b>AREX</b><span data-i18n="brand.sub">V5.5 · دستیار معاملاتی هوشمند</span></div>
+    <div class="brand-text"><b>AREX</b><span data-i18n="brand.sub">V5.6 · دستیار معاملاتی هوشمند</span></div>
   </div>
   <label class="nav-search" for="navSearch">
     <span class="nav-search-icon" aria-hidden="true">⌕</span>
@@ -1588,14 +1591,18 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
         <aside class="arex-roadmap-side"><h3>همراه معاملاتی AREX</h3><p id="arexRoadmapAdvice">من وضعیت ثبت‌شده امروز، قوانین ریسک و کامل‌بودن ژورنال را بررسی می‌کنم. تا وقتی داده‌ای در دسترس نباشد، سیگنال خرید یا فروش نمی‌سازم.</p><div class="arex-roadmap-actions"><button class="btn" type="button" id="arexRoadmapJournal">ژورنال</button><button class="btn ghost" type="button" id="arexRoadmapRisk">مدیریت ریسک</button><button class="btn ghost" type="button" id="arexRoadmapCalendar">تقویم</button></div></aside>
       </section>
       <section class="arex-dashboard-kpis" id="arexDashboardKpis" aria-label="خلاصه وضعیت حساب، عملکرد و ریسک">
-        <div class="arex-kpi"><span class="label">موجودی تنظیم‌شده</span><strong>در حال بررسی</strong><small>اتصال بروکر تأیید نشده</small></div>
+        <div class="arex-kpi"><span class="label">موجودی تنظیم‌شده</span><strong>در حال بررسی</strong><small>موجودی تنظیم‌شده در AREX</small></div>
         <div class="arex-kpi"><span class="label">سود و زیان امروز</span><strong>داده ناکافی</strong><small>فقط معاملات ثبت‌شده</small></div>
         <div class="arex-kpi"><span class="label">معاملات امروز</span><strong>—</strong><small>از ژورنال محلی</small></div>
         <div class="arex-kpi"><span class="label">سقف افت روزانه</span><strong>تنظیم نشده</strong><small>تنظیمات محلی</small></div>
       </section>
       <div id="arexDashboardWarnings" class="arex-dashboard-warnings" aria-live="polite">وضعیت کنترل‌ها بر اساس اطلاعات محلی است؛ نبود هشدار ثبت‌شده به معنی تأیید ایمنی معامله نیست.</div>
+      <section class="card arex-next-step-card" id="arexDashboardCoach" aria-live="polite">
+        <div class="arex-next-step-icon">✦</div><div class="arex-next-step-copy"><div class="section-title">قدم بعدی پیشنهادی آرکس</div><p id="arexDashboardCoachText">در حال بررسی وضعیت ثبت‌شده…</p></div>
+        <button type="button" class="btn ghost" id="arexOpenCoach">گفت‌وگو با آرکس</button>
+      </section>
       <section class="card" id="dashboardTvCalendar">
-        <div class="tv-mini-head"><div><div class="section-title">تقویم اقتصادی TradingView</div><div class="section-sub">منبع پیش‌فرض تقویم AREX · زمان‌بندی و اهمیت رویدادها را پیش از معامله بررسی کن.</div></div><button class="btn ghost" type="button" id="openFullCalendar">نمایش کامل</button></div>
+        <div class="tv-mini-head"><div><div class="section-title">تقویم اقتصادی</div><div class="section-sub">منبع نمایش را انتخاب کن؛ برای فید شخصی، ابتدا آدرس آن را در بخش تقویم ثبت کن.</div></div><div class="arex-dash-cal-actions"><select id="dashboardCalendarSource" class="txt-input" aria-label="منبع تقویم داشبورد"><option value="freeapi">تقویم رایگان AREX</option><option value="tradingview">TradingView</option><option value="feed">فید شخصی من</option></select><button class="btn ghost" type="button" id="openFullCalendar">نمایش کامل</button></div></div>
         <div class="tv-mini-body" id="dashboardTvWrap"><div class="empty">در حال بارگذاری تقویم TradingView…</div></div>
         <div class="tv-mini-foot">تقویم از ویجت رسمی TradingView بارگذاری می‌شود؛ در صورت محدودیت شبکه ممکن است نمایش داده نشود.</div>
       </section>
@@ -1623,12 +1630,6 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
       </div>
 
       <div class="worldclocks" id="worldClocks"></div>
-      <section class="card" id="arexMarketPanel" style="margin-bottom:16px;">
-        <div class="section-title-row"><div class="section-title">📈 نمای بازار زنده</div><button class="btn ghost" id="arexMarketRefresh" type="button">بروزرسانی</button></div>
-        <div class="section-sub" id="arexMarketStatus">برای دریافت قیمت‌ها، آدرس Worker امن AREX را در فید تقویم ذخیره کن. قیمت‌ها تا زمان اتصال منبع معتبر نمایش داده نمی‌شوند.</div>
-        <div class="grid g3" id="arexMarketQuotes"><div class="empty">داده زنده هنوز متصل نشده است.</div></div>
-      </section>
-
       <div class="grid g2 v5-primary-grid">
         <section class="card targets-card" aria-labelledby="targetsHeading">
           <div class="section-title" id="targetsHeading">🎯 اهداف و حدود معاملاتی</div>
@@ -2259,7 +2260,6 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
         <button type="button" class="chip" data-settings-jump="settingsSessions">سشن‌ها</button>
         <button type="button" class="chip" data-settings-jump="settingsRisk">ریسک</button>
         <button type="button" class="chip" data-settings-jump="settingsRules">قوانین</button>
-        <button type="button" class="chip" data-settings-jump="mt5BridgeCard">MT5</button>
         <button type="button" class="chip" data-settings-jump="arexAccountCard">حساب AREX</button>
         <button type="button" class="chip" data-settings-jump="settingsBackup">پشتیبان‌گیری</button>
         <button type="button" class="chip" data-settings-jump="driveCard">Google Drive</button>
@@ -2273,6 +2273,18 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
             <button class="btn ghost theme-opt" id="setDark" data-i18n="set.dark">🌙 حالت تاریک</button>
             <button class="btn ghost theme-opt" id="setLight" data-i18n="set.light">☀️ حالت روشن</button>
             <button class="btn ghost theme-opt" id="setAuto" data-i18n="set.auto">🖥️ خودکار (سیستم)</button>
+          </div>
+          <div class="arex-font-controls">
+            <label for="arexFontFamily">فونت فارسی</label>
+            <select class="txt-input" id="arexFontFamily">
+              <option value="vazirmatn">Vazirmatn · وزیرمتن</option>
+              <option value="ibmplex">IBM Plex Sans Arabic</option>
+              <option value="noto">Noto Sans Arabic</option>
+              <option value="alexandria">Alexandria</option>
+              <option value="markazi">Markazi Text</option>
+            </select>
+            <div class="arex-font-size-row"><label for="arexFontScale">اندازه نوشته</label><output id="arexFontScaleLabel">۱۰۰٪</output></div>
+            <input id="arexFontScale" type="range" min="85" max="120" step="5" value="100" aria-label="اندازه نوشته">
           </div>
         </div>
         <div class="card">
@@ -2356,13 +2368,6 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
             <button class="btn ghost" id="addRuleBtn">افزودن</button>
           </div>
         </div>
-        <div class="card" id="mt5BridgeCard" style="grid-column:1/-1;">
-          <div class="section-title">🔌 اتصال خودکار MetaTrader 5</div>
-          <div class="section-sub">پس از راه‌اندازی Worker و نصب Expert Advisor، معاملات بسته‌شده از حساب MT5 به‌صورت خودکار به ژورنال AREX وارد می‌شوند. این اتصال به یک پل امن نیاز دارد؛ وب‌سایت به‌تنهایی نمی‌تواند مستقیم به برنامه دسکتاپ متصل شود.</div>
-          <div class="form-grid"><div><div class="field-lbl">آدرس Worker پل MT5</div><input class="txt-input" id="mt5WorkerUrl" type="url" dir="ltr" placeholder="https://your-worker.workers.dev"></div><div><div class="field-lbl">کلید مشترک اتصال</div><input class="txt-input" id="mt5BridgeToken" type="password" dir="ltr" autocomplete="new-password" placeholder="کلید محرمانه‌ای که در Worker تنظیم می‌کنی"></div></div>
-          <div class="modal-actions" style="justify-content:flex-start;flex-wrap:wrap"><button class="btn" id="mt5SaveConfig" type="button">ذخیره اتصال</button><button class="btn ghost" id="mt5SyncNow" type="button">دریافت معاملات جدید</button><span id="mt5BridgeStatus" class="muted-small">هنوز پیکربندی نشده</span></div>
-          <div class="calc-hint">مهم: آدرس Worker و کلید باید با تنظیمات سرور مطابقت داشته باشند. کلید در این مرورگر ذخیره می‌شود؛ از دستگاه شخصی استفاده کن و آن را با کسی به اشتراک نگذار. نسخه‌ی اولیه، معاملات بسته‌شده را وارد می‌کند؛ مدیریت معامله باز و اصلاح لحظه‌ای SL/TP مرحله بعدی است.</div>
-        </div>
         <div class="card" id="arexAccountCard">
           <div class="section-title">🔐 حساب AREX و همگام‌سازی ابری</div>
           <div class="section-sub">ورود با Google از Google Drive جداست. پس از تنظیم Firebase، می‌توانی یک نسخه از داده‌های این حساب را در فضای ابری اختصاصی خودت ذخیره یا بازیابی کنی.</div>
@@ -2414,16 +2419,36 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
           <div class="field-lbl" id="driveVersionsLbl" style="display:none;">نسخه‌های پشتیبان اخیر</div>
           <div id="driveVersions"></div>
         </div>
+        <div class="card" id="settingsDashboard">
+          <div class="section-title">🧩 شخصی‌سازی داشبورد</div>
+          <div class="section-sub">نمایش کارت‌ها را مطابق روش کاری خودت تنظیم کن. تنظیمات روی همین دستگاه ذخیره می‌شوند.</div>
+          <div id="arexDashboardWidgetSettings" class="arex-widget-settings"></div>
+          <label class="arex-setting-inline"><span>جزئیات کارت‌ها</span><select id="arexDashboardDensity" class="txt-input"><option value="comfortable">کامل</option><option value="compact">فشرده</option></select></label>
+        </div>
         <div class="card" id="settingsNotifications">
-          <div class="section-title">🔔 یادآوری روزانه مرور</div>
-          <div class="section-sub">
-            هنگام بازبودن برنامه، AREX می‌تواند مرورهای امروز را بررسی کند. یادآوری پس‌زمینه به پشتیبانی مرورگر، مجوز اعلان و دسترسی به پایگاه داده حساب‌محور وابسته است؛ اتصال Periodic Background Sync به دیتابیس اختصاصی کاربر در این نسخه تأیید نشده و نباید آن را قابلیت تضمین‌شده فرض کرد.
-            <b>محدودیت:</b> تحویل اعلان وقتی مرورگر کاملاً بسته است در همه‌ی مرورگرها و سیستم‌عامل‌ها (مخصوصاً iOS) تضمین‌شده نیست — برای اطمینان کامل، کنار آن از یادآور گوشی هم استفاده کن.
+          <div class="section-title">🔔 مدیریت اعلان‌ها</div>
+          <div class="section-sub">اعلان مرورگر هنگام فعال بودن سایت اجرا می‌شود. اعلان تلگرام از طریق Worker امن ارسال می‌شود و به تنظیم سرور نیاز دارد.</div>
+          <div class="arex-notif-section">
+            <label class="arex-setting-inline"><span>اعلان مرورگر</span><input type="checkbox" id="arexBrowserNotifEnabled"></label>
+            <button class="btn ghost" id="notifBtn" type="button">🔔 اجازه اعلان مرورگر</button>
+            <span id="notifStatus" class="muted-small" role="status"></span>
           </div>
-          <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-            <button class="btn ghost" id="notifBtn">🔔 فعال‌سازی یادآوری روزانه</button>
-            <span id="notifStatus" style="font-size:12px; color:var(--muted);"></span>
+          <div class="arex-notif-section">
+            <label class="arex-setting-inline"><span>فعال‌سازی ارسال تلگرام</span><input type="checkbox" id="arexTelegramEnabled"></label>
+            <label class="arex-field-label" for="arexEdgeWorkerUrl">آدرس Worker اعلان‌های AREX</label>
+            <input class="txt-input" id="arexEdgeWorkerUrl" type="url" dir="ltr" placeholder="https://your-worker.workers.dev" autocomplete="url">
+            <div class="calc-hint">توکن ربات و Chat ID باید فقط در Secrets سمت Cloudflare تنظیم شوند؛ آن‌ها را در سایت یا GitHub ننویس.</div>
+            <div class="arex-notif-types">
+              <label><input type="checkbox" data-telegram-category="daily"> یادآوری تکمیل برنامه روزانه</label>
+              <label><input type="checkbox" data-telegram-category="risk"> هشدارهای قوانین و ریسک</label>
+              <label><input type="checkbox" data-telegram-category="calendar"> رویدادهای مهم تقویم اقتصادی</label>
+              <label><input type="checkbox" data-telegram-category="weekly"> مرور هفتگی عملکرد</label>
+              <label><input type="checkbox" data-telegram-category="system"> وضعیت پشتیبان‌گیری و همگام‌سازی</label>
+            </div>
+            <div class="modal-actions" style="justify-content:flex-start;flex-wrap:wrap"><button class="btn" id="arexSaveNotifPrefs" type="button">ذخیره تنظیمات اعلان</button><button class="btn ghost" id="arexTestTelegram" type="button">ارسال پیام آزمایشی تلگرام</button></div>
+            <div id="arexTelegramStatus" class="calc-hint" role="status">ارسال تلگرام هنوز آزمایش نشده است.</div>
           </div>
+          <div class="calc-hint">یادآوری روزانه بین ساعت ۲۰:۰۰ تا ۲۳:۵۹، تا زمان تکمیل گزارش امروز تکرار می‌شود. اگر سایت کاملاً بسته باشد، اجرای اعلان مرورگر به سیستم‌عامل و قابلیت‌های پس‌زمینه وابسته است؛ برای تلگرام باید Worker و تنظیمات سرور فعال باشند.</div>
         </div>
       </div>
     </section>
@@ -2576,8 +2601,7 @@ let state = {
   assistantReminderDate: '',
   arexRuleMeta: {},
   arexStrategyNotes: '',
-  authUser: null,
-  marketSnapshot: { fetchedAt: 0, quotes: [], status: "not_configured" }
+  authUser: null
 };
 let dirty = { sessions:false, trades:false, psych:false, goalsrules:false, settings:false, calendarEvents:false, tradeRules:false, riskLimits:false, propChallenges:false, backtests:false, scenarios:false, notifLog:false, assistantState:false };
 let saveTimer = null;
@@ -3300,7 +3324,7 @@ const I18N = {
     'nav.review':"مرورهای زمان‌بندی‌شده", 'nav.trades':"ژورنال معاملات", 'nav.psych':"ژورنال روان‌شناسی",
     'nav.goals':"اهداف و قوانین", 'nav.obsidian':"اتصال به Obsidian", 'nav.calendar':"تقویم اقتصادی", 'nav.path':"مسیر انضباط", 'nav.backtest':"بک‌تست", 'nav.propfirm':"پراپ‌فرم", 'nav.scenarios':"سناریوهای در انتظار", 'nav.settings':"تنظیمات", 'nav.roadmap':'برنامه روزانه', 'nav.assistant':'دستیار معاملاتی', 'nav.risk':'مدیریت ریسک', 'nav.strategy':'استراتژی و قوانین', 'nav.analytics':'تحلیل عملکرد',
     'page.backtestSub':"ثبت و بررسی بک‌تست — کاملاً جدا از معاملات واقعی", 'page.propfirmSub':"پیگیری چالش‌های پراپ‌فرم و سقف‌های ریسک", 'page.scenariosSub':"ایده‌های معاملاتی در انتظار ورود",
-    'brand.sub':"V5.5 · دستیار معاملاتی هوشمند", 'tk.title':"قیمت لحظه‌ای تتر", 'tk.refresh':"🔄 بروزرسانی", 'tk.obsidian':"🗒️ ورود به Obsidian", 'tk.sync':"☁️ همگام‌سازی با Drive",
+    'brand.sub':"V5.6 · دستیار معاملاتی هوشمند", 'tk.title':"قیمت لحظه‌ای تتر", 'tk.refresh':"🔄 بروزرسانی", 'tk.obsidian':"🗒️ ورود به Obsidian", 'tk.sync':"☁️ همگام‌سازی با Drive",
     'dash.newsSoonTitle':"📰 اخبار مهم ۳ روز آینده", 'dash.sessionTitle':"🕒 نمای هم‌پوشانی سشن‌های فارکس", 'dash.fngTitle':"😨 شاخص ترس و طمع (کریپتو)", 'sync.inprogress':"در حال همگام‌سازی...", 'sync.last':"آخرین همگام‌سازی:",
     'ui.lesson':"مرحله", 'ui.phase':"حوزه:", 'ui.startSession':"شروع این مرحله", 'ui.allDone':"همه‌ی مراحل این چرخه را تکمیل کرده‌اید!", 'ui.complete':"تکمیل", 'ui.watched':"تکمیل شد",
     'cal.title':'📰 تقویم اقتصادی زنده', 'cal.sub':'اخبار مهم اقتصادی (تأثیرگذار روی فارکس) به‌صورت زنده.', 'cal.tabWidget':'🌐 ویجت زنده (TradingView)', 'cal.tabFeed':'📋 فید شخصی من',
@@ -3356,7 +3380,7 @@ const I18N = {
     'nav.review':"Spaced Reviews", 'nav.trades':"Trade Journal", 'nav.psych':"Psychology Journal",
     'nav.goals':"Goals & Rules", 'nav.obsidian':"Connect Obsidian", 'nav.calendar':"Economic Calendar", 'nav.path':"Discipline Path", 'nav.backtest':"Backtest", 'nav.propfirm':"Prop Firm", 'nav.scenarios':"Pending Scenarios", 'nav.settings':"Settings", 'nav.roadmap':'Daily Roadmap', 'nav.assistant':'Trading Assistant', 'nav.risk':'Risk Management', 'nav.strategy':'Strategy & Rules', 'nav.analytics':'Performance Analytics',
     'page.backtestSub':"Log and review backtests — fully separate from live trades", 'page.propfirmSub':"Track prop-firm challenges and risk limits", 'page.scenariosSub':"Trade ideas waiting to be entered",
-    'brand.sub':"V5.5 · Trading Assistant", 'tk.title':"Live Tether (USDT/USD) rate", 'tk.refresh':"🔄 Refresh", 'tk.obsidian':"🗒️ Open Obsidian", 'tk.sync':"☁️ Sync with Drive",
+    'brand.sub':"V5.6 · Trading Assistant", 'tk.title':"Live Tether (USDT/USD) rate", 'tk.refresh':"🔄 Refresh", 'tk.obsidian':"🗒️ Open Obsidian", 'tk.sync':"☁️ Sync with Drive",
     'dash.newsSoonTitle':"📰 Important news — next 3 days", 'dash.sessionTitle':"🕒 Forex session overlap", 'dash.fngTitle':"😨 Crypto Fear & Greed Index", 'sync.inprogress':"Syncing...", 'sync.last':"Last synced:",
     'ui.lesson':"Checkpoint", 'ui.phase':"Focus:", 'ui.startSession':"Start this checkpoint", 'ui.allDone':"All improvement checkpoints completed!", 'ui.complete':"Complete", 'ui.watched':"completed",
     'cal.title':'📰 Live economic calendar', 'cal.sub':'Market-moving economic news, live.', 'cal.tabWidget':'🌐 Live widget (TradingView)', 'cal.tabFeed':'📋 My own feed',
@@ -3412,7 +3436,7 @@ const I18N = {
     'nav.review':"Geplante Wiederholungen", 'nav.trades':"Handelsjournal", 'nav.psych':"Psychologie-Journal",
     'nav.goals':"Ziele & Regeln", 'nav.obsidian':"Mit Obsidian verbinden", 'nav.calendar':"Wirtschaftskalender", 'nav.path':"Disziplin-Pfad", 'nav.backtest':"Backtest", 'nav.propfirm':"Prop-Firma", 'nav.scenarios':"Offene Szenarien", 'nav.settings':"Einstellungen", 'nav.roadmap':'Tagesplan', 'nav.assistant':'Trading-Assistent', 'nav.risk':'Risikomanagement', 'nav.strategy':'Strategie & Regeln', 'nav.analytics':'Performance-Analyse',
     'page.backtestSub':"Backtests erfassen — getrennt von echten Trades", 'page.propfirmSub':"Prop-Firma-Challenges und Risikolimits verfolgen", 'page.scenariosSub':"Trade-Ideen, die noch nicht eröffnet wurden",
-    'brand.sub':"V5.5 · Handelsassistent", 'tk.title':"Live Tether-Kurs (USDT/USD)", 'tk.refresh':"🔄 Aktualisieren", 'tk.obsidian':"🗒️ Obsidian öffnen", 'tk.sync':"☁️ Mit Drive synchronisieren",
+    'brand.sub':"V5.6 · Handelsassistent", 'tk.title':"Live Tether-Kurs (USDT/USD)", 'tk.refresh':"🔄 Aktualisieren", 'tk.obsidian':"🗒️ Obsidian öffnen", 'tk.sync':"☁️ Mit Drive synchronisieren",
     'dash.newsSoonTitle':"📰 Wichtige News — nächste 3 Tage", 'dash.sessionTitle':"🕒 Forex-Sitzungsüberschneidung", 'dash.fngTitle':"😨 Crypto Fear & Greed Index", 'sync.inprogress':"Synchronisiere...", 'sync.last':"Letzte Synchronisierung:",
     'ui.lesson':"Schritt", 'ui.phase':"Focus:", 'ui.startSession':"Diesen Schritt starten", 'ui.allDone':"Alle Verbesserungsschritte abgeschlossen!", 'ui.complete':"Abgeschlossen", 'ui.watched':"abgeschlossen",
     'cal.title':'📰 Live-Wirtschaftskalender', 'cal.sub':'Marktbewegende Wirtschaftsnachrichten, live.', 'cal.tabWidget':'🌐 Live-Widget (TradingView)', 'cal.tabFeed':'📋 Mein eigener Feed',
@@ -3663,6 +3687,16 @@ function notify(title, body, icon, opts){
   updateChangelogDot();
   if('Notification' in window && Notification.permission==='granted' && state.notifEnabled){
     try{ new Notification(title, { body, icon:'icon-192.png' }); }catch(e){}
+  }
+  if(window.arexSendTelegramNotification){
+    const label=String(title||'').toLowerCase();
+    let category='';
+    if(/خبر اقتصادی|تقویم|economic event|calendar/.test(label))category='calendar';
+    else if(/ریسک|سقف ضرر|قانون|risk|rule/.test(label))category='risk';
+    else if(/هفتگی|weekly/.test(label))category='weekly';
+    else if(/همگام|پشتیبان|drive|backup|sync/.test(label))category='system';
+    else if(/روزانه|پایان روز|ثبت وضعیت روز|daily review/.test(label))category='daily';
+    if(category)window.arexSendTelegramNotification(category,title,body,'notice-'+category+'-'+Date.now()).catch(err=>console.warn('AREX Telegram notice skipped:',err));
   }
 }
 function fmtNotifTime(iso){
@@ -5746,7 +5780,7 @@ async function checkUpcomingHighImpactAlerts(events){
     const title='خبر اقتصادی مهم نزدیک است';
     const body=`${e.title||'رویداد اقتصادی'} · ${e.country||''} · ${mins>=0?'حدود '+Math.ceil(mins)+' دقیقه دیگر':'زمان انتشار گذشته است'}. این هشدار سیگنال ورود نیست؛ قوانین خبر و نماد را بررسی کن.`;
     notify(title,body,'📰');
-    if(window.arexSendExternalAlert){window.arexSendExternalAlert({title,body,eventId:id}).catch(err=>console.warn('AREX external alert not sent:',err));}
+    
   }
   try{localStorage.setItem(key,JSON.stringify(sent));}catch{}
 }
@@ -6145,7 +6179,7 @@ function getArexRuleFindings(){
  const log=(state.dailyLogs||{})[d]; if(log&&log.status==='yes'&&!log.journalDone) findings.push({level:'note',title:'تکمیل ژورنال',message:'گزارش روزانه ثبت شده، اما تکمیل ژورنال همه معاملات را تأیید نکرده‌ای.'});
  const events=(state.calendarEvents||[]).filter(e=>e.date===d);
  if(events.length) findings.push({level:'note',title:'بررسی خبر پیش از معامله',message:'برای امروز '+faDigits(events.length)+' رویداد تقویمی ثبت شده است؛ تا وقتی اهمیت، ارز مرتبط و زمان انتشار از منبع معتبر تأیید نشده، این رویدادها به‌تنهایی پنجره ممنوعیت قطعی نمی‌سازند.'});
- findings.push({level:'note',title:'بازار زنده',message:'تحلیل زنده RSI/DXY و وضعیت لحظه‌ای اخبار هنوز به منبع داده تأییدشده متصل نیست؛ ربات در این وضعیت سیگنال خرید یا فروش صادر نمی‌کند.'});
+ findings.push({level:'note',title:'داده بازار',message:'داده زنده بازار به‌عنوان ابزار مستقل داشبورد حذف شده است؛ برای تصمیم‌گیری فقط از اطلاعات معتبر و ثبت‌شده استفاده کن.'});
  return findings;
 }
 function renderAssistantWidget(){const bubble=document.getElementById('mascotBubble');if(!bubble)return;const d=todayIso(),trades=state.trades.filter(t=>t.date===d),log=state.dailyLogs[d],open=!isForexWeekend(new Date()),findings=getArexRuleFindings();let msg='',chips=[];if(findings.some(x=>x.level==='stop')){msg=findings.find(x=>x.level==='stop').message;chips=[['مرور معاملات امروز',()=>goView('trades')],['مدیریت ریسک',()=>goView('dashboard')]];}else if(log){msg=log.status==='no'?'وضعیت امروز ثبت شده. علت «'+(log.reason||'نامشخص')+'» را در مرور هفتگی بررسی می‌کنیم.':(log.journalDone?'معاملات امروز ثبت شده‌اند. پیش از پایان روز، مرور روان‌شناسی و اقدام فردا را هم بررسی کن.':'معامله ثبت کرده‌ای؛ گزارش روان‌شناسی و ژورنال هنوز کامل نیست.');}else if(trades.length){msg='برای امروز '+faDigits(trades.length)+' معامله ثبت کرده‌ای. حالا ژورنال روان‌شناسی، پایبندی به پلن و اقدام مشخص برای فردا را ثبت کن.';chips=[['ثبت گزارش روزانه',()=>{loadDailyReview();goView('daily');}]];}else if(open){msg='پیش از هر ورود، نماد و استراتژی را مشخص کن و محدودیت ریسک روزانه را بررسی کن. اگر معامله‌ای انجام دادی، آن را در ژورنال ثبت کن.';chips=[['ثبت معامله',()=>goView('trades')],['ثبت گزارش روزانه',()=>{loadDailyReview();goView('daily');}],['تقویم اقتصادی',()=>goView('calendar')]];}else{msg='امروز می‌توانی ژورنال و گزارش عملکردت را کامل کنی. تصمیم نگرفتن در نبود ستاپ معتبر هم یک تصمیم معاملاتی قابل‌قبول است.';chips=[['گزارش روزانه',()=>{loadDailyReview();goView('daily');}],['مرور معاملات',()=>goView('trades')]];}const plans=state.tradingTargets.day||{};if(plans.behavior)msg+=' قانون امروزت: '+plans.behavior+'.';bubble.textContent=msg;const status=document.getElementById('arexRuleStatus');if(status)status.innerHTML=findings.length?findings.slice(0,3).map(f=>'<span class="arex-rule-pill '+(f.level==='stop'?'stop':f.level==='review'?'review':'')+'">'+(f.level==='stop'?'⚠ ':f.level==='review'?'↗ ':'• ')+f.title+'</span>').join(''):'<span class="arex-rule-pill good">✓ بررسی اولیه قوانین</span><span class="arex-rule-pill">داده زنده: اتصال تأیید نشده</span>';const box=document.getElementById('mascotChips');box.innerHTML=chips.map((c,i)=>'<button class="chip" data-assistant-action="'+i+'">'+c[0]+'</button>').join('');box.querySelectorAll('[data-assistant-action]').forEach((b,i)=>b.addEventListener('click',chips[i][1]));const ans=document.getElementById('mascotAnswer');if(ans){ans.style.display='none';ans.textContent='';}const panel=document.getElementById('mascotPanel');if(panel)panel.setAttribute('aria-live','polite');}
@@ -6173,7 +6207,24 @@ function updateWeeklyWinrate(force=false){
   ['topWinRate','sidebarWinRate'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=text;});
 }
 function showTargetPrompts(){const now=new Date(),day=state.tradingTargets.day||{},week=state.tradingTargets.week||{},month=state.tradingTargets.month||{};let period='',message='';const expectedDayKey=now.getHours()>=21?nextTradingDateIso(now):todayIso();const dayDue=!isForexWeekend(now)&&day.periodKey!==expectedDayKey;const dayTab=document.querySelector('[data-target-period="day"]');if(dayTab)dayTab.textContent=now.getHours()>=21?'روز معاملاتی بعد':'امروز';const nextWeek=new Date(now);nextWeek.setDate(now.getDate()+1);const weekDue=now.getDay()===0&&now.getHours()>=19&&week.periodKey!==weekStartIso(nextWeek);const lastDay=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();const nextMonth=new Date(now.getFullYear(),now.getMonth()+1,1);const monthDue=now.getDate()===lastDay&&now.getHours()>=19&&month.periodKey!==monthStartIso(nextMonth);if(monthDue){period='month';message='پایان ماه میلادی نزدیک است؛ اهداف، حد سود/ضرر و سقف معاملات ماه آینده را مشخص کن.';}else if(weekDue){period='week';message='مرور هفتگی: اهداف، سقف سود/ضرر و تعداد معاملات هفته آینده را تعیین کن.';}else if(dayDue){period='day';message=now.getHours()>=21?'برای روز معاملاتی بعد، حد سود، حد ضرر، سقف معاملات و قانون رفتاری‌ات را از الان مشخص کن.':'قبل از شروع/ادامه بازار، حد سود، حد ضرر و سقف معاملات امروزت را مشخص کن.';}const banner=document.getElementById('targetPromptBanner');if(!banner)return;banner.style.display=period?'flex':'none';if(period){document.getElementById('targetPromptText').textContent=message;document.getElementById('targetPromptAction').onclick=()=>{setTargetPeriod(period);document.getElementById('targetProfit').focus();};}}
-function checkEndOfDayAssistantReminder(){const now=new Date(),d=todayIso();if(now.getHours()<20||state.assistantReminderDate===d||isForexWeekend(now))return;const log=state.dailyLogs[d],trades=state.trades.filter(t=>t.date===d),psychSaved=state.psych.some(p=>p.date===d)||!!(log&&log.psychDone);const logComplete=!!(log&&log.mood&&log.nextAction&&((log.status==='no'&&log.reason)||(log.status==='yes'&&log.journalDone)));if(logComplete&&psychSaved)return;state.assistantReminderDate=d;queueSave('assistantState');const body=trades.length?'معاملات امروز ثبت شده‌اند؛ ژورنال روان‌شناسی، پایبندی به پلن و اقدام فردا را کامل کن.':'اگر امروز معامله کردی، ژورنال را ثبت کن؛ اگر معامله نکردی، علت و وضعیت روانی‌ات را مشخص کن.';notify(trades.length?'مرور پایان روز AREX':'ثبت وضعیت روز معاملاتی',body,'🧠');}
+function checkEndOfDayAssistantReminder(){
+ const now=new Date(),d=todayIso();
+ if(now.getHours()<20||now.getHours()>23)return;
+ const log=state.dailyLogs[d],trades=state.trades.filter(t=>t.date===d);
+ const psychSaved=state.psych.some(p=>p.date===d)||!!(log&&log.psychDone);
+ const logComplete=!!(log&&log.mood&&log.nextAction&&((log.status==='no'&&log.reason)||(log.status==='yes'&&log.journalDone)));
+ const pendingReviews=Object.values(state.sessions||{}).reduce((n,x)=>n+(x.reviews||[]).filter(r=>!r.done&&r.date<=d).length,0);
+ if(logComplete&&psychSaved&&pendingReviews===0)return;
+ const key='arex-v56-evening-reminder-'+(localStorage.getItem('arex-auth-uid')||'local')+'-'+d;
+ const last=Number(localStorage.getItem(key)||0);
+ if(now.getHours()===23&&now.getMinutes()>59)return;
+ if(last&&Date.now()-last<30*60*1000)return;
+ try{localStorage.setItem(key,String(Date.now()));}catch{}
+ const title=trades.length?'مرور پایان روز AREX':'تکمیل برنامه روزانه';
+ const body=trades.length?'گزارش روزانه، مرور روان‌شناسی و مرورهای عقب‌افتاده را تکمیل کن.':'وضعیت امروز را ثبت کن؛ اگر معامله نکردی، دلیل و وضعیت ذهنی را هم بنویس.';
+ notify(title,body,'🧠');
+
+}
 function requestArexNotificationPermission(){
  if(!('Notification' in window)){toast('این مرورگر از اعلان سیستمی پشتیبانی نمی‌کند.');return;}
  Notification.requestPermission().then(permission=>{if(permission==='granted'){state.notifEnabled=true;queueSave('settings');notify('اعلان‌های AREX فعال شد','هشدارهای داخل سایت و اعلان مرورگر برای زمان فعال بودن برنامه آماده‌اند.','🔔',{silent:true});}else toast('اجازه اعلان داده نشد؛ اعلان‌های داخل سایت همچنان در دسترس‌اند.');});
@@ -6187,38 +6238,7 @@ function getArexCoachSummary(){
  if(!logs.journalDone)return 'معامله ثبت شده؛ ژورنال و پایبندی به پلن را تکمیل کن تا بتوانیم کیفیت اجرا را از نتیجه تصادفی جدا کنیم.';
  return 'اطلاعات ثبت‌شده امروز را مرور کن. من فقط بر اساس ژورنال و قوانین تأییدشده نتیجه‌گیری می‌کنم؛ داده زنده بازار هنوز متصل نیست.';
 }
-window.AREX_GET_EDGE_WORKER_URL=()=>String((state.calendarFeedUrl||'').trim()).replace(/\/$/,'');
-async function refreshArexMarketSnapshot(force=false){
-  const base=(state.calendarFeedUrl||'').trim().replace(/\/$/,'');
-  const box=document.getElementById('arexMarketQuotes'), status=document.getElementById('arexMarketStatus');
-  if(!box||!status)return;
-  if(!base){status.textContent='منبع قیمت متصل نیست. ابتدا Worker را مستقر کن و آدرس آن را در فید تقویم ذخیره کن.';return;}
-  const age=Date.now()-(state.marketSnapshot?.fetchedAt||0);
-  if(!force&&age<60000&&state.marketSnapshot?.quotes?.length){renderArexMarketSnapshot();return;}
-  status.textContent='در حال دریافت قیمت‌های بازار…';
-  try{
-    const r=await fetch(base+'/market?symbols='+encodeURIComponent('EUR/USD,XAU/USD,DJI'),{cache:'no-store',headers:{'Accept':'application/json'}});
-    if(!r.ok)throw new Error('HTTP '+r.status);
-    const data=await r.json(); if(!Array.isArray(data.quotes))throw new Error('ساختار پاسخ نامعتبر است');
-    state.marketSnapshot={fetchedAt:Date.now(),quotes:data.quotes,status:'ok'};
-    storage.set('marketSnapshot',JSON.stringify(state.marketSnapshot)).catch(()=>{});
-    renderArexMarketSnapshot();
-  }catch(e){state.marketSnapshot={...(state.marketSnapshot||{}),status:'error'};status.textContent='دریافت قیمت زنده ناموفق بود. آدرس Worker، کلید ارائه‌دهنده و محدودیت API را بررسی کن.'; if(!state.marketSnapshot.quotes?.length)box.innerHTML='<div class="empty">قیمت زنده در دسترس نیست؛ هیچ مقدار ساختگی نمایش داده نمی‌شود.</div>'; console.warn('AREX market feed:',e);}
-}
-function renderArexMarketSnapshot(){
- const snap=state.marketSnapshot||{},box=document.getElementById('arexMarketQuotes'),status=document.getElementById('arexMarketStatus');if(!box||!status)return;
- const names={'EUR/USD':'یورو / دلار','XAU/USD':'طلا / دلار','DJI':'Dow Jones'};
- if(!snap.quotes?.length){box.innerHTML='<div class="empty">داده زنده هنوز متصل نشده است.</div>';return;}
- box.innerHTML=snap.quotes.map(q=>'<div class="card" style="padding:12px;min-width:0"><div class="section-sub">'+(names[q.symbol]||q.symbol)+'</div><div style="font-size:20px;font-weight:700;direction:ltr;text-align:right;overflow-wrap:anywhere">'+(Number.isFinite(Number(q.price))?Number(q.price).toLocaleString('en-US',{maximumFractionDigits:5}):'—')+'</div><div class="section-sub">'+(q.source||'Twelve Data')+'</div></div>').join('');
- status.textContent='آخرین دریافت: '+new Date(snap.fetchedAt).toLocaleString('fa-IR')+' · قیمت‌ها صرفاً داده منبع هستند و سیگنال معاملاتی محسوب نمی‌شوند.';
-}
-const MT5_CONFIG_KEY='arex-mt5-bridge-config-v1';
-function getMt5Config(){try{return JSON.parse(localStorage.getItem(MT5_CONFIG_KEY)||'{}')}catch{return {}}}
-function saveMt5Config(){const config={url:document.getElementById('mt5WorkerUrl').value.trim().replace(/\/$/,''),token:document.getElementById('mt5BridgeToken').value.trim()};if(config.url&&!/^https:\/\//i.test(config.url)){toast('آدرس Worker باید با https:// شروع شود');return;}localStorage.setItem(MT5_CONFIG_KEY,JSON.stringify(config));document.getElementById('mt5BridgeStatus').textContent=config.url&&config.token?'تنظیمات ذخیره شد؛ در حال بررسی اتصال…':'آدرس و کلید را وارد کن';if(config.url&&config.token)syncMt5Trades();}
-async function syncMt5Trades(){const status=document.getElementById('mt5BridgeStatus');const c=getMt5Config();if(!c.url||!c.token){if(status)status.textContent='ابتدا آدرس Worker و کلید را ذخیره کن';return;}if(status)status.textContent='در حال دریافت معاملات…';try{const res=await fetch(c.url+'/mt5/trades',{headers:{'Authorization':'Bearer '+c.token,'Accept':'application/json'},cache:'no-store'});if(!res.ok)throw new Error('HTTP '+res.status);const payload=await res.json();if(!Array.isArray(payload.trades))throw new Error('پاسخ Worker معتبر نیست');let added=0;const existing=new Set(state.trades.map(t=>String(t.mt5Ticket||t.id)));for(const x of payload.trades){const ticket=String(x.ticket||'');if(!ticket||existing.has(ticket)||existing.has('mt5-'+ticket))continue;const profit=Number(x.profit||0);const t={id:'mt5-'+ticket,mt5Ticket:ticket,source:'MetaTrader 5',date:String(x.closeTime||x.time||'').slice(0,10),time:String(x.closeTime||x.time||'').slice(11,16),symbol:String(x.symbol||'MT5'),dir:String(x.type||'').toLowerCase().includes('sell')?'sell':'buy',entry:x.entry==null?'':String(x.entry),sl:x.sl==null?'':String(x.sl),exit:x.exit==null?'':String(x.exit),r:'',usd:String(profit),setup:'MetaTrader 5 · واردشده خودکار',note:'ورود خودکار از حساب MT5؛ ticket '+ticket+(x.comment?' · '+String(x.comment):''),ruleCompliance:null,mistakes:[],sessions:[],nearNews:false,hasShotEntry:false,hasShotExit:false,hasVoice:false};if(!t.date||t.date==='')t.date=todayIso();state.trades.unshift(t);existing.add(ticket);existing.add('mt5-'+ticket);added++;}if(added){queueSave('trades');renderTrades();renderTradeWeekMap();renderDashboardDailyStatus();renderAssistantWidget();renderArexDailyRoadmap();}if(status)status.textContent=added?('همگام‌سازی موفق · '+faDigits(added)+' معامله جدید وارد شد'):'اتصال برقرار است · معامله جدیدی وجود ندارد';}catch(e){console.error('MT5 sync failed',e);if(status)status.textContent='اتصال ناموفق؛ آدرس، کلید و وضعیت Worker را بررسی کن';}}
-function initMt5Bridge(){const c=getMt5Config();const url=document.getElementById('mt5WorkerUrl'),token=document.getElementById('mt5BridgeToken');if(url)url.value=c.url||'';if(token)token.value=c.token||'';document.getElementById('mt5SaveConfig')?.addEventListener('click',saveMt5Config);document.getElementById('mt5SyncNow')?.addEventListener('click',syncMt5Trades);setInterval(()=>{if(document.visibilityState==='visible'&&getMt5Config().url)syncMt5Trades()},60000);}
-
-function initV5Assistant(){document.getElementById('arexRoadmapJournal')?.addEventListener('click',()=>goView('trades'));document.getElementById('arexRoadmapRisk')?.addEventListener('click',()=>goView('dashboard'));document.getElementById('arexRoadmapCalendar')?.addEventListener('click',()=>goView('calendar'));document.getElementById('openFullCalendar')?.addEventListener('click',()=>goView('calendar'));loadDashboardTvCalendar();renderArexDailyRoadmap();initMt5Bridge();document.getElementById('arexCoachBtn')?.addEventListener('click',()=>{const ans=document.getElementById('mascotAnswer');if(ans){ans.textContent=getArexCoachSummary();ans.style.display='block';}});document.getElementById('arexNotifPermissionBtn')?.addEventListener('click',requestArexNotificationPermission);document.querySelectorAll('[data-target-period]').forEach(b=>b.addEventListener('click',()=>setTargetPeriod(b.dataset.targetPeriod)));document.getElementById('saveTargetsBtn').addEventListener('click',saveCurrentTargets);document.getElementById('openDailyReviewBtn').addEventListener('click',()=>{loadDailyReview();goView('daily');});document.getElementById('saveDailyReviewBtn').addEventListener('click',saveDailyReview);document.getElementById('dailyReviewDate').addEventListener('change',e=>loadDailyReview(e.target.value||todayIso()));document.querySelectorAll('[data-traded]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-traded]').forEach(x=>x.classList.toggle('active',x===b));document.getElementById('noTradeReasonWrap').style.display=b.dataset.traded==='no'?'block':'none';}));['dailyFocus','dailyDiscipline'].forEach(id=>document.getElementById(id).addEventListener('input',e=>{document.getElementById(id+'Value').textContent=faDigits(e.target.value)+' از ۵';}));document.getElementById('refreshEconomicCalendar')?.addEventListener('click',()=>{loadTvCalendar(true);fetchFFCalendar(true);const dw=document.getElementById('dashboardTvWrap');if(dw){dw.dataset.loaded='';loadDashboardTvCalendar();}});document.getElementById('refreshNewsSoon')?.addEventListener('click',()=>fetchFFCalendar(true));document.getElementById('topLangSelect').value=state.language;setTargetPeriod(state.targetPeriod||'day');loadDailyReview();renderDailyHistory();renderStrategyInsights();renderTradeWeekMap();renderDashboardDailyStatus();renderAssistantWidget();updateWeeklyWinrate();showTargetPrompts();setInterval(()=>{renderAssistantWidget();renderDashboardDailyStatus();renderArexDailyRoadmap();updateWeeklyWinrate();checkEndOfDayAssistantReminder();showTargetPrompts();},30000);checkEndOfDayAssistantReminder();document.getElementById('arexMarketRefresh')?.addEventListener('click',()=>refreshArexMarketSnapshot(true));refreshArexMarketSnapshot(false);setInterval(()=>refreshArexMarketSnapshot(false),60000);setInterval(()=>{if(document.getElementById('view-daily').classList.contains('active'))renderDailyHistory();},60000);}
+function initV5Assistant(){document.getElementById('arexRoadmapJournal')?.addEventListener('click',()=>goView('trades'));document.getElementById('arexRoadmapRisk')?.addEventListener('click',()=>goView('dashboard'));document.getElementById('arexRoadmapCalendar')?.addEventListener('click',()=>goView('calendar'));document.getElementById('openFullCalendar')?.addEventListener('click',()=>goView('calendar'));loadDashboardTvCalendar();renderArexDailyRoadmap();document.getElementById('arexCoachBtn')?.addEventListener('click',()=>{const ans=document.getElementById('mascotAnswer');if(ans){ans.textContent=getArexCoachSummary();ans.style.display='block';}});document.getElementById('arexNotifPermissionBtn')?.addEventListener('click',requestArexNotificationPermission);document.querySelectorAll('[data-target-period]').forEach(b=>b.addEventListener('click',()=>setTargetPeriod(b.dataset.targetPeriod)));document.getElementById('saveTargetsBtn').addEventListener('click',saveCurrentTargets);document.getElementById('openDailyReviewBtn').addEventListener('click',()=>{loadDailyReview();goView('daily');});document.getElementById('saveDailyReviewBtn').addEventListener('click',saveDailyReview);document.getElementById('dailyReviewDate').addEventListener('change',e=>loadDailyReview(e.target.value||todayIso()));document.querySelectorAll('[data-traded]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-traded]').forEach(x=>x.classList.toggle('active',x===b));document.getElementById('noTradeReasonWrap').style.display=b.dataset.traded==='no'?'block':'none';}));['dailyFocus','dailyDiscipline'].forEach(id=>document.getElementById(id).addEventListener('input',e=>{document.getElementById(id+'Value').textContent=faDigits(e.target.value)+' از ۵';}));document.getElementById('refreshEconomicCalendar')?.addEventListener('click',()=>{loadTvCalendar(true);fetchFFCalendar(true);const dw=document.getElementById('dashboardTvWrap');if(dw){dw.dataset.loaded='';loadDashboardTvCalendar();}});document.getElementById('refreshNewsSoon')?.addEventListener('click',()=>fetchFFCalendar(true));document.getElementById('topLangSelect').value=state.language;setTargetPeriod(state.targetPeriod||'day');loadDailyReview();renderDailyHistory();renderStrategyInsights();renderTradeWeekMap();renderDashboardDailyStatus();renderAssistantWidget();updateWeeklyWinrate();showTargetPrompts();setInterval(()=>{renderAssistantWidget();renderDashboardDailyStatus();renderArexDailyRoadmap();updateWeeklyWinrate();checkEndOfDayAssistantReminder();showTargetPrompts();},30000);checkEndOfDayAssistantReminder();setInterval(()=>{if(document.getElementById('view-daily').classList.contains('active'))renderDailyHistory();},60000);}
 
 let __arexAppStarted = false;
 function startApp(){ if(__arexAppStarted) return; __arexAppStarted = true; loadAll(); }
@@ -6530,14 +6550,13 @@ initV5Assistant=function(){arexOriginalInitV5Assistant();initArexV52Workspace();
  const endpointKey='arex_v55_ai_endpoint';
  if($('arexAiEndpoint'))$('arexAiEndpoint').value=localStorage.getItem(endpointKey)||'';
  function addChat(role,text){const h=$('arexChatHistory');if(!h)return;const el=document.createElement('div');el.className='arex-chat-msg '+role;const label=document.createElement('small');label.textContent=role==='user'?'شما':'آرکس';el.appendChild(label);el.appendChild(document.createTextNode(text));h.appendChild(el);h.scrollTop=h.scrollHeight;history.push({role:role==='user'?'user':'assistant',content:text});if(history.length>24)history.splice(0,2);}
- function contextSnapshot(){const st=(typeof state!=='undefined'&&state)||window.state||{};return {app:'AREX V5.5',language:st.language||'fa',timezone:'Asia/Tehran',tradesCount:Array.isArray(st.trades)?st.trades.length:0,psychNotesCount:Array.isArray(st.psych)?st.psych.length:0,goalsCount:Array.isArray(st.goals)?st.goals.length:0,confirmedRules:Array.isArray(st.tradeRules)?st.tradeRules:[],riskLimits:st.riskLimits||{},activePage:document.querySelector('.view.active')?.id||'unknown',instruction:'Do not invent user data, live prices, strategy rules, or news. If information is missing, ask a focused question. Do not promise profitable outcomes.'};}
+ function contextSnapshot(){const st=(typeof state!=='undefined'&&state)||window.state||{};return {app:'AREX V5.6',language:st.language||'fa',timezone:'Asia/Tehran',tradesCount:Array.isArray(st.trades)?st.trades.length:0,psychNotesCount:Array.isArray(st.psych)?st.psych.length:0,goalsCount:Array.isArray(st.goals)?st.goals.length:0,confirmedRules:Array.isArray(st.tradeRules)?st.tradeRules:[],riskLimits:st.riskLimits||{},activePage:document.querySelector('.view.active')?.id||'unknown',instruction:'Do not invent user data, live prices, strategy rules, or news. If information is missing, ask a focused question. Do not promise profitable outcomes.'};}
  function localAnswer(q){const x=q.toLowerCase();if(/سلام|درود|hello|hi\b/.test(x))return 'سلام! من آرکس هستم. می‌توانم در کار با بخش‌های AREX، نظم روزانه، ژورنال، مدیریت ریسک و مرور قوانین کمک کنم. برای پاسخ عمومی درباره هر موضوع، endpoint هوش مصنوعی را در تنظیمات وصل کن.';if(/از کجا شروع|شروع کنم|first|start/.test(x))return 'برای شروع این مسیر را برو: ۱) برنامه روزانه را باز کن و وضعیت و هدف امروز را ثبت کن؛ ۲) در مدیریت ریسک موجودی و ریسک مجاز را تنظیم کن؛ ۳) پیش از معامله قوانین استراتژی و تقویم اقتصادی را مرور کن؛ ۴) بعد از معامله نتیجه و اسکرین‌شات را در ژورنال ثبت کن؛ ۵) آخر روز عملکرد و روان‌شناسی را مرور کن.';if(/ریسک|risk|ضرر/.test(x))return 'پیش از هر معامله، حد ضرر و حجم را طوری تعیین کن که زیان احتمالی از سقف ریسک شخصی‌ات بیشتر نشود. اگر موجودی، درصد ریسک، نماد و فاصله SL را بدهی، می‌توانم داده‌های لازم برای محاسبه را بررسی کنم؛ برای محاسبه دقیق حجم، مشخصات قرارداد/ارزش هر پوینت بروکر هم لازم است.';if(/تقویم|خبر|news|calendar/.test(x))return 'از تب «تقویم اقتصادی» استفاده کن؛ تب «تقویم رایگان (API)» از Finance Calendar رویدادهای مهم را می‌گیرد. اگر فید خطا داد، خطا را بررسی کن و خالی بودن فهرست را به معنی نبود خبر تلقی نکن.';if(/ژورنال|ثبت معامله|journal/.test(x))return 'از «ژورنال معاملات» برای ثبت نماد، جهت، ورود/خروج، SL/TP، نتیجه و دلیل ورود استفاده کن. ثبت دلیل و رعایت قوانین از ثبت صرف سود و زیان مهم‌تر است.';if(/تنظیمات|settings/.test(x))return 'تنظیمات را به بخش‌های ظاهر، سشن‌ها، ریسک، قوانین، اتصال‌ها و پشتیبان‌گیری تقسیم کرده‌ایم. از نوار دسترسی سریع بالای تنظیمات برای رفتن به بخش موردنظر استفاده کن.';if(/استراتژی|قانون|strategy/.test(x))return 'قوانین تأییدشده‌ات باید بر دانش عمومی مقدم باشند. اگر شرط ورود، تایم‌فریم، حد ضرر یا استثنا مبهم است، آن را قطعی فرض نمی‌کنم. سؤال یا قانون دقیق را بنویس تا کمک کنم ابهامش را مشخص کنیم.';return 'برای این سؤال هنوز موتور هوش مصنوعی عمومی به AREX وصل نشده است؛ نمی‌خواهم پاسخ ساختگی بدهم. در تنظیمات ← «اتصال هوش مصنوعی آرکس»، آدرس یک backend امن سازگار را ثبت کن. تا آن زمان می‌توانم درباره امکانات داخلی، نظم معاملاتی، ژورنال و ریسک با اطلاعات موجود راهنمایی بدهم.';}
  async function askArex(text){if(chatBusy||!text.trim())return;chatBusy=true;const send=$('arexChatSend');if(send){send.disabled=true;send.textContent='…'}addChat('user',text.trim());const endpoint=localStorage.getItem(endpointKey)||'';try{if(endpoint){const res=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:history.slice(-16),context:contextSnapshot()}),signal:AbortSignal.timeout?AbortSignal.timeout(30000):undefined});if(!res.ok)throw new Error('HTTP '+res.status);const data=await res.json();const answer=data.answer||data.reply||data.text||data.choices?.[0]?.message?.content;if(typeof answer!=='string'||!answer.trim())throw new Error('پاسخ سرویس خالی یا ناشناخته است');addChat('assistant',answer.trim());}else addChat('assistant',localAnswer(text));}catch(e){addChat('assistant','اتصال به سرویس هوش مصنوعی ناموفق بود ('+e.message+'). آدرس endpoint، CORS و وضعیت backend را بررسی کن. پاسخ جایگزین ساختگی تولید نکردم.');}finally{chatBusy=false;if(send){send.disabled=false;send.textContent='ارسال ↗'}}}
  if($('arexChatForm'))$('arexChatForm').addEventListener('submit',e=>{e.preventDefault();const input=$('arexChatInput'),text=input.value.trim();if(!text)return;input.value='';askArex(text)});
  if($('arexChatInput'))$('arexChatInput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();$('arexChatForm').requestSubmit()}});
  if($('arexAiEndpointSave'))$('arexAiEndpointSave').addEventListener('click',()=>{const val=$('arexAiEndpoint').value.trim();if(val&&!/^https:\/\//i.test(val)){ $('arexAiEndpointStatus').textContent='آدرس باید با https:// شروع شود.';return;}try{if(val)localStorage.setItem(endpointKey,val);else localStorage.removeItem(endpointKey);$('arexAiEndpointStatus').textContent=val?'آدرس ذخیره شد. کلید محرمانه باید فقط در backend باشد.':'اتصال مدل زبانی پاک شد.';}catch(e){$('arexAiEndpointStatus').textContent='ذخیره در مرورگر انجام نشد.'}});
- if($('arexAiEndpointTest'))$('arexAiEndpointTest').addEventListener('click',async()=>{const val=$('arexAiEndpoint').value.trim();if(!val){$('arexAiEndpointStatus').textContent='ابتدا آدرس endpoint را وارد کن.';return;}try{const r=await fetch(val,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'user',content:'Reply with exactly: AREX_OK'}],context:{app:'AREX V5.5',test:true}})});if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();const ans=d.answer||d.reply||d.text||d.choices?.[0]?.message?.content;if(!ans)throw new Error('ساختار پاسخ نامعتبر');$('arexAiEndpointStatus').textContent='اتصال برقرار است؛ پاسخ سرویس دریافت شد.';}catch(e){$('arexAiEndpointStatus').textContent='آزمون ناموفق: '+e.message+' · CORS و فرمت پاسخ را بررسی کن.'}});
- if($('arexBotExpand'))$('arexBotExpand').addEventListener('click',()=>{const btn=document.querySelector('.navbtn[data-view="assistant"]');if(btn)btn.click();else{const m=$('mascot');if(m)m.classList.toggle('open')}});
+ if($('arexAiEndpointTest'))$('arexAiEndpointTest').addEventListener('click',async()=>{const val=$('arexAiEndpoint').value.trim();if(!val){$('arexAiEndpointStatus').textContent='ابتدا آدرس endpoint را وارد کن.';return;}try{const r=await fetch(val,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'user',content:'Reply with exactly: AREX_OK'}],context:{app:'AREX V5.6',test:true}})});if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();const ans=d.answer||d.reply||d.text||d.choices?.[0]?.message?.content;if(!ans)throw new Error('ساختار پاسخ نامعتبر');$('arexAiEndpointStatus').textContent='اتصال برقرار است؛ پاسخ سرویس دریافت شد.';}catch(e){$('arexAiEndpointStatus').textContent='آزمون ناموفق: '+e.message+' · CORS و فرمت پاسخ را بررسی کن.'}});
  // First-visit guided tour. Only shown after the app's main shell is visible.
  const tourSteps=[
   {target:'#view-dashboard',title:'به AREX خوش آمدی',text:'داشبورد نمای کلی وضعیت و عملکرد است. برای شروع واقعی، مسیر روزانه را دنبال کن و داده‌های شخصی خودت را وارد کن.'},
@@ -6563,5 +6582,246 @@ initV5Assistant=function(){arexOriginalInitV5Assistant();initArexV52Workspace();
 })();
 
 </script>
+
+<style id="arex-v56-refinement-css">
+:root{--arex-font-scale:1;--arex-user-font:'Vazirmatn'}
+html{font-size:16px}
+body,button,input,select,textarea{font-family:var(--arex-user-font),'Vazirmatn',Tahoma,sans-serif!important}
+body{min-width:0;overflow-x:hidden}
+img,svg,video,canvas,iframe{max-width:100%}
+.view,.content,.card,.grid,.form-grid,.topbar,.topbar>div{min-width:0}
+.card,.section-sub,.calc-hint,.arex-dashboard-warnings,.mascot-panel-msg,.arex-chat-msg{overflow-wrap:anywhere}
+input,select,textarea,button{max-width:100%}
+.arex-font-controls{margin-top:18px;padding-top:14px;border-top:1px solid var(--border);display:grid;gap:9px}
+.arex-font-controls label,.arex-field-label{font-size:12px;color:var(--muted);font-weight:700}
+.arex-font-size-row,.arex-setting-inline{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.arex-font-controls input[type=range]{width:100%;accent-color:var(--gold)}
+.arex-dash-cal-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.arex-dash-cal-actions select{min-width:165px;max-width:230px}
+.arex-widget-settings{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.arex-widget-toggle,.arex-notif-types label{display:flex;align-items:center;gap:9px;padding:10px 11px;border:1px solid var(--border);border-radius:11px;background:var(--panel-alt);font-size:12px;min-width:0}
+.arex-widget-toggle input,.arex-notif-types input,.arex-setting-inline input[type=checkbox]{accent-color:var(--gold);width:17px;height:17px;flex-shrink:0}
+.arex-setting-inline{margin:12px 0}
+.arex-setting-inline select{max-width:190px}
+.arex-notif-section{padding:12px 0;border-top:1px solid var(--border);display:grid;gap:10px}
+.arex-notif-types{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.arex-next-step-card{display:flex;align-items:center;gap:14px;margin-bottom:16px;border-color:rgba(110,165,230,.28);background:linear-gradient(120deg,var(--panel),var(--panel-alt))}
+.arex-next-step-icon{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;flex:0 0 auto;background:rgba(110,165,230,.12);color:var(--accent);font-size:22px}
+.arex-next-step-copy{flex:1;min-width:0}
+.arex-next-step-copy .section-title{margin-bottom:4px}
+.arex-next-step-copy p{font-size:12px;line-height:1.9;color:var(--muted);margin:0}
+.arex-dash-feed-list{display:grid;gap:7px;max-height:360px;overflow:auto;padding:2px}
+.arex-dash-feed-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--panel-alt)}
+.arex-dash-feed-row b{font-size:12px;display:block}
+.arex-dash-feed-row small{font-size:10px;color:var(--muted);display:block;margin-top:3px}
+.arex-dash-impact{font-size:10px;padding:4px 7px;border-radius:999px;background:var(--panel-hi);white-space:nowrap}
+.arex-dash-impact.high{color:var(--red)}
+.arex-dash-impact.medium{color:#d5a54a}
+.arex-compact-dashboard .card{padding:12px}
+.arex-compact-dashboard .section-sub{margin-bottom:10px}
+.brand{cursor:pointer;user-select:none}
+.brand:focus-visible{outline:2px solid var(--gold);outline-offset:4px;border-radius:10px}
+.arex-tour-backdrop{z-index:30000!important;isolation:isolate}
+.arex-tour-card{position:relative;z-index:1;max-height:calc(100dvh - 36px);overflow:auto;pointer-events:auto}
+.arex-tour-focus{z-index:auto!important;position:static!important;outline:2px solid var(--gold)!important;outline-offset:2px!important}
+.mascot{z-index:12000}
+.mascot.expanded{position:fixed!important;inset:16px!important;display:flex!important;align-items:stretch!important;justify-content:flex-start!important;gap:0!important;z-index:25000!important;pointer-events:none}
+.mascot.expanded .mascot-body{display:none}
+.mascot.expanded .mascot-panel{display:flex!important;flex-direction:column;width:min(900px,100%)!important;height:calc(100dvh - 32px)!important;max-height:none!important;margin:auto!important;pointer-events:auto;overflow:hidden}
+.mascot.expanded .arex-chat-history{flex:1;min-height:80px;max-height:none;overflow:auto}
+.mascot.expanded .arex-chat-form{flex-shrink:0}
+.mascot.expanded .mascot-panel-msg{max-height:20vh;overflow:auto}
+.mascot.expanded #arexBotExpand{transform:rotate(180deg)}
+.mascot-panel{max-height:min(78dvh,760px);overflow:auto}
+.arex-chat-history{min-height:0}
+@media(min-width:861px){
+  #hamburgerBtn{display:none!important}
+  .brand{position:relative;padding-inline-end:24px}
+  .brand::after{content:'☰';position:absolute;inset-inline-end:0;top:50%;transform:translateY(-50%);font-size:15px;color:var(--muted);opacity:.8}
+  .brand:hover::after{color:var(--gold)}
+}
+@media(max-width:860px){
+  .arex-next-step-card{align-items:flex-start;flex-wrap:wrap}
+  .arex-next-step-copy{flex-basis:calc(100% - 60px)}
+  .arex-next-step-card>.btn{margin-inline-start:56px}
+  .arex-dash-cal-actions{width:100%}
+  .arex-dash-cal-actions select{flex:1;min-width:0;max-width:none}
+  .arex-widget-settings,.arex-notif-types{grid-template-columns:1fr}
+  .mascot.expanded{inset:8px!important}
+  .mascot.expanded .mascot-panel{width:100%!important;height:calc(100dvh - 16px)!important}
+  .topbar,.topbar>div{flex-wrap:wrap}
+  .content{padding:clamp(10px,3vw,18px)!important}
+  .grid,.form-grid{grid-template-columns:minmax(0,1fr)!important}
+  .table-wrap,.table-container{max-width:100%;overflow-x:auto}
+}
+@media(max-width:480px){
+  .arex-dash-cal-actions .btn{flex-shrink:0}
+  .arex-next-step-card{gap:9px}
+  .arex-next-step-icon{width:36px;height:36px}
+  .mascot:not(.expanded){left:10px!important;right:auto!important;bottom:10px!important}
+  html[dir="ltr"] .mascot:not(.expanded){left:auto!important;right:10px!important}
+  .mascot:not(.expanded) .mascot-panel{width:calc(100vw - 20px)!important;max-width:360px;max-height:78dvh}
+  .arex-tour-backdrop{padding:10px}
+  .arex-tour-card{padding:17px}
+  .arex-tour-actions{flex-wrap:wrap}
+}
+@media(prefers-reduced-motion:reduce){.arex-tour-backdrop,.mascot-panel{animation:none!important;transition:none!important}}
+</style>
+
+<script id="arex-v56-refinement-js">
+(function(){
+'use strict';
+const $=id=>document.getElementById(id);
+const PREF_KEY='arex-v56-ui-prefs-'+(localStorage.getItem('arex-auth-uid')||'local');
+const NOTIF_KEY='arex-v56-notification-prefs-'+(localStorage.getItem('arex-auth-uid')||'local');
+const WIDGETS=[
+ {id:'arexDashboardKpis',label:'خلاصه حساب و عملکرد'},
+ {id:'arexDashboardWarnings',label:'هشدارهای ریسک و قوانین'},
+ {id:'arexDashboardCoach',label:'قدم بعدی پیشنهادی آرکس'},
+ {id:'dashboardTvCalendar',label:'تقویم اقتصادی'},
+ {selector:'.clock-news-row',label:'ساعت و اخبار نزدیک'},
+ {id:'worldClocks',label:'ساعت‌های جهانی'},
+ {selector:'.v5-primary-grid',label:'اهداف و حدود معاملاتی'},
+ {id:'tradeWeekMap',parent:true,label:'نقشه فعالیت هفته'},
+ {id:'dashboardDailyCheck',label:'جمع‌بندی امروز'},
+ {selector:'.upcoming-news-card',label:'رویدادهای پیش‌رو'}
+];
+const defaultUi={font:'vazirmatn',scale:100,widgets:{},density:'comfortable',calendarSource:'freeapi'};
+const defaultNotif={browserEnabled:false,telegramEnabled:false,categories:{daily:true,risk:true,calendar:true,weekly:false,system:false}};
+function read(key,fallback){try{return Object.assign({},fallback,JSON.parse(localStorage.getItem(key)||'{}'))}catch{return Object.assign({},fallback)}}
+let ui=read(PREF_KEY,defaultUi), notif=read(NOTIF_KEY,defaultNotif);
+ui.widgets=Object.assign({},defaultUi.widgets,ui.widgets||{});
+notif.categories=Object.assign({},defaultNotif.categories,notif.categories||{});
+function saveUi(){try{localStorage.setItem(PREF_KEY,JSON.stringify(ui))}catch{}}
+function saveNotif(){try{localStorage.setItem(NOTIF_KEY,JSON.stringify(notif))}catch{}}
+function fontName(key){return ({vazirmatn:"'Vazirmatn'",ibmplex:"'IBM Plex Sans Arabic'",noto:"'Noto Sans Arabic'",alexandria:"'Alexandria'",markazi:"'Markazi Text'"})[key]||"'Vazirmatn'";}
+function applyFont(){
+ document.documentElement.style.setProperty('--arex-user-font',fontName(ui.font));
+ document.documentElement.style.setProperty('--arex-font-scale',String(Number(ui.scale||100)/100));
+ const scale=Math.max(.85,Math.min(1.2,Number(ui.scale||100)/100));
+ const fontTargets=document.querySelectorAll('body,body button,body input,body select,body textarea,body label,body p,body span,body small,body strong,body b,body h1,body h2,body h3,body h4,body li,body th,body td,body output,body .section-title,body .section-sub,body .field-lbl,body .calc-hint,body .muted-small,body .chip,body .navbtn,body .arex-chat-msg');
+ fontTargets.forEach(el=>{if(!el.dataset.arexBaseFontSize){const px=parseFloat(getComputedStyle(el).fontSize);if(Number.isFinite(px))el.dataset.arexBaseFontSize=String(px)}});
+ fontTargets.forEach(el=>{const base=Number(el.dataset.arexBaseFontSize);if(Number.isFinite(base)&&base>0)el.style.fontSize=(base*scale)+'px'});
+ const sel=$('arexFontFamily'),range=$('arexFontScale'),out=$('arexFontScaleLabel');
+ if(sel)sel.value=ui.font;if(range)range.value=ui.scale;
+ if(out)out.textContent=(new Intl.NumberFormat('fa-IR').format(ui.scale||100))+'٪';
+}
+function targetFor(item){let el=item.id?$(item.id):document.querySelector(item.selector);if(item.parent&&el)el=el.closest('.card');return el;}
+function renderWidgetSettings(){
+ const box=$('arexDashboardWidgetSettings');if(!box)return;box.innerHTML='';
+ WIDGETS.forEach((item,i)=>{const key=item.id||item.selector;const row=document.createElement('label');row.className='arex-widget-toggle';const input=document.createElement('input');input.type='checkbox';input.checked=ui.widgets[key]!==false;input.addEventListener('change',()=>{ui.widgets[key]=input.checked;saveUi();applyWidgets()});const text=document.createElement('span');text.textContent=item.label;row.append(input,text);box.append(row)});
+ const den=$('arexDashboardDensity');if(den)den.value=ui.density||'comfortable';
+ const source=$('dashboardCalendarSource');if(source)source.value=ui.calendarSource||'freeapi';
+}
+function applyWidgets(){
+ WIDGETS.forEach(item=>{const el=targetFor(item);if(!el)return;const key=item.id||item.selector;el.style.display=ui.widgets[key]===false?'none':'';});
+ document.body.classList.toggle('arex-compact-dashboard',ui.density==='compact');
+}
+function safeText(el,value){if(el)el.textContent=value;}
+function renderDashboardCoach(){
+ const el=$('arexDashboardCoachText');if(!el)return;
+ let summary='ابتدا برنامه روزانه و حدود ریسک را بررسی کن.';
+ try{if(typeof getArexCoachSummary==='function')summary=getArexCoachSummary();}catch{}
+ safeText(el,summary);
+ if($('mascotBubble'))safeText($('mascotBubble'),summary);
+}
+function formatEventDate(e){
+ const raw=e.date||e.datetime||e.timestamp||'';const d=new Date(raw);
+ return Number.isNaN(d.getTime())?String(raw||'زمان نامشخص'):d.toLocaleString('fa-IR',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+}
+function renderFeedDashboard(){
+ const wrap=$('dashboardTvWrap');if(!wrap)return;
+ const events=Array.isArray(state.ffCache?.events)?state.ffCache.events:[];
+ if(!state.calendarFeedUrl){wrap.innerHTML='<div class="arex-calendar-fallback"><b>فید شخصی تنظیم نشده است</b><p>از صفحه تقویم اقتصادی، آدرس فید شخصی را ثبت و ذخیره کن.</p><button type="button" class="btn ghost" id="arexGoCalendarSettings">رفتن به تقویم</button></div>';wrap.querySelector('#arexGoCalendarSettings')?.addEventListener('click',()=>goView('calendar'));return;}
+ if(!events.length){wrap.innerHTML='<div class="empty">در حال دریافت فید شخصی…</div>';if(typeof fetchFFCalendar==='function')fetchFFCalendar(false);return;}
+ wrap.innerHTML='';const list=document.createElement('div');list.className='arex-dash-feed-list';
+ events.slice(0,8).forEach(e=>{const row=document.createElement('div');row.className='arex-dash-feed-row';const info=document.createElement('div');const title=document.createElement('b');title.textContent=String(e.title||e.event||'رویداد اقتصادی');const meta=document.createElement('small');meta.textContent=String(e.country||e.currency||'')+' · '+formatEventDate(e);info.append(title,meta);const impact=document.createElement('span');const v=String(e.impact||e.importance||'').toLowerCase();impact.className='arex-dash-impact '+(v.includes('high')||v==='3'?'high':v.includes('medium')||v==='2'?'medium':'');impact.textContent=v.includes('high')||v==='3'?'اهمیت بالا':v.includes('medium')||v==='2'?'متوسط':'رویداد';row.append(info,impact);list.append(row)});wrap.append(list);
+}
+function renderFreeCalendarDashboard(){
+ const wrap=$('dashboardTvWrap');if(!wrap)return;
+ const source=$('fcApiEvents');
+ if(source&&source.children.length&& !source.querySelector('.empty')){wrap.innerHTML='';const copy=source.cloneNode(true);copy.removeAttribute('id');copy.style.maxHeight='360px';copy.style.overflow='auto';wrap.append(copy);return;}
+ wrap.innerHTML='<div class="empty">تقویم رایگان هنوز بارگذاری نشده است؛ برای دریافت آن، صفحه تقویم اقتصادی را باز کن.</div>';
+ $('fcApiRefresh')?.click();
+}
+function setCalendarSource(source){
+ ui.calendarSource=source;saveUi();
+ const select=$('dashboardCalendarSource');if(select&&select.value!==source)select.value=source;
+ const wrap=$('dashboardTvWrap');if(!wrap)return;
+ wrap.dataset.loaded='0';wrap.dataset.fallback='';
+ if(source==='tradingview'){wrap.innerHTML='<div class="empty">در حال بارگذاری TradingView…</div>';if(typeof loadDashboardTvCalendar==='function')loadDashboardTvCalendar();}
+ else if(source==='feed')renderFeedDashboard();
+ else renderFreeCalendarDashboard();
+}
+function loadNotifPrefsToUi(){
+ const b=$('arexBrowserNotifEnabled'),t=$('arexTelegramEnabled'),u=$('arexEdgeWorkerUrl');
+ if(b)b.checked=!!notif.browserEnabled;
+ if(t)t.checked=!!notif.telegramEnabled;
+ if(u)u.value=localStorage.getItem('arex_v56_edge_worker_url')||'';
+ document.querySelectorAll('[data-telegram-category]').forEach(el=>el.checked=notif.categories[el.dataset.telegramCategory]!==false);
+}
+function saveNotifFromUi(){
+ notif.browserEnabled=!!$('arexBrowserNotifEnabled')?.checked;
+ notif.telegramEnabled=!!$('arexTelegramEnabled')?.checked;
+ document.querySelectorAll('[data-telegram-category]').forEach(el=>notif.categories[el.dataset.telegramCategory]=el.checked);
+ const url=String($('arexEdgeWorkerUrl')?.value||'').trim().replace(/\/+$/,'');
+ if(url&&!/^https:\/\/[^ ]+/i.test(url)){safeText($('arexTelegramStatus'),'آدرس Worker باید با https:// شروع شود.');return false;}
+ try{if(url)localStorage.setItem('arex_v56_edge_worker_url',url);else localStorage.removeItem('arex_v56_edge_worker_url')}catch{}
+ saveNotif();window.AREX_GET_EDGE_WORKER_URL=()=>String(localStorage.getItem('arex_v56_edge_worker_url')||'').trim().replace(/\/+$/,'');
+ if(typeof state!=='undefined'){state.notifEnabled=notif.browserEnabled;try{queueSave('settings')}catch{}}
+ if(notif.browserEnabled&&'Notification'in window&&Notification.permission!=='granted'){
+   Notification.requestPermission().then(permission=>{if(permission!=='granted'){notif.browserEnabled=false;saveNotif();if($('arexBrowserNotifEnabled'))$('arexBrowserNotifEnabled').checked=false;}else{state.notifEnabled=true;try{queueSave('settings')}catch{}}});
+ }
+ safeText($('arexTelegramStatus'),notif.telegramEnabled?'تنظیمات ذخیره شد. برای ارسال تلگرام، Worker و Secrets سمت سرور باید آماده باشند.':'تنظیمات اعلان ذخیره شد؛ ارسال تلگرام غیرفعال است.');
+ if(typeof updateNotifUi==='function')updateNotifUi();
+ return true;
+}
+window.AREX_GET_EDGE_WORKER_URL=()=>String(localStorage.getItem('arex_v56_edge_worker_url')||'').trim().replace(/\/+$/,'');
+window.arexSendTelegramNotification=async function(category,title,body,eventId){
+ if(!notif.telegramEnabled||notif.categories[category]===false)return {skipped:true,reason:'category_disabled'};
+ if(!window.arexSendExternalAlert)throw new Error('برای ارسال تلگرام، ورود حساب Firebase و اتصال Worker لازم است.');
+ return window.arexSendExternalAlert({title,body,eventId,category});
+};
+async function sendTelegramTest(){
+ const status=$('arexTelegramStatus');if(!saveNotifFromUi())return;
+ if(!notif.telegramEnabled){safeText(status,'ابتدا ارسال تلگرام را فعال کن و تنظیمات را ذخیره کن.');return;}
+ if(!window.arexSendExternalAlert){safeText(status,'اتصال احراز هویت Firebase در دسترس نیست. ابتدا با حساب Google وارد شو و تنظیمات Firebase را بررسی کن.');return;}
+ safeText(status,'در حال ارسال پیام آزمایشی…');
+ try{const result=await window.arexSendExternalAlert({title:'آزمایش اعلان AREX',body:'اگر این پیام را می‌بینی، اتصال AREX به Telegram Worker موفق بوده است.',eventId:'test-'+Date.now(),category:'system'});safeText(status,'پاسخ Worker: '+JSON.stringify(result.results||result));}
+ catch(e){safeText(status,'ارسال ناموفق: '+String(e.message||e)+' · Secrets و آدرس Worker را بررسی کن.');}
+}
+function setupLogoToggle(){
+ const brand=$('brandMenuToggle'),hamb=$('hamburgerBtn');if(!brand||!hamb)return;
+ const toggle=()=>hamb.click();brand.addEventListener('click',e=>{if(e.target.closest('a,button,input,select'))return;toggle()});
+ brand.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle()}});
+}
+function setupAssistant(){
+ const mascot=$('mascot'),expand=$('arexBotExpand');
+ if(expand&&mascot){expand.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();mascot.classList.toggle('expanded');mascot.classList.add('open');const expanded=mascot.classList.contains('expanded');expand.setAttribute('aria-label',expanded?'بستن حالت تمام‌صفحه دستیار':'باز کردن صفحه دستیار');expand.textContent=expanded?'⤡':'⤢';if(expanded)setTimeout(()=>$('arexChatInput')?.focus(),80);});}
+ $('arexOpenCoach')?.addEventListener('click',()=>{mascot?.classList.add('open');renderDashboardCoach();$('arexChatInput')?.focus()});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&mascot?.classList.contains('expanded')){mascot.classList.remove('expanded');if(expand){expand.textContent='⤢';expand.setAttribute('aria-label','باز کردن صفحه دستیار')}}});
+}
+function setupSettings(){
+ $('arexFontFamily')?.addEventListener('change',e=>{ui.font=e.target.value;saveUi();applyFont()});
+ $('arexFontScale')?.addEventListener('input',e=>{ui.scale=Number(e.target.value)||100;saveUi();applyFont()});
+ $('arexDashboardDensity')?.addEventListener('change',e=>{ui.density=e.target.value;saveUi();applyWidgets()});
+ $('dashboardCalendarSource')?.addEventListener('change',e=>setCalendarSource(e.target.value));
+ $('arexSaveNotifPrefs')?.addEventListener('click',saveNotifFromUi);
+ $('arexTestTelegram')?.addEventListener('click',sendTelegramTest);
+ $('arexBrowserNotifEnabled')?.addEventListener('change',e=>{notif.browserEnabled=e.target.checked;if(notif.browserEnabled&&'Notification'in window&&Notification.permission!=='granted'){Notification.requestPermission().then(p=>{if(p!=='granted'){notif.browserEnabled=false;if($('arexBrowserNotifEnabled'))$('arexBrowserNotifEnabled').checked=false;}if(typeof state!=='undefined'){state.notifEnabled=notif.browserEnabled;try{queueSave('settings')}catch{}}saveNotif()})}else{if(typeof state!=='undefined'){state.notifEnabled=notif.browserEnabled;try{queueSave('settings')}catch{}}saveNotif()}});
+ $('arexTelegramEnabled')?.addEventListener('change',e=>{notif.telegramEnabled=e.target.checked;saveNotif()});
+ document.querySelectorAll('[data-telegram-category]').forEach(el=>el.addEventListener('change',()=>{notif.categories[el.dataset.telegramCategory]=el.checked;saveNotif()}));
+}
+function init(){
+ applyFont();renderWidgetSettings();applyWidgets();loadNotifPrefsToUi();setupLogoToggle();setupAssistant();setupSettings();
+ setCalendarSource(ui.calendarSource||'freeapi');
+ renderDashboardCoach();
+ setInterval(()=>{renderDashboardCoach();if((ui.calendarSource||'freeapi')==='feed'&&$('dashboardTvWrap')&&!$('dashboardTvWrap').querySelector('.arex-dash-feed-row'))renderFeedDashboard();if((ui.calendarSource||'freeapi')==='freeapi'&&$('dashboardTvWrap')&&!$('dashboardTvWrap').querySelector('.fc-calendar-events'))renderFreeCalendarDashboard();},45000);
+ document.querySelectorAll('[data-settings-jump="settingsDashboard"],[data-settings-jump="settingsNotifications"]').forEach(b=>{b.addEventListener('click',()=>setTimeout(()=>document.getElementById(b.dataset.settingsJump)?.scrollIntoView({behavior:'smooth',block:'start'}),50))});
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+})();
+</script>
+
 </body>
 </html>
