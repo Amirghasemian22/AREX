@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v5-6-arex-dashboard-notifications-1';
+const CACHE_VERSION = 'v5-7-glass-ui-assistant-responsive-1';
 const CACHE_NAME = 'fx-bootcamp-' + CACHE_VERSION;
 const APP_SHELL = [
   './',
@@ -6,6 +6,7 @@ const APP_SHELL = [
   './manifest.json',
   './icon-192.png',
   './icon-512.png',
+  './arex-glass-wallpaper.jpg',
   './auth-config.js',
   './auth-client.js',
   './fx_widget.js'
