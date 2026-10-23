@@ -55,23 +55,23 @@ test('new analysis engines are wired into the page and offline cache', () => {
   }
 });
 
-test('Firebase client contains no embedded service-provider secret literals', () => {
+test('Google Drive auth client contains no embedded service-provider secret literals', () => {
   const client = read('auth-client.js');
   assert.doesNotMatch(client, /TELEGRAM_BOT_TOKEN\s*[:=]\s*["'][0-9]+:[A-Za-z0-9_-]+["']/);
   assert.doesNotMatch(client, /RESEND_API_KEY\s*[:=]\s*["']re_[A-Za-z0-9]+["']/);
-  assert.match(client, /getIdToken\(\)/);
+  assert.match(client, /arexGetDriveAccessToken/);
+  assert.doesNotMatch(client, /firebase-auth|firebase-firestore|getIdToken\(\)/);
 });
 
-test('cloud backup waits for a stable local snapshot and publishes only completed snapshots', () => {
-  const client = read('auth-client.js');
-  const html = read('index.html');
-  const sw = read('sw.js');
-  assert.ok(fs.existsSync(path.join(root, 'js/core/cloud-sync.js')));
+test('cloud backup uses Google Drive private appDataFolder and exposes restore/save controls', () => {
+  const html=read('index.html'), client=read('auth-client.js'), sw=read('sw.js');
+  assert.ok(fs.existsSync(path.join(root,'js/core/cloud-sync.js')));
   assert.ok(html.includes('src="js/core/cloud-sync.js"'));
   assert.ok(sw.includes("'./js/core/cloud-sync.js'"));
-  assert.match(client, /readStableSnapshot/);
-  assert.match(client, /complete:false/);
-  assert.match(client, /complete:true/);
-  assert.match(client, /currentSnapshotId:snapshotId/);
-  assert.match(client, /snapshotMeta\.complete===false/);
+  assert.match(html,/spaces=appDataFolder/);
+  assert.match(html,/parents:\s*\['appDataFolder'\]/);
+  assert.match(html,/function driveUploadBackup/);
+  assert.match(client,/arexDriveSaveBackup/);
+  assert.match(client,/arexDriveRestoreLatest/);
+  assert.match(html,/driveRestoreFrom/);
 });

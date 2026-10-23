@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v9-6-3-drive-login-25';
+const CACHE_VERSION = 'v9-6-3-drive-only-26';
 const CACHE_NAME = 'fx-bootcamp-' + CACHE_VERSION;
 const APP_SHELL = [
   './',
@@ -8,7 +8,6 @@ const APP_SHELL = [
   './icon-192.png',
   './icon-512.png',
   './arex-glass-wallpaper.jpg',
-  './auth-config.js',
   './auth-client.js',
   './fx_widget.js',
   './js/core/util.js',

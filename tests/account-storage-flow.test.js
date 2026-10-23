@@ -40,7 +40,7 @@ test('authenticated account flow uses the policy and preserves IndexedDB errors'
   const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
   const sw=fs.readFileSync(path.join(root,'sw.js'),'utf8');
   assert.match(auth,/AREXAccountStoragePolicy/);
-  assert.match(auth,/if \(migration\.allowed\) await writeDb/);
+  assert.match(auth,/if\(migration\.allowed\) await writeDb/);
   assert.doesNotMatch(auth,/catch \{ return \{\}; \}/);
   assert.match(html,/src="js\/core\/account-storage-policy\.js"/);
   assert.match(sw,/\.\/js\/core\/account-storage-policy\.js/);

@@ -55,16 +55,19 @@ check('Local script and stylesheet references exist', () => {
   return `${new Set(refs).size} unique local refs present`;
 });
 
-check('Firestore rules fail closed for unauthenticated and non-owner access', () => {
-  const rules = read('firestore.rules');
-  if (!/match\s*\/users\/\{userId\}\/\{document=\*\*\}/.test(rules)) fail('expected per-user document path not found');
-  if (!/request\.auth\s*!=\s*null\s*&&\s*request\.auth\.uid\s*==\s*userId/.test(rules)) fail('owner UID guard not found');
-  if (/allow\s+(?:read|write|read,\s*write)\s*:\s*if\s+true\s*;/.test(rules)) fail('unconditional allow found');
-  return 'static owner guard present; live rules evaluation still required';
+check('Google Drive-only authentication and backup are wired', () => {
+  const html = read('index.html');
+  const client = read('auth-client.js');
+  if (!/google\.accounts\.oauth2\.initTokenClient/.test(html)) fail('Google OAuth token client missing');
+  if (!/https:\/\/www\.googleapis\.com\/auth\/drive\.appdata/.test(html)) fail('Drive appDataFolder scope missing');
+  if (!/parents:\s*\['appDataFolder'\]/.test(html)) fail('private Drive appDataFolder backup target missing');
+  if (/firebase-auth|firebase-firestore|identitytoolkit\.googleapis\.com/.test(client + html)) fail('Firebase runtime references remain in login/backup code');
+  if (!/arexDriveLoginComplete/.test(client) || !/arexDriveSaveBackup/.test(client)) fail('Drive login/backup adapter missing');
+  return 'Google OAuth + private Drive appDataFolder; no Firebase login/backup runtime';
 });
 
 check('Browser code has no obvious private key or service-account payload', () => {
-  const files = ['index.html', 'auth-client.js', 'auth-config.js', 'fx_widget.js'];
+  const files = ['index.html', 'auth-client.js', 'fx_widget.js'];
   const patterns = [/BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY/, /"type"\s*:\s*"service_account"/, /private_key_id\s*:/i];
   for (const file of files) for (const pattern of patterns) if (pattern.test(read(file))) fail(`credential pattern ${pattern} found in ${file}`);
   return 'no obvious private-key/service-account markers';

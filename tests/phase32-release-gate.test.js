@@ -28,7 +28,7 @@ test('release gate checks unique IDs and local HTML references', () => {
 
 test('release gate checks Firestore owner guard and browser credential hygiene', () => {
   const gate = read('scripts/release-gate.js');
-  assert.match(gate, /Firestore rules fail closed/);
+  assert.match(gate, /Google Drive-only authentication and backup are wired/);
   assert.match(gate, /Browser code has no obvious private key/);
 });
 
@@ -36,7 +36,7 @@ test('release report makes no claim of live-service certification', () => {
   const report = read('PHASE32_RELEASE_CANDIDATE_REPORT_FA.md');
   assert.match(report, /آزمون‌های زنده/);
   assert.match(report, /Google/);
-  assert.match(report, /Firebase/);
+  assert.match(report, /Google/);
   assert.match(report, /Cloudflare/);
   assert.match(report, /WIP/);
 });
@@ -46,7 +46,7 @@ test('critical trading workflows and recovery modules are retained in the packag
   for (const id of ['view-dashboard', 'view-trades', 'view-psych', 'view-calendar', 'settingsBackup', 'settingsNotifications']) {
     assert.ok(html.includes(`id="${id}"`), `missing preserved anchor ${id}`);
   }
-  for (const file of ['js/core/backup-safety.js', 'js/core/cloud-sync.js', 'js/core/save-reliability.js', 'js/core/runtime-verification.js', 'auth-client.js', 'arex-edge-worker.js', 'firestore.rules']) {
+  for (const file of ['js/core/backup-safety.js', 'js/core/cloud-sync.js', 'js/core/save-reliability.js', 'js/core/runtime-verification.js', 'auth-client.js', 'arex-edge-worker.js']) {
     assert.ok(fs.existsSync(path.join(root, file)), `missing ${file}`);
   }
 });

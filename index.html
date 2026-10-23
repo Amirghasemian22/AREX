@@ -1081,7 +1081,7 @@ body[data-bg="minimal"]{ background-image:none; }
 #view-trades #riskCalcMount_trade{display:none!important}.ticker{display:none!important}.obs-note-link{display:none!important}.sidebar-foot{display:flex;flex-direction:column;gap:5px}.sidebar-foot .mini-progress{font-size:11px;color:var(--muted)}
 .fx-card{padding:14px!important}.fx-head{margin-bottom:8px!important}.fx-row{padding:6px 9px!important;gap:8px!important}.fx-info{min-width:115px!important}.fx-city{font-size:11px!important}.fx-time{font-size:15px!important}.fx-date,.fx-hours{font-size:9px!important}.fx-track{min-height:40px!important}.fx-vol{margin-top:8px!important;padding:8px!important}.fx-vol-chart{height:48px!important}.fx-axis{font-size:9px!important}.fx-now{cursor:ew-resize!important;pointer-events:auto!important}.fx-overlay{cursor:ew-resize!important;touch-action:pan-y}
 @media(max-width:760px){.top-quick-tools{gap:5px}.top-clock{min-width:54px}.top-clock span{font-size:12px}.top-clock small{display:none}.top-usdt{padding:4px 5px}.top-usdt span{max-width:64px;overflow:hidden}.daily-status-grid{grid-template-columns:1fr}.trade-week-map{gap:4px}.trade-day{min-height:62px;font-size:9px}.trade-day b{font-size:14px}.target-form-grid{grid-template-columns:1fr 1fr}}
-/* Authentication gate: Google sign-in requires the project's own Firebase configuration. */
+/* Authentication gate: Google OAuth and Google Drive appDataFolder. */
 #arexAuthGate{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:24px;background:#070b14;overflow:hidden;isolation:isolate}#arexAuthGate:before{content:"";position:absolute;inset:0;z-index:-2;background-color:#07101f;background-image:linear-gradient(115deg,rgba(5,10,22,.78),rgba(7,15,31,.66)),url("https://images.unsplash.com/photo-1642790106117-e829e14a795f?auto=format&fit=crop&w=2200&q=85"),radial-gradient(ellipse at 50% 45%,#17365a 0%,#0a1427 52%,#050912 100%);background-position:center;background-size:cover,cover,cover;filter:saturate(.85)}#arexAuthGate:after{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse at 18% 18%,rgba(48,131,255,.25),transparent 38%),radial-gradient(ellipse at 84% 80%,rgba(27,195,170,.16),transparent 34%),linear-gradient(90deg,rgba(3,8,18,.08),rgba(3,8,18,.28));pointer-events:none}#arexAuthGate.visible{display:flex}.auth-topbar{position:absolute;z-index:5;top:24px;left:28px;right:28px;display:flex;align-items:center;justify-content:space-between;gap:12px;color:#eaf1ff}.auth-clock{display:flex!important;visibility:visible;opacity:1;align-items:center;gap:10px;padding:10px 14px;border:1px solid rgba(255,255,255,.16);border-radius:14px;background:rgba(9,17,33,.48);backdrop-filter:blur(14px);font:600 12px Inter,Vazirmatn,sans-serif}.auth-clock strong{font-size:17px;letter-spacing:.04em}.auth-lang{min-width:54px;height:42px;display:inline-grid;place-items:center;border:1px solid rgba(125,174,255,.42);border-radius:13px;background:linear-gradient(145deg,rgba(28,48,78,.92),rgba(9,17,33,.78));box-shadow:0 8px 24px rgba(0,0,0,.18),inset 0 1px rgba(255,255,255,.08);color:#edf4ff;padding:0 13px;cursor:pointer;font:800 13px Inter,sans-serif;letter-spacing:.06em;transition:transform .18s,border-color .18s,background .18s}.auth-lang:hover{transform:translateY(-1px);border-color:#77b7ff;background:rgba(35,63,101,.94)}.auth-lang:active{transform:translateY(0)}.auth-layout{width:min(960px,100%);display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:44px;padding:60px 0 24px}.auth-story{color:#eef4ff;text-align:left;direction:ltr}.auth-wordmark{font:800 clamp(42px,7vw,76px) Inter,sans-serif;letter-spacing:.08em;margin:0 0 12px;background:linear-gradient(110deg,#fff,#9ac5ff);color:transparent;background-clip:text}.auth-story p{font:400 16px/1.9 Inter,Vazirmatn,sans-serif;color:#b6c6df;max-width:420px}.auth-market-line{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}.auth-market-line span{padding:9px 12px;border:1px solid rgba(255,255,255,.14);background:rgba(12,23,43,.48);border-radius:999px;font:500 11px Inter,sans-serif;color:#dce8fa}.auth-card{position:relative;width:min(420px,100%);padding:34px;border:1px solid rgba(255,255,255,.17);border-radius:26px;background:linear-gradient(155deg,rgba(19,29,49,.94),rgba(9,16,29,.92));box-shadow:0 28px 90px rgba(0,0,0,.42);text-align:center;backdrop-filter:blur(22px);animation:authRise .65s cubic-bezier(.2,.75,.25,1) both}.auth-card:before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(135deg,rgba(137,188,255,.35),transparent 45%,rgba(41,211,182,.2));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}.auth-logo{width:58px;height:58px;border-radius:18px;margin:0 auto 20px;display:grid;place-items:center;background:linear-gradient(135deg,#dbeafe,#74aaff);color:#081327;font:900 26px Inter,sans-serif;box-shadow:0 8px 30px rgba(79,145,255,.25)}.auth-card h2{margin:0 0 8px;color:#f5f8ff;font:800 25px Inter,Vazirmatn,sans-serif;letter-spacing:.03em}.auth-card p{font-size:12px;color:#aab9d1;line-height:1.9}.auth-google{width:100%;padding:14px;border-radius:13px;border:1px solid rgba(255,255,255,.15);background:linear-gradient(110deg,#eaf2ff,#c6ddff);color:#101a2b;font-weight:800;cursor:pointer;margin-top:16px;transition:transform .2s,box-shadow .2s}.auth-google:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(87,151,255,.2)}.auth-google:disabled{opacity:.5;cursor:not-allowed}.auth-setup-note{font-size:11px!important;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.05);text-align:right;margin-top:12px}.auth-local{font-size:11px;color:#aab9d1;text-decoration:underline;background:none;border:0;margin-top:14px;cursor:pointer}.auth-error{color:#ff8d99!important;min-height:20px;font-size:11px!important}@keyframes authRise{from{opacity:0;transform:translateY(14px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}@media(max-width:720px){.auth-layout{grid-template-columns:1fr;gap:20px;padding-top:76px;max-width:440px}.auth-story{text-align:center}.auth-wordmark{font-size:48px}.auth-story p{margin:auto;font-size:13px}.auth-market-line{justify-content:center}.auth-topbar{top:12px;left:12px;right:12px}.auth-card{padding:26px}}/* Auth gate styling is defined above; do not override its premium glass layout with app theme styles. */
 
 
@@ -1517,7 +1517,7 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
   <div class="auth-card"><div class="auth-logo"><img src="icon-192.png" alt="لوگوی AREX" width="76" height="76" decoding="async"></div><h2 id="authTitle">AREX</h2><p id="authDescription">دستیار هوشمند مدیریت معاملات، ریسک و عملکرد</p>
     <button class="auth-google" id="googleSignInBtn" type="button">ورود با Google Drive&nbsp; ↗</button>
     <p id="authError" class="auth-error" role="status"></p>
-    <p id="authSetupNote" class="auth-setup-note">برای ورود به AREX با حساب Google وارد شو و دسترسی Google Drive را برای پشتیبان‌گیری تأیید کن.</p>
+    <p id="authSetupNote" class="auth-setup-note">برای ورود به AREX، حساب Google و دسترسی فضای اختصاصی Google Drive را تأیید کن.</p>
     <button class="auth-local" id="localPreviewBtn" type="button" style="display:none">حالت محلی</button>
     <div id="authUserRow" style="display:none;margin-top:14px;font-size:11px;color:var(--muted)"></div>
   </div></div>
@@ -1529,8 +1529,8 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
  function update(){if(!clock||!date)return;const n=new Date();try{clock.textContent=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Tehran',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(n);date.textContent=new Intl.DateTimeFormat(document.documentElement.lang==='fa'?'fa-IR':'en-GB',{timeZone:'Asia/Tehran',weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(n)+' · Tehran';}catch(e){clock.textContent=n.toLocaleTimeString();}}
  update();setInterval(update,1000);
  const signIn=document.getElementById('googleSignInBtn'),error=document.getElementById('authError');
- if(signIn&&!signIn.dataset.authBound){signIn.dataset.authBound='1';signIn.addEventListener('click',function(){if(typeof window.arexStartGoogleSignIn==='function'){window.arexStartGoogleSignIn();return;}if(error)error.textContent='سرویس ورود در حال آماده‌شدن است…';signIn.disabled=true;let tries=0;const timer=setInterval(()=>{tries++;if(typeof window.arexStartGoogleSignIn==='function'){clearInterval(timer);signIn.disabled=false;window.arexStartGoogleSignIn();}else if(tries>=20){clearInterval(timer);signIn.disabled=false;if(error)error.textContent='سرویس ورود بارگذاری نشد. اتصال اینترنت و تنظیمات Firebase را بررسی کن.';}},250);});}
- const language=document.getElementById('authLanguageBtn');if(language){language.addEventListener('click',function(){const en=document.documentElement.lang!=='en';document.documentElement.lang=en?'en':'fa';document.documentElement.dir=en?'ltr':'rtl';language.textContent=en?'FA':'EN';document.getElementById('authDescription').textContent=en?'Personal trading, risk and performance workspace':'دستیار هوشمند مدیریت معاملات، ریسک و عملکرد';document.getElementById('authTagline').textContent=en?'A focused trading workspace for your journal, risk rules and performance.':'فضایی متمرکز برای ژورنال معاملات، قوانین ریسک و بررسی عملکرد.';document.getElementById('googleSignInBtn').textContent=en?'Continue with Google Drive ↗':'ورود با Google Drive ↗';document.getElementById('authSetupNote').textContent=en?'Sign in to AREX and authorize Google Drive access for backups.':'برای ورود به AREX با حساب Google وارد شو و دسترسی Google Drive را برای پشتیبان‌گیری تأیید کن.';update();});}
+ if(signIn&&!signIn.dataset.authBound){signIn.dataset.authBound='1';signIn.addEventListener('click',function(){if(typeof window.arexStartGoogleSignIn==='function'){window.arexStartGoogleSignIn();return;}if(error)error.textContent='سرویس ورود در حال آماده‌شدن است…';signIn.disabled=true;let tries=0;const timer=setInterval(()=>{tries++;if(typeof window.arexStartGoogleSignIn==='function'){clearInterval(timer);signIn.disabled=false;window.arexStartGoogleSignIn();}else if(tries>=20){clearInterval(timer);signIn.disabled=false;if(error)error.textContent='سرویس ورود بارگذاری نشد. اتصال اینترنت و تنظیمات Google OAuth را بررسی کن.';}},250);});}
+ const language=document.getElementById('authLanguageBtn');if(language){language.addEventListener('click',function(){const en=document.documentElement.lang!=='en';document.documentElement.lang=en?'en':'fa';document.documentElement.dir=en?'ltr':'rtl';language.textContent=en?'FA':'EN';document.getElementById('authDescription').textContent=en?'Personal trading, risk and performance workspace':'دستیار هوشمند مدیریت معاملات، ریسک و عملکرد';document.getElementById('authTagline').textContent=en?'A focused trading workspace for your journal, risk rules and performance.':'فضایی متمرکز برای ژورنال معاملات، قوانین ریسک و بررسی عملکرد.';document.getElementById('googleSignInBtn').textContent=en?'Continue with Google Drive ↗':'ورود با Google Drive ↗';document.getElementById('authSetupNote').textContent=en?'Sign in to AREX and authorize Google Drive access for backups.':'برای ورود به AREX، حساب Google و دسترسی فضای اختصاصی Google Drive را تأیید کن.';update();});}
 })();
 </script>
 <div class="backdrop" id="backdrop"></div>
@@ -2507,10 +2507,10 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
         </div>
         <div class="card" id="arexAccountCard">
           <div class="section-title">🔐 حساب AREX و همگام‌سازی ابری</div>
-          <div class="section-sub">ورود با Google از Google Drive جداست. پس از تنظیم Firebase، می‌توانی یک نسخه از داده‌های این حساب را در فضای ابری اختصاصی خودت ذخیره یا بازیابی کنی.</div>
-          <div id="arexAccountStatus" class="calc-hint">حالت آزمایشی محلی؛ احراز هویت ابری هنوز پیکربندی نشده است.</div>
+          <div class="section-sub">ورود و پشتیبان‌گیری AREX مستقیماً با حساب Google و فضای اختصاصی برنامه در Google Drive انجام می‌شود؛ Firebase برای ورود و پشتیبان‌گیری استفاده نمی‌شود.</div>
+          <div id="arexAccountStatus" class="calc-hint">برای ورود، حساب Google را تأیید کن. نسخه‌های پشتیبان در فضای اختصاصی AREX داخل Google Drive ذخیره می‌شوند.</div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button class="btn" id="cloudSaveBtn" type="button" disabled>☁️ ذخیره نسخه حساب در ابر</button><button class="btn ghost" id="cloudLoadBtn" type="button" disabled>⬇️ بازیابی نسخه حساب از ابر</button><button class="btn ghost" id="accountSignOutBtn" type="button" style="display:none">خروج از حساب</button></div>
-          <div class="calc-hint">داده‌های این دستگاه تا وقتی بازیابی ابری را انتخاب نکنی جایگزین نمی‌شوند. از قوانین امنیتی Firestore استفاده کن تا هر کاربر فقط به داده‌های خودش دسترسی داشته باشد.</div>
+          <div class="calc-hint">داده‌های این دستگاه تا وقتی بازیابی ابری را انتخاب نکنی جایگزین نمی‌شوند. نسخه‌های پشتیبان در پوشه appDataFolder مخصوص همین برنامه ذخیره می‌شوند و برای سایر برنامه‌ها در Drive قابل مشاهده نیستند.</div>
         </div>
         <div class="card" id="settingsAssistantAI">
           <div class="section-title">✦ اتصال هوش مصنوعی آرکس</div>
@@ -2703,7 +2703,6 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
 </div>
 
 
-<script src="auth-config.js"></script>
 <script src="js/core/util.js"></script>
 <script src="js/core/ui-quality.js"></script>
 <script src="js/core/account-storage-policy.js"></script>
@@ -2935,7 +2934,7 @@ function todayIso(){ return isoLocal(new Date()); }
    internet connection is required for normal use. See the optional
    Google Drive sync section further below for cross-device backup. */
 let DB_NAME = 'forexBootcampDB'; const DB_STORE = 'kv';
-// Firebase Auth switches storage to an account-scoped IndexedDB after successful sign-in.
+// Google OAuth account identity selects an account-scoped IndexedDB after successful sign-in.
 window.arexSetDatabaseName = name => { if (typeof name === 'string' && /^forexBootcampDB__[a-zA-Z0-9_-]{1,80}$/.test(name)) DB_NAME = name; };
 let _dbPromise = null;
 function openDB(){
@@ -3060,7 +3059,7 @@ async function archiveLegacyChecklist(rawSessions, reason){
    4. Paste the Client ID below between the quotes
    Leave it empty ("") to keep this app 100% offline/local-only. */
 const GOOGLE_CLIENT_ID = "715202165384-63bbdp55cr31nfnb2npdpfrffal78bq9.apps.googleusercontent.com";
-const DRIVE_SCOPE = "https://www.googleapis.com/auth/drive.appdata https://www.googleapis.com/auth/userinfo.email";
+const DRIVE_SCOPE = "openid email profile https://www.googleapis.com/auth/drive.appdata";
 const DRIVE_BACKUP_PREFIX = "fx-backup-";
 const DRIVE_MAX_VERSIONS = 10;      // how many backup versions to keep on Drive
 
@@ -3076,10 +3075,14 @@ function driveEnabled(){ return !!GOOGLE_CLIENT_ID; }
 
 async function fetchDriveAccountEmail(){
   try{
-    const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', { headers:{ Authorization:'Bearer '+gAccessToken } });
+    const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', { headers:{ Authorization:'Bearer '+gAccessToken }, cache:'no-store' });
+    if(!res.ok) throw new Error('google_userinfo_http_'+res.status);
     const json = await res.json();
-    if(json.email){ state.driveAccountEmail = json.email; queueSave('settings'); updateDriveUi(); }
-  }catch(e){ /* non-fatal — email is only used as a login hint */ }
+    if(json.email){ state.driveAccountEmail = json.email; }
+    if(json.sub){ state.driveAccountId = String(json.sub); }
+    if(json.email || json.sub){ queueSave('settings'); updateDriveUi(); }
+    return json;
+  }catch(e){ console.warn('AREX Google identity lookup failed',e); throw e; }
 }
 
 /* ---- boot / connection ---- */
@@ -3093,20 +3096,28 @@ function initGoogleDrive(){
       client_id: GOOGLE_CLIENT_ID,
       scope: DRIVE_SCOPE,
       hint: state.driveAccountEmail || undefined,
-      callback: (resp)=>{
+      callback: async (resp)=>{
         if(resp.error){
           if(gTokenClient._resolve) gTokenClient._resolve(false);
+          if(window.arexDriveLoginPending && window.arexDriveLoginFailed) window.arexDriveLoginFailed(resp.error==='access_denied'?'دسترسی Google Drive لغو شد. برای ورود مجوز را تأیید کن.':(resp.error==='popup_closed'?'پنجره ورود گوگل بسته شد.':'ورود Google Drive ناموفق بود: '+resp.error));
           if(resp.error !== 'popup_closed' && resp.error !== 'access_denied') toast('اتصال به Google Drive ناموفق بود');
           return;
         }
         gAccessToken = resp.access_token;
-        try{localStorage.setItem('arex_v55_remembered_device','1')}catch(e){}
+        /* OAuth access tokens are not persisted; a fresh page load requires Google consent again. */
         gTokenExpiresAt = Date.now() + (resp.expires_in||3500)*1000;
         state.driveConnected = true;
         state.driveWasConnected = true;
         queueSave('settings');
         updateDriveUi();
-        if(!state.driveAccountEmail) fetchDriveAccountEmail();
+        try { await fetchDriveAccountEmail(); }
+        catch(e) {
+          state.driveConnected = false;
+          updateDriveUi();
+          if(window.arexDriveLoginPending && window.arexDriveLoginFailed) window.arexDriveLoginFailed('Google حساب کاربری را تأیید نکرد؛ مجوزهای OAuth را بررسی کن.');
+          if(gTokenClient._resolve) gTokenClient._resolve(false);
+          return;
+        }
         if(driveAutoReconnecting){
           driveAutoReconnecting = false;
           driveBackupNow({ silent:false, auto:true });
@@ -3116,26 +3127,18 @@ function initGoogleDrive(){
       }
     });
     updateDriveUi();
-    // try a silent reconnect if this device connected before, so the user
-    // doesn't have to sign in again on every visit — using the saved email
-    // as a login hint makes this succeed without any visible popup in most cases.
-    // On success this also triggers one automatic sync (see callback above),
-    // so your latest data is pulled/pushed right when the app opens.
-    if(state.driveWasConnected){
-      driveAutoReconnecting = true;
-      gTokenClient.requestAccessToken({ prompt: '', hint: state.driveAccountEmail || undefined });
-    }
+    // Authentication is explicit on each fresh page load; no local flag bypasses the login gate.
   };
   document.head.appendChild(script);
 }
-// Accept the Drive-scoped access token returned by the same Google OAuth login used by Firebase.
+// Accept a Google Drive-scoped OAuth access token when supplied by the Drive OAuth flow.
 window.arexAcceptDriveAccessToken = function(token, expiresIn=3500, email=''){
   if(!token) return false;
   gAccessToken = token;
   gTokenExpiresAt = Date.now() + Math.max(60, Number(expiresIn)||3500)*1000;
   state.driveConnected = true;
   state.driveWasConnected = true;
-  try{localStorage.setItem('arex_v55_remembered_device','1')}catch(e){}
+  /* OAuth access tokens are not persisted; a fresh page load requires Google consent again. */
   if(email) state.driveAccountEmail = email;
   queueSave('settings');
   updateDriveUi();
@@ -3153,11 +3156,13 @@ function driveSignOut(){
     try{ google.accounts.oauth2.revoke(gAccessToken, ()=>{}); }catch(e){}
   }
   gAccessToken = null; gTokenExpiresAt = 0;
-  state.driveConnected = false; state.driveWasConnected = false; state.driveAccountEmail = "";
+  state.driveConnected = false; state.driveWasConnected = false; state.driveAccountEmail = ""; state.driveAccountId = "";
+  try{localStorage.removeItem('arex-auth-uid');localStorage.removeItem('arex-last-auth-uid');}catch(e){}
   drivePendingConflict = null;
   queueSave('settings');
   updateDriveUi();
   toast('از Google Drive خارج شدید');
+  setTimeout(()=>location.reload(),250);
 }
 /* ensure we have a non-expired access token before any Drive API call */
 function ensureFreshToken(){
@@ -3180,20 +3185,38 @@ async function driveListBackups(){
   return json.files || [];
 }
 async function driveUploadBackup(){
-  const allData = await storage.getAllData();
+  await ensureFreshToken();
+  let allData;
+  const syncPolicy=window.AREXCore&&window.AREXCore.cloudSync;
+  if(syncPolicy && window.arexStorageBridge && window.arexStorageBridge.getAllData){
+    const stable=await syncPolicy.readStableSnapshot({
+      flush:()=>window.arexStorageBridge.flush(),
+      getStatus:()=>window.arexGetSaveStatus?window.arexGetSaveStatus():null,
+      readAll:()=>window.arexStorageBridge.getAllData(),
+      maxAttempts:3,
+      wait:attempt=>new Promise(resolve=>setTimeout(resolve,100*(attempt+1)))
+    });
+    allData=stable.data;
+  }else{
+    allData=await storage.getAllData();
+  }
   delete allData['driveFileId'];
-  const payload = JSON.stringify(allData);
-  const metadata = { name: DRIVE_BACKUP_PREFIX + new Date().toISOString().replace(/[:.]/g,'-') + '.json', parents: ['appDataFolder'] };
-  const boundary = '-------fxboot' + Date.now();
-  const body =
-    `--${boundary}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n${JSON.stringify(metadata)}\r\n` +
-    `--${boundary}\r\nContent-Type: application/json\r\n\r\n${payload}\r\n--${boundary}--`;
-  const res = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', {
-    method: 'POST',
-    headers: { Authorization: 'Bearer '+gAccessToken, 'Content-Type': `multipart/related; boundary=${boundary}` },
-    body
+  const payload=JSON.stringify(allData);
+  const blob=new Blob([payload],{type:'application/json'});
+  const metadata={name:DRIVE_BACKUP_PREFIX+new Date().toISOString().replace(/[:.]/g,'-')+'.json',parents:['appDataFolder'],mimeType:'application/json'};
+  // Resumable upload avoids the 5 MB limit of Drive multipart/simple uploads and handles large journals with images.
+  const init=await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable',{
+    method:'POST',
+    headers:{Authorization:'Bearer '+gAccessToken,'Content-Type':'application/json; charset=UTF-8','X-Upload-Content-Type':'application/json','X-Upload-Content-Length':String(blob.size)},
+    body:JSON.stringify(metadata),cache:'no-store'
   });
-  return res.json();
+  if(!init.ok) throw new Error('Google Drive upload initialization failed: HTTP '+init.status);
+  const uploadUrl=init.headers.get('Location');
+  if(!uploadUrl) throw new Error('Google Drive did not return a resumable upload URL');
+  const res=await fetch(uploadUrl,{method:'PUT',headers:{Authorization:'Bearer '+gAccessToken,'Content-Type':'application/json'},body:blob,cache:'no-store'});
+  const json=await res.json().catch(()=>({}));
+  if(!res.ok || !json.id) throw new Error(json.error?.message||('Google Drive upload failed: HTTP '+res.status));
+  return json;
 }
 async function drivePruneOldVersions(){
   try{
@@ -3260,9 +3283,11 @@ async function driveBackupNow(opts){
     queueSave('settings');
     await drivePruneOldVersions();
     notify('همگام‌سازی با Drive انجام شد', opts.auto? 'اطلاعات شما با آخرین نسخه‌ی Drive به‌روز شد.' : 'نسخه‌ی فعلی در Drive ذخیره شد.', '☁️');
+    return true;
   }catch(e){
     console.error(e);
     notify('خطا در همگام‌سازی با Drive', 'اتصال یا دسترسی را بررسی کنید.', '❌');
+    return false;
   }finally{
     driveSyncInProgress = false;
     updateDriveUi();
@@ -3283,7 +3308,8 @@ async function driveRestoreFrom(fileId){
     drivePendingConflict = null;
     toast('اطلاعات از Drive بازیابی شد — در حال بارگذاری مجدد...');
     setTimeout(()=>location.reload(), 1000);
-  }catch(e){ console.error(e); toast('خطا در بازیابی از Drive'); }
+    return true;
+  }catch(e){ console.error(e); toast('خطا در بازیابی از Drive'); return false; }
 }
 function driveResolveConflictPull(){ if(drivePendingConflict) driveRestoreFrom(drivePendingConflict.id); }
 function driveResolveConflictPush(){ drivePendingConflict = null; driveBackupNow({ forceOverride:true }); }
@@ -6464,6 +6490,24 @@ document.getElementById('importFile').addEventListener('change', e=>{
   reader.readAsText(file);
 });
 /* ================= GOOGLE DRIVE UI WIRING ================= */
+window.arexDriveIsEnabled = driveEnabled;
+window.arexDriveStartOAuth = function(){
+  if(!driveEnabled()) throw new Error('google_oauth_client_id_missing');
+  if(!driveGisLoaded || !gTokenClient) throw new Error('google_identity_services_loading');
+  driveConnect();
+};
+window.arexGetDriveIdentity = function(){ return {id:String(state.driveAccountId||''),email:String(state.driveAccountEmail||'')}; };
+window.arexGetDriveAccessToken = async function(){ await ensureFreshToken(); if(!gAccessToken) throw new Error('google_drive_not_connected'); return gAccessToken; };
+window.arexDriveSaveBackup = async function(){ const ok=await driveBackupNow({silent:false,forceOverride:true}); if(ok!==true) throw new Error('Google Drive backup did not complete'); return true; };
+window.arexDriveSignOut = driveSignOut;
+window.arexDriveRestoreLatest = async function(){
+  await ensureFreshToken();
+  const files=await driveListBackups();
+  if(!files.length) throw new Error('در Google Drive نسخه پشتیبانی برای AREX پیدا نشد.');
+  const latest=files[0];
+  if(!confirm('آخرین نسخه پشتیبان ('+new Date(latest.modifiedTime).toLocaleString()+') بازیابی شود؟ اطلاعات محلی فعلی جایگزین می‌شود.')) return;
+  await driveRestoreFrom(latest.id);
+};
 updateDriveUi(); // shows correct hint immediately, even before GIS script loads
 if(driveEnabled()) initGoogleDrive();
 document.getElementById('driveConnectBtn').addEventListener('click', driveConnect);
@@ -6617,13 +6661,13 @@ function initV5Assistant(){document.getElementById('arexRoadmapJournal')?.addEve
 let __arexAppStarted = false;
 function startApp(){ if(__arexAppStarted) return; __arexAppStarted = true; loadAll(); }
 
-/* ===== Login gate wiring: Firebase sign-in; Drive remains an optional backup integration ===== */
+/* ===== Login gate wiring: Google Drive OAuth is the sole sign-in path ===== */
 (function(){
  const gate=document.getElementById('arexAuthGate'),app=document.querySelector('.wrap'),mascot=document.getElementById('mascot');
  function enter(){if(gate)gate.classList.remove('visible');if(app)app.style.visibility='visible';if(mascot)mascot.style.visibility='visible';const note=document.getElementById('authSetupNote');if(note)note.style.display='none';startApp();}
  if(app)app.style.visibility='hidden';if(mascot)mascot.style.visibility='hidden';
  const btn=document.getElementById('googleSignInBtn'),err=document.getElementById('authError'),note=document.getElementById('authSetupNote');
- if(note)note.textContent='برای ورود به AREX با حساب Google وارد شو و دسترسی Google Drive را برای پشتیبان‌گیری تأیید کن.';
+ if(note)note.textContent='برای ورود به AREX، حساب Google و دسترسی فضای اختصاصی Google Drive را تأیید کن.';
  if(btn)btn.textContent='ورود با Google Drive ↗';
  window.arexEnterApp=enter;
 })();
@@ -6834,16 +6878,7 @@ initV5Assistant=function(){arexOriginalInitV5Assistant();initArexV52Workspace();
 (function arexV55(){
  const $=id=>document.getElementById(id);
  const safeText=(v)=>String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
- // Respect remembered-device preference. This remembers this browser only; it is not server-side authentication.
- const remembered=()=>localStorage.getItem('arex_v55_remembered_device')==='1';
- const markRemembered=()=>{try{localStorage.setItem('arex_v55_remembered_device','1')}catch(e){}};
- document.addEventListener('click',e=>{if(e.target.closest('#accountSignOutBtn')||e.target.closest('#driveSignOutBtn')){try{localStorage.removeItem('arex_v55_remembered_device')}catch(e){}}});
- // If this device already completed Google Drive consent once, don't show the entry gate on each visit.
- // Drive actions still acquire a valid token as needed. This is convenience gating, not secure identity verification.
- if(remembered()){
-   const gate=$('arexAuthGate'); if(gate){gate.classList.remove('visible');gate.style.display='none';gate.setAttribute('aria-hidden','true');document.body.classList.remove('arex-auth-locked');}
-   if(typeof window.arexEnterApp==='function') window.arexEnterApp();
- }
+ // Google Drive OAuth is the only login path. A local remembered-device flag never bypasses authentication.
  // Finance Calendar API. Its documented response separates ISO event time from local clock-only fields.
  // Use time_utc as the canonical timestamp; this avoids invalid Date("09:30") parsing and missing rows.
  let fcEvents=[], fcImpact='all', fcCountry='all', fcQuery='', fcLast=0, fcBusy=false;
@@ -7117,13 +7152,13 @@ function saveNotifFromUi(){
 window.AREX_GET_EDGE_WORKER_URL=()=>String(localStorage.getItem('arex_v56_edge_worker_url')||'').trim().replace(/\/+$/,'');
 window.arexSendTelegramNotification=async function(category,title,body,eventId){
  if(!notif.telegramEnabled||notif.categories[category]===false)return {skipped:true,reason:'category_disabled'};
- if(!window.arexSendExternalAlert)throw new Error('برای ارسال تلگرام، ورود حساب Firebase و اتصال Worker لازم است.');
+ if(!window.arexSendExternalAlert)throw new Error('برای ارسال تلگرام، ورود Google Drive و اتصال Worker لازم است.');
  return window.arexSendExternalAlert({title,body,eventId,category});
 };
 async function sendTelegramTest(){
  const status=$('arexTelegramStatus');if(!saveNotifFromUi())return;
  if(!notif.telegramEnabled){safeText(status,'ابتدا ارسال تلگرام را فعال کن و تنظیمات را ذخیره کن.');return;}
- if(!window.arexSendExternalAlert){safeText(status,'اتصال احراز هویت Firebase در دسترس نیست. ابتدا با حساب Google وارد شو و تنظیمات Firebase را بررسی کن.');return;}
+ if(!window.arexSendExternalAlert){safeText(status,'ورود Google Drive در دسترس نیست. ابتدا با حساب Google وارد شو و تنظیمات OAuth را بررسی کن.');return;}
  safeText(status,'در حال ارسال پیام آزمایشی…');
  try{const result=await window.arexSendExternalAlert({title:'آزمایش اعلان AREX',body:'اگر این پیام را می‌بینی، اتصال AREX به Telegram Worker موفق بوده است.',eventId:'test-'+Date.now(),category:'system'});safeText(status,'پاسخ Worker: '+JSON.stringify(result.results||result));}
  catch(e){safeText(status,'ارسال ناموفق: '+String(e.message||e)+' · Secrets و آدرس Worker را بررسی کن.');}

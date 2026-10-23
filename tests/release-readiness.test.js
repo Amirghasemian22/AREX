@@ -14,17 +14,17 @@ test('authenticated IndexedDB uses the canonical single-suffix account database 
 
 test('auth migration recovers old double-scoped data only when canonical database is empty', () => {
   const client = read('auth-client.js');
-  assert.match(client, /priorDoubleScoped=await readDb\(target\+'__'\+clean\)/);
-  assert.match(client, /accountPolicy\.migrationSource/);
-  assert.match(client, /if \(migration\.allowed\) await writeDb/);
+  assert.match(client, /priorDoubleScoped=await readDb\(target\+'__'\+policy\.sanitizeUid\(uid\)\)/);
+  assert.match(client, /policy\.migrationSource/);
+  assert.match(client, /if\(migration\.allowed\) await writeDb/);
   assert.match(client, /AREXAccountStoragePolicy/);
 });
 
 test('release readiness checklist distinguishes automated checks from live-service verification', () => {
-  const report = read('PHASE21_RELEASE_READINESS_REPORT_FA.md');
-  assert.match(report, /Firebase واقعی/);
-  assert.match(report, /مرورگر واقعی/);
-  assert.match(report, /WIP/);
+  const report = read('DEPLOY_AND_TEST_FA.md');
+  assert.match(report, /Google OAuth/);
+  assert.match(report, /روی دامنه منتشرشده/);
+  assert.match(report, /Google Drive/);
   assert.match(report, /forexBootcampDB__/);
 });
 
@@ -33,7 +33,7 @@ test('critical app screens and preservation-sensitive services remain present', 
   for (const marker of ['id="view-dashboard"', 'id="view-trades"', 'id="view-psych"', 'id="view-calendar"', 'id="settingsBackup"', 'id="settingsNotifications"']) {
     assert.ok(html.includes(marker), `Missing preserved screen/control anchor: ${marker}`);
   }
-  for (const file of ['auth-client.js', 'arex-edge-worker.js', 'firestore.rules', 'js/core/backup-safety.js', 'js/core/cloud-sync.js', 'js/core/save-reliability.js']) {
+  for (const file of ['auth-client.js', 'arex-edge-worker.js', 'js/core/backup-safety.js', 'js/core/cloud-sync.js', 'js/core/save-reliability.js']) {
     assert.ok(fs.existsSync(path.join(root, file)), `Missing critical service/file: ${file}`);
   }
 });

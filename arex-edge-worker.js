@@ -2,7 +2,7 @@
  * AREX Edge Worker: economic calendar proxy, live quotes, Telegram/email alerts.
  * Deploy on Cloudflare Workers. Configure secrets as described in EDGE_WORKER_SETUP_FA.md.
  * Secrets are server-side only: TWELVEDATA_API_KEY, TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID,
- * RESEND_API_KEY, ALERT_EMAIL_TO, ALERT_EMAIL_FROM, ALERT_ALLOWED_UID. Set FIREBASE_PROJECT_ID=arex-a1853 and optionally AREX_ALLOWED_ORIGINS as comma-separated exact origins.
+ * RESEND_API_KEY, ALERT_EMAIL_TO, ALERT_EMAIL_FROM, ALERT_ALLOWED_GOOGLE_EMAIL. Set ALERT_ALLOWED_GOOGLE_EMAIL to the owner Google email and optionally AREX_ALLOWED_ORIGINS as comma-separated exact origins.
  */
 const CALENDAR_UPSTREAM = 'https://nfs.faireconomy.media/ff_calendar_thisweek.json';
 const CAL_TTL = 900;
@@ -35,22 +35,13 @@ async function allowRate(env, key, limit, windowSeconds) {
   return bucket.count <= limit;
 }
 
-function b64urlToBytes(s){ const x=s.replace(/-/g,'+').replace(/_/g,'/'); const bin=atob(x+'='.repeat((4-x.length%4)%4)); return Uint8Array.from(bin,c=>c.charCodeAt(0)); }
-async function verifyFirebaseIdToken(token, projectId){
-  const pieces=String(token||'').split('.'); if(pieces.length!==3) throw new Error('missing_or_invalid_id_token');
-  const header=JSON.parse(new TextDecoder().decode(b64urlToBytes(pieces[0])));
-  const claims=JSON.parse(new TextDecoder().decode(b64urlToBytes(pieces[1])));
-  if(header.alg!=='RS256'||!header.kid) throw new Error('unsupported_token');
-  const now=Math.floor(Date.now()/1000);
-  if(claims.aud!==projectId||claims.iss!==`https://securetoken.google.com/${projectId}`||!claims.sub||claims.sub.length>128||claims.exp<now||claims.iat>now+60) throw new Error('invalid_token_claims');
-  const jwksRes=await fetch('https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com',{cf:{cacheTtl:3600}});
-  if(!jwksRes.ok) throw new Error('token_verification_unavailable');
-  const jwks=await jwksRes.json(), jwk=jwks.keys.find(k=>k.kid===header.kid&&k.alg==='RS256');
-  if(!jwk) throw new Error('unknown_signing_key');
-  const key=await crypto.subtle.importKey('jwk',jwk,{name:'RSASSA-PKCS1-v1_5',hash:'SHA-256'},false,['verify']);
-  const valid=await crypto.subtle.verify('RSASSA-PKCS1-v1_5',key,b64urlToBytes(pieces[2]),encoder.encode(`${pieces[0]}.${pieces[1]}`));
-  if(!valid) throw new Error('invalid_token_signature');
-  return claims;
+async function verifyGoogleAccessToken(token){
+  if(!token || token.length>8192) throw new Error('missing_or_invalid_google_access_token');
+  const response=await fetch('https://www.googleapis.com/oauth2/v3/userinfo',{headers:{Authorization:`Bearer ${token}`},cf:{cacheTtl:0}});
+  if(!response.ok) throw new Error('google_access_token_invalid');
+  const profile=await response.json();
+  if(!profile.sub || !profile.email || profile.email_verified!==true) throw new Error('google_identity_unverified');
+  return {sub:String(profile.sub),email:String(profile.email).toLowerCase(),email_verified:true};
 }
 async function fetchCalendar(ctx){
   const cache=caches.default, key=new Request('https://arex-internal-cache.invalid/ff-calendar-v1.json');
@@ -89,7 +80,7 @@ const NOTIFY_LOG_TTL = 60 * 60 * 24 * 30;
 const DEFAULT_NOTIFY_ORIGINS = ['https://amirghasemian22.github.io'];
 function notifyOriginAllowed(request, env) {
   const origin = request.headers.get('Origin');
-  // Non-browser callers are still protected by Firebase token verification and UID allowlisting.
+  // Non-browser callers are still protected by Google token verification and account allowlisting.
   if (!origin) return true;
   let allowed = DEFAULT_NOTIFY_ORIGINS;
   if (env.AREX_ALLOWED_ORIGINS) allowed = String(env.AREX_ALLOWED_ORIGINS).split(',').map(v => v.trim()).filter(Boolean);
@@ -142,12 +133,12 @@ async function sendChannel(url, options, channel) {
 }
 async function sendAlerts(request, env){
   if (!notifyOriginAllowed(request, env)) return json({error:'origin_not_allowed'},403,{'Cache-Control':'no-store'});
-  const projectId=env.FIREBASE_PROJECT_ID||'arex-a1853';
   const authorization=request.headers.get('Authorization')||'';
   if(!authorization.startsWith('Bearer ')) return json({error:'unauthorized'},401,{'Cache-Control':'no-store'});
-  let claims; try{claims=await verifyFirebaseIdToken(authorization.slice(7),projectId);}catch(e){return json({error:'unauthorized',detail:String(e?.message||e)},401,{'Cache-Control':'no-store'});}
-  if(!env.ALERT_ALLOWED_UID) return json({error:'alerts_not_enabled',message:'Set ALERT_ALLOWED_UID to the owner Firebase UID before enabling external alerts.'},503,{'Cache-Control':'no-store'});
-  if(claims.sub!==env.ALERT_ALLOWED_UID) return json({error:'forbidden'},403,{'Cache-Control':'no-store'});
+  let claims; try{claims=await verifyGoogleAccessToken(authorization.slice(7));}catch(e){return json({error:'unauthorized',detail:String(e?.message||e)},401,{'Cache-Control':'no-store'});}
+  const allowedEmail=String(env.ALERT_ALLOWED_GOOGLE_EMAIL||'').trim().toLowerCase();
+  if(!allowedEmail) return json({error:'alerts_not_enabled',message:'Set ALERT_ALLOWED_GOOGLE_EMAIL to the owner Google email before enabling external alerts.'},503,{'Cache-Control':'no-store'});
+  if(claims.email!==allowedEmail) return json({error:'forbidden'},403,{'Cache-Control':'no-store'});
   if(!await allowRate(env,`notify:${claims.sub}`,10,60)) return json({error:'rate_limited',message:'Too many alert requests.'},429,{'Retry-After':'60','Cache-Control':'no-store'});
   const contentLength=Number(request.headers.get('Content-Length')||0);
   if(contentLength>16000) return json({error:'payload_too_large'},413,{'Cache-Control':'no-store'});
