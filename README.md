@@ -1,320 +1,448 @@
-# AREX — Forex Trading Learning, Journal & Risk Management Workspace
+# AREX V9.6.3 — Personal Trading Assistant & Management Workspace
 
 <p align="center">
-  <strong>A personal workspace for learning Forex, tracking trades, managing risk, and building trading discipline.</strong>
+  <strong>A personal trading workspace for trade journaling, risk management, strategy discipline, trading psychology, and performance analysis.</strong>
 </p>
 
 <p align="center">
-  <a href="https://amirghasemian22.github.io/AREX/">🚀 Live Demo</a>
+  <a href="https://amirghasemian22.github.io/AREX/">🚀 Open AREX</a>
   ·
   <a href="https://github.com/Amirghasemian22/AREX">💻 GitHub Repository</a>
+  ·
+  <a href="https://github.com/Amirghasemian22/AREX/issues">🐛 Report an Issue</a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Version-9.6.3-00B8D9?style=for-the-badge" alt="Version 9.6.3">
+  <img src="https://img.shields.io/badge/Platform-Web%20App-243B59?style=for-the-badge" alt="Web Application">
+  <img src="https://img.shields.io/badge/Focus-Trading%20Management-16A085?style=for-the-badge" alt="Trading Management">
 </p>
 
 ---
 
-## 📌 About AREX
+## 📌 What Is AREX?
 
-**AREX** started as a small personal planner for organizing a Forex learning journey.
+**AREX is a personal trading assistant and management workspace designed to help traders make more structured decisions, manage risk, document their trades, and improve their trading process over time.**
 
-Over time, it evolved into a complete browser-based workspace for traders who want to keep their **learning, trading journal, risk management, psychology, goals, reviews, and market events** in one place.
+Instead of functioning as just a trade journal, AREX brings several aspects of trading management into one environment:
 
-The current **v2.1** combines a structured Forex learning roadmap with practical tools for tracking and reviewing trading activity.
+* Trade planning and journaling
+* Risk and position-size calculations
+* Strategy rules and execution discipline
+* Trading psychology and behavioral reviews
+* Performance statistics and visual analytics
+* Economic events and market-session awareness
+* Personal goals, reviews, and trading routines
+* Data backup and recovery options
+* A customizable workspace for everyday use
 
-> AREX is a personal productivity and journaling tool. It does not provide financial advice, trading signals, or guaranteed trading results.
+AREX is designed for traders who want to understand not only **what happened in a trade, but also why they took it, whether they followed their rules, and what they can improve next time.**
+
+### Project Status
+
+**Version:** V9.6.3
+
+AREX is an evolving project. Features, integrations, and deployment behavior may vary depending on configuration, browser support, external services, and the current deployment.
 
 ---
 
-## ✨ Features
+## ✨ Core Features
 
-### 📚 Forex Learning Planner
+### 📊 1. Trading Dashboard
 
-* 78-session Forex learning roadmap
-* 10-week learning schedule
-* Session checklist
-* Learning progress tracking
-* Daily and weekly study planning
-* Study-time tracking
-* Spaced-review system
-* Weekly learning goals
+The dashboard brings important trading information into one place.
 
-### 📈 Trading Journal
+Depending on available data, it can help you review:
 
-Record and review your trades with:
+* Trading activity and account performance
+* Profit and loss statistics
+* Trading progress and consistency
+* Recent activity and journal records
+* Performance charts and visual summaries
+* Daily trading plans and priorities
 
-* Entry and exit information
-* Position and risk information
-* Trade setup
-* R-multiple
-* Win/loss statistics
-* Trading history
-* Performance summary
-* Equity curve
-* Setup-based performance analysis
+The goal is to make the information needed for reviewing your trading process easier to understand.
 
-### 🧮 Risk Management Calculator
+### 📈 2. Trading Journal
 
-Built-in tools for planning trade risk, including:
+Record trades and build a history of your decisions.
 
-* Account balance
-* Risk percentage
-* Risk amount
-* Entry price
-* Stop-loss
-* Take-profit
+Journal information may include:
+
+* Trading symbol and direction
+* Entry and exit prices
+* Stop-loss and take-profit
+* Position size and risk
+* Trade setup and strategy
+* Trade outcome and R-multiple
+* Notes before and after the trade
+* Execution quality and rule adherence
+
+Use your trading history to identify recurring mistakes, evaluate setups, and understand your own behavior.
+
+### 🧮 3. Risk Management
+
+Plan risk before entering a trade.
+
+Risk-management tools are intended to support calculations such as:
+
+* Account balance and equity
+* Risk percentage per trade
+* Monetary risk amount
+* Entry price and stop-loss distance
+* Take-profit and risk-to-reward ratio
 * Position sizing
-* Risk visualization
+* Trade risk evaluation
 
-### 🧠 Trading Psychology Journal
+**Important:** Calculation accuracy depends on the information supplied and the instrument's contract specifications. Verify symbol specifications, tick values, lot sizes, and broker requirements before placing a trade.
 
-Track the psychological side of trading:
+### 🧠 4. Trading Psychology
 
-* Daily mood
-* Trading discipline
-* Emotional state
-* Personal rules
-* Goals
-* Behavioral reviews
+Trading performance is affected by both strategy execution and behavior.
 
-### 📅 Economic Calendar
+AREX provides a workspace for documenting and reviewing aspects of trading psychology, such as:
 
-Keep important market events visible while planning your trading routine.
+* Emotional state and mood
+* Fear, hesitation, and impulsive decisions
+* Discipline and rule adherence
+* Trading mistakes and behavioral patterns
+* Personal observations
+* Post-trade reflections
+* Goals for improving consistency
 
-AREX includes:
+The purpose is to make behavioral patterns easier to recognize and review over time.
 
-* Forex Factory economic calendar integration
-* Event impact filtering
-* Currency filtering
-* Personal economic events
-* Upcoming-event tracking
+### 📋 5. Strategy Rules & Trading Discipline
 
-### 📊 Market & Trading Tools
+Keep your trading process organized around defined rules.
 
-* Fear & Greed indicator
-* Forex market session timeline
-* World clock
-* Trading dashboard
-* Daily performance overview
+This area of the AREX concept focuses on:
 
-### 💾 Local-First Data Storage
+* Documenting personal trading rules
+* Recording strategy conditions
+* Reviewing trade execution against defined criteria
+* Tracking recurring rule violations
+* Distinguishing planned trades from impulsive trades
+* Improving consistency through structured reviews
 
-Your personal trading data is stored locally in your browser using **IndexedDB**.
+Strategy rules should remain explicit. Unclear or incomplete conditions should be clarified rather than treated as confirmed trading rules.
 
-Normal usage does not require a backend server.
+### 📉 6. Performance Analytics
 
-This means your:
+Use recorded trading data to evaluate your process instead of relying only on memory or individual outcomes.
 
-* trades
-* learning progress
-* journal entries
-* goals
-* rules
-* reviews
+Depending on the available records and implementation, performance analysis can include:
 
-can remain on your own device.
+* Win/loss statistics
+* Profit and loss summaries
+* Equity-curve visualization
+* R-multiple analysis
+* Setup-based comparisons
+* Trading-history reviews
+* Progress in reducing recurring mistakes
+* Evaluation of discipline and execution
 
-### ☁️ Optional Google Drive Backup
+Meaningful conclusions require sufficient, accurate trade data. Historical performance does not guarantee future results.
 
-AREX can optionally synchronize backups with Google Drive.
+### 📅 7. Economic Calendar
 
-You can:
+Stay aware of scheduled economic events that may be relevant to your trading plan.
 
-* connect Google Drive
-* create backups
-* restore previous backups
-* keep multiple backup versions
-* resolve backup conflicts
+AREX's economic-calendar functionality is intended to help organize information such as:
 
-### 📦 Backup & Restore
+* Upcoming economic events
+* Event impact and currency filters
+* Event timing
+* Personal economic-event notes
 
-Export your AREX data as a JSON backup file and restore it whenever needed.
+Availability and data freshness depend on the configured data source or integration. Always verify important event times against a reliable, up-to-date source.
 
-This makes it possible to move your data between devices without depending entirely on a remote database.
+### 🌍 8. Market Sessions & Time Tools
 
-### 📱 Progressive Web App
+Trading-session awareness can help organize your routine across different markets and time zones.
 
-AREX includes PWA capabilities:
+Market-related tools may include:
 
-* Installable application
-* Offline support
+* Forex market-session timelines
+* World-clock information
+* Trading-session planning
+* Time-related dashboard information
+
+Market hours can change because of daylight-saving transitions, holidays, and differences between data providers. Confirm relevant times when precision matters.
+
+### 🏆 9. Goals & Prop-Firm Risk Tracking
+
+AREX is designed to support structured trading goals and risk awareness.
+
+Depending on the configured features, this workflow can help organize:
+
+* Personal trading objectives
+* Daily and weekly limits
+* Risk-related rules
+* Progress reviews
+* Prop-firm challenge tracking
+* Discipline and consistency checks
+
+Challenge requirements differ by provider. Always verify the applicable rules, drawdown calculations, and limits with the relevant firm.
+
+### 🎨 10. Customizable Interface
+
+AREX is designed to provide a personalized workspace.
+
+Depending on the current build, customization may include:
+
+* Appearance and theme settings
+* Color preferences
+* Background or wallpaper selection
+* Language selection
+* Responsive layouts for different screen sizes
+
+### 💾 11. Local Data & Backup
+
+AREX includes a data-management approach intended to help users retain and recover their trading records.
+
+Depending on the enabled implementation, data-management features may include:
+
+* Browser-based storage using IndexedDB
+* JSON data export and import
+* Backup and restore workflows
+* Recovery of previously exported data
+* Optional cloud-backup integrations
+
+**Important:** Browser storage is not a substitute for an independent backup. Clearing browser data, changing browsers, using another device, or encountering browser-storage problems may affect access to locally stored information. Export backups regularly and verify that they can be restored.
+
+### ☁️ 12. Optional Cloud Integrations
+
+AREX has been developed with support for external-service integrations as part of its broader architecture.
+
+These may include cloud authentication, remote data storage, or backup services, depending on the current configuration.
+
+Cloud features require the appropriate service setup, credentials or public client configuration, security rules, and deployment settings. Do not assume that a cloud feature is operational merely because its interface is present.
+
+### 📱 13. PWA & Offline Capabilities
+
+AREX is designed as a browser-based application and may support Progressive Web App capabilities.
+
+Depending on the deployed build and browser, these capabilities may include:
+
+* Installable application experience
+* Responsive mobile interface
 * Service Worker caching
-* Mobile-friendly interface
-* System notifications for scheduled reviews where supported
+* Access to some previously cached resources while offline
+
+Offline access does not necessarily mean every feature works without an internet connection. External APIs, authentication, cloud synchronization, and live market information generally depend on network availability.
 
 ---
 
-## 🖥️ Live Demo
+## 🧭 Main Workspace Areas
 
-### 👉 [Open AREX](https://amirghasemian22.github.io/AREX/)
+The following table describes the main functional areas of AREX. Exact navigation labels may differ between builds.
 
-No installation is required.
-
-Open the application in your browser and start using it.
-
----
-
-## 🧭 Main Sections
-
-| Section            | Purpose                                   |
-| ------------------ | ----------------------------------------- |
-| Dashboard          | Overview of learning and trading progress |
-| Learning Checklist | Track the Forex learning roadmap          |
-| Schedule           | Daily and weekly learning plan            |
-| Reviews            | Spaced repetition and scheduled reviews   |
-| Trading Journal    | Record and analyze trades                 |
-| Psychology Journal | Track emotions and discipline             |
-| Goals & Rules      | Define trading rules and personal goals   |
-| Economic Calendar  | Monitor important market events           |
-| Discipline Path    | Track consistency and daily discipline    |
-| Settings & Backup  | Appearance, data management and backups   |
+| Area                     | Purpose                                                       |
+| ------------------------ | ------------------------------------------------------------- |
+| Dashboard                | Review trading activity and important performance information |
+| Trading Journal          | Record, organize, and review trades                           |
+| Risk Management          | Calculate planned risk and position sizing                    |
+| Performance Analytics    | Evaluate results and trading behavior                         |
+| Trading Psychology       | Document emotions and behavioral patterns                     |
+| Strategy & Rules         | Maintain trading rules and review execution                   |
+| Goals & Reviews          | Organize trading objectives and periodic reviews              |
+| Economic Calendar        | Review scheduled market events                                |
+| Market Sessions & Clock  | Organize trading activity around market hours                 |
+| Prop-Firm Challenge      | Track applicable challenge objectives and risk limits         |
+| Settings & Customization | Configure available appearance and application preferences    |
+| Data Management          | Export, back up, and restore supported application data       |
 
 ---
 
-## 🔐 Privacy & Data
+## 🖥️ Live Application
 
-AREX follows a **local-first** approach.
+**Open AREX:**
 
-Your primary application data is stored in your browser using IndexedDB.
+https://amirghasemian22.github.io/AREX/
 
-AREX does not require an application account or backend database for normal usage.
-
-Optional Google Drive synchronization is available for users who want cloud backups.
+AREX is distributed as a web application. Availability depends on the deployment status and your browser environment.
 
 ---
 
 ## 🛠️ Technology
 
-AREX is intentionally lightweight and runs directly in the browser.
+AREX uses web technologies to provide a lightweight, browser-based trading workspace.
 
-### Core
+### Core Technologies
 
 * HTML5
 * CSS3
-* Vanilla JavaScript
+* JavaScript
 
-### Browser APIs
+### Browser Capabilities
+
+Depending on the current implementation:
 
 * IndexedDB
-* Service Workers
-* Web Notifications
-* File API
 * Local browser storage
-* PWA / Web App Manifest
+* Service Workers
+* Web App Manifest
+* File API
+* Web Notifications
 
-### Integrations
+### External Integrations
 
-* Google Drive API
-* Google Identity Services
-* Forex Factory economic calendar
-* External market data sources
+Depending on configuration:
+
+* Google authentication services
+* Cloud database and backup services
+* Google Drive integration
+* Economic-calendar and market-data sources
 
 ### Hosting
 
 * GitHub Pages
 
+Some external integrations may require a separately configured service or server-side component.
+
 ---
 
-## 🚀 Running Locally
+## 🚀 Run AREX Locally
 
-AREX is a client-side web application.
+### Requirements
 
-Clone the repository:
+* Git
+* A modern web browser
+* Python or another local HTTP server
+
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/Amirghasemian22/AREX.git
 cd AREX
 ```
 
-Then serve the directory using any local HTTP server.
+### 2. Start a Local HTTP Server
 
-For example:
+With Python installed:
 
 ```bash
 python -m http.server 8000
 ```
 
-Open:
+### 3. Open the Application
+
+Visit:
 
 ```text
 http://localhost:8000
 ```
 
+### Important Notes
+
+* Keep the repository's directory structure intact.
+* Do not move JavaScript, CSS, asset, or configuration files away from the paths expected by the application.
+* Some authentication providers require localhost or the deployed domain to be configured as an authorized domain.
+* Features that depend on external APIs or cloud services may require additional configuration.
+* A successful local launch does not, by itself, verify every integration.
+
 ---
 
 ## 📂 Project Structure
 
+AREX may contain the following types of files and directories. The exact structure depends on the current release.
+
 ```text
 AREX/
 ├── index.html
-├── manifest.json
-├── sw.js
-├── icon-192.png
-├── icon-512.png
-└── README.md
+├── README.md
+├── js/
+├── scripts/
+├── tests/
+├── css/                 # If included in the release
+├── assets/              # If included in the release
+├── manifest.json        # If included in the release
+├── sw.js                # If included in the release
+└── ...                  # Other application and configuration files
 ```
 
-The current version is intentionally implemented as a lightweight client-side application without a traditional backend.
+### Directory Guidelines
+
+* **`index.html`** — Application entry point.
+* **`js/`** — JavaScript modules and application logic, if used by the current build.
+* **`scripts/`** — Development, build, validation, or maintenance scripts, depending on their contents.
+* **`tests/`** — Automated tests and validation files.
+* **`css/` and `assets/`** — Stylesheets and visual resources, if present.
+
+Preserve the directory structure when uploading or deploying the project. Not every development file is required at runtime, but removing files without checking their references can break the application or its maintenance workflow.
 
 ---
 
-## 🗺️ Roadmap
+## 🔒 Security & Privacy
 
-AREX is still evolving.
+AREX may store information locally in your browser and may use external services when configured.
 
-Potential future directions include:
+Keep the following principles in mind:
 
-* [ ] More advanced trading analytics
-* [ ] Additional market data integrations
-* [ ] More detailed performance reports
-* [ ] Advanced journal filtering
-* [ ] Strategy performance analysis
-* [ ] Improved mobile experience
-* [ ] More backup and synchronization options
-* [ ] Expanded learning resources
-* [ ] Multi-language improvements
+* Back up important trading records regularly.
+* Avoid using public or shared devices for sensitive personal data.
+* Do not publish private API keys, service-account credentials, access tokens, or other secrets in the repository.
+* Restrict cloud-database access using appropriate authentication and security rules.
+* Never rely on frontend code alone to protect server-side secrets.
+* Review the privacy and security policies of any connected third-party service.
+
+Firebase web configuration values are generally intended to be included in client applications, but they are **not** a replacement for properly configured authentication, database security rules, and API restrictions.
+
+Do not assume that locally stored data is automatically synchronized to the cloud. Confirm that the relevant backup or synchronization operation completed successfully.
+
+---
+
+## 🗺️ Project Direction
+
+AREX aims to evolve into a more capable personal trading assistant that helps traders understand their own processes and make better-informed decisions.
+
+Potential areas of development include:
+
+* More detailed strategy-performance reports
+* Repeated-mistake detection
+* Improved trade-review workflows
+* Chart screenshots and trade annotations
+* Broker and trading-platform imports
+* Comparisons by symbol, strategy, or market session
+* More advanced strategy knowledge management
+* Better decision-support workflows
+* Additional backup and synchronization options
+* Improved mobile usability and accessibility
+
+These items represent possible development directions and should not be interpreted as guarantees that every feature is already implemented.
 
 ---
 
 ## 📜 Version History
 
-### v2.1
+### V9.6.3
 
-* Animated assistant
-* Customizable application backgrounds
-* Glassmorphism effects
-* Forex session timeline
-* Fear & Greed indicator
-* Economic calendar
-* UI and UX improvements
+* Current project release designation.
+* Focus on a more integrated trading-management experience.
+* Continued development of the application structure, interface, and supporting workflows.
 
-### v2.0
+> For detailed changes between builds, consult the repository's commit history and release notes where available.
 
-* Responsive improvements
-* Position sizing and risk calculator
-* Major visual redesign
+### Earlier Versions
 
-### v1.5
+AREX evolved from an earlier Forex learning planner into a broader trading-management workspace.
 
-* Google Drive synchronization
-* Custom colors
-* World clock
-* Language switching
-
-### v1.0
-
-* 78-session Forex learning checklist
-* Trading journal
-* Psychology journal
-* Scheduled reviews
+Previous versions introduced and developed features such as the trading journal, risk calculator, psychology journal, dashboard, market tools, customization, and data-management workflows.
 
 ---
 
-## ⚠️ Disclaimer
+## ⚠️ Financial Disclaimer
 
-AREX is a personal learning, journaling and trading-management tool.
+AREX is a trading-management, journaling, and productivity tool. It is not a broker, investment adviser, or financial institution.
 
-It does **not** provide financial advice, investment recommendations, trading signals, or guaranteed results.
+AREX does not guarantee profitable trading outcomes and should not be treated as a source of guaranteed trading signals or returns.
 
-Trading financial markets involves substantial risk. Always conduct your own research and use appropriate risk management.
+Trading Forex, futures, CFDs, cryptocurrencies, and other financial instruments involves substantial risk and may result in the loss of some or all of your capital.
+
+You are responsible for your trading decisions, risk management, and compliance with applicable laws and broker requirements.
+
+Always verify calculations, instrument specifications, market information, and external data before making a trading decision.
 
 ---
 
@@ -323,23 +451,23 @@ Trading financial markets involves substantial risk. Always conduct your own res
 Created and maintained by **Amir Ghasemian Moghadam**.
 
 * GitHub: [@Amirghasemian22](https://github.com/Amirghasemian22)
-* Linkedin: https://www.linkedin.com/in/amirghasemiian-ai-vision/
+* LinkedIn: [Amir Ghasemian](https://www.linkedin.com/in/amirghasemiian-ai-vision/)
 
 ---
 
-## ⭐ Support the Project
+## ⭐ Support AREX
 
 If you find AREX useful:
 
-⭐ Star the repository
-🐛 Report bugs through GitHub Issues
-💡 Suggest new features
-🔀 Contribute improvements
+* ⭐ Star the repository.
+* 🐛 Report bugs through GitHub Issues.
+* 💡 Suggest improvements.
+* 🔀 Contribute to the project.
 
-Every star and contribution helps the project grow.
+Feedback helps AREX continue to improve.
 
 ---
 
 ## 📄 License
 
-See the repository license for terms of use.
+See the repository's license file for applicable terms of use. If no license is included, the project's reuse and redistribution permissions may be limited.
