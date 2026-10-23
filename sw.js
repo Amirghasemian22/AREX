@@ -1,8 +1,9 @@
-const CACHE_VERSION = 'v9-6-3-security-release-audit-23';
+const CACHE_VERSION = 'v9-6-3-login-controls-fix-24';
 const CACHE_NAME = 'fx-bootcamp-' + CACHE_VERSION;
 const APP_SHELL = [
   './',
   './index.html',
+  './arex-reference-ui.css',
   './manifest.json',
   './icon-192.png',
   './icon-512.png',
