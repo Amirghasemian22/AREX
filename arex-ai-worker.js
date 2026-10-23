@@ -1,5 +1,5 @@
 /**
- * AREX V5.5 AI gateway for Cloudflare Workers.
+ * AREX V9.6.3 AI gateway for Cloudflare Workers.
  * Configure secrets/vars in Cloudflare: GEMINI_API_KEY (Secret), AREX_ALLOWED_ORIGIN (Var, optional).
  * The provider key stays server-side; never paste it into index.html.
  */

@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v5-7-glass-ui-assistant-responsive-1';
+const CACHE_VERSION = 'v9-6-3-security-release-audit-23';
 const CACHE_NAME = 'fx-bootcamp-' + CACHE_VERSION;
 const APP_SHELL = [
   './',
@@ -9,7 +9,41 @@ const APP_SHELL = [
   './arex-glass-wallpaper.jpg',
   './auth-config.js',
   './auth-client.js',
-  './fx_widget.js'
+  './fx_widget.js',
+  './js/core/util.js',
+  './js/core/ui-quality.js',
+  './js/core/account-storage-policy.js',
+  './js/core/analytics.js',
+  './js/core/trade-lifecycle.js',
+  './js/core/trade-audit.js',
+  './js/core/diagnostic-repair.js',
+  './js/core/repair-history.js',
+  './js/core/repair-recovery.js',
+  './js/core/save-reliability.js',
+  './js/core/propguard.js',
+  './js/core/errors.js',
+  './js/core/alert-engine.js',
+  './js/core/quality.js',
+  './js/core/migrate.js',
+  './js/core/backup-safety.js',
+  './js/core/cloud-sync.js',
+  './js/core/runtime-verification.js',
+  './js/core/importer.js',
+  './js/core/riskstate.js',
+  './js/core/strategykb.js',
+  './js/core/ruleaudit.js',
+  './js/core/pretrade.js',
+  './js/ui/analytics.js',
+  './js/i18n/v9.js',
+  './js/ui/propguard.js',
+  './js/ui/import.js',
+  './js/ui/tradeform.js',
+  './js/ui/strategy.js',
+  './js/ui/pretrade.js',
+  './js/core/extended.js',
+  './js/core/ohlc-backtest.js',
+  './js/ui/workspace.js',
+  './js/ui/workspace.css'
 ];
 
 self.addEventListener('install', (event) => {
