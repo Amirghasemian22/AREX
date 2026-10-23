@@ -158,12 +158,27 @@ if (!configured) {
   window.arexStartGoogleSignIn = async () => {
     if(!auth) return setError('سرویس ورود آماده نیست. تنظیمات Firebase را بررسی کن.');
     setBusy(true); setError('');
-    try { await signInWithPopup(auth,new GoogleAuthProvider()); }
-    catch(error) { console.error('Google sign-in failed',error); setError(error.code==='auth/popup-closed-by-user'?'پنجره ورود بسته شد.':('ورود Google ناموفق بود: '+(error.code||'خطای نامشخص'))); }
-    finally { setBusy(false); }
+    try {
+      const provider = new GoogleAuthProvider();
+      // One user action: authenticate the AREX account and request Google Drive app-data permission.
+      provider.addScope('https://www.googleapis.com/auth/drive.appdata');
+      provider.addScope('https://www.googleapis.com/auth/userinfo.email');
+      provider.setCustomParameters({ prompt: 'select_account' });
+      const result = await signInWithPopup(auth, provider);
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      if (credential && credential.accessToken && window.arexAcceptDriveAccessToken) {
+        window.arexAcceptDriveAccessToken(credential.accessToken, 3500, result.user && result.user.email || '');
+      } else {
+        // Keep the account signed in, but explain that Drive authorization needs to be completed.
+        setError('ورود انجام شد، اما مجوز Google Drive دریافت نشد. از بخش تنظیمات، اتصال Google Drive را تکمیل کن.');
+      }
+    } catch(error) {
+      console.error('Google Drive sign-in failed',error);
+      setError(error.code==='auth/popup-closed-by-user'?'پنجره ورود بسته شد.':('ورود با Google Drive ناموفق بود: '+(error.code||'خطای نامشخص')));
+    } finally { setBusy(false); }
   };
   if(byId('googleSignInBtn')) byId('googleSignInBtn').disabled=false;
-  if(byId('authSetupNote')) byId('authSetupNote').textContent='ورود Google فعال است. حساب کاربری از Google Drive مستقل است.';
+  if(byId('authSetupNote')) byId('authSetupNote').textContent='ورود با Google و مجوز Google Drive در یک مرحله انجام می‌شود.';
   if(byId('localPreviewBtn')) byId('localPreviewBtn').style.display='none';
   if(byId('cloudSaveBtn')) {byId('cloudSaveBtn').disabled=false;byId('cloudSaveBtn').addEventListener('click',async()=>{if(!auth.currentUser)return;try{await saveCloudBackup(auth.currentUser);}catch(e){console.error(e);setAccountStatus('ذخیره ابری ناموفق بود: '+(e.message||e));}});}
   if(byId('cloudLoadBtn')) {byId('cloudLoadBtn').disabled=false;byId('cloudLoadBtn').addEventListener('click',async()=>{if(!auth.currentUser)return;try{await loadCloudBackup(auth.currentUser);}catch(e){console.error(e);setAccountStatus('بازیابی ابری ناموفق بود: '+(e.message||e));}});}

@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v9-6-3-login-controls-fix-24';
+const CACHE_VERSION = 'v9-6-3-drive-login-25';
 const CACHE_NAME = 'fx-bootcamp-' + CACHE_VERSION;
 const APP_SHELL = [
   './',

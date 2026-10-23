@@ -1515,9 +1515,9 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
   <div class="auth-topbar"><div class="auth-clock" aria-live="polite"><span>◷</span><div><strong id="authClockTime">--:--:--</strong><div id="authClockDate">Tehran · Local time</div></div></div><button class="auth-lang" id="authLanguageBtn" type="button" aria-label="Switch language" title="فارسی / English">EN</button></div>
   <div class="auth-layout"><div class="auth-story"><div class="auth-wordmark">AREX</div><p id="authTagline">A focused trading workspace for your journal, risk rules and performance.</p><div class="auth-market-line"><span>FOREX</span><span>GOLD</span><span>DOW JONES</span><span>RISK · JOURNAL · DISCIPLINE</span></div></div>
   <div class="auth-card"><div class="auth-logo"><img src="icon-192.png" alt="لوگوی AREX" width="76" height="76" decoding="async"></div><h2 id="authTitle">AREX</h2><p id="authDescription">دستیار هوشمند مدیریت معاملات، ریسک و عملکرد</p>
-    <button class="auth-google" id="googleSignInBtn" type="button">ورود با حساب Google&nbsp; ↗</button>
+    <button class="auth-google" id="googleSignInBtn" type="button">ورود با Google Drive&nbsp; ↗</button>
     <p id="authError" class="auth-error" role="status"></p>
-    <p id="authSetupNote" class="auth-setup-note">برای ورود امن به AREX با حساب Google وارد شو. همگام‌سازی و پشتیبان‌گیری Google Drive از داخل تنظیمات انجام می‌شود.</p>
+    <p id="authSetupNote" class="auth-setup-note">برای ورود به AREX با حساب Google وارد شو و دسترسی Google Drive را برای پشتیبان‌گیری تأیید کن.</p>
     <button class="auth-local" id="localPreviewBtn" type="button" style="display:none">حالت محلی</button>
     <div id="authUserRow" style="display:none;margin-top:14px;font-size:11px;color:var(--muted)"></div>
   </div></div>
@@ -1530,7 +1530,7 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
  update();setInterval(update,1000);
  const signIn=document.getElementById('googleSignInBtn'),error=document.getElementById('authError');
  if(signIn&&!signIn.dataset.authBound){signIn.dataset.authBound='1';signIn.addEventListener('click',function(){if(typeof window.arexStartGoogleSignIn==='function'){window.arexStartGoogleSignIn();return;}if(error)error.textContent='سرویس ورود در حال آماده‌شدن است…';signIn.disabled=true;let tries=0;const timer=setInterval(()=>{tries++;if(typeof window.arexStartGoogleSignIn==='function'){clearInterval(timer);signIn.disabled=false;window.arexStartGoogleSignIn();}else if(tries>=20){clearInterval(timer);signIn.disabled=false;if(error)error.textContent='سرویس ورود بارگذاری نشد. اتصال اینترنت و تنظیمات Firebase را بررسی کن.';}},250);});}
- const language=document.getElementById('authLanguageBtn');if(language){language.addEventListener('click',function(){const en=document.documentElement.lang!=='en';document.documentElement.lang=en?'en':'fa';document.documentElement.dir=en?'ltr':'rtl';language.textContent=en?'FA':'EN';document.getElementById('authDescription').textContent=en?'Personal trading, risk and performance workspace':'دستیار هوشمند مدیریت معاملات، ریسک و عملکرد';document.getElementById('authTagline').textContent=en?'A focused trading workspace for your journal, risk rules and performance.':'فضایی متمرکز برای ژورنال معاملات، قوانین ریسک و بررسی عملکرد.';document.getElementById('googleSignInBtn').textContent=en?'Continue with Google ↗':'ورود با حساب Google ↗';document.getElementById('authSetupNote').textContent=en?'Sign in to AREX with Google. Google Drive backup is connected separately from Settings.':'برای ورود امن به AREX با حساب Google وارد شو. همگام‌سازی و پشتیبان‌گیری Google Drive از داخل تنظیمات انجام می‌شود.';update();});}
+ const language=document.getElementById('authLanguageBtn');if(language){language.addEventListener('click',function(){const en=document.documentElement.lang!=='en';document.documentElement.lang=en?'en':'fa';document.documentElement.dir=en?'ltr':'rtl';language.textContent=en?'FA':'EN';document.getElementById('authDescription').textContent=en?'Personal trading, risk and performance workspace':'دستیار هوشمند مدیریت معاملات، ریسک و عملکرد';document.getElementById('authTagline').textContent=en?'A focused trading workspace for your journal, risk rules and performance.':'فضایی متمرکز برای ژورنال معاملات، قوانین ریسک و بررسی عملکرد.';document.getElementById('googleSignInBtn').textContent=en?'Continue with Google Drive ↗':'ورود با Google Drive ↗';document.getElementById('authSetupNote').textContent=en?'Sign in to AREX and authorize Google Drive access for backups.':'برای ورود به AREX با حساب Google وارد شو و دسترسی Google Drive را برای پشتیبان‌گیری تأیید کن.';update();});}
 })();
 </script>
 <div class="backdrop" id="backdrop"></div>
@@ -3128,6 +3128,21 @@ function initGoogleDrive(){
   };
   document.head.appendChild(script);
 }
+// Accept the Drive-scoped access token returned by the same Google OAuth login used by Firebase.
+window.arexAcceptDriveAccessToken = function(token, expiresIn=3500, email=''){
+  if(!token) return false;
+  gAccessToken = token;
+  gTokenExpiresAt = Date.now() + Math.max(60, Number(expiresIn)||3500)*1000;
+  state.driveConnected = true;
+  state.driveWasConnected = true;
+  try{localStorage.setItem('arex_v55_remembered_device','1')}catch(e){}
+  if(email) state.driveAccountEmail = email;
+  queueSave('settings');
+  updateDriveUi();
+  if(!state.driveAccountEmail) fetchDriveAccountEmail();
+  return true;
+};
+
 function driveConnect(){
   if(!driveGisLoaded || !gTokenClient){ toast('در حال بارگذاری سرویس گوگل...'); return; }
   gTokenClient.requestAccessToken({ prompt: state.driveAccountEmail ? '' : 'consent', hint: state.driveAccountEmail || undefined });
@@ -6608,8 +6623,8 @@ function startApp(){ if(__arexAppStarted) return; __arexAppStarted = true; loadA
  function enter(){if(gate)gate.classList.remove('visible');if(app)app.style.visibility='visible';if(mascot)mascot.style.visibility='visible';const note=document.getElementById('authSetupNote');if(note)note.style.display='none';startApp();}
  if(app)app.style.visibility='hidden';if(mascot)mascot.style.visibility='hidden';
  const btn=document.getElementById('googleSignInBtn'),err=document.getElementById('authError'),note=document.getElementById('authSetupNote');
- if(note)note.textContent='برای ورود امن به AREX با حساب Google وارد شو. همگام‌سازی و پشتیبان‌گیری Google Drive از داخل تنظیمات انجام می‌شود.';
- if(btn)btn.textContent='ورود با حساب Google ↗';
+ if(note)note.textContent='برای ورود به AREX با حساب Google وارد شو و دسترسی Google Drive را برای پشتیبان‌گیری تأیید کن.';
+ if(btn)btn.textContent='ورود با Google Drive ↗';
  window.arexEnterApp=enter;
 })();
 
