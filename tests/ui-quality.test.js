@@ -49,5 +49,5 @@ test('UI quality module is loaded by the page and precached for offline use', ()
   const html = read('index.html'), sw = read('sw.js');
   assert.match(html, /src="js\/core\/ui-quality\.js"/);
   assert.match(sw, /'\.\/js\/core\/ui-quality\.js'/);
-  assert.match(sw, /v9-6-4-drive-only-27/);
+  assert.match(sw, /v9-6-4-drive-only-final-quality-pass-33/);
 });

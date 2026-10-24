@@ -5,6 +5,7 @@
   const esc = v => escapeHtml(v == null ? '' : String(v));
   const fa = v => (typeof faDigits === 'function') ? faDigits(String(v)) : String(v);
   let kb = null, loading = null, seq = 0;
+  let ruleFilters = { q: '', status: 'all', kind: 'all' };
   window.__arexKBPromise = null;
 
   function nowObj() { const d = new Date(), p = n => String(n).padStart(2, '0'); const date = typeof todayIso === 'function' ? todayIso() : d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()); return { date, time: p(d.getHours()) + ':' + p(d.getMinutes()), iso: d.toISOString() }; }
@@ -63,8 +64,13 @@
     const cs = K().conflicts(kb), order = { official: 0, proposed: 1, retired: 2, rejected: 3 };
     const rules = kb.rules.slice().sort((a, b) => order[a.status] - order[b.status]);
     const legacy = (state.tradeRules || []).filter(t => !kb.rules.some(r => K().norm(r.text) === K().norm(t))).length;
+    const officialCount = kb.rules.filter(r => r.status === 'official').length;
+    const proposalCount = kb.rules.filter(r => r.status === 'proposed').length;
+    const hypothesisCount = kb.rules.filter(r => r.kind === 'hypothesis').length;
+    const versionCount = kb.versions.length;
     box.innerHTML = '<div class="section-title">' + V9T('kb.title') + '</div><div class="section-sub">' + V9T('kb.sub') + '</div>' +
-      '<div class="v9-tabs">' + (legacy ? '<button type="button" class="btn ghost" id="kbImport">' + V9T('kb.importLegacy', { n: fa(legacy) }) + '</button>' : '') + '</div>' +
+      '<div class="v9-kb-summary" aria-label="خلاصه پایگاه قوانین"><div><b>' + fa(officialCount) + '</b><span>قانون رسمی فعال</span></div><div><b>' + fa(proposalCount) + '</b><span>پیشنهاد در انتظار تصمیم</span></div><div><b>' + fa(hypothesisCount) + '</b><span>فرضیه نیازمند آزمون</span></div><div><b>' + fa(versionCount) + '</b><span>نسخه تاریخی ثبت‌شده</span></div></div>' +
+      '<div class="v9-tabs">' + (legacy ? '<button type="button" class="btn ghost" id="kbImport">' + V9T('kb.importLegacy', { n: fa(legacy) }) + '</button>' : '') + '<button type="button" class="btn ghost" id="kbExport">خروجی گرفتن از قوانین و تاریخچه (JSON)</button></div>' +
       '<details class="v9-details" id="kbNewBox"><summary>' + V9T('kb.addProposal') + '</summary><div class="form-grid" style="margin-top:8px">' +
       '<div style="grid-column:1/-1"><div class="field-lbl">' + V9T('kb.fText') + '</div><input class="txt-input" id="kbText" maxlength="240"></div>' +
       '<div><div class="field-lbl">' + V9T('kb.fKind') + '</div><select class="txt-input" id="kbKind"><option value="confirmed">' + V9T('kind.confirmed') + '</option><option value="mandatory">' + V9T('kind.mandatory') + '</option><option value="preference">' + V9T('kind.preference') + '</option><option value="hypothesis">' + V9T('kind.hypothesis') + '</option></select></div>' +
@@ -74,15 +80,42 @@
       '<div><div class="field-lbl">' + V9T('kb.fExample') + '</div><input class="txt-input" id="kbEx" maxlength="240"></div>' +
       '<div><div class="field-lbl">' + V9T('kb.fException') + '</div><input class="txt-input" id="kbExc" maxlength="240"></div></div>' +
       '<div class="modal-actions" style="justify-content:flex-start"><button type="button" class="btn" id="kbAdd">' + V9T('kb.submitProposal') + '</button></div></details>' +
-      (cs.length ? '<div class="v9-warn" style="margin-top:10px">' + V9T('kb.conflictsFound', { n: fa(cs.length) }) + '</div>' : '') +
-      '<div style="margin-top:10px">' + (rules.length ? rules.map(r => ruleCard(r, cs)).join('') : '<div class="empty">' + V9T('kb.noRules') + '</div>') + '</div>' +
+      (cs.length ? '<div class="v9-warn" style="margin-top:10px"><b>' + V9T('kb.conflictsFound', { n: fa(cs.length) }) + '</b><div class="v9-find-b">تعارض‌ها فقط برای بازبینی انسانی علامت‌گذاری می‌شوند و هیچ قانونی خودکار تغییر نمی‌کند.</div>' + cs.map(c => '<div class="v9-find-b">' + esc(c.why || V9T('kb.cf.' + c.code, c.p)) + ' · اطمینان: ' + esc(c.confidence) + '</div>').join('') + '</div>' : '') +
+      '<div class="v9-rule-filters"><label><span class="field-lbl" for="kbRuleSearch">جست‌وجوی متن، استراتژی یا پارامتر</span><input id="kbRuleSearch" class="txt-input" type="search" value="' + esc(ruleFilters.q) + '" placeholder="مثلاً طلا، حد ضرر، min_rr"></label><label><span class="field-lbl" for="kbRuleStatus">وضعیت</span><select id="kbRuleStatus" class="txt-input"><option value="all">همه وضعیت‌ها</option><option value="official">رسمی فعال</option><option value="proposed">پیشنهادی</option><option value="retired">بازنشسته</option><option value="rejected">ردشده</option></select></label><label><span class="field-lbl" for="kbRuleKind">نوع قانون</span><select id="kbRuleKind" class="txt-input"><option value="all">همه انواع</option><option value="mandatory">الزامی</option><option value="confirmed">تأییدشده</option><option value="preference">ترجیح شخصی</option><option value="hypothesis">فرضیه</option></select></label></div><div class="v9-find-b v9-muted" id="kbRuleCount"></div>' +
+      '<div style="margin-top:10px" id="kbRuleResults">' + (rules.length ? rules.map(r => ruleCard(r, cs)).join('') : '<div class="empty">' + V9T('kb.noRules') + '</div>') + '</div>' +
       '<div class="section-title" style="margin-top:16px">' + V9T('kb.evolutionTitle') + '</div>' + evolutionHtml();
     const q = id => box.querySelector(id);
+    const statusSelect = q('#kbRuleStatus'), kindSelect = q('#kbRuleKind');
+    if (statusSelect) statusSelect.value = ruleFilters.status;
+    if (kindSelect) kindSelect.value = ruleFilters.kind;
+    function applyRuleFilters() {
+      ruleFilters.q = q('#kbRuleSearch') ? q('#kbRuleSearch').value : '';
+      ruleFilters.status = statusSelect ? statusSelect.value : 'all';
+      ruleFilters.kind = kindSelect ? kindSelect.value : 'all';
+      const needle = K().norm(ruleFilters.q);
+      const filtered = rules.filter(r => {
+        const hay = K().norm([r.text, r.strategy || '', r.param ? r.param.key + ' ' + r.param.value : '', ...(r.examples || []), ...(r.exceptions || [])].join(' '));
+        return (!needle || hay.includes(needle)) && (ruleFilters.status === 'all' || r.status === ruleFilters.status) && (ruleFilters.kind === 'all' || r.kind === ruleFilters.kind);
+      });
+      q('#kbRuleCount').textContent = 'نمایش ' + fa(filtered.length) + ' از ' + fa(rules.length) + ' قانون؛ فیلتر فقط نمایش را تغییر می‌دهد.';
+      q('#kbRuleResults').innerHTML = filtered.length ? filtered.map(r => ruleCard(r, cs)).join('') : '<div class="empty">قانونی با این فیلترها پیدا نشد.</div>';
+      q('#kbRuleResults').querySelectorAll('[data-kb]').forEach(bindRuleAction);
+    }
+    if (q('#kbRuleSearch')) q('#kbRuleSearch').addEventListener('input', applyRuleFilters);
+    if (statusSelect) statusSelect.addEventListener('change', applyRuleFilters);
+    if (kindSelect) kindSelect.addEventListener('change', applyRuleFilters);
+    applyRuleFilters();
+    const exportBtn = q('#kbExport'); if (exportBtn) exportBtn.addEventListener('click', () => {
+      const payload = { app: 'AREX', type: 'strategy-knowledge-base-export', schema: kb.schema, exportedAt: new Date().toISOString(), kb };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json;charset=utf-8' });
+      const url = URL.createObjectURL(blob), a = document.createElement('a'); a.href = url; a.download = 'AREX-strategy-knowledge-base-' + nowObj().date + '.json'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+      toast('خروجی قوانین و تاریخچه روی دستگاهت آماده شد. فایل را در محل امن نگه‌دار.');
+    });
     const imp = q('#kbImport'); if (imp) imp.addEventListener('click', () => { const meta = typeof getArexRuleMeta === 'function' ? getArexRuleMeta() : {}; const r = K().importLegacy(kb, state.tradeRules || [], t => meta[arexRuleKey(t)], nowObj(), newId); commit(r, { k: 'kb.imported', p: { n: r.added } }); });
     q('#kbAdd').addEventListener('click', () => {
       commit(K().propose(kb, { text: q('#kbText').value, kind: q('#kbKind').value, strategy: q('#kbStrategy').value, param: { key: q('#kbPKey').value, value: q('#kbPVal').value }, examples: [q('#kbEx').value], exceptions: [q('#kbExc').value] }, nowObj(), newId), { k: 'kb.proposed' });
     });
-    box.querySelectorAll('[data-kb]').forEach(b => b.addEventListener('click', () => {
+    function bindRuleAction(b) { b.addEventListener('click', () => {
       const id = b.dataset.id, act = b.dataset.kb, r = kb.rules.find(x => x.id === id); if (!r) return;
       if (act === 'reject') { commit(K().reject(kb, id, nowObj()), { k: 'kb.rejected' }); return; }
       if (act === 'revise') {
@@ -92,7 +125,7 @@
       }
       const reason = ask(act === 'approve' ? V9T('kb.askApproveReason') : V9T('kb.askRetireReason')); if (reason === null) return;
       commit(act === 'approve' ? K().approve(kb, id, reason, nowObj()) : K().retire(kb, id, reason, nowObj()), { k: act === 'approve' ? 'kb.approved' : 'kb.retired' });
-    }));
+    }); }
   }
   window.renderArexKB = async function () { const my = ++seq; ensureContainer(); await window.arexLoadKB(); if (my !== seq) return; render(); };
 })();

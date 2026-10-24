@@ -634,6 +634,21 @@ a.btn{text-decoration:none; display:inline-flex; align-items:center; gap:6px;}
 .switch input:checked + .slider{background:var(--gold-dim);}
 .switch input:checked + .slider::before{transform:translateX(-16px); background:var(--gold);}
 
+
+/* Dashboard Phase 5: interactive mistake evidence */
+.arex-trend-row-button{font:inherit;color:var(--text);width:100%;text-align:start;cursor:pointer;background:transparent;border:0;padding:4px 0}.arex-trend-row-button:focus-visible{outline:2px solid var(--accent-soft);outline-offset:3px;border-radius:6px}.arex-mistake-analysis{border-top:1px solid var(--line);padding-top:12px;margin-top:6px}.arex-mistake-analysis-list{display:grid;gap:7px}.arex-mistake-analysis-item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;width:100%;text-align:start;border:1px solid var(--line);border-radius:10px;background:var(--card2,rgba(127,127,127,.05));padding:10px 12px;color:var(--text);cursor:pointer}.arex-mistake-analysis-item:hover,.arex-mistake-analysis-item:focus-visible{border-color:var(--accent-soft);outline:2px solid transparent}.arex-mistake-analysis-item small{display:block;color:var(--muted);font-size:11px;margin-top:3px}.arex-mistake-analysis-metrics{font-size:11px;color:var(--muted);text-align:end}.arex-mistake-analysis-detail{margin-top:10px;padding:12px;border:1px solid var(--line);border-radius:12px}.arex-mistake-evidence-trade{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;padding:8px 0;border-bottom:1px solid var(--line);font-size:12px}.arex-mistake-evidence-trade:last-child{border-bottom:0}.arex-mistake-evidence-trade small{display:block;color:var(--muted)}@media(max-width:480px){.arex-mistake-analysis-item{padding:9px}.arex-mistake-evidence-trade{grid-template-columns:1fr}}
+/* Dashboard Phase 3: performance, mistake trend and recent trade evidence */
+.arex-dashboard-performance{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:13px;margin:0 0 16px;align-items:stretch}
+.arex-performance-card{min-width:0;padding:16px}
+.arex-dash-period{width:100px;flex-shrink:0}.arex-dash-period select{padding:7px 8px;font-size:10px}
+.arex-dash-chart{min-height:205px;display:flex;align-items:center;justify-content:center;overflow:hidden}.arex-dash-chart svg{display:block;width:100%;height:auto;max-height:250px}
+.arex-dash-chart-foot{font-size:10px;color:var(--muted);line-height:1.8;border-top:1px solid var(--border);padding-top:9px;margin-top:8px}
+.arex-mistake-trend{display:grid;gap:11px;padding:12px 0;min-height:150px;align-content:start}
+.arex-trend-row{display:grid;grid-template-columns:minmax(85px,1fr) minmax(60px,1.5fr) 24px;align-items:center;gap:9px;font-size:10px}.arex-trend-label{overflow-wrap:anywhere;color:var(--text)}.arex-trend-track{height:8px;border-radius:99px;background:var(--panel-hi);overflow:hidden}.arex-trend-track i{display:block;height:100%;border-radius:inherit;background:var(--accent-soft)}.arex-trend-count{text-align:end;color:var(--muted);font-variant-numeric:tabular-nums}
+.arex-recent-trades-card{grid-column:1/-1}.arex-recent-trades{display:grid;gap:7px}.arex-recent-trade{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(80px,.7fr) minmax(90px,.7fr) auto;gap:12px;align-items:center;padding:11px 12px;border:1px solid var(--border);border-radius:11px;background:rgba(127,155,196,.025);font-size:11px}.arex-recent-trade b{display:block;overflow-wrap:anywhere}.arex-recent-trade small{display:block;color:var(--muted);font-size:9px;margin-top:4px}.arex-recent-pl{font-weight:750;text-align:end;font-variant-numeric:tabular-nums}.arex-recent-pl.positive{color:var(--green)}.arex-recent-pl.negative{color:var(--red)}.arex-recent-trade button{white-space:nowrap}
+@media(max-width:900px){.arex-dashboard-performance{grid-template-columns:minmax(0,1fr)}.arex-recent-trades-card{grid-column:auto}}
+@media(max-width:560px){.arex-recent-trade{grid-template-columns:minmax(0,1fr) auto;gap:7px}.arex-recent-trade .arex-recent-meta{grid-column:1}.arex-recent-pl{grid-column:2;grid-row:1;text-align:end}.arex-recent-trade button{grid-column:2;grid-row:2}.arex-trend-row{grid-template-columns:minmax(80px,1fr) minmax(50px,1.3fr) 22px}}
+
 /* World clocks on dashboard */
 .worldclocks{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px;}
 .wc-chip{
@@ -1074,7 +1089,7 @@ body[data-bg="minimal"]{ background-image:none; }
 .target-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.target-form-grid label,.target-wide{display:flex;flex-direction:column;gap:5px;font-size:11px;color:var(--muted)}.target-wide{margin-top:10px}.target-footer{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:12px}.target-footer span{font-size:11px;color:var(--muted)}.target-progress{font-size:12px;color:var(--muted);margin-top:12px;line-height:1.9}
 .trade-week-map{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px;margin:16px 0}.trade-day{border:1px solid var(--border);border-radius:12px;min-height:74px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;background:var(--panel-alt);font-size:11px}.trade-day b{font-size:17px}.trade-day.traded{border-color:var(--green);background:var(--green-dim);color:var(--green)}.trade-day.no-trade{border-color:var(--gold);background:rgba(var(--accent-rgb),.10);color:var(--gold)}.trade-day.pending{color:var(--muted2)}.activity-legend{display:flex;flex-wrap:wrap;gap:12px;font-size:10px;color:var(--muted)}.activity-legend span{display:flex;align-items:center;gap:5px}.dot{width:8px;height:8px;border-radius:50%;display:inline-block}.dot.traded{background:var(--green)}.dot.no-trade{background:var(--gold)}.dot.pending{background:var(--muted2)}.activity-summary{margin-top:10px;font-size:12px;color:var(--muted)}
 .daily-check-card{margin:0 0 16px}.daily-check-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.daily-status-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:12px}.daily-status-tile{border:1px solid var(--border);background:var(--panel-alt);border-radius:11px;padding:12px}.daily-status-tile b{display:block;font-size:13px;margin-bottom:4px}.daily-status-tile span{font-size:11px;color:var(--muted)}
-.daily-review-hero{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}.daily-date-label{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted)}.daily-date-label input{width:150px;padding:7px}.daily-date-pill{padding:6px 10px;border-radius:9px;background:rgba(var(--accent-rgb),.1);color:var(--gold);font-size:12px;font-weight:800}.daily-choice-row{display:flex;gap:10px;flex-wrap:wrap}.daily-choice{flex:1;min-width:180px;padding:13px;border:1px solid var(--border);border-radius:12px;background:var(--panel-alt);color:var(--text);font-weight:700;cursor:pointer}.daily-choice.active{border-color:var(--gold);background:rgba(var(--accent-rgb),.13);color:var(--gold)}.daily-checkline{display:flex;gap:9px;align-items:center;padding:9px 0;font-size:12px;border-bottom:1px solid var(--border)}.daily-checkline input{width:16px;height:16px}.daily-range-labels{display:flex;align-items:center;justify-content:space-between;font-size:10px;color:var(--muted)}.daily-range-labels b{font-size:12px;color:var(--gold)}.insight-row{padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--panel-alt);margin:7px 0;font-size:12px;line-height:1.9}.insight-row.good{border-color:rgba(51,197,137,.35)}.insight-row.warn{border-color:rgba(226,85,90,.4)}.insight-row.info{border-color:rgba(var(--accent-rgb),.3)}.daily-history-row{padding:12px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.daily-history-row:last-child{border-bottom:0}.daily-history-row small{color:var(--muted)}
+.daily-review-hero{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}.daily-date-label{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted)}.daily-date-label input{width:150px;padding:7px}.daily-date-pill{padding:6px 10px;border-radius:9px;background:rgba(var(--accent-rgb),.1);color:var(--gold);font-size:12px;font-weight:800}.daily-choice-row{display:flex;gap:10px;flex-wrap:wrap}.daily-choice{flex:1;min-width:180px;padding:13px;border:1px solid var(--border);border-radius:12px;background:var(--panel-alt);color:var(--text);font-weight:700;cursor:pointer}.daily-choice.active{border-color:var(--gold);background:rgba(var(--accent-rgb),.13);color:var(--gold)}.daily-checkline{display:flex;gap:9px;align-items:center;padding:9px 0;font-size:12px;border-bottom:1px solid var(--border)}.daily-checkline input{width:16px;height:16px}.daily-range-labels{display:flex;align-items:center;justify-content:space-between;font-size:10px;color:var(--muted)}.daily-range-labels b{font-size:12px;color:var(--gold)}.insight-row{padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--panel-alt);margin:7px 0;font-size:12px;line-height:1.9}.insight-row.good{border-color:rgba(51,197,137,.35)}.insight-row.warn{border-color:rgba(226,85,90,.4)}.insight-row.info{border-color:rgba(var(--accent-rgb),.3)}.daily-history-row{padding:12px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.daily-history-row:last-child{border-bottom:0}.daily-history-row small{color:var(--muted)}.mistake-trend-panel{grid-column:1/-1;margin-top:12px;padding:13px;border:1px solid var(--border);border-radius:12px;background:var(--panel-alt)}.mistake-trend-item{padding:10px 0;border-bottom:1px solid var(--border)}.mistake-trend-item:last-child{border-bottom:0}.mistake-trend-meta{display:flex;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:11px;margin-top:4px}.mistake-trend-meta b{color:var(--text)}.mistake-trend-note{font-size:11px;color:var(--muted);line-height:1.8;margin-top:8px}
 /* Hide the retired learning-cycle widgets from the interface, keep their data structures intact for old backups. */
 #sidebar [data-view="path"],#sidebar [data-view="checklist"],#sidebar [data-view="schedule"],#sidebar [data-view="review"],#sidebar [data-view="obsidian"],#sidebar [data-nav-group="tools"],#view-path,#view-checklist,#view-schedule,#view-review,#view-obsidian{display:none!important}
 #view-dashboard .clock-news-row{display:none!important}#view-dashboard .v5-obsolete-dashboard{display:none!important}.sidebar-foot .mini-bar{display:none!important}#view-dashboard .grid.g6{display:none!important}#view-dashboard .grid.g3{display:none!important}#view-dashboard #heatmapGrid,#view-dashboard .hm-legend,#view-dashboard [data-i18n="dash.heatmapTitle"],#view-dashboard [data-i18n="dash.heatmapSub"]{display:none!important}
@@ -1113,6 +1128,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 .brand-mark,.auth-logo{background:linear-gradient(145deg,#c4dcff,#6b9fff);color:#081326;box-shadow:0 8px 24px rgba(88,143,255,.18)}
 .navbtn{border-radius:11px}.navbtn.active{box-shadow:inset -2px 0 var(--gold)}
 #arexDailyRoadmap{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(240px,.75fr);gap:14px;margin:0 0 16px}
+.v25-goal-form{display:grid;gap:9px;margin-top:13px;padding-top:12px;border-top:1px solid var(--border)}.v25-goal-form label{display:flex;flex-direction:column;gap:5px;color:var(--muted);font-size:11px}.v25-goal-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.v25-goal-card{border:1px solid var(--border);border-radius:11px;padding:11px;margin:8px 0;background:var(--panel-alt)}.v25-goal-card.done{opacity:.72}.v25-goal-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}.v25-goal-title{font-weight:800;overflow-wrap:anywhere}.v25-goal-meta{font-size:10px;color:var(--muted);line-height:1.8;margin-top:5px}.v25-goal-progress{height:5px;background:var(--panel-hi);border-radius:99px;overflow:hidden;margin:8px 0}.v25-goal-progress i{display:block;height:100%;background:var(--green)}.v25-goal-actions{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:8px}.v25-goal-actions input{width:90px;min-height:32px;padding:5px}.v25-readiness-note{border:1px solid rgba(var(--accent-rgb),.25);background:rgba(var(--accent-rgb),.07);border-radius:10px;padding:10px 12px;font-size:11px;line-height:1.9;margin:10px 0;color:var(--muted)}.v25-readiness-note b{color:var(--text)}@media(max-width:760px){.v25-goal-fields{grid-template-columns:1fr 1fr}}
 .arex-roadmap-main{padding:19px 20px;border:1px solid var(--border);border-radius:17px;background:linear-gradient(120deg,color-mix(in srgb,var(--panel) 95%,#24466f),var(--panel));}
 .arex-roadmap-kicker{font-size:10px;letter-spacing:.12em;color:var(--gold);font-weight:800;margin-bottom:7px}
 .arex-roadmap-title{font-size:20px;font-weight:850;line-height:1.6;margin:0 0 5px}
@@ -1348,6 +1364,25 @@ a:hover{filter:brightness(1.12);}
 .settings-jumpbar{display:flex;gap:8px;align-items:center;overflow-x:auto;overscroll-behavior-inline:contain;padding:2px 1px 12px;margin-bottom:4px;scrollbar-width:thin}
 .settings-jumpbar .chip{flex:0 0 auto;white-space:nowrap;min-height:36px}.settings-jumpbar .chip:focus-visible{outline-offset:2px}
 #view-settings [id^="settings"]{scroll-margin-top:78px}
+
+/* Dashboard decision-support layer: evidence first, no invented conclusions. */
+.arex-dashboard-insights{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:13px;margin:0 0 16px;align-items:stretch}
+.arex-insight-card{min-width:0;padding:17px 18px;display:flex;flex-direction:column;gap:9px}
+.arex-insight-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.arex-insight-head .section-title{margin:0}.arex-insight-head .section-sub{margin-top:4px}
+.arex-evidence-badge,.arex-readiness-badge{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;padding:4px 8px;border:1px solid var(--border);border-radius:999px;font-size:10px;color:var(--muted);background:var(--panel-alt)}
+.arex-evidence-badge.has-data{color:var(--accent-soft);border-color:rgba(var(--accent-rgb),.3);background:rgba(var(--accent-rgb),.07)}
+.arex-readiness-badge.review{color:#D6A94F;border-color:rgba(214,169,79,.32);background:rgba(214,169,79,.08)}.arex-readiness-badge.stop{color:var(--red);border-color:rgba(248,113,113,.3);background:rgba(248,113,113,.07)}.arex-readiness-badge.ready{color:var(--green);border-color:rgba(74,222,128,.28);background:rgba(74,222,128,.07)}
+.arex-insight-primary{font-size:17px;font-weight:800;line-height:1.65;overflow-wrap:anywhere}
+.arex-insight-detail{font-size:11px;color:var(--muted);line-height:1.9;margin:0}
+.arex-evidence-details{border:1px solid var(--border);border-radius:10px;padding:9px 11px;background:rgba(127,155,196,.035);font-size:11px;line-height:1.85}
+.arex-evidence-details summary{cursor:pointer;font-weight:700;color:var(--accent-soft)}.arex-evidence-details #arexMistakeEvidenceBody{padding-top:8px;color:var(--muted)}
+.arex-insight-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:4px}.arex-insight-actions .btn{min-height:36px;font-size:11px}
+.arex-readiness-list{list-style:none;padding:0;margin:0;display:grid;gap:6px}.arex-readiness-list li{font-size:11px;line-height:1.7;color:var(--muted);padding-inline-start:19px;position:relative}.arex-readiness-list li:before{content:'•';position:absolute;inset-inline-start:5px;color:var(--accent-soft);font-weight:900}
+.arex-readiness-list li.ok:before{content:'✓';color:var(--green)}.arex-readiness-list li.warn:before{content:'!';color:#D6A94F}
+@media(max-width:900px){.arex-dashboard-insights{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:480px){.arex-insight-card{padding:14px}.arex-insight-primary{font-size:15px}.arex-insight-actions .btn{flex:1}}
+
 .arex-dashboard-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin:0 0 13px}
 .arex-dashboard-kpis .arex-kpi{padding:14px 16px;min-height:108px}
 .arex-dashboard-warnings{margin:0 0 16px;padding:10px 13px;border-inline-start:3px solid var(--accent-soft);border-radius:9px;background:rgba(var(--accent-rgb),.055);font-size:10px;line-height:1.8;color:var(--muted)}
@@ -1436,7 +1471,7 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
 #view-settings .txt-input,#view-settings input:not([type=checkbox]),#view-settings select{min-height:36px;padding:7px 9px}
 #view-settings .btn{min-height:34px;padding:7px 10px;font-size:10px}
 /* API calendar refresh */
-.fc-calendar-filters{display:grid;grid-template-columns:minmax(180px,1fr) minmax(145px,.55fr) auto;gap:9px;align-items:center;margin:10px 0 14px}
+.fc-calendar-filters{display:grid;grid-template-columns:minmax(180px,1fr) minmax(145px,.55fr) minmax(145px,.55fr) auto;gap:9px;align-items:center;margin:10px 0 14px}
 .fc-calendar-filters input,.fc-calendar-filters select{width:100%;min-width:0;min-height:39px;padding:8px 11px;border:1px solid var(--border);border-radius:11px;background:var(--panel);color:var(--text);font:inherit;font-size:11px}
 .fc-calendar-filters .chip-row{display:flex;gap:5px;flex-wrap:wrap}
 .fc-api-row{grid-template-columns:90px minmax(0,1fr) auto;gap:14px;padding:15px 16px;border-radius:15px;transition:border-color .18s,transform .18s}
@@ -1478,6 +1513,17 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
 .imp-table td:last-child{white-space:normal; min-width:160px;}
 .imp-error td{color:#ff8a8a;} .imp-duplicate td{opacity:.6;} .imp-skipped td{opacity:.5;} .imp-ok td:nth-child(2){color:#5fd39a;}
 
+/* Phase 17 — evidence-first performance insights */
+.arex-analytics-insights{margin-top:16px;}
+.arex-analytics-insights-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.arex-insight-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.arex-insight-item{min-width:0;border:1px solid var(--border);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:7px;background:var(--surface-2,rgba(128,128,128,.035))}
+.arex-insight-item>span,.arex-insight-item small{font-size:12px;color:var(--muted)}
+.arex-insight-item strong{font-size:15px;line-height:1.5;overflow-wrap:anywhere}
+.arex-insight-item.positive{border-inline-start:3px solid #27ae88}.arex-insight-item.warning{border-inline-start:3px solid #d5a63c}
+@media(max-width:1000px){.arex-insight-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.arex-insight-grid{grid-template-columns:minmax(0,1fr)}.arex-insight-item strong{font-size:14px}}
+
 /* V9.6.3 analytics center */
 .arex-v9-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr)); gap:16px; margin-top:16px;}
 #v9Heat,#v9Drill{grid-column:1/-1;}
@@ -1491,6 +1537,8 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
 .v9-hc.low{border:1px dashed var(--muted); opacity:.75;}
 .v9-hc:focus-visible{outline:2px solid var(--gold); outline-offset:1px;}
 .v9-find{border:1px solid var(--border); border-radius:12px; padding:10px 12px; margin-bottom:8px; display:flex; flex-direction:column; gap:4px;}
+.v9-kb-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0}.v9-kb-summary>div{border:1px solid var(--border);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:5px;background:var(--card,transparent)}.v9-kb-summary b{font-size:22px;line-height:1.2}.v9-kb-summary span{font-size:11px;color:var(--muted)}.v9-rule-filters{display:grid;grid-template-columns:minmax(0,1.5fr) repeat(2,minmax(150px,.7fr));gap:10px;margin-top:14px}.v9-rule-filters label{min-width:0}.v9-rule-filters .txt-input{width:100%;min-width:0}
+@media(max-width:760px){.v9-kb-summary{grid-template-columns:repeat(2,minmax(0,1fr))}.v9-rule-filters{grid-template-columns:minmax(0,1fr)}}
 .v9-find-h{display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;}
 .v9-find-b{font-size:12px;} .v9-muted{opacity:.7;}
 .v9-score{font-size:42px; font-weight:800; line-height:1.1;} .v9-score small{font-size:14px; opacity:.6;}
@@ -1503,11 +1551,72 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
 .v9-guard{border:1px solid var(--border); border-radius:12px; padding:10px 12px; margin-top:12px; display:flex; flex-direction:column; gap:8px;}
 .v9-guard-row{display:flex; flex-direction:column; gap:4px; font-size:12px;}
 .v9-guard-row > span:first-child{font-weight:600;}
-</style>
+
+/* Phase 15 — trade journal usability */
+.arex-journal-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.arex-journal-filters{display:grid;grid-template-columns:minmax(220px,2fr) repeat(3,minmax(130px,1fr)) auto;gap:10px;align-items:end;padding:14px;margin:12px 0 8px;border:1px solid var(--border);border-radius:14px;background:var(--surface-2,rgba(128,128,128,.035))}
+.arex-journal-filters label{display:flex;flex-direction:column;gap:6px;min-width:0;font-size:11px;color:var(--muted)}
+.arex-journal-filters .txt-input{width:100%;min-width:0;min-height:40px}
+.arex-journal-filter-summary{font-size:11px;color:var(--muted);padding:4px 2px 10px}
+.arex-journal-reset{white-space:nowrap;min-height:40px}
+.arex-journal-history #tradesList{display:grid;gap:10px}
+.arex-journal-history #tradesList .entry-card{border:1px solid var(--border);border-radius:14px;padding:14px;background:var(--card-bg,transparent);gap:14px;transition:border-color .15s ease}
+.arex-journal-history #tradesList .entry-card:hover{border-color:var(--accent,var(--blue,#579dff))}
+.arex-journal-history #tradesList .entry-card .meta{line-height:1.8}
+.arex-journal-history #tradesList .entry-card .body{font-size:14px;line-height:1.8}
+.arex-journal-history #tradesList .trade-edit-btn,.arex-journal-history #tradesList .del-x{min-height:34px}
+@media(max-width:900px){.arex-journal-filters{grid-template-columns:repeat(2,minmax(0,1fr))}.arex-journal-search{grid-column:1/-1}.arex-journal-reset{width:100%}}
+@media(max-width:520px){.arex-journal-filters{grid-template-columns:1fr;padding:10px}.arex-journal-search{grid-column:auto}.arex-journal-heading{align-items:flex-start}.arex-journal-history #tradesList .entry-card{padding:11px;gap:8px}}
+@media(prefers-reduced-motion:reduce){.arex-journal-history #tradesList .entry-card{transition:none}}
+
+
+/* Phase 18 — risk decision support */
+.arex-risk-decision{margin:14px 0 16px;padding:18px;border:1px solid var(--border);border-radius:16px;background:var(--panel);}
+.arex-risk-decision-head{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;margin-bottom:14px}
+.arex-risk-decision-head h3{margin:0;font-size:16px}.arex-risk-decision-head p{margin:6px 0 0;color:var(--muted);font-size:11px;line-height:1.8;max-width:720px}
+.arex-risk-status{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;font-size:11px;font-weight:700;background:var(--panel-alt);color:var(--muted)}
+.arex-risk-status.review{color:var(--gold);border:1px solid color-mix(in srgb,var(--gold) 30%,transparent)}.arex-risk-status.stop{color:var(--red);border:1px solid color-mix(in srgb,var(--red) 30%,transparent)}.arex-risk-status.ok{color:var(--green);border:1px solid color-mix(in srgb,var(--green) 30%,transparent)}
+.arex-risk-decision-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.arex-risk-check{padding:13px;border:1px solid var(--border);border-radius:12px;min-width:0}.arex-risk-check b{display:block;font-size:12px;margin-bottom:5px}.arex-risk-check strong{display:block;font-size:18px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}.arex-risk-check small{display:block;color:var(--muted);font-size:10px;line-height:1.7;margin-top:5px}.arex-risk-decision-note{margin-top:12px;padding:10px 12px;border-right:3px solid var(--accent-soft);border-radius:8px;background:var(--panel-alt);font-size:11px;line-height:1.9;color:var(--muted)}
+@media(max-width:720px){.arex-risk-decision-grid{grid-template-columns:1fr}.arex-risk-check{display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:center}.arex-risk-check b{margin:0}.arex-risk-check strong{grid-column:2;grid-row:1/3}.arex-risk-check small{margin:0}}
+
+/* Phase 19 — psychology journal clarity */
+#view-psych .psych-insights{border:1px solid rgba(var(--accent-rgb),.22);background:linear-gradient(135deg,rgba(var(--accent-rgb),.055),transparent 70%)}
+#view-psych .psych-metric{font-size:clamp(20px,2.4vw,28px);font-weight:750;color:var(--text);padding:8px 0;overflow-wrap:anywhere}
+#view-psych .psych-metric-label{font-size:15px;line-height:1.7}
+#view-psych #psychInsightNote{margin:0;line-height:1.9}
+@media(max-width:640px){#view-psych .psych-insights .form-grid{grid-template-columns:1fr 1fr}#view-psych .psych-insights .form-grid>div:last-child{grid-column:1/-1}}
+@media(prefers-reduced-motion:reduce){#view-psych *{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+/* Prop-firm tracker Phase 23 */
+.pf-overview{margin-bottom:16px}.pf-overview-grid,.pf-metric-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.pf-overview-item,.pf-metric{min-width:0;padding:13px;border:1px solid var(--border,rgba(128,128,128,.22));border-radius:12px;background:var(--surface-2,rgba(128,128,128,.05));display:flex;flex-direction:column;gap:6px}.pf-overview-item span,.pf-metric span,.pf-overview-item small,.pf-metric small{color:var(--muted);font-size:12px;line-height:1.6}.pf-overview-item strong,.pf-metric strong{font-size:clamp(16px,2vw,22px);overflow-wrap:anywhere}.pf-metric-grid{margin:14px 0;grid-template-columns:repeat(4,minmax(0,1fr))}.pf-positive{color:var(--green)}.pf-negative{color:var(--red)}.pf-progress-group{display:grid;gap:12px;margin:12px 0}.pf-progress-group .ch-bar-track{overflow:hidden}.pf-progress-group .ch-bar-track i{display:block;height:100%;max-width:100%;border-radius:inherit}.pf-alert{padding:11px 13px;margin-top:12px;border-radius:10px;border:1px solid var(--border,rgba(128,128,128,.25));font-size:12px;line-height:1.8}.pf-alert.warning{border-color:var(--red, #d44);background:rgba(210,65,65,.07)}.pf-alert ul{margin:6px 0 0;padding-inline-start:20px}.pf-alert.neutral{color:var(--muted)}.pf-actions{justify-content:flex-start;flex-wrap:wrap;margin-top:14px}.pf-actions .btn,.pf-actions .del-x{min-height:38px}
+@media(max-width:900px){.pf-overview-grid,.pf-metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.pf-overview-grid,.pf-metric-grid{grid-template-columns:1fr}.pf-overview-item,.pf-metric{padding:11px}.pf-actions>*{flex:1 1 100%}.pf-actions .del-x{width:100%}.pf-progress-group .ch-bar-lbl{gap:8px;align-items:flex-start}.pf-progress-group .ch-bar-lbl span:last-child{text-align:end;overflow-wrap:anywhere}}
+
+    .daily-evidence-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0}
+    .daily-evidence-metric{border:1px solid var(--border,rgba(128,145,170,.22));border-radius:12px;padding:11px 12px;min-width:0}
+    .daily-evidence-metric span{display:block;font-size:12px;opacity:.78;margin-bottom:5px}.daily-evidence-metric b{font-size:18px;overflow-wrap:anywhere}
+    .daily-action-callout{border-inline-start:3px solid var(--accent,#4f8cff);padding:12px 14px;margin:12px 0;border-radius:8px;background:var(--surface-2,rgba(100,130,180,.08))}
+    .daily-action-callout small{display:block;opacity:.72;margin-top:5px}
+    @media(max-width:700px){.daily-evidence-summary{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Markazi+Text:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="arex-reference-ui.css">
+
+<style id="arex-phase6-14-quality-pass">
+/* Phase 6–14: conservative cross-view polish; no data model changes. */
+:where(button, a, input, select, textarea, [tabindex]:not([tabindex="-1"])):focus-visible{outline:2px solid var(--accent,#4b9ce2)!important;outline-offset:3px!important}
+:where(button, a, input, select, textarea){touch-action:manipulation}
+:where(button, .btn){min-height:32px}
+:where(table){max-width:100%;border-collapse:separate;border-spacing:0}
+:where(th,td){overflow-wrap:anywhere}
+:where(.modal-content,.modal,.arex-modal,.dialog){overscroll-behavior:contain}
+:where(.modal-content,.modal,.arex-modal,.dialog,[role="dialog"]){max-height:min(90dvh,900px);overflow:auto}
+:where(.card, .section-title, .section-sub, .muted, small){overflow-wrap:anywhere}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+@media(max-width:560px){:where(input,select,textarea){max-width:100%;min-width:0}:where(.modal-content,.modal,.arex-modal,.dialog,[role="dialog"]){max-height:calc(100dvh - 16px)}}
+</style>
 </head>
 <body>
 
@@ -1538,7 +1647,7 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
 <aside class="sidebar" id="sidebar">
   <div class="brand" id="brandMenuToggle" role="button" tabindex="0" aria-label="باز و بسته کردن منوی AREX" title="برای باز و بسته کردن منو کلیک کن">
     <div class="brand-mark"><img src="icon-192.png" alt="لوگوی AREX" width="34" height="34" decoding="async"></div>
-    <div class="brand-text"><b>AREX</b><span data-i18n="brand.sub">V9.6.3 · دستیار معاملاتی هوشمند</span></div>
+    <div class="brand-text"><b>AREX</b><span data-i18n="brand.sub">V9.6.4 · دستیار معاملاتی هوشمند</span></div>
   </div>
   <label class="nav-search" for="navSearch">
     <span class="nav-search-icon" aria-hidden="true">⌕</span>
@@ -1652,9 +1761,46 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
       </section>
       <div id="arexDashboardWarnings" class="arex-dashboard-warnings" aria-live="polite">وضعیت کنترل‌ها بر اساس اطلاعات محلی است؛ نبود هشدار ثبت‌شده به معنی تأیید ایمنی معامله نیست.</div>
       <section class="card arex-next-step-card" id="arexDashboardCoach" aria-live="polite">
-        <div class="arex-next-step-icon">✦</div><div class="arex-next-step-copy"><div class="section-title">قدم بعدی پیشنهادی آرکس</div><p id="arexDashboardCoachText">در حال بررسی وضعیت ثبت‌شده…</p></div>
+        <div class="arex-next-step-icon">✦</div><div class="arex-next-step-copy"><div class="arex-coach-heading"><div class="section-title">قدم بعدی پیشنهادی آرکس</div><span class="arex-evidence-badge" id="arexCoachPriority">در حال بررسی</span></div><p id="arexDashboardCoachText">در حال بررسی وضعیت ثبت‌شده…</p>
+          <details class="arex-evidence-details" id="arexCoachWhy"><summary>چرا این پیشنهاد؟</summary><div id="arexCoachEvidence">پیشنهاد بر اساس داده‌های ثبت‌شده آماده می‌شود.</div></details>
+          <div class="arex-coach-motivation" id="arexCoachMotivation"><b>یادآوری امروز</b><span id="arexCoachMotivationText">پیشرفت را با کیفیت تصمیم‌ها و پایبندی به فرایند بسنج، نه فقط نتیجه یک معامله.</span></div>
+        </div>
         <button type="button" class="btn ghost" id="arexOpenCoach">گفت‌وگو با آرکس</button>
       </section>
+      <section class="arex-dashboard-insights" id="arexDashboardInsights" aria-label="تحلیل تصمیم‌گیری روزانه">
+        <article class="card arex-insight-card" id="arexMainMistakeCard">
+          <div class="arex-insight-head"><div><div class="section-title">مهم‌ترین اشتباه ثبت‌شده</div><div class="section-sub">بر اساس برچسب‌هایی که در ژورنال ثبت کرده‌ای</div></div><span class="arex-evidence-badge" id="arexMistakeEvidenceBadge">نیازمند داده</span></div>
+          <div class="arex-insight-primary" id="arexMainMistakeTitle">هنوز داده کافی نیست</div>
+          <p class="arex-insight-detail" id="arexMainMistakeDetail">برای شناسایی الگوی تکراری، اشتباهات را هنگام ثبت معاملات علامت بزن.</p>
+          <details class="arex-evidence-details" id="arexMistakeEvidence"><summary>چرا این نتیجه؟</summary><div id="arexMistakeEvidenceBody">پس از ثبت معاملات دارای برچسب اشتباه، شواهد این بخش نمایش داده می‌شود.</div></details>
+          <div class="arex-insight-actions"><button class="btn ghost" type="button" id="arexViewMistakeTrades">بررسی معاملات مرتبط</button><button class="btn ghost" type="button" id="arexViewPsychJournal">ژورنال روان‌شناسی</button></div>
+        </article>
+        <article class="card arex-insight-card" id="arexTradeReadinessCard">
+          <div class="arex-insight-head"><div><div class="section-title">امروز معامله کنم؟</div><div class="section-sub">ارزیابی آمادگی، نه پیش‌بینی نتیجه بازار</div></div><span class="arex-readiness-badge" id="arexReadinessBadge">نیازمند بررسی</span></div>
+          <div class="arex-insight-primary" id="arexReadinessTitle">اول برنامه روزانه را بررسی کن</div>
+          <p class="arex-insight-detail" id="arexReadinessDetail">تا زمانی که برنامه، وضعیت روانی و محدودیت‌های ریسک روشن نباشند، آمادگی امروز قابل تأیید نیست.</p>
+          <ul class="arex-readiness-list" id="arexReadinessChecks"><li>برنامه معاملاتی امروز</li><li>وضعیت روانی</li><li>محدودیت‌های ریسک</li></ul>
+          <div class="arex-insight-actions"><button class="btn" type="button" id="arexOpenDailyPlan">بررسی برنامه امروز</button><button class="btn ghost" type="button" id="arexOpenRiskPage">مدیریت ریسک</button></div>
+        </article>
+      </section>
+      <section class="arex-dashboard-performance" id="arexDashboardPerformance" aria-label="روند عملکرد و معاملات اخیر">
+        <article class="card arex-performance-card">
+          <div class="arex-insight-head"><div><div class="section-title">روند عملکرد</div><div class="section-sub" id="arexDashPerformanceSub">فقط نتایج مالی ثبت‌شده در ژورنال</div></div><label class="arex-dash-period"><span class="sr-only">بازه روند عملکرد</span><select id="arexDashPerformancePeriod" class="txt-input" aria-label="بازه روند عملکرد"><option value="7">۷ روز</option><option value="30" selected>۳۰ روز</option><option value="90">۹۰ روز</option><option value="all">تمام دوره</option></select></label></div>
+          <div id="arexDashPerformanceChart" class="arex-dash-chart"><div class="arex-empty-state"><b>هنوز داده‌ای برای نمایش نیست</b><p>با ثبت نتایج عددی معاملات، روند اینجا نمایش داده می‌شود.</p></div></div>
+          <div class="arex-dash-chart-foot" id="arexDashPerformanceFoot">این نمودار، سود و زیان تجمعی معاملات دارای P/L را نشان می‌دهد؛ موجودی اولیه در آن لحاظ نشده است.</div>
+        </article>
+        <article class="card arex-performance-card">
+          <div class="arex-insight-head"><div><div class="section-title">روند اشتباهات ثبت‌شده</div><div class="section-sub">تعداد برچسب‌های اشتباه در بازه انتخاب‌شده</div></div><span class="arex-evidence-badge" id="arexDashMistakeTrendBadge">نیازمند داده</span></div>
+          <div id="arexDashMistakeTrend" class="arex-mistake-trend"><div class="arex-empty-state"><b>هنوز برچسبی ثبت نشده</b><p>اشتباه‌ها را در ژورنال علامت بزن تا روندشان قابل بررسی شود.</p></div></div>
+          <div class="arex-mistake-analysis" id="arexDashMistakeAnalysis" aria-live="polite"><div class="arex-empty-state"><b>تحلیل تعاملی اشتباه‌ها</b><p>با ثبت برچسب‌ها، فراوانی، اثر مالی ثبت‌شده و تغییر نسبت به بازه قبلی اینجا نمایش داده می‌شود.</p></div></div>
+          <div class="arex-dash-chart-foot">فراوانی، جمع P/L معاملات برچسب‌خورده و تغییر تعداد بین دو بازه، معیارهای جداگانه‌اند و هیچ‌کدام به‌تنهایی رابطه علت‌ومعلولی را ثابت نمی‌کنند.</div>
+        </article>
+        <article class="card arex-performance-card arex-recent-trades-card">
+          <div class="arex-insight-head"><div><div class="section-title">آخرین معاملات</div><div class="section-sub">نمای سریع از تازه‌ترین ردیف‌های ژورنال</div></div><button type="button" class="btn ghost" id="arexDashAllTrades">مشاهده ژورنال</button></div>
+          <div id="arexDashRecentTrades" class="arex-recent-trades"><div class="empty">هنوز معامله‌ای ثبت نشده است.</div></div>
+        </article>
+      </section>
+
       <section class="card" id="dashboardTvCalendar">
         <div class="tv-mini-head"><div><div class="section-title">تقویم اقتصادی</div><div class="section-sub">منبع نمایش را انتخاب کن؛ برای فید شخصی، ابتدا آدرس آن را در بخش تقویم ثبت کن.</div></div><div class="arex-dash-cal-actions"><select id="dashboardCalendarSource" class="txt-input" aria-label="منبع تقویم داشبورد"><option value="freeapi">تقویم رایگان AREX</option><option value="tradingview">TradingView</option><option value="feed">فید شخصی من</option></select><button class="btn ghost" type="button" id="openFullCalendar">نمایش کامل</button></div></div>
         <div class="tv-mini-body" id="dashboardTvWrap"><div class="empty">در حال بارگذاری تقویم TradingView…</div></div>
@@ -1976,8 +2122,16 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
         <div id="mistakeBreakdown" style="margin-top:10px;"></div>
         <div id="newsBreakdown" style="margin-top:10px;"></div>
       </div>
-      <div class="card">
-        <div class="section-title" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;"><span>تاریخچه معاملات</span><button class="btn ghost" id="openImportBtn" type="button" style="padding:6px 12px; font-size:12px;" data-v9="imp.btn"></button></div>
+      <div class="card arex-journal-history">
+        <div class="section-title arex-journal-heading"><div><span>تاریخچه معاملات</span><div class="section-sub">معامله‌ها را جست‌وجو و فیلتر کن؛ فیلترها فقط نمایش را تغییر می‌دهند و داده‌ای را حذف نمی‌کنند.</div></div><button class="btn ghost" id="openImportBtn" type="button" style="padding:6px 12px; font-size:12px;" data-v9="imp.btn"></button></div>
+        <div class="arex-journal-filters" role="search" aria-label="جست‌وجو و فیلتر تاریخچه معاملات">
+          <label class="arex-journal-search"><span>جست‌وجو</span><input class="txt-input" id="arexTradeSearch" type="search" placeholder="نماد، ستاپ، یادداشت یا برچسب…" autocomplete="off"></label>
+          <label><span>نتیجه</span><select class="txt-input" id="arexTradeOutcome"><option value="all">همه نتایج</option><option value="win">سودده</option><option value="loss">زیان‌ده</option><option value="flat">سربه‌سر</option><option value="missing">بدون نتیجه R</option></select></label>
+          <label><span>جهت</span><select class="txt-input" id="arexTradeDirection"><option value="all">خرید و فروش</option><option value="buy">خرید</option><option value="sell">فروش</option></select></label>
+          <label><span>بازه تاریخ</span><select class="txt-input" id="arexTradePeriod"><option value="all">تمام دوره</option><option value="7">۷ روز اخیر</option><option value="30">۳۰ روز اخیر</option><option value="90">۹۰ روز اخیر</option></select></label>
+          <button class="btn ghost arex-journal-reset" type="button" id="arexTradeReset">پاک‌کردن فیلترها</button>
+        </div>
+        <div id="arexTradeFilterSummary" class="arex-journal-filter-summary" aria-live="polite"></div>
         <div id="tradesList"></div>
       </div>
     </section>
@@ -2009,12 +2163,25 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
         </div>
       </div>
       <div class="modal-actions" style="justify-content:space-between;margin-top:14px;"><span id="dailySaveStatus" class="muted-small">اطلاعات روی همین دستگاه ذخیره می‌شود.</span><button class="btn" id="saveDailyReviewBtn">ذخیره گزارش روزانه</button></div>
-      <div class="card strategy-insights-card" style="margin-top:16px;"><div class="section-title">🧭 تحلیل و نکته‌های AREX</div><div class="section-sub">فعلاً بر اساس ژورنال و قوانین عمومی تحلیل می‌کند؛ تحلیل اختصاصی استراتژی پس از دریافت فایل استراتژی تو تکمیل می‌شود.</div><div id="assistantInsights"></div></div>
+      <div class="card strategy-insights-card" style="margin-top:16px;"><div class="section-title">🧭 مرور شواهد و پیشنهاد قدم بعدی AREX</div><div class="section-sub">پیشنهادها فقط از اطلاعات ثبت‌شده ساخته می‌شوند؛ همبستگی یا تکرار به‌تنهایی علت را ثابت نمی‌کند و این بخش سیگنال ورود نیست.</div><div id="dailyEvidenceSummary" class="daily-evidence-summary" aria-live="polite"></div><div id="assistantInsights"></div><div class="arex-quick-links" style="margin-top:12px"><button type="button" class="btn ghost" data-arex-go="roadmap">برنامه امروز</button><button type="button" class="btn ghost" data-arex-go="trades">بازبینی معاملات</button><button type="button" class="btn ghost" data-arex-go="analytics">تحلیل عملکرد</button><button type="button" class="btn ghost" data-arex-go="goals">اهداف و قوانین</button><button type="button" class="btn ghost" data-arex-go="psych">مرور روان‌شناسی</button></div></div>
       <div class="card" style="margin-top:16px;"><div class="section-title">گزارش‌های قبلی</div><div id="dailyHistory"></div></div>
+      <div class="card phase28-actions-card" style="margin-top:16px;"><div class="section-title">🧩 تاریخچه اقدامات اصلاحی</div><div class="section-sub">اقدام‌هایی که در گزارش پایان روز ثبت می‌کنی، اینجا برای پیگیری نگهداری می‌شوند. ثبت اقدام به معنی انجام‌شدن آن نیست؛ وضعیت انجام را جداگانه تأیید کن.</div><div id="correctiveActionHistory" aria-live="polite"><div class="empty">هنوز اقدامی ثبت نشده است.</div></div></div>
     </section>
 
     <!-- PSYCH -->
     <section class="view" id="view-psych">
+      <div class="card psych-insights" style="margin-bottom:16px;">
+        <div class="section-title">🧭 مرور الگوهای روان‌شناختی</div>
+        <div class="section-sub">این خلاصه فقط یادداشت‌های ثبت‌شده را توصیف می‌کند؛ به‌تنهایی علت نتیجه معاملات یا آمادگی برای معامله را اثبات نمی‌کند.</div>
+        <div class="form-grid" style="margin-top:12px;">
+          <div><div class="field-lbl">یادداشت‌های ۳۰ روز اخیر</div><div class="psych-metric" id="psychMetricCount">—</div></div>
+          <div><div class="field-lbl">میانگین پایبندی ثبت‌شده</div><div class="psych-metric" id="psychMetricRating">—</div></div>
+          <div><div class="field-lbl">حال‌وهوای پرتکرار</div><div class="psych-metric psych-metric-label" id="psychMetricMood">—</div></div>
+        </div>
+        <div class="field-lbl" style="margin-top:14px;">نکته قابل مرور</div>
+        <p id="psychInsightNote" class="section-sub" role="status" aria-live="polite">با ثبت چند یادداشت، خلاصه‌ای محتاطانه از داده‌ها نمایش داده می‌شود.</p>
+        <div class="modal-actions" style="justify-content:flex-start;"><button class="btn ghost" type="button" id="psychShowRecent">نمایش یادداشت‌های اخیر</button></div>
+      </div>
       <div class="card" style="margin-bottom:16px;">
         <div class="section-title">🧾 ثبت وضعیت روان‌شناسی معامله‌گری</div>
         <div class="form-grid">
@@ -2047,6 +2214,11 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
 
     <!-- GOALS -->
     <section class="view" id="view-goals">
+      <div class="card phase29-workflow-card" style="margin-bottom:16px;">
+        <div class="section-title">🔗 مسیر کاری AREX</div>
+        <div class="section-sub">از برنامه‌ریزی به اجرا، ثبت شواهد و مرور نتیجه برو؛ هر بخش منبع داده خودش را حفظ می‌کند و اطلاعات به‌صورت خودکار کپی یا بازنویسی نمی‌شوند.</div>
+        <div class="arex-quick-links"><button type="button" class="btn ghost" data-arex-go="roadmap">۱. برنامه روزانه</button><button type="button" class="btn ghost" data-arex-go="trades">۲. ژورنال معاملات</button><button type="button" class="btn ghost" data-arex-go="daily">۳. گزارش پایان روز</button><button type="button" class="btn ghost" data-arex-go="analytics">۴. تحلیل عملکرد</button><button type="button" class="btn ghost" data-arex-go="path">۵. مسیر انضباط</button></div>
+      </div>
       <div class="card weekly-goal-card">
         <div class="section-title">🎯 هدف این هفته</div>
         <div class="section-sub">این بخش هر هفته خودکار خالی می‌شود — یک هدف کوچک و مشخص فقط برای همین هفته بنویس</div>
@@ -2061,9 +2233,11 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
           <div class="section-title">🎯 اهداف من</div>
           <div class="section-sub">اهداف کوتاه‌مدت و بلندمدت مسیر معامله‌گری</div>
           <div id="goalsList"></div>
-          <div style="display:flex; gap:8px; margin-top:10px; flex-wrap:wrap;">
-            <input class="txt-input" id="newGoalInput" placeholder="هدف جدید..." style="flex:1; min-width:140px;">
-            <button class="btn ghost" id="addGoalBtn">افزودن</button>
+          <div class="v25-goal-form">
+            <label>عنوان هدف<input class="txt-input" id="newGoalInput" placeholder="مثلاً: مرور ۲۰ معامله اخیر"></label>
+            <label>اقدام بعدی<input class="txt-input" id="newGoalAction" placeholder="اولین قدم قابل انجام"></label>
+            <div class="v25-goal-fields"><label>مقدار هدف<input class="txt-input" id="newGoalTarget" type="number" min="0" step="any" placeholder="اختیاری"></label><label>مقدار فعلی<input class="txt-input" id="newGoalCurrent" type="number" min="0" step="any" value="0"></label><label>واحد<input class="txt-input" id="newGoalUnit" maxlength="18" placeholder="معامله، روز..."></label><label>مهلت<input class="txt-input" id="newGoalDue" type="date"></label></div>
+            <button class="btn ghost" id="addGoalBtn">افزودن هدف قابل‌اندازه‌گیری</button>
           </div>
         </div>
         <div class="card">
@@ -2128,7 +2302,7 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
 
         <div id="calPaneFreeApi" style="display:none;">
           <div class="section-sub">تقویم اقتصادی از Finance Calendar API؛ رویدادها و زمان‌ها با منطقه زمانی تهران نمایش داده می‌شوند. داده‌ها برای تصمیم معاملاتی باید با منبع رسمی رویداد بررسی شوند.</div>
-          <div class="arex-calendar-toolbar"><div id="fcApiStatus" role="status">تقویم برای دریافت رویدادها آماده است.</div><button class="btn ghost" type="button" id="fcApiRefresh">↻ بروزرسانی</button></div><div class="fc-calendar-filters"><input id="fcSearch" type="search" placeholder="جست‌وجوی رویداد یا کشور…" aria-label="جست‌وجوی رویداد"><select id="fcCountryFilter" aria-label="فیلتر کشور"><option value="all">همه کشورها</option><option value="US">USD · آمریکا</option><option value="EU">EUR · منطقه یورو</option><option value="DE">EUR · آلمان</option><option value="GB">GBP · بریتانیا</option><option value="JP">JPY · ژاپن</option><option value="CA">CAD · کانادا</option><option value="AU">AUD · استرالیا</option><option value="CH">CHF · سوئیس</option><option value="NZ">NZD · نیوزیلند</option><option value="NO">NOK · نروژ</option><option value="SE">SEK · سوئد</option><option value="CN">CNY · چین</option></select><div class="chip-row"><button class="chip active" data-fc-impact="all">همه اهمیت‌ها</button><button class="chip" data-fc-impact="high">🔴 بالا</button><button class="chip" data-fc-impact="medium">🟠 متوسط</button></div></div>
+          <div class="arex-calendar-toolbar"><div id="fcApiStatus" role="status">تقویم برای دریافت رویدادها آماده است.</div><button class="btn ghost" type="button" id="fcApiRefresh">↻ بروزرسانی</button></div><div class="fc-calendar-filters"><input id="fcSearch" type="search" placeholder="جست‌وجوی رویداد یا کشور…" aria-label="جست‌وجوی رویداد"><select id="fcRangeFilter" aria-label="بازه زمانی رویداد"><option value="7d">۷ روز آینده</option><option value="24h">۲۴ ساعت آینده</option><option value="30d">۳۰ روز آینده</option><option value="all">تمام داده‌های دریافتی</option></select><select id="fcCountryFilter" aria-label="فیلتر کشور"><option value="all">همه کشورها</option><option value="US">USD · آمریکا</option><option value="EU">EUR · منطقه یورو</option><option value="DE">EUR · آلمان</option><option value="GB">GBP · بریتانیا</option><option value="JP">JPY · ژاپن</option><option value="CA">CAD · کانادا</option><option value="AU">AUD · استرالیا</option><option value="CH">CHF · سوئیس</option><option value="NZ">NZD · نیوزیلند</option><option value="NO">NOK · نروژ</option><option value="SE">SEK · سوئد</option><option value="CN">CNY · چین</option></select><div class="chip-row"><button class="chip active" data-fc-impact="all">همه اهمیت‌ها</button><button class="chip" data-fc-impact="high">🔴 بالا</button><button class="chip" data-fc-impact="medium">🟠 متوسط</button></div></div>
           <div id="fcApiEvents" class="fc-api-events"><div class="empty">رویدادها هنوز دریافت نشده‌اند.</div></div>
           <div class="fc-attribution">منبع داده: <a href="https://www.financecalendar.com" target="_blank" rel="noopener noreferrer">Finance Calendar</a> · داده رایگان با ذکر منبع. پوشش شامل رویدادهای مهم اقتصادهای اصلی است و تمام اخبار جهان/سخنرانی‌ها را تضمین نمی‌کند.</div>
         </div>
@@ -2220,9 +2394,22 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
       </div>
       <div class="card" style="margin-bottom:16px;">
         <div class="section-title">آمار بک‌تست</div>
+        <div class="section-sub">آمار بر اساس فیلترهای انتخاب‌شده و R خالص پس از کسر هزینه ثبت‌شده محاسبه می‌شود.</div>
+        <div id="btEvidenceNotice" class="arex-bt-evidence" role="status"></div>
         <div class="trade-stats" id="btStats"></div>
+        <div id="btSetupInsights" class="arex-bt-setup-insights"></div>
       </div>
-      <div class="card"><div class="section-title">تاریخچه بک‌تست</div><div id="btList"></div></div>
+      <div class="card"><div class="section-title">تاریخچه بک‌تست</div>
+        <div class="arex-filter-row arex-bt-filters">
+          <label><span class="field-lbl">جست‌وجو</span><input class="txt-input" id="btSearch" type="search" placeholder="نماد، ستاپ یا یادداشت…" aria-label="جست‌وجوی بک‌تست"></label>
+          <label><span class="field-lbl">ستاپ</span><select class="txt-input" id="btSetupFilter"><option value="all">همه ستاپ‌ها</option></select></label>
+          <label><span class="field-lbl">تایم‌فریم</span><select class="txt-input" id="btTimeframeFilter"><option value="all">همه تایم‌فریم‌ها</option><option>M1</option><option>M5</option><option>M15</option><option>H1</option><option>H4</option><option>D1</option></select></label>
+          <label><span class="field-lbl">نتیجه</span><select class="txt-input" id="btOutcomeFilter"><option value="all">همه نتایج</option><option value="win">سودده</option><option value="loss">زیان‌ده</option><option value="breakeven">سربه‌سر</option><option value="missing">بدون نتیجه</option></select></label>
+          <button class="btn ghost" type="button" id="btClearFilters">پاک‌کردن فیلترها</button>
+        </div>
+        <div id="btResultCount" class="section-sub" aria-live="polite"></div>
+        <div id="btList"></div>
+      </div>
     </section>
 
     <!-- PROP FIRM CHALLENGE TRACKER -->
@@ -2238,6 +2425,11 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
           <div><div class="field-lbl">روزهای باقی‌مانده</div><input class="txt-input" id="pfDaysLeft" type="number" step="1"></div>
         </div>
         <div class="modal-actions"><button class="btn" id="addChallengeBtn">افزودن چالش</button></div>
+      </div>
+      <div class="pf-overview card" id="propFirmOverview" aria-live="polite">
+        <div class="section-title">📊 نمای کلی چالش‌ها</div>
+        <div class="section-sub">خلاصه از چالش‌های ثبت‌شده روی همین دستگاه؛ اطلاعات از شرکت پراپ یا حساب زنده دریافت نمی‌شود.</div>
+        <div class="pf-overview-grid" id="propFirmOverviewGrid"></div>
       </div>
       <div id="challengesList"></div>
     </section>
@@ -2271,8 +2463,8 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
       </div>
       <div class="arex-kpi-grid" id="arexRoadmapSummary"></div>
       <div class="arex-roadmap-layout">
-        <section class="card"><div class="section-title">مراحل روز معاملاتی</div><div class="section-sub">وضعیت هر مورد روی همین دستگاه و برای تاریخ امروز ذخیره می‌شود.</div><div id="arexRoadmapTasks" class="arex-task-list"></div><div class="arex-roadmap-progress"><div><span>پیشرفت امروز</span><b id="arexRoadmapProgressText">۰٪</b></div><div class="arex-progress-track"><i id="arexRoadmapProgressBar"></i></div></div></section>
-        <section class="card"><div class="section-title">یادداشت برنامه امروز</div><div class="section-sub">سناریو، محدودیت‌ها و نکته‌ای که می‌خواهی پیش از شروع به یاد داشته باشی.</div><label class="field-lbl" for="arexRoadmapNote">یادداشت</label><textarea id="arexRoadmapNote" rows="7" placeholder="مثلاً: فقط ستاپ‌های تأییدشده؛ در نبود شرایط مناسب، معامله نکردن هم انتخاب معتبر است."></textarea><button type="button" class="btn" id="arexRoadmapSaveNote">ذخیره یادداشت</button><div class="arex-quick-links"><button type="button" class="btn ghost" data-arex-go="calendar">مرور تقویم اقتصادی</button><button type="button" class="btn ghost" data-arex-go="risk">بررسی ریسک</button><button type="button" class="btn ghost" data-arex-go="trades">ثبت معامله</button></div></section>
+        <section class="card"><div class="section-title">مراحل روز معاملاتی</div><div class="section-sub">وضعیت هر مورد روی همین دستگاه و برای تاریخ امروز ذخیره می‌شود.</div><div class="v25-readiness-note"><b>نکته مهم:</b> درصد تکمیل این چک‌لیست فقط میزان انجام مراحل را نشان می‌دهد؛ به معنی آمادگی روانی، معتبر بودن ستاپ یا مجاز بودن ورود به معامله نیست. این موارد باید جداگانه بررسی شوند.</div><div id="arexRoadmapTasks" class="arex-task-list"></div><div class="arex-roadmap-progress"><div><span>پیشرفت امروز</span><b id="arexRoadmapProgressText">۰٪</b></div><div class="arex-progress-track"><i id="arexRoadmapProgressBar"></i></div></div></section>
+        <section class="card"><div class="section-title">یادداشت برنامه امروز</div><div class="section-sub">سناریو، محدودیت‌ها و نکته‌ای که می‌خواهی پیش از شروع به یاد داشته باشی.</div><label class="field-lbl" for="arexRoadmapNote">یادداشت</label><textarea id="arexRoadmapNote" rows="7" placeholder="مثلاً: فقط ستاپ‌های تأییدشده؛ در نبود شرایط مناسب، معامله نکردن هم انتخاب معتبر است."></textarea><button type="button" class="btn" id="arexRoadmapSaveNote">ذخیره یادداشت</button><div class="arex-quick-links"><button type="button" class="btn ghost" data-arex-go="calendar">مرور تقویم اقتصادی</button><button type="button" class="btn ghost" data-arex-go="risk">بررسی ریسک</button><button type="button" class="btn ghost" data-arex-go="trades">ثبت معامله</button><button type="button" class="btn ghost" data-arex-go="goals">مرور اهداف</button><button type="button" class="btn ghost" data-arex-go="path">مسیر انضباط</button><button type="button" class="btn ghost" data-arex-go="daily">گزارش پایان روز</button></div></section>
       </div>
     </section>
 
@@ -2298,6 +2490,11 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
     <section class="view arex-workspace-view" id="view-risk">
       <div class="arex-page-hero"><div><div class="eyebrow">CAPITAL PRESERVATION</div><h2>مدیریت ریسک</h2><p>محاسبه حجم فقط با مشخصات واردشده انجام می‌شود. اندازه قرارداد، ارزش پیپ/تیک و تبدیل ارز را با مشخصات واقعی بروکر تطبیق بده؛ مقادیر پیش‌فرض برای همه نمادها دقیق نیستند.</p></div><span class="arex-status-pill warning">! محاسبه وابسته به مشخصات بروکر</span></div>
       <div class="arex-kpi-grid" id="arexRiskSummary"></div>
+      <section class="arex-risk-decision" id="arexRiskDecisionPanel" aria-live="polite">
+        <div class="arex-risk-decision-head"><div><h3>وضعیت ریسک بر اساس داده‌های ثبت‌شده</h3><p>این بررسی فقط ژورنال محلی و محدودیت‌های تنظیم‌شده را می‌خواند؛ به بروکر وصل نیست و ریسک معاملات باز یا افت شناور را لزوماً پوشش نمی‌دهد.</p></div><span class="arex-risk-status review" id="arexRiskDecisionBadge">نیازمند بررسی</span></div>
+        <div class="arex-risk-decision-grid" id="arexRiskDecisionGrid"></div>
+        <div class="arex-risk-decision-note" id="arexRiskDecisionNote">برای ارزیابی دقیق‌تر، موجودی و سقف‌ها را تنظیم کن و نتایج مالی معاملات را کامل ثبت کن.</div>
+      </section>
       <div id="riskCalcMount_risk" class="arex-risk-mount"></div>
       <section class="card" style="margin-top:16px"><div class="section-title">منبع داده و محدودیت‌های محاسبه</div><div class="section-sub">برای جلوگیری از برداشت اشتباه، وضعیت منبع هر مقدار و محدودیت‌های ابزار را جدا از اعداد ریسک ببین.</div><div class="arex-limit-grid"><div class="arex-limit-item"><span>موجودی حساب</span><b>ورود دستی</b></div><div class="arex-limit-item"><span>اتصال بروکر</span><b>تأیید نشده</b></div><div class="arex-limit-item"><span>اندازه قرارداد</span><b>وابسته به نماد</b></div></div><div class="arex-inline-note">این صفحه به‌تنهایی از ثبت معامله جلوگیری نمی‌کند و به حساب بروکر متصل نیست؛ کنترل‌ها و هشدارها بر اساس داده‌های در دسترس برنامه هستند. پیش از استفاده، ارزش پیپ/تیک، اندازه قرارداد، هزینه‌ها و ارز حساب را با مشخصات واقعی بروکر تطبیق بده.</div></section>
     </section>
@@ -2707,6 +2904,8 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
 <script src="js/core/ui-quality.js"></script>
 <script src="js/core/account-storage-policy.js"></script>
 <script src="js/core/analytics.js"></script>
+<script src="js/core/daily-learning.js"></script>
+<script src="js/core/mistake-trends.js"></script>
 <script src="js/core/trade-lifecycle.js"></script>
 <script src="js/core/trade-audit.js"></script>
 <script src="js/core/diagnostic-repair.js"></script>
@@ -2731,6 +2930,7 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
 <script src="js/ui/propguard.js"></script>
 <script src="js/ui/import.js"></script>
 <script src="js/ui/tradeform.js"></script>
+<script src="js/ui/tradeform-ux-phase16.js"></script>
 <script src="js/ui/strategy.js"></script>
 <script src="js/ui/pretrade.js"></script>
 <script>
@@ -2783,6 +2983,7 @@ let state = {
   calendarFeedUrl: "",
   ffCache: { fetchedAt:0, events:[] },
   dailyLogs: {},
+  correctiveActionHistory: [],
   tradingTargets: { day:{}, week:{}, month:{} },
   targetPeriod: 'day',
   weeklyWinrateSnapshots: {},
@@ -3478,7 +3679,7 @@ async function performFlushSave(){
     if(dirty.backtests){ await persistDirtyKey('backtests','backtests',JSON.stringify(state.backtests)); didSave=true; }
     if(dirty.scenarios){ await persistDirtyKey('scenarios','scenarios',JSON.stringify(state.scenarios)); didSave=true; }
     if(dirty.notifLog){ await persistDirtyKey('notifLog','notifLog',JSON.stringify(state.notifLog)); didSave=true; }
-    if(dirty.assistantState){ await persistDirtyKey('assistantState','assistantState',JSON.stringify({dailyLogs:state.dailyLogs,tradingTargets:state.tradingTargets,targetPeriod:state.targetPeriod,weeklyWinrateSnapshots:state.weeklyWinrateSnapshots,assistantReminderDate:state.assistantReminderDate,workspaceState:state.workspaceState||{}})); didSave=true; }
+    if(dirty.assistantState){ await persistDirtyKey('assistantState','assistantState',JSON.stringify({dailyLogs:state.dailyLogs,correctiveActionHistory:state.correctiveActionHistory||[],tradingTargets:state.tradingTargets,targetPeriod:state.targetPeriod,weeklyWinrateSnapshots:state.weeklyWinrateSnapshots,assistantReminderDate:state.assistantReminderDate,workspaceState:state.workspaceState||{}})); didSave=true; }
     if(dirty.settings){ await persistDirtyKey('settings','settings',buildSettingsPayload()); didSave=true; }
     if(didSave && !Object.keys(dirty).some(k=>dirty[k])) toast('ذخیره شد ✓');
   }catch(e){
@@ -3543,7 +3744,7 @@ async function loadAll(){
     const results = await Promise.all(keys.map(k => storage.get(k).catch(()=>null)));
     const [s,t,p,gr,se,ce,ffc,tr,rl,pc,bt,sc,nl,as] = results;
     if(nl && nl.value) state.notifLog = JSON.parse(nl.value);
-    if(as && as.value){ const ax=JSON.parse(as.value); state.workspaceState=ax.workspaceState||state.workspaceState||{dailyPlans:{},behaviorGoals:[],attachments:{},focusMode:false,weeklyReports:[],savedSearches:[]}; state.dailyLogs=ax.dailyLogs||{}; state.tradingTargets=ax.tradingTargets||{day:{},week:{},month:{}}; state.targetPeriod=ax.targetPeriod||'day'; state.weeklyWinrateSnapshots=ax.weeklyWinrateSnapshots||{}; state.assistantReminderDate=ax.assistantReminderDate||''; }
+    if(as && as.value){ const ax=JSON.parse(as.value); state.workspaceState=ax.workspaceState||state.workspaceState||{dailyPlans:{},behaviorGoals:[],attachments:{},focusMode:false,weeklyReports:[],savedSearches:[]}; state.dailyLogs=ax.dailyLogs||{}; state.correctiveActionHistory=Array.isArray(ax.correctiveActionHistory)?ax.correctiveActionHistory:[]; state.tradingTargets=ax.tradingTargets||{day:{},week:{},month:{}}; state.targetPeriod=ax.targetPeriod||'day'; state.weeklyWinrateSnapshots=ax.weeklyWinrateSnapshots||{}; state.assistantReminderDate=ax.assistantReminderDate||''; }
     if(tr && tr.value) state.tradeRules = JSON.parse(tr.value);
     if(rl && rl.value) state.riskLimits = JSON.parse(rl.value);
     if(pc && pc.value) state.propChallenges = JSON.parse(pc.value);
@@ -3656,7 +3857,7 @@ const I18N = {
     'nav.review':"مرورهای زمان‌بندی‌شده", 'nav.trades':"ژورنال معاملات", 'nav.psych':"ژورنال روان‌شناسی",
     'nav.goals':"اهداف و قوانین", 'nav.obsidian':"اتصال به Obsidian", 'nav.calendar':"تقویم اقتصادی", 'nav.path':"مسیر انضباط", 'nav.backtest':"بک‌تست", 'nav.propfirm':"پراپ‌فرم", 'nav.scenarios':"سناریوهای در انتظار", 'nav.settings':"تنظیمات", 'nav.roadmap':'برنامه روزانه', 'nav.assistant':'دستیار معاملاتی', 'nav.risk':'مدیریت ریسک', 'nav.strategy':'استراتژی و قوانین', 'nav.analytics':'تحلیل عملکرد',
     'page.backtestSub':"ثبت و بررسی بک‌تست — کاملاً جدا از معاملات واقعی", 'page.propfirmSub':"پیگیری چالش‌های پراپ‌فرم و سقف‌های ریسک", 'page.scenariosSub':"ایده‌های معاملاتی در انتظار ورود",
-    'brand.sub':"V9.6.3 · دستیار معاملاتی هوشمند", 'tk.title':"قیمت لحظه‌ای تتر", 'tk.refresh':"🔄 بروزرسانی", 'tk.obsidian':"🗒️ ورود به Obsidian", 'tk.sync':"☁️ همگام‌سازی با Drive",
+    'brand.sub':"V9.6.4 · دستیار معاملاتی هوشمند", 'tk.title':"قیمت لحظه‌ای تتر", 'tk.refresh':"🔄 بروزرسانی", 'tk.obsidian':"🗒️ ورود به Obsidian", 'tk.sync':"☁️ همگام‌سازی با Drive",
     'dash.newsSoonTitle':"📰 اخبار مهم ۳ روز آینده", 'dash.sessionTitle':"🕒 نمای هم‌پوشانی سشن‌های فارکس", 'dash.fngTitle':"😨 شاخص ترس و طمع (کریپتو)", 'sync.inprogress':"در حال همگام‌سازی...", 'sync.last':"آخرین همگام‌سازی:",
     'ui.language':'تغییر زبان', 'ui.lesson':"مرحله", 'ui.phase':"حوزه:", 'ui.startSession':"شروع این مرحله", 'ui.allDone':"همه‌ی مراحل این چرخه را تکمیل کرده‌اید!", 'ui.complete':"تکمیل", 'ui.watched':"تکمیل شد",
     'cal.title':'📰 تقویم اقتصادی زنده', 'cal.sub':'اخبار مهم اقتصادی (تأثیرگذار روی فارکس) به‌صورت زنده.', 'cal.tabWidget':'🌐 ویجت زنده (TradingView)', 'cal.tabFeed':'📋 فید شخصی من',
@@ -3882,7 +4083,7 @@ document.getElementById('addRuleBtn').addEventListener('click', ()=>{
       dailyPct: parseFloat(document.getElementById('rlDailyPct').value)||0,
       weeklyPct: parseFloat(document.getElementById('rlWeeklyPct').value)||0
     };
-    queueSave('riskLimits'); updateRiskWarnBanner();
+    queueSave('riskLimits'); updateRiskWarnBanner(); if(typeof renderArexRiskSummary==='function') renderArexRiskSummary();
   });
 });
 function loadRiskLimitInputs(){
@@ -3906,6 +4107,7 @@ function goView(name){
   document.querySelectorAll('.navbtn').forEach(b=>b.classList.toggle('active', b.dataset.view===name));
   document.getElementById('pageTitle').textContent = t('nav.'+name);
   document.getElementById('pageSub').textContent = t('page.'+name+'Sub');
+  document.querySelectorAll('[data-mobile-view]').forEach(b=>b.classList.toggle('active',b.dataset.mobileView===name));
   document.getElementById('sidebar').classList.remove('open');
   document.getElementById('backdrop').classList.remove('open');
   const menuToggle=document.getElementById('hamburgerBtn');if(menuToggle)menuToggle.setAttribute('aria-expanded','false');
@@ -5576,7 +5778,7 @@ function editTrade(id){
   document.getElementById('addTradeBtn').textContent='ذخیره تغییرات معامله';document.getElementById('cancelTradeEditBtn').style.display='inline-flex';
   document.getElementById('trSymbol').scrollIntoView({behavior:'smooth',block:'center'});toast('حالت ویرایش فعال شد');
 }
-document.getElementById('cancelTradeEditBtn').addEventListener('click',()=>{editingTradeId=null;document.getElementById('addTradeBtn').textContent='ثبت معامله';document.getElementById('cancelTradeEditBtn').style.display='none';['trSymbol','trEntry','trSl','trExit','trR','trUsd','trSetup','trNote','trTime','trTp','trRiskPct','trSlOrig','trTags','trEmoBefore','trEmoAfter'].forEach(i=>document.getElementById(i).value='');toast('ویرایش لغو شد');});
+document.getElementById('cancelTradeEditBtn').addEventListener('click',()=>{editingTradeId=null;trSelectedMistakes=[];pendingShot={entry:null,exit:null};document.getElementById('addTradeBtn').textContent='ثبت معامله';document.getElementById('cancelTradeEditBtn').style.display='none';['trSymbol','trEntry','trSl','trExit','trR','trUsd','trSetup','trNote','trTime','trTp','trRiskPct','trSlOrig','trTags','trEmoBefore','trEmoAfter'].forEach(i=>document.getElementById(i).value='');toast('ویرایش لغو شد');});
 // V9.6.3 UI modules (js/ui/*.js) are initialised once the DOM above exists.
 try{ initArexTradeForm(); initArexImport(); initArexPretrade(); if(typeof arexApplyV9Static==='function') arexApplyV9Static(); }catch(e){ console.error('V9 init',e); }
 document.getElementById('addTradeBtn').addEventListener('click', async ()=>{
@@ -5721,13 +5923,37 @@ async function toggleVoiceRecord(tradeId, btn){
   }catch(e){ toast('اجازه‌ی دسترسی به میکروفون داده نشد'); }
 }
 
+function getArexJournalVisibleTrades(){
+  const search=(document.getElementById('arexTradeSearch')?.value||'').trim().toLocaleLowerCase();
+  const outcome=document.getElementById('arexTradeOutcome')?.value||'all';
+  const direction=document.getElementById('arexTradeDirection')?.value||'all';
+  const period=document.getElementById('arexTradePeriod')?.value||'all';
+  const cutoff=period==='all'?null:new Date(Date.now()-Number(period)*86400000);
+  return (Array.isArray(state.trades)?state.trades:[]).filter(t=>{
+    if(direction!=='all'&&String(t.dir||'')!==direction)return false;
+    if(cutoff&&(!t.date||new Date(String(t.date).slice(0,10)+'T23:59:59')<cutoff))return false;
+    const rawR=t.r, hasR=rawR!==''&&rawR!==null&&rawR!==undefined&&Number.isFinite(Number(rawR));
+    const r=hasR?Number(rawR):null;
+    if(outcome==='missing'&&hasR)return false;
+    if(outcome==='win'&&!(hasR&&r>0))return false;
+    if(outcome==='loss'&&!(hasR&&r<0))return false;
+    if(outcome==='flat'&&!(hasR&&r===0))return false;
+    if(search){const haystack=[t.symbol,t.setup,t.note,t.tags,Array.isArray(t.mistakes)?t.mistakes.join(' '):'',t.date,t.time,t.dir].map(v=>String(v||'')).join(' ').toLocaleLowerCase();if(!haystack.includes(search))return false;}
+    return true;
+  }).slice().sort((a,b)=>String(b.date||'').localeCompare(String(a.date||''))||String(b.time||'').localeCompare(String(a.time||'')));
+}
 function renderTrades(){
   const box = document.getElementById('tradesList');
   renderTradeStats();
   updateRiskWarnBanner();
-  if(!state.trades.length){ box.innerHTML = '<div class="empty">هنوز معامله‌ای ثبت نشده</div>'; return; }
+  const allTrades=Array.isArray(state.trades)?state.trades:[];
+  const visibleTrades=getArexJournalVisibleTrades();
+  const summary=document.getElementById('arexTradeFilterSummary');
+  if(summary)summary.textContent='نمایش '+faDigits(visibleTrades.length)+' از '+faDigits(allTrades.length)+' معامله ثبت‌شده · فیلترها فقط روی نمایش اثر دارند.';
+  if(!allTrades.length){ box.innerHTML = '<div class="empty">هنوز معامله‌ای ثبت نشده</div>'; return; }
+  if(!visibleTrades.length){box.innerHTML='<div class="empty">معامله‌ای با این فیلترها پیدا نشد. فیلترها را تغییر بده یا پاک کن.</div>';return;}
   box.innerHTML='';
-  state.trades.forEach(t=>{
+  visibleTrades.forEach(t=>{
     const r = parseFloat(t.r);
     const pillClass = isNaN(r) ? 'neu' : (r>0?'win':(r<0?'loss':'neu'));
     const div = document.createElement('div'); div.className='entry-card';
@@ -5780,6 +6006,16 @@ function renderTrades(){
   });
 }
 
+// Journal filters are presentation-only and never mutate saved trade data.
+['arexTradeSearch','arexTradeOutcome','arexTradeDirection','arexTradePeriod'].forEach(id=>{
+  const control=document.getElementById(id);
+  if(control)control.addEventListener(control.tagName==='INPUT'?'input':'change',()=>renderTrades());
+});
+document.getElementById('arexTradeReset')?.addEventListener('click',()=>{
+  ['arexTradeSearch','arexTradeOutcome','arexTradeDirection','arexTradePeriod'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=id==='arexTradeSearch'?'':'all';});
+  renderTrades();
+});
+
 /* ---- printable weekly/monthly report (PDF via browser print) ---- */
 document.getElementById('tradeReportBtn').addEventListener('click', ()=>{
   const rValues = state.trades.map(t=>parseFloat(t.r)).filter(r=>!isNaN(r));
@@ -5800,116 +6036,194 @@ document.getElementById('tradeReportBtn').addEventListener('click', ()=>{
 
 
 /* ================= BACKTEST (separate journal) ================= */
-document.getElementById('addBacktestBtn').addEventListener('click', ()=>{
-  const symbol = document.getElementById('btSymbol').value.trim();
-  const date = document.getElementById('btDate').value || todayIso();
-  if(!symbol){ toast('نماد را وارد کنید'); return; }
-  state.backtests.unshift({
-    id: Date.now(), date, symbol,
-    dir: document.getElementById('btDir').value,
-    r: document.getElementById('btR').value,
-    setup: document.getElementById('btSetup').value.trim(),
-    timeframe: document.getElementById('btTimeframe').value, session:document.getElementById('btSession').value, regime:document.getElementById('btRegime').value, costs:parseFloat(document.getElementById('btCosts').value)||0,
-    note: document.getElementById('btNote').value.trim()
-  });
-  queueSave('backtests');
-  ['btSymbol','btR','btSetup','btNote','btCosts'].forEach(id=>document.getElementById(id).value='');
-  renderBacktests(); toast('بک‌تست ثبت شد ✓');
-});
-function renderBacktests(){
-  const statBox = document.getElementById('btStats');
-  const rValues = state.backtests.map(t=>parseFloat(t.r)).filter(r=>!isNaN(r));
-  if(!rValues.length){ statBox.innerHTML = '<div class="empty" style="padding:6px 0;">هنوز داده‌ای نیست</div>'; }
-  else{
-    const wins = rValues.filter(r=>r>0).length, winRate = Math.round(wins/rValues.length*100), winProbability=wins/rValues.length;
-    const totalR = rValues.reduce((a,b)=>a+b,0);
-    const winners=rValues.filter(x=>x>0),losers=rValues.filter(x=>x<0);const avgWin=winners.length?winners.reduce((a,b)=>a+b,0)/winners.length:0;const avgLoss=losers.length?Math.abs(losers.reduce((a,b)=>a+b,0)/losers.length):0;const expectancy=(winProbability*avgWin)-((1-winProbability)*avgLoss);const grossWin=winners.reduce((a,b)=>a+b,0),grossLoss=Math.abs(losers.reduce((a,b)=>a+b,0));const pf=grossLoss?grossWin/grossLoss:(grossWin?Infinity:0);let cum=0,peak=0,dd=0;rValues.forEach(x=>{cum+=x;peak=Math.max(peak,cum);dd=Math.max(dd,peak-cum);});
-    statBox.innerHTML =
-      '<div class="ts-item"><div class="ts-lbl">تعداد بک‌تست</div><div class="ts-val">'+faDigits(rValues.length)+'</div></div>'+
-      '<div class="ts-item"><div class="ts-lbl">درصد برد</div><div class="ts-val">'+faDigits(winRate)+'٪</div></div>'+
-      '<div class="ts-item"><div class="ts-lbl">مجموع R</div><div class="ts-val">'+faDigits(totalR.toFixed(1))+'</div></div>'+
-      '<div class="ts-item"><div class="ts-lbl">امید ریاضی</div><div class="ts-val">'+faDigits(expectancy.toFixed(2))+'R</div></div>'+
-      '<div class="ts-item"><div class="ts-lbl">Profit Factor</div><div class="ts-val">'+(pf===Infinity?'∞':faDigits(pf.toFixed(2)))+'</div></div>'+
-      '<div class="ts-item"><div class="ts-lbl">بیشترین افت</div><div class="ts-val">'+faDigits(dd.toFixed(2))+'R</div></div>';
-  }
-  const box = document.getElementById('btList');
-  if(!state.backtests.length){ box.innerHTML = '<div class="empty">هنوز بک‌تستی ثبت نشده</div>'; return; }
-  box.innerHTML='';
-  state.backtests.forEach(t=>{
-    const r = parseFloat(t.r);
-    const pillClass = isNaN(r) ? 'neu' : (r>0?'win':(r<0?'loss':'neu'));
-    const div = document.createElement('div'); div.className='entry-card';
-    div.innerHTML =
-      '<div style="flex:1; min-width:160px;"><div class="meta">'+escapeHtml(t.date)+' · '+(t.dir==='buy'?'خرید':'فروش')+(t.setup?' · '+escapeHtml(t.setup):'')+'</div>'+
-      '<div class="body"><b>'+escapeHtml(t.symbol)+'</b> · '+escapeHtml(t.timeframe||'—')+' · '+escapeHtml(t.session||'سشن نامشخص')+' · '+escapeHtml(t.regime||'شرایط نامشخص')+(t.costs?' · هزینه '+faDigits(t.costs)+'R':'')+'</div>'+(t.note?'<div style="font-size:12px;color:var(--muted);margin-top:6px;">'+escapeHtml(t.note)+'</div>':'')+'</div>'+
-      '<div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px;">'+(t.r?'<span class="pill '+pillClass+'">'+escapeHtml(t.r)+' R</span>':'')+'<button class="del-x" data-id="'+escapeHtml(t.id)+'">✕</button></div>';
-    div.querySelector('.del-x').addEventListener('click', ()=>{ state.backtests = state.backtests.filter(x=>x.id!==t.id); queueSave('backtests'); renderBacktests(); });
-    box.appendChild(div);
+function arexBacktestNetR(t){
+  const r = t && t.r !== '' && t.r !== null && t.r !== undefined ? Number(t.r) : NaN;
+  if(!Number.isFinite(r)) return null;
+  const costs = t.costs !== '' && t.costs !== null && t.costs !== undefined && Number.isFinite(Number(t.costs)) ? Number(t.costs) : 0;
+  return r - costs;
+}
+function arexBacktestFilterRecords(records){
+  const q=(document.getElementById('btSearch')?.value||'').trim().toLocaleLowerCase();
+  const setup=document.getElementById('btSetupFilter')?.value||'all';
+  const tf=document.getElementById('btTimeframeFilter')?.value||'all';
+  const outcome=document.getElementById('btOutcomeFilter')?.value||'all';
+  return records.filter(t=>{
+    const text=[t.symbol,t.setup,t.note,t.session,t.regime].filter(Boolean).join(' ').toLocaleLowerCase();
+    if(q&&!text.includes(q)) return false;
+    if(setup!=='all'&&(t.setup||'بدون ستاپ')!==setup) return false;
+    if(tf!=='all'&&(t.timeframe||'')!==tf) return false;
+    const net=arexBacktestNetR(t);
+    if(outcome==='missing'&&net!==null) return false;
+    if(outcome==='win'&&!(net>0)) return false;
+    if(outcome==='loss'&&!(net<0)) return false;
+    if(outcome==='breakeven'&&!(net===0)) return false;
+    return true;
   });
 }
+function renderBacktests(){
+  const setupFilter=document.getElementById('btSetupFilter');
+  if(setupFilter){
+    const previous=setupFilter.value;
+    const setups=[...new Set(state.backtests.map(t=>(t.setup||'').trim()||'بدون ستاپ'))].sort((a,b)=>a.localeCompare(b,'fa'));
+    setupFilter.innerHTML='<option value="all">همه ستاپ‌ها</option>'+setups.map(x=>'<option value="'+escapeHtml(x)+'">'+escapeHtml(x)+'</option>').join('');
+    setupFilter.value=setups.includes(previous)?previous:'all';
+  }
+  const visible=arexBacktestFilterRecords(state.backtests);
+  const valid=visible.map(t=>({trade:t,net:arexBacktestNetR(t)})).filter(x=>x.net!==null);
+  const values=valid.map(x=>x.net), wins=values.filter(r=>r>0), losses=values.filter(r=>r<0), flats=values.filter(r=>r===0);
+  const total=values.reduce((a,b)=>a+b,0), winRate=values.length?wins.length/values.length*100:0;
+  const avgWin=wins.length?wins.reduce((a,b)=>a+b,0)/wins.length:0;
+  const avgLoss=losses.length?Math.abs(losses.reduce((a,b)=>a+b,0)/losses.length):0;
+  const expectancy=values.length?total/values.length:0;
+  const grossWin=wins.reduce((a,b)=>a+b,0),grossLoss=Math.abs(losses.reduce((a,b)=>a+b,0));
+  const pf=grossLoss?grossWin/grossLoss:(grossWin?Infinity:null);
+  // Drawdown must follow chronological order, not the newest-first display order.
+  const chronological=valid.slice().sort((a,b)=>String(a.trade.date||'').localeCompare(String(b.trade.date||''))||Number(a.trade.id||0)-Number(b.trade.id||0));
+  let cumulative=0,peak=0,maxDrawdown=0;
+  chronological.forEach(x=>{cumulative+=x.net;peak=Math.max(peak,cumulative);maxDrawdown=Math.max(maxDrawdown,peak-cumulative);});
+  const statBox=document.getElementById('btStats'), notice=document.getElementById('btEvidenceNotice');
+  if(notice){
+    notice.dataset.level=values.length<30?'warn':'info';
+    notice.textContent=values.length===0?'برای فیلتر فعلی نتیجه R معتبر ثبت نشده است؛ آمار عملکرد قابل محاسبه نیست.':values.length<5?`نمونه بسیار کوچک است (${values.length} نتیجه). اعداد صرفاً توصیفی‌اند و برای ارزیابی استراتژی کافی نیستند.`:values.length<30?`${values.length} نتیجه معتبر در این فیلتر وجود دارد. این نمونه هنوز محدود است؛ برای قضاوت درباره پایداری استراتژی به داده بیشتر و آزمون خارج از نمونه نیاز است.`:`${values.length} نتیجه معتبر در این فیلتر وجود دارد. حجم نمونه به‌تنهایی پایداری یا سودآوری آینده را اثبات نمی‌کند.`;
+  }
+  if(!values.length){statBox.innerHTML='<div class="empty" style="padding:6px 0;">برای محاسبه آمار، نتیجه R معتبر ثبت کنید.</div>';}
+  else{
+    const stats=[
+      ['نتایج معتبر',String(values.length)],['درصد برد خالص',faDigits(winRate.toFixed(1))+'٪'],['مجموع R خالص',faDigits(total.toFixed(2))+'R'],
+      ['میانگین R / امید ریاضی',faDigits(expectancy.toFixed(2))+'R'],['Profit Factor',pf===null?'—':(pf===Infinity?'∞':faDigits(pf.toFixed(2)))],['بیشترین افت تجمعی',faDigits(maxDrawdown.toFixed(2))+'R'],
+      ['سودده / زیان‌ده / سربه‌سر',`${wins.length} / ${losses.length} / ${flats.length}`]
+    ];
+    statBox.innerHTML=stats.map(([label,value])=>'<div class="ts-item"><div class="ts-lbl">'+escapeHtml(label)+'</div><div class="ts-val">'+escapeHtml(value)+'</div></div>').join('');
+  }
+  const insightBox=document.getElementById('btSetupInsights');
+  if(insightBox){
+    const groups=new Map();
+    valid.forEach(x=>{const key=(x.trade.setup||'').trim()||'بدون ستاپ';if(!groups.has(key))groups.set(key,[]);groups.get(key).push(x.net);});
+    const eligible=[...groups.entries()].filter(([,arr])=>arr.length>=5).map(([name,arr])=>({name,n:arr.length,avg:arr.reduce((a,b)=>a+b,0)/arr.length,total:arr.reduce((a,b)=>a+b,0)})).sort((a,b)=>b.avg-a.avg);
+    if(!eligible.length) insightBox.innerHTML='<div class="arex-bt-setup-item"><b>مقایسه ستاپ‌ها</b><span>برای مقایسه توصیفی، حداقل ۵ نتیجه معتبر برای هر ستاپ لازم است. فعلاً داده کافی در هر گروه وجود ندارد.</span></div>';
+    else insightBox.innerHTML='<div class="arex-bt-setup-item"><b>بالاترین میانگین R در نمونه</b><span>'+escapeHtml(eligible[0].name)+' · '+eligible[0].n+' نتیجه · میانگین '+faDigits(eligible[0].avg.toFixed(2))+'R</span></div>'+(eligible.length>1?'<div class="arex-bt-setup-item"><b>پایین‌ترین میانگین R در گروه‌های قابل‌مقایسه</b><span>'+escapeHtml(eligible[eligible.length-1].name)+' · '+eligible[eligible.length-1].n+' نتیجه · میانگین '+faDigits(eligible[eligible.length-1].avg.toFixed(2))+'R</span></div>':'');
+  }
+  const box=document.getElementById('btList'), count=document.getElementById('btResultCount');
+  if(count)count.textContent=`نمایش ${visible.length} مورد از ${state.backtests.length} بک‌تست ثبت‌شده`;
+  if(!visible.length){box.innerHTML='<div class="empty">موردی با این فیلترها پیدا نشد.</div>';return;}
+  box.innerHTML='';
+  visible.slice().sort((a,b)=>String(b.date||'').localeCompare(String(a.date||''))||Number(b.id||0)-Number(a.id||0)).forEach(t=>{
+    const net=arexBacktestNetR(t),pillClass=net===null?'neu':(net>0?'win':(net<0?'loss':'neu'));
+    const div=document.createElement('div');div.className='entry-card';
+    div.innerHTML='<div style="flex:1;min-width:160px;"><div class="meta">'+escapeHtml(t.date||'تاریخ نامشخص')+' · '+(t.dir==='buy'?'خرید':'فروش')+(t.setup?' · '+escapeHtml(t.setup):'')+'</div><div class="body"><b>'+escapeHtml(t.symbol||'نماد نامشخص')+'</b> · '+escapeHtml(t.timeframe||'—')+' · '+escapeHtml(t.session||'سشن نامشخص')+' · '+escapeHtml(t.regime||'شرایط نامشخص')+(Number(t.costs)>0?' · هزینه '+faDigits(Number(t.costs).toFixed(2))+'R':'')+'</div>'+(t.note?'<div style="font-size:12px;color:var(--muted);margin-top:6px;">'+escapeHtml(t.note)+'</div>':'')+'</div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">'+(net!==null?'<span class="pill '+pillClass+'">'+faDigits(net.toFixed(2))+' R خالص</span>':'<span class="pill neu">نتیجه ثبت نشده</span>')+'<button class="del-x" data-id="'+escapeHtml(t.id)+'" aria-label="حذف بک‌تست">✕</button></div>';
+    div.querySelector('.del-x').addEventListener('click',()=>{if(!confirm('این مورد بک‌تست حذف شود؟'))return;state.backtests=state.backtests.filter(x=>String(x.id)!==String(t.id));queueSave('backtests');renderBacktests();});box.appendChild(div);
+  });
+}
+['btSearch','btSetupFilter','btTimeframeFilter','btOutcomeFilter'].forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener(id==='btSearch'?'input':'change',renderBacktests);});
+document.getElementById('btClearFilters').addEventListener('click',()=>{document.getElementById('btSearch').value='';document.getElementById('btSetupFilter').value='all';document.getElementById('btTimeframeFilter').value='all';document.getElementById('btOutcomeFilter').value='all';renderBacktests();});
+document.getElementById('addBacktestBtn').addEventListener('click',()=>{
+  const symbol=document.getElementById('btSymbol').value.trim(),date=document.getElementById('btDate').value||todayIso();
+  const rawR=document.getElementById('btR').value,rawCosts=document.getElementById('btCosts').value;
+  if(!symbol){toast('نماد را وارد کنید');document.getElementById('btSymbol').focus();return;}
+  if(rawR.trim()!==''&&!Number.isFinite(Number(rawR))){toast('مقدار R معتبر نیست');document.getElementById('btR').focus();return;}
+  if(rawCosts.trim()!==''&&(!Number.isFinite(Number(rawCosts))||Number(rawCosts)<0)){toast('هزینه باید عدد معتبر و نامنفی باشد');document.getElementById('btCosts').focus();return;}
+  state.backtests.unshift({id:Date.now(),date,symbol,dir:document.getElementById('btDir').value,r:rawR.trim(),setup:document.getElementById('btSetup').value.trim(),timeframe:document.getElementById('btTimeframe').value,session:document.getElementById('btSession').value,regime:document.getElementById('btRegime').value,costs:rawCosts.trim()===''?0:Number(rawCosts),note:document.getElementById('btNote').value.trim()});
+  queueSave('backtests');['btSymbol','btR','btSetup','btNote','btCosts'].forEach(id=>document.getElementById(id).value='');renderBacktests();toast('بک‌تست ثبت شد ✓');
+});
 
-/* ================= PROP FIRM CHALLENGE TRACKER ================= */
+/* ================= PROP FIRM CHALLENGE TRACKER — PHASE 23 ================= */
+function pfNum(value){ const n=Number(value); return value!=='' && value!==null && value!==undefined && Number.isFinite(n) ? n : null; }
+function pfMoney(value){ return faDigits(Number(value||0).toLocaleString('en-US',{maximumFractionDigits:2})); }
+function pfDailyPnl(c){ const today=todayIso(); return (Array.isArray(c.trades)?c.trades:[]).filter(t=>t.date===today).reduce((sum,t)=>sum+(pfNum(t.pnl)??0),0); }
+function pfChallengeMetrics(c){
+  const net=challengeNetPnl(c), daily=pfDailyPnl(c);
+  const target=pfNum(c.profitTarget), dailyLimit=pfNum(c.dailyLossLimit), maxLimit=pfNum(c.maxLossLimit);
+  const targetPct=target>0?Math.max(0,Math.min(100,net/target*100)):null;
+  const dailyUsed=dailyLimit>0?Math.max(0,Math.min(100,Math.max(0,-daily)/dailyLimit*100)):null;
+  const totalUsed=maxLimit>0?Math.max(0,Math.min(100,Math.max(0,-net)/maxLimit*100)):null;
+  const missing=[];
+  if(!(pfNum(c.balance)>0)) missing.push('موجودی اولیه');
+  if(!(target>0)) missing.push('هدف سود');
+  if(!(dailyLimit>0)) missing.push('سقف ضرر روزانه');
+  if(!(maxLimit>0)) missing.push('سقف ضرر کل');
+  if(!Number.isFinite(Number(c.daysLeft)) || Number(c.daysLeft)<0) missing.push('روزهای باقی‌مانده');
+  return {net,daily,target,dailyLimit,maxLimit,targetPct,dailyUsed,totalUsed,missing,remainingTarget:target!==null?Math.max(0,target-net):null};
+}
+function renderPropFirmOverview(){
+  const grid=document.getElementById('propFirmOverviewGrid'); if(!grid)return;
+  const active=(state.propChallenges||[]).filter(c=>!c.passed&&!c.failed);
+  const known=active.map(c=>pfChallengeMetrics(c));
+  const missing=known.filter(m=>m.missing.length>0).length;
+  const nearDaily=known.filter(m=>m.dailyUsed!==null&&m.dailyUsed>=80).length;
+  const nearTotal=known.filter(m=>m.totalUsed!==null&&m.totalUsed>=80).length;
+  grid.innerHTML=[
+    ['چالش‌های فعال',faDigits(active.length),'در حال پیگیری'],
+    ['نزدیک سقف ضرر روزانه',faDigits(nearDaily),'مصرف ۸۰٪ یا بیشتر از سقف تنظیم‌شده'],
+    ['نزدیک سقف ضرر کل',faDigits(nearTotal),'مصرف ۸۰٪ یا بیشتر از سقف تنظیم‌شده'],
+    ['نیازمند تکمیل تنظیمات',faDigits(missing),'حداقل یک مقدار ضروری ثبت نشده']
+  ].map(x=>'<div class="pf-overview-item"><span>'+x[0]+'</span><strong>'+x[1]+'</strong><small>'+x[2]+'</small></div>').join('');
+}
 document.getElementById('addChallengeBtn').addEventListener('click', ()=>{
-  const name = document.getElementById('pfName').value.trim();
-  if(!name){ toast('نام چالش را وارد کنید'); return; }
+  const name=document.getElementById('pfName').value.trim();
+  const fields=[['pfBalance','موجودی حساب',true],['pfTarget','هدف سود',true],['pfDailyLoss','سقف ضرر روزانه',true],['pfMaxLoss','سقف ضرر کل',true],['pfDaysLeft','روزهای باقی‌مانده',false]];
+  if(!name){ toast('نام چالش را وارد کنید'); document.getElementById('pfName').focus(); return; }
+  for(const [id,label,positive] of fields){
+    const el=document.getElementById(id), raw=el.value.trim(), n=pfNum(raw);
+    if(raw===''||n===null||(positive?n<=0:n<0)||(id==='pfDaysLeft'&&!Number.isInteger(n))){toast(label+(positive?' باید عددی بزرگ‌تر از صفر باشد':' باید عدد صحیح و نامنفی باشد'));el.focus();return;}
+  }
   state.propChallenges.unshift({
-    id: Date.now(), name,
-    balance: parseFloat(document.getElementById('pfBalance').value)||0,
-    profitTarget: parseFloat(document.getElementById('pfTarget').value)||0,
-    dailyLossLimit: parseFloat(document.getElementById('pfDailyLoss').value)||0,
-    maxLossLimit: parseFloat(document.getElementById('pfMaxLoss').value)||0,
-    daysLeft: parseInt(document.getElementById('pfDaysLeft').value)||0,
-    trades: [], passed:false, failed:false
+    id:Date.now(),name,balance:Number(document.getElementById('pfBalance').value),
+    profitTarget:Number(document.getElementById('pfTarget').value),
+    dailyLossLimit:Number(document.getElementById('pfDailyLoss').value),
+    maxLossLimit:Number(document.getElementById('pfMaxLoss').value),
+    daysLeft:Number(document.getElementById('pfDaysLeft').value),trades:[],passed:false,failed:false
   });
   queueSave('propChallenges');
   ['pfName','pfBalance','pfTarget','pfDailyLoss','pfMaxLoss','pfDaysLeft'].forEach(id=>document.getElementById(id).value='');
   renderChallenges(); toast('چالش اضافه شد ✓');
 });
-function challengeNetPnl(c){ return (c.trades||[]).reduce((s,t)=>s+(Number(t.pnl)||0),0); }
+function challengeNetPnl(c){ return (Array.isArray(c.trades)?c.trades:[]).reduce((s,t)=>s+(pfNum(t.pnl)??0),0); }
 function renderChallenges(){
-  const box = document.getElementById('challengesList');
-  if(!state.propChallenges.length){ box.innerHTML = '<div class="card"><div class="empty">هنوز چالشی تعریف نشده</div></div>'; return; }
-  box.innerHTML = state.propChallenges.map(c=>{
-    const net = challengeNetPnl(c);
-    const profitPct = c.profitTarget ? Math.min(100, Math.max(0, net/c.profitTarget*100)) : 0;
-    const lossPct = c.maxLossLimit ? Math.min(100, Math.max(0, Math.abs(Math.min(0,net))/c.maxLossLimit*100)) : 0;
-    const status = c.passed? 'passed' : c.failed? 'failed' : 'active';
-    const statusLabel = c.passed? '✅ پاس شده' : c.failed? '❌ شکست خورده' : '🟢 در حال انجام';
-    return '<div class="card challenge-card" data-cid="'+c.id+'">'+
+  const box=document.getElementById('challengesList');
+  if(!state.propChallenges.length){ box.innerHTML='<div class="card"><div class="empty">هنوز چالشی تعریف نشده</div><div class="section-sub">برای شروع، نام چالش، موجودی اولیه، هدف سود و سقف‌های ضرر را وارد کن.</div></div>'; renderPropFirmOverview(); return; }
+  box.innerHTML=state.propChallenges.map(c=>{
+    const m=pfChallengeMetrics(c), status=c.passed?'passed':c.failed?'failed':'active';
+    const statusLabel=c.passed?'✅ پاس‌شده (ثبت دستی)':c.failed?'❌ ناموفق (ثبت دستی)':'🟢 در حال پیگیری';
+    const targetWidth=m.targetPct===null?0:m.targetPct, dailyWidth=m.dailyUsed===null?0:m.dailyUsed, totalWidth=m.totalUsed===null?0:m.totalUsed;
+    const warnings=[];
+    if(m.missing.length) warnings.push('برای محاسبه کامل، این موارد را بررسی کن: '+m.missing.join('، ')+'.');
+    if(m.dailyUsed!==null&&m.dailyUsed>=80) warnings.push('مصرف زیان روزانه به ۸۰٪ یا بیشتر از سقف تنظیم‌شده رسیده است.');
+    if(m.totalUsed!==null&&m.totalUsed>=80) warnings.push('مصرف زیان کل به ۸۰٪ یا بیشتر از سقف تنظیم‌شده رسیده است.');
+    if(m.target!==null&&m.net>=m.target&&m.target>0&&!c.passed) warnings.push('نتیجه ثبت‌شده به هدف سود رسیده؛ وضعیت پاس‌شدن را با قوانین رسمی شرکت بررسی کن.');
+    return '<div class="card challenge-card pf-challenge-card" data-cid="'+c.id+'">'+
       '<div class="challenge-head"><b>'+escapeHtml(c.name)+'</b><span class="challenge-status '+status+'">'+statusLabel+'</span></div>'+
-      '<div class="challenge-bars">'+
-        '<div class="ch-bar-row"><div class="ch-bar-lbl"><span>پیشرفت سود</span><span>'+faDigits(net.toFixed(0))+'$ / '+faDigits(c.profitTarget)+'$</span></div><div class="ch-bar-track"><i style="width:'+profitPct+'%; background:var(--green);"></i></div></div>'+
-        '<div class="ch-bar-row"><div class="ch-bar-lbl"><span>مصرف سقف ضرر کل</span><span>'+faDigits(lossPct.toFixed(0))+'٪</span></div><div class="ch-bar-track"><i style="width:'+lossPct+'%; background:var(--red);"></i></div></div>'+
+      '<div class="pf-metric-grid">'+
+        '<div class="pf-metric"><span>سود/زیان ثبت‌شده</span><strong class="'+(m.net>0?'pf-positive':m.net<0?'pf-negative':'')+'">'+(m.net>0?'+':'')+pfMoney(m.net)+' $</strong><small>جمع رکوردهای دستی این چالش</small></div>'+
+        '<div class="pf-metric"><span>مانده تا هدف سود</span><strong>'+(m.remainingTarget===null?'نیازمند هدف':pfMoney(m.remainingTarget)+' $')+'</strong><small>'+(m.targetPct===null?'هدف سود تنظیم نشده':faDigits(m.targetPct.toFixed(1))+'٪ پیشرفت نسبت به هدف')+'</small></div>'+
+        '<div class="pf-metric"><span>سود/زیان امروز</span><strong class="'+(m.daily>0?'pf-positive':m.daily<0?'pf-negative':'')+'">'+(m.daily>0?'+':'')+pfMoney(m.daily)+' $</strong><small>'+(m.dailyUsed===null?'سقف روزانه تنظیم نشده':'مصرف '+faDigits(m.dailyUsed.toFixed(1))+'٪ از سقف ضرر روزانه')+'</small></div>'+
+        '<div class="pf-metric"><span>مصرف سقف ضرر کل</span><strong>'+(m.totalUsed===null?'—':faDigits(m.totalUsed.toFixed(1))+'٪')+'</strong><small>'+(m.totalUsed===null?'سقف ضرر کل تنظیم نشده':'بر پایه زیان خالص ثبت‌شده؛ بدون افت شناور')+'</small></div>'+
       '</div>'+
-      '<div class="ch-stats-mini"><span>موجودی: '+faDigits(c.balance)+'$</span><span>سقف ضرر روزانه: '+faDigits(c.dailyLossLimit)+'$</span><span>روز باقی‌مانده: '+faDigits(c.daysLeft)+'</span><span>تعداد ثبت: '+faDigits((c.trades||[]).length)+'</span></div>'+
+      '<div class="pf-progress-group"><div class="ch-bar-row"><div class="ch-bar-lbl"><span>پیشرفت هدف سود</span><span>'+(m.target===null?'نامشخص':pfMoney(m.net)+' / '+pfMoney(m.target)+' $')+'</span></div><div class="ch-bar-track" role="progressbar" aria-label="پیشرفت هدف سود" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+Math.round(targetWidth)+'"><i style="width:'+targetWidth+'%;background:var(--green)"></i></div></div>'+
+      '<div class="ch-bar-row"><div class="ch-bar-lbl"><span>مصرف سقف ضرر روزانه</span><span>'+(m.dailyUsed===null?'تنظیم نشده':faDigits(m.dailyUsed.toFixed(1))+'٪')+'</span></div><div class="ch-bar-track" role="progressbar" aria-label="مصرف سقف ضرر روزانه" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+Math.round(dailyWidth)+'"><i style="width:'+dailyWidth+'%;background:var(--red)"></i></div></div>'+
+      '<div class="ch-bar-row"><div class="ch-bar-lbl"><span>مصرف سقف ضرر کل</span><span>'+(m.totalUsed===null?'تنظیم نشده':faDigits(m.totalUsed.toFixed(1))+'٪')+'</span></div><div class="ch-bar-track" role="progressbar" aria-label="مصرف سقف ضرر کل" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+Math.round(totalWidth)+'"><i style="width:'+totalWidth+'%;background:var(--red)"></i></div></div></div>'+
+      '<div class="ch-stats-mini"><span>موجودی اولیه: '+(pfNum(c.balance)!==null?pfMoney(c.balance)+' $':'نامشخص')+'</span><span>سقف روزانه: '+(m.dailyLimit!==null?pfMoney(m.dailyLimit)+' $':'نامشخص')+'</span><span>سقف کل: '+(m.maxLimit!==null?pfMoney(m.maxLimit)+' $':'نامشخص')+'</span><span>روز باقی‌مانده: '+faDigits(Math.max(0,Number(c.daysLeft)||0))+'</span><span>رکوردهای P/L: '+faDigits((c.trades||[]).length)+'</span></div>'+
+      (warnings.length?'<div class="pf-alert '+(warnings.some(w=>w.includes('۸۰٪'))?'warning':'neutral')+'" role="status"><b>'+(warnings.some(w=>w.includes('۸۰٪'))?'⚠️ نیازمند توجه':'ℹ️ یادآوری')+'</b><ul>'+warnings.map(w=>'<li>'+escapeHtml(w)+'</li>').join('')+'</ul></div>':'<div class="pf-alert neutral">وضعیت فقط بر اساس رکوردهای واردشده محاسبه شده است؛ قوانین رسمی شرکت را جداگانه بررسی کن.</div>')+
       (typeof arexGuardHtml==='function'?arexGuardHtml(c):'')+
-      '<div class="modal-actions" style="justify-content:flex-start; margin-top:12px;">'+
-        '<button class="btn ghost ch-add-pnl" data-cid="'+c.id+'" style="padding:6px 12px;font-size:12px;">➕ ثبت سود/ضرر روز</button>'+
-        '<button class="btn ghost ch-toggle" data-cid="'+c.id+'" data-f="passed" style="padding:6px 12px;font-size:12px;">علامت پاس‌شدن</button>'+
-        '<button class="btn ghost ch-toggle" data-cid="'+c.id+'" data-f="failed" style="padding:6px 12px;font-size:12px;">علامت شکست</button>'+
-        '<button class="del-x ch-del" data-cid="'+c.id+'">✕ حذف چالش</button>'+
-      '</div></div>';
+      '<div class="modal-actions pf-actions">'+
+      '<button class="btn ghost ch-add-pnl" data-cid="'+c.id+'">➕ ثبت سود/ضرر روز</button><button class="btn ghost ch-toggle" data-cid="'+c.id+'" data-f="passed">علامت پاس‌شدن</button><button class="btn ghost ch-toggle" data-cid="'+c.id+'" data-f="failed">علامت شکست</button><button class="del-x ch-del" data-cid="'+c.id+'">✕ حذف چالش</button></div></div>';
   }).join('');
-  box.querySelectorAll('.ch-add-pnl').forEach(b=>b.addEventListener('click', ()=>{
-    const v = prompt('مبلغ سود/ضرر امروز را وارد کنید (منفی برای ضرر):');
-    if(v===null || isNaN(parseFloat(v))) return;
-    const c = state.propChallenges.find(x=>x.id==b.dataset.cid);
-    c.trades = c.trades||[]; c.trades.push({date:todayIso(), pnl:parseFloat(v)});
-    queueSave('propChallenges'); renderChallenges();
+  renderPropFirmOverview();
+  box.querySelectorAll('.ch-add-pnl').forEach(b=>b.addEventListener('click',()=>{
+    const raw=prompt('مبلغ سود/ضرر امروز را وارد کن (عدد منفی برای ضرر):'); if(raw===null)return;
+    const value=raw.trim()===''?null:Number(raw);
+    if(value===null||!Number.isFinite(value)){toast('مبلغ باید یک عدد معتبر باشد');return;}
+    const c=state.propChallenges.find(x=>String(x.id)===b.dataset.cid);if(!c)return;
+    c.trades=Array.isArray(c.trades)?c.trades:[];c.trades.push({date:todayIso(),pnl:value});queueSave('propChallenges');renderChallenges();
   }));
-  box.querySelectorAll('.ch-toggle').forEach(b=>b.addEventListener('click', ()=>{
-    const c = state.propChallenges.find(x=>x.id==b.dataset.cid);
-    const f = b.dataset.f;
-    c[f] = !c[f]; if(f==='passed') c.failed=false; if(f==='failed') c.passed=false;
-    queueSave('propChallenges'); renderChallenges();
+  box.querySelectorAll('.ch-toggle').forEach(b=>b.addEventListener('click',()=>{
+    const c=state.propChallenges.find(x=>String(x.id)===b.dataset.cid);if(!c)return;
+    const f=b.dataset.f;c[f]=!c[f];if(f==='passed'&&c.passed)c.failed=false;if(f==='failed'&&c.failed)c.passed=false;
+    queueSave('propChallenges');renderChallenges();
   }));
-  box.querySelectorAll('.ch-del').forEach(b=>b.addEventListener('click', ()=>{
-    if(!confirm('این چالش حذف شود؟')) return;
-    state.propChallenges = state.propChallenges.filter(x=>x.id!=b.dataset.cid);
-    queueSave('propChallenges'); renderChallenges();
+  box.querySelectorAll('.ch-del').forEach(b=>b.addEventListener('click',()=>{
+    if(!confirm('این چالش حذف شود؟'))return;state.propChallenges=state.propChallenges.filter(x=>String(x.id)!==b.dataset.cid);queueSave('propChallenges');renderChallenges();
   }));
 }
-
 /* ================= PENDING SCENARIOS BOARD ================= */
 document.getElementById('addScenarioBtn').addEventListener('click', ()=>{
   const symbol = document.getElementById('scSymbol').value.trim();
@@ -5946,7 +6260,25 @@ document.getElementById('addPsychBtn').addEventListener('click', ()=>{
   psychRating = 0; renderStars('psStars', 0);
   renderPsych();
 });
+function renderPsychInsights(){
+  const countEl=document.getElementById('psychMetricCount'); if(!countEl)return;
+  const now=new Date(); now.setHours(0,0,0,0);
+  const cutoff=new Date(now); cutoff.setDate(cutoff.getDate()-29);
+  const recent=(Array.isArray(state.psych)?state.psych:[]).filter(p=>{if(!p||!p.date)return false;const d=new Date(p.date+'T00:00:00');return !Number.isNaN(d.getTime())&&d>=cutoff&&d<=now;});
+  countEl.textContent=String(recent.length);
+  const rated=recent.filter(p=>Number.isFinite(Number(p.rating))&&Number(p.rating)>0);
+  document.getElementById('psychMetricRating').textContent=rated.length?((rated.reduce((sum,p)=>sum+Number(p.rating),0)/rated.length).toFixed(1)+' / 5'):'داده کافی نیست';
+  const moods=new Map();recent.forEach(p=>{const m=String(p.mood||'').trim();if(m)moods.set(m,(moods.get(m)||0)+1)});
+  const top=[...moods.entries()].sort((a,b)=>b[1]-a[1]);
+  document.getElementById('psychMetricMood').textContent=top.length?top[0][0]+' ('+top[0][1]+')':'هنوز ثبت نشده';
+  const note=document.getElementById('psychInsightNote');
+  if(!recent.length){note.textContent='در ۳۰ روز اخیر یادداشتی با تاریخ معتبر ثبت نشده است. چند روز ثبت منظم، تصویر قابل‌مرور‌تری می‌دهد؛ این بخش برای قضاوت یا تشخیص روان‌شناختی نیست.';return;}
+  const concerns=recent.filter(p=>/FOMO|ترسیده|خسته|عصبانی|ریونج|انتقام/i.test(String(p.mood||''))).length;
+  if(recent.length<5){note.textContent='فعلاً '+recent.length+' یادداشت در بازه ۳۰ روزه وجود دارد. این حجم برای شناسایی روند پایدار کم است؛ فعلاً فقط حال‌وهوای ثبت‌شده را مرور کن.';return;}
+  note.textContent='در '+recent.length+' یادداشت اخیر، '+concerns+' مورد با برچسب‌هایی مانند ترس، خستگی، FOMO یا عصبانیت ثبت شده است. این فقط شمارش برچسب‌هاست و رابطه علّی با سود و زیان را نشان نمی‌دهد. یک یادداشت را باز کن و ببین آیا اقدام اصلاحی مشخصی ثبت کرده‌ای.';
+}
 function renderPsych(){
+  renderPsychInsights();
   const box = document.getElementById('psychList');
   if(!state.psych.length){ box.innerHTML = '<div class="empty">هنوز یادداشتی ثبت نشده</div>'; return; }
   box.innerHTML='';
@@ -5964,29 +6296,42 @@ function renderPsych(){
   });
 }
 
+document.getElementById('psychShowRecent')?.addEventListener('click',()=>{
+  const box=document.getElementById('psychList');if(!box)return;
+  box.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+});
+
 /* ================= GOALS ================= */
 document.getElementById('addGoalBtn').addEventListener('click', addGoal);
 document.getElementById('newGoalInput').addEventListener('keydown', e=>{ if(e.key==='Enter') addGoal(); });
 function addGoal(){
-  const inp = document.getElementById('newGoalInput');
-  const text = inp.value.trim(); if(!text) return;
-  state.goals.push({ id: Date.now(), text, done:false });
-  inp.value='';
-  queueSave('goalsrules'); renderGoals();
+  const inp=document.getElementById('newGoalInput');
+  const text=inp.value.trim(); if(!text)return;
+  const targetRaw=document.getElementById('newGoalTarget')?.value||'';
+  const currentRaw=document.getElementById('newGoalCurrent')?.value||'0';
+  const target=targetRaw===''?null:Number(targetRaw), current=Number(currentRaw);
+  if(target!==null&&(!Number.isFinite(target)||target<0)){toast('مقدار هدف باید صفر یا بیشتر باشد');return;}
+  if(!Number.isFinite(current)||current<0){toast('مقدار فعلی باید صفر یا بیشتر باشد');return;}
+  state.goals.push({id:Date.now(),text,done:false,action:document.getElementById('newGoalAction')?.value.trim()||'',target,current,unit:document.getElementById('newGoalUnit')?.value.trim()||'',dueDate:document.getElementById('newGoalDue')?.value||'',createdAt:todayIso()});
+  ['newGoalInput','newGoalAction','newGoalTarget','newGoalUnit','newGoalDue'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  const currentEl=document.getElementById('newGoalCurrent');if(currentEl)currentEl.value='0';
+  queueSave('goalsrules');renderGoals();
 }
 function renderGoals(){
-  const box = document.getElementById('goalsList');
-  if(!state.goals.length){ box.innerHTML = '<div class="empty">هدفی ثبت نشده</div>'; return; }
+  const box=document.getElementById('goalsList');if(!box)return;
+  if(!state.goals.length){box.innerHTML='<div class="empty">هدفی ثبت نشده؛ یک هدف روشن با اقدام بعدی اضافه کن.</div>';return;}
   box.innerHTML='';
   state.goals.forEach(g=>{
-    const div = document.createElement('div'); div.className='goal-item';
-    div.innerHTML =
-      '<span class="chk" style="width:20px;height:20px;'+(g.done?'background:var(--green);border-color:var(--green);color:#06251a;':'')+'">'+(g.done?'✓':'')+'</span>'+
-      '<input type="text" value="'+g.text.replace(/"/g,'&quot;')+'" '+(g.done?'style="text-decoration:line-through;color:var(--muted)"':'')+'>'+
-      '<button class="del-x">✕</button>';
-    div.querySelector('.chk').addEventListener('click', ()=>{ g.done=!g.done; queueSave('goalsrules'); renderGoals(); });
-    div.querySelector('input').addEventListener('input', e=>{ g.text=e.target.value; queueSave('goalsrules'); });
-    div.querySelector('.del-x').addEventListener('click', ()=>{ state.goals=state.goals.filter(x=>x.id!==g.id); queueSave('goalsrules'); renderGoals(); });
+    const target=Number.isFinite(Number(g.target))&&g.target!==null&&g.target!==''?Math.max(0,Number(g.target)):null;
+    const current=Math.max(0,Number(g.current)||0);const pct=target!==null&&target>0?Math.min(100,Math.round(current/target*100)):(g.done?100:0);
+    const div=document.createElement('div');div.className='v25-goal-card'+(g.done?' done':'');
+    div.innerHTML='<div class="v25-goal-top"><label style="display:flex;gap:8px;align-items:flex-start;min-width:0"><input type="checkbox" data-goal-done style="margin-top:4px" '+(g.done?'checked':'')+' aria-label="تکمیل هدف"><span class="v25-goal-title">'+escapeHtml(g.text)+'</span></label><button class="del-x" data-goal-delete aria-label="حذف هدف">✕</button></div>'+
+      (g.action?'<div class="v25-goal-meta">اقدام بعدی: '+escapeHtml(g.action)+'</div>':'<div class="v25-goal-meta">برای شفاف‌تر شدن هدف، یک اقدام بعدی تعیین کن.</div>')+
+      '<div class="v25-goal-meta">'+(target!==null?'پیشرفت: '+escapeHtml(String(current))+' / '+escapeHtml(String(target))+(g.unit?' '+escapeHtml(g.unit):'')+' · '+faDigits(pct)+'٪':'هدف بدون مقدار عددی')+(g.dueDate?' · مهلت: '+escapeHtml(g.dueDate):' · بدون مهلت')+'</div>'+
+      (target!==null&&target>0?'<div class="v25-goal-progress" aria-label="پیشرفت هدف"><i style="width:'+pct+'%"></i></div><div class="v25-goal-actions"><label>مقدار فعلی <input class="txt-input" data-goal-current type="number" min="0" step="any" value="'+current+'"></label><button class="btn ghost" data-goal-update>ثبت پیشرفت</button></div>':'');
+    div.querySelector('[data-goal-done]').addEventListener('change',e=>{g.done=e.target.checked;queueSave('goalsrules');renderGoals();});
+    div.querySelector('[data-goal-delete]').addEventListener('click',()=>{state.goals=state.goals.filter(x=>x.id!==g.id);queueSave('goalsrules');renderGoals();});
+    div.querySelector('[data-goal-update]')?.addEventListener('click',()=>{const n=Number(div.querySelector('[data-goal-current]').value);if(!Number.isFinite(n)||n<0){toast('مقدار فعلی نامعتبر است');return;}g.current=n;if(target!==null&&n>=target)toast('به مقدار هدف رسیدی؛ تکمیل نهایی را خودت تأیید کن.');queueSave('goalsrules');renderGoals();});
     box.appendChild(div);
   });
 }
@@ -6225,7 +6570,7 @@ function renderArexDailyRoadmap(){
   ['۳','ژورنال و آمادگی','وضعیت ذهنی، معاملات ثبت‌نشده و کیفیت ستاپ را مرور کن.','journal']
  ];steps.innerHTML=items.map(x=>'<div class="arex-roadmap-step"><b>'+x[0]+'</b><span><strong>'+x[1]+'</strong><br>'+x[2]+'</span></div>').join('');
  if(advice)advice.textContent=stop?stop.message:(log?'گزارش امروز ثبت شده است. ربات بر اساس داده‌های واقعی ژورنال و قوانین تأییدشده راهنمایی می‌کند؛ نتیجه‌ای که داده کافی ندارد به‌عنوان نامشخص باقی می‌ماند.':(trades.length?'ژورنال معاملات امروز را کامل کن و خطاهای تکراری را در مرور عملکرد بررسی کن.':'پیش از اولین معامله، تقویم، ریسک و آمادگی روانی را بررسی کن. در نبود شرایط کافی، هیچ سیگنال قطعی تولید نمی‌شود.'));
- renderArexDashboardSummary();
+ renderArexDashboardSummary();renderArexDecisionSupport();renderArexDashboardPerformance();
 }
 function setCalTab(tab){
   document.querySelectorAll('#calTabs [data-caltab]').forEach(b=>b.classList.toggle('active', b.dataset.caltab===tab));
@@ -6532,9 +6877,29 @@ function renderTradeWeekMap(){const box=document.getElementById('tradeWeekMap');
  box.innerHTML=html;box.querySelectorAll('[data-day-date]').forEach(b=>b.addEventListener('click',()=>{const d=b.dataset.dayDate;loadDailyReview(d);goView('daily');}));const sum=document.getElementById('tradeWeekSummary');if(sum)sum.textContent='این هفته: '+faDigits(tradedDays)+' روز معامله · '+faDigits(loggedNoTrade)+' روز بدون معامله ثبت‌شده · '+faDigits(pending)+' روز نیازمند ثبت وضعیت';}
 function renderDashboardDailyStatus(){const el=document.getElementById('dashboardDailyStatus');if(!el)return;const d=todayIso(),log=state.dailyLogs[d],trades=state.trades.filter(t=>t.date===d),psych=state.psych.some(p=>p.date===d);const status=log?(log.status==='no'?'بدون معامله ثبت شده':'گزارش روزانه ثبت شده'):(trades.length?'معامله ثبت شده؛ گزارش روزانه را کامل کن':'هنوز وضعیت امروز ثبت نشده');el.innerHTML='<div class="daily-status-tile"><b>'+status+'</b><span>'+faDigits(trades.length)+' معامله امروز · '+(psych?'ژورنال روان‌شناسی ثبت شده':'ژورنال روان‌شناسی ثبت نشده')+'</span></div><div class="daily-status-tile"><b>وضعیت روانی</b><span>'+escapeHtml(log?.mood||state.psych.find(p=>p.date===d)?.mood||'هنوز ثبت نشده')+'</span></div><div class="daily-status-tile"><b>اقدام بعدی</b><span>'+escapeHtml(log?.nextAction||'گزارش روزانه را ثبت کن و یک اقدام مشخص برای فردا بنویس')+'</span></div>';}
 function loadDailyReview(date=todayIso()){const dateInput=document.getElementById('dailyReviewDate');if(dateInput)dateInput.value=date;const existing=state.dailyLogs[date];const hasTrades=state.trades.some(t=>t.date===date);const log=existing|| (hasTrades?{status:'yes',journalDone:true}:{});document.getElementById('dailyDatePill').textContent=date;document.getElementById('noTradeReasonWrap').style.display=log.status==='no'?'block':'none';document.querySelectorAll('[data-traded]').forEach(b=>b.classList.toggle('active',b.dataset.traded===(log.status==='no'?'no':log.status==='yes'?'yes':'')));document.getElementById('noTradeReason').value=log.reason||'';document.getElementById('noTradeNote').value=log.reasonNote||'';document.getElementById('dailyMood').value=log.mood||'آرام و منضبط';document.getElementById('dailyFocus').value=log.focus||3;document.getElementById('dailyFocusValue').textContent=faDigits(log.focus||3)+' از ۵';document.getElementById('dailyDiscipline').value=log.discipline||3;document.getElementById('dailyDisciplineValue').textContent=faDigits(log.discipline||3)+' از ۵';document.getElementById('dailyJournalDone').checked=!!log.journalDone;document.getElementById('dailyPsychDone').checked=!!log.psychDone;document.getElementById('dailyPlanFollowed').checked=!!log.planFollowed;document.getElementById('dailyLesson').value=log.lesson||'';document.getElementById('dailyNextAction').value=log.nextAction||'';document.getElementById('saveDailyReviewBtn').dataset.date=date;renderStrategyInsights(date);}
-function saveDailyReview(){const date=document.getElementById('saveDailyReviewBtn').dataset.date||todayIso();let status=document.querySelector('[data-traded].active')?.dataset.traded|| (state.trades.some(t=>t.date===date)?'yes':'');if(!status){toast('اول مشخص کن امروز معامله کردی یا نه');return;}if(status==='no'&&!document.getElementById('noTradeReason').value){toast('علت معامله نکردن را انتخاب کن');return;}if(status==='no'&&state.trades.some(t=>t.date===date)){toast('برای این تاریخ معامله ثبت شده؛ وضعیت روز باید «معامله کردم» باشد.');return;}const log={date,status,reason:document.getElementById('noTradeReason').value,reasonNote:document.getElementById('noTradeNote').value.trim(),mood:document.getElementById('dailyMood').value,focus:Number(document.getElementById('dailyFocus').value),discipline:Number(document.getElementById('dailyDiscipline').value),journalDone:document.getElementById('dailyJournalDone').checked,psychDone:document.getElementById('dailyPsychDone').checked,planFollowed:document.getElementById('dailyPlanFollowed').checked,lesson:document.getElementById('dailyLesson').value.trim(),nextAction:document.getElementById('dailyNextAction').value.trim(),updatedAt:new Date().toISOString()};state.dailyLogs[date]=log;queueSave('assistantState');document.getElementById('dailySaveStatus').textContent='ذخیره شد · '+new Date().toLocaleTimeString();renderDailyHistory();renderTradeWeekMap();renderDashboardDailyStatus();renderAssistantWidget();renderStrategyInsights(date);toast('گزارش روزانه ذخیره شد ✓');}
+function renderCorrectiveActionHistory(){
+ const box=document.getElementById('correctiveActionHistory');if(!box)return;
+ const items=Array.isArray(state.correctiveActionHistory)?state.correctiveActionHistory.slice().sort((a,b)=>(b.updatedAt||b.date||'').localeCompare(a.updatedAt||a.date||'')):[];
+ if(!items.length){box.innerHTML='<div class="empty">هنوز اقدامی ثبت نشده است. یک اقدام مشخص را در گزارش پایان روز بنویس و ذخیره کن.</div>';return;}
+ box.innerHTML=items.slice(0,30).map((x)=>'<article class="phase28-action-row"><div class="phase28-action-main"><div class="phase28-action-meta"><b>'+escapeHtml(x.date||'—')+'</b><span class="phase28-status '+(x.status==='done'?'done':'open')+'">'+(x.status==='done'?'انجام شد':'در انتظار پیگیری')+'</span></div><p>'+escapeHtml(x.action||'اقدامی ثبت نشده')+'</p>'+(x.reviewNote?'<small>'+escapeHtml(x.reviewNote)+'</small>':'')+'</div><div class="phase28-action-buttons">'+(x.status==='done'?'<button class="btn ghost" type="button" data-phase28-reopen="'+escapeHtml(x.id)+'">بازگشایی</button>':'<button class="btn" type="button" data-phase28-done="'+escapeHtml(x.id)+'">تأیید انجام</button>')+'<button class="btn ghost" type="button" data-phase28-note="'+escapeHtml(x.id)+'">یادداشت نتیجه</button></div></article>').join('');
+ box.querySelectorAll('[data-phase28-done]').forEach(b=>b.addEventListener('click',()=>updateCorrectiveAction(b.dataset.phase28Done,{status:'done',completedAt:new Date().toISOString()})));
+ box.querySelectorAll('[data-phase28-reopen]').forEach(b=>b.addEventListener('click',()=>updateCorrectiveAction(b.dataset.phase28Reopen,{status:'open',completedAt:''})));
+ box.querySelectorAll('[data-phase28-note]').forEach(b=>b.addEventListener('click',()=>{const item=state.correctiveActionHistory.find(x=>x.id===b.dataset.phase28Note);if(!item)return;const note=prompt('نتیجه یا شواهد اجرای اقدام را بنویس:',item.reviewNote||'');if(note===null)return;updateCorrectiveAction(item.id,{reviewNote:note.trim()});}));
+}
+function updateCorrectiveAction(id,patch){const item=(state.correctiveActionHistory||[]).find(x=>x.id===id);if(!item)return;Object.assign(item,patch,{updatedAt:new Date().toISOString()});queueSave('assistantState');renderCorrectiveActionHistory();}
+function syncCorrectiveAction(date,action){
+ state.correctiveActionHistory=Array.isArray(state.correctiveActionHistory)?state.correctiveActionHistory:[];
+ const text=(action||'').trim();const existing=state.correctiveActionHistory.find(x=>x.date===date&&x.status!=='done');
+ if(!text){if(existing)state.correctiveActionHistory=state.correctiveActionHistory.filter(x=>x!==existing);return;}
+ if(existing){if(existing.action!==text){existing.action=text;existing.updatedAt=new Date().toISOString();}return;}
+ const completedSame=state.correctiveActionHistory.some(x=>x.date===date&&x.status==='done'&&x.action===text);if(completedSame)return;
+ state.correctiveActionHistory.push({id:'action-'+date+'-'+Math.random().toString(36).slice(2,8),date,action:text,status:'open',reviewNote:'',createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),completedAt:''});
+}
+function saveDailyReview(){const date=document.getElementById('saveDailyReviewBtn').dataset.date||todayIso();let status=document.querySelector('[data-traded].active')?.dataset.traded|| (state.trades.some(t=>t.date===date)?'yes':'');if(!status){toast('اول مشخص کن امروز معامله کردی یا نه');return;}if(status==='no'&&!document.getElementById('noTradeReason').value){toast('علت معامله نکردن را انتخاب کن');return;}if(status==='no'&&state.trades.some(t=>t.date===date)){toast('برای این تاریخ معامله ثبت شده؛ وضعیت روز باید «معامله کردم» باشد.');return;}const log={date,status,reason:document.getElementById('noTradeReason').value,reasonNote:document.getElementById('noTradeNote').value.trim(),mood:document.getElementById('dailyMood').value,focus:Number(document.getElementById('dailyFocus').value),discipline:Number(document.getElementById('dailyDiscipline').value),journalDone:document.getElementById('dailyJournalDone').checked,psychDone:document.getElementById('dailyPsychDone').checked,planFollowed:document.getElementById('dailyPlanFollowed').checked,lesson:document.getElementById('dailyLesson').value.trim(),nextAction:document.getElementById('dailyNextAction').value.trim(),updatedAt:new Date().toISOString()};state.dailyLogs[date]=log;syncCorrectiveAction(date,log.nextAction);queueSave('assistantState');renderCorrectiveActionHistory();document.getElementById('dailySaveStatus').textContent='ذخیره شد · '+new Date().toLocaleTimeString();renderDailyHistory();renderTradeWeekMap();renderDashboardDailyStatus();renderAssistantWidget();renderStrategyInsights(date);toast('گزارش روزانه ذخیره شد ✓');}
 function renderStrategyInsights(date=todayIso()){
  const box=document.getElementById('assistantInsights');if(!box)return;const trades=state.trades.filter(t=>t.date===date).sort((a,b)=>(a.time||'').localeCompare(b.time||''));const log=state.dailyLogs[date]||{};const out=[];
+ const learner=(window.AREXCore&&AREXCore.dailyLearning)?AREXCore.dailyLearning.summarize(trades,log):null;const evidence=document.getElementById('dailyEvidenceSummary');if(evidence&&learner){evidence.innerHTML='<div class="daily-evidence-metric"><span>معاملات ثبت‌شده</span><b>'+faDigits(learner.tradeCount)+'</b></div><div class="daily-evidence-metric"><span>نتیجه R موجود</span><b>'+faDigits(learner.rCount)+' از '+faDigits(learner.tradeCount)+'</b></div><div class="daily-evidence-metric"><span>فیلد حد ضرر خالی</span><b>'+faDigits(learner.noSLCount)+'</b></div><div class="daily-evidence-metric"><span>نوع داده</span><b>'+(learner.hasEvidence?'ثبت‌شده':'ناکافی')+'</b></div>'+(learner.suggestedAction?'<div class="daily-action-callout"><b>قدم پیشنهادی بعدی</b><div>'+escapeHtml(learner.suggestedAction)+'</div><small>مبنای پیشنهاد: '+escapeHtml(learner.actionReason||'مرور داده')+' · پیشنهاد برای بازبینی است، نه دستور معامله.</small></div>':'');}
+ const trendApi=window.AREXCore&&AREXCore.mistakeTrends;if(evidence&&trendApi){const end=date||todayIso(),d=new Date(end+'T12:00:00');d.setDate(d.getDate()-29);const start=isoLocal(d),trend=trendApi.analyze(state.trades,start,end);let trendHtml='<div class="mistake-trend-panel"><b>روند اشتباه‌های ثبت‌شده · ۳۰ روز تا '+escapeHtml(end)+'</b><div class="section-sub">بر پایه برچسب‌های موجود در ژورنال؛ موارد پرتکرار با نمونه‌های قابل‌ردیابی نمایش داده می‌شوند.</div>';if(!trend.items.length){trendHtml+='<div class="mistake-trend-note">در این بازه اشتباهی با برچسب مشخص ثبت نشده؛ این به معنی نبود اشتباه نیست.</div>';}else{trend.items.slice(0,5).forEach(item=>{const money=item.usdCount?((item.knownUsd>0?'+':'')+faDigits(item.knownUsd.toFixed(2))+' USD'):'در دسترس نیست';const coverage=item.financialCoverage==='complete'?'پوشش نتیجه کامل':item.financialCoverage==='partial'?'نتیجه بعضی معاملات ناقص':'نتیجه مالی ثبت نشده';trendHtml+='<div class="mistake-trend-item"><b>'+escapeHtml(item.name)+'</b><div class="mistake-trend-meta"><span>تکرار: <b>'+faDigits(item.count)+'</b></span><span>مجموع نتیجه معاملات مرتبط: <b>'+escapeHtml(money)+'</b></span><span>'+escapeHtml(coverage)+'</span></div><div class="mistake-trend-meta"><span>نمونه تاریخ‌ها: '+escapeHtml(item.dates.slice(0,3).join('، ')||'ثبت نشده')+'</span><span>شناسه معاملات: '+escapeHtml(item.tradeIds.slice(0,5).join('، ')||'شناسه موجود نیست')+'</span></div></div>';});}trendHtml+='<div class="mistake-trend-note">'+escapeHtml(trend.note)+'</div><button type="button" class="btn ghost" id="arexViewMistakeTrendTrades">باز کردن ژورنال معاملات</button></div>';evidence.insertAdjacentHTML('beforeend',trendHtml);document.getElementById('arexViewMistakeTrendTrades')?.addEventListener('click',()=>goView('trades'));}
  if(!trades.length){if(log.status==='no'){const reason=log.reason||'علت نامشخص';if(/ستاپ معتبر|بازار نامناسب|روز استراحت/.test(reason))out.push(['good','رعایت فرصت‌گزینی','ثبت نکردن معامله به‌خودی‌خود اشتباه نیست؛ اگر ستاپ معتبر نبود یا طبق پلن استراحت داشتی، این می‌تواند تصمیم منضبطی باشد.']);else if(/ترس|تردید|FOMO|خستگی|جبران|انتقام/.test(reason))out.push(['warn','علت عدم معامله نیاز به مرور دارد','علت ثبت‌شده («'+escapeHtml(reason)+'») می‌تواند با احساسات مرتبط باشد. بررسی کن آیا این تصمیم با قوانین مکتوبت هماهنگ بوده یا نه.']);else out.push(['info','روز بدون معامله ثبت شد','در مرور هفتگی بررسی کن که دلیل امروز با پلن معاملاتی هماهنگ بوده است.']);}else out.push(['info','داده کافی برای تحلیل نیست','مشخص کن امروز معامله کردی یا نه؛ ثبت روز بدون معامله هم به تحلیل الگوهای رفتاری کمک می‌کند.']);}
  else {const rs=trades.map(t=>parseFloat(t.r)).filter(Number.isFinite),wins=rs.filter(r=>r>0).length,losses=rs.filter(r=>r<0).length,totalR=rs.reduce((a,b)=>a+b,0);out.push(['info','خلاصه روز','معاملات: '+faDigits(trades.length)+' · نرخ برد ثبت‌شده: '+(rs.length?faDigits(Math.round(wins/rs.length*100))+'٪':'داده R ناقص')+' · مجموع نتیجه: '+faDigits(totalR.toFixed(2))+'R']);
   const noSL=trades.filter(t=>!String(t.sl||'').trim());if(noSL.length)out.push(['warn','حد ضرر ثبت نشده','برای '+faDigits(noSL.length)+' معامله حد ضرر در ژورنال ثبت نشده است. بررسی کن آیا واقعاً حد ضرر نداشتی یا فقط فیلد را تکمیل نکرده‌ای.']);
@@ -6645,7 +7010,7 @@ function getArexCoachSummary(){
  if(!logs.journalDone)return 'معامله ثبت شده؛ ژورنال و پایبندی به پلن را تکمیل کن تا بتوانیم کیفیت اجرا را از نتیجه تصادفی جدا کنیم.';
  return 'اطلاعات ثبت‌شده امروز را مرور کن. من فقط بر اساس ژورنال و قوانین تأییدشده نتیجه‌گیری می‌کنم؛ داده زنده بازار هنوز متصل نیست.';
 }
-function initV5Assistant(){document.getElementById('arexRoadmapJournal')?.addEventListener('click',()=>goView('trades'));document.getElementById('arexRoadmapRisk')?.addEventListener('click',()=>goView('dashboard'));document.getElementById('arexRoadmapCalendar')?.addEventListener('click',()=>goView('calendar'));document.getElementById('openFullCalendar')?.addEventListener('click',()=>goView('calendar'));loadDashboardTvCalendar();renderArexDailyRoadmap();document.getElementById('arexCoachBtn')?.addEventListener('click',()=>{const ans=document.getElementById('mascotAnswer');if(ans){ans.textContent=getArexCoachSummary();ans.style.display='block';}});document.getElementById('arexNotifPermissionBtn')?.addEventListener('click',requestArexNotificationPermission);document.querySelectorAll('[data-target-period]').forEach(b=>b.addEventListener('click',()=>setTargetPeriod(b.dataset.targetPeriod)));document.getElementById('saveTargetsBtn').addEventListener('click',saveCurrentTargets);document.getElementById('openDailyReviewBtn').addEventListener('click',()=>{loadDailyReview();goView('daily');});document.getElementById('saveDailyReviewBtn').addEventListener('click',saveDailyReview);document.getElementById('dailyReviewDate').addEventListener('change',e=>loadDailyReview(e.target.value||todayIso()));document.querySelectorAll('[data-traded]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-traded]').forEach(x=>x.classList.toggle('active',x===b));document.getElementById('noTradeReasonWrap').style.display=b.dataset.traded==='no'?'block':'none';}));['dailyFocus','dailyDiscipline'].forEach(id=>document.getElementById(id).addEventListener('input',e=>{document.getElementById(id+'Value').textContent=faDigits(e.target.value)+' از ۵';}));document.getElementById('refreshEconomicCalendar')?.addEventListener('click',()=>{loadTvCalendar(true);fetchFFCalendar(true);const dw=document.getElementById('dashboardTvWrap');if(dw){dw.dataset.loaded='';loadDashboardTvCalendar();}});document.getElementById('refreshNewsSoon')?.addEventListener('click',()=>fetchFFCalendar(true));document.getElementById('topLangSelect').value=state.language;setTargetPeriod(state.targetPeriod||'day');loadDailyReview();renderDailyHistory();renderStrategyInsights();renderTradeWeekMap();renderDashboardDailyStatus();renderAssistantWidget();updateWeeklyWinrate();showTargetPrompts();setInterval(()=>{renderAssistantWidget();renderDashboardDailyStatus();renderArexDailyRoadmap();updateWeeklyWinrate();checkEndOfDayAssistantReminder();showTargetPrompts();},30000);checkEndOfDayAssistantReminder();setInterval(()=>{if(document.getElementById('view-daily').classList.contains('active'))renderDailyHistory();},60000);}
+function initV5Assistant(){document.getElementById('arexRoadmapJournal')?.addEventListener('click',()=>goView('trades'));document.getElementById('arexRoadmapRisk')?.addEventListener('click',()=>goView('dashboard'));document.getElementById('arexRoadmapCalendar')?.addEventListener('click',()=>goView('calendar'));document.getElementById('openFullCalendar')?.addEventListener('click',()=>goView('calendar'));loadDashboardTvCalendar();renderArexDailyRoadmap();document.getElementById('arexCoachBtn')?.addEventListener('click',()=>{const ans=document.getElementById('mascotAnswer');if(ans){ans.textContent=getArexCoachSummary();ans.style.display='block';}});document.getElementById('arexNotifPermissionBtn')?.addEventListener('click',requestArexNotificationPermission);document.querySelectorAll('[data-target-period]').forEach(b=>b.addEventListener('click',()=>setTargetPeriod(b.dataset.targetPeriod)));document.getElementById('saveTargetsBtn').addEventListener('click',saveCurrentTargets);document.getElementById('openDailyReviewBtn').addEventListener('click',()=>{loadDailyReview();goView('daily');});document.getElementById('saveDailyReviewBtn').addEventListener('click',saveDailyReview);document.getElementById('dailyReviewDate').addEventListener('change',e=>loadDailyReview(e.target.value||todayIso()));document.querySelectorAll('[data-traded]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-traded]').forEach(x=>x.classList.toggle('active',x===b));document.getElementById('noTradeReasonWrap').style.display=b.dataset.traded==='no'?'block':'none';}));['dailyFocus','dailyDiscipline'].forEach(id=>document.getElementById(id).addEventListener('input',e=>{document.getElementById(id+'Value').textContent=faDigits(e.target.value)+' از ۵';}));document.getElementById('refreshEconomicCalendar')?.addEventListener('click',()=>{loadTvCalendar(true);fetchFFCalendar(true);const dw=document.getElementById('dashboardTvWrap');if(dw){dw.dataset.loaded='';loadDashboardTvCalendar();}});document.getElementById('refreshNewsSoon')?.addEventListener('click',()=>fetchFFCalendar(true));document.getElementById('topLangSelect').value=state.language;setTargetPeriod(state.targetPeriod||'day');loadDailyReview();renderDailyHistory();renderCorrectiveActionHistory();renderStrategyInsights();renderTradeWeekMap();renderDashboardDailyStatus();renderAssistantWidget();updateWeeklyWinrate();showTargetPrompts();setInterval(()=>{renderAssistantWidget();renderDashboardDailyStatus();renderArexDailyRoadmap();updateWeeklyWinrate();checkEndOfDayAssistantReminder();showTargetPrompts();},30000);checkEndOfDayAssistantReminder();setInterval(()=>{if(document.getElementById('view-daily').classList.contains('active'))renderDailyHistory();},60000);}
 
 let __arexAppStarted = false;
 function startApp(){ if(__arexAppStarted) return; __arexAppStarted = true; loadAll(); }
@@ -6797,9 +7162,27 @@ function evaluateArexAnalysis(ev){
  reasons.push(...missing);renderArexAnalysisResult({status,statusLabel,summary,reasons});
  const hist=getArexAnalysisHistory();hist.unshift({symbol,strategy,date:todayIso(),status,statusLabel});try{localStorage.setItem('arex-v52-analysis-history',JSON.stringify(hist.slice(0,20)))}catch{}renderArexAnalysisHistory();
 }
-function renderArexRiskSummary(){const box=document.getElementById('arexRiskSummary');if(box){const l=state.riskLimits||{};box.innerHTML=[['موجودی تنظیم‌شده',Number(l.balance)>0?faDigits(Number(l.balance).toLocaleString()):'ثبت نشده','این مقدار به حساب بروکر متصل نیست'],['سقف افت روزانه',Number.isFinite(Number(l.dailyPct))?faDigits(Number(l.dailyPct))+'٪':'تنظیم نشده','طبق تنظیمات محلی'],['سقف افت هفتگی',Number.isFinite(Number(l.weeklyPct))?faDigits(Number(l.weeklyPct))+'٪':'تنظیم نشده','طبق تنظیمات محلی']].map(x=>'<div class="arex-kpi"><span class="label">'+x[0]+'</span><strong>'+x[1]+'</strong><small>'+x[2]+'</small></div>').join('');}const limits=document.getElementById('arexRiskLimitsSummary');if(limits){const l=state.riskLimits||{};limits.innerHTML=[['موجودی حساب تنظیم‌شده',Number(l.balance)>0?faDigits(Number(l.balance).toLocaleString()):'ثبت نشده'],['سقف افت روزانه',Number.isFinite(Number(l.dailyPct))?faDigits(Number(l.dailyPct))+'٪':'—'],['سقف افت هفتگی',Number.isFinite(Number(l.weeklyPct))?faDigits(Number(l.weeklyPct))+'٪':'—']].map(x=>'<div class="arex-limit-item"><span>'+x[0]+'</span><b>'+x[1]+'</b></div>').join('');}}
-
-const AREX_RULE_KINDS={mandatory:'قانون الزامی تأییدشده',confirmed:'قانون تأییدشده',preference:'ترجیح شخصی',hypothesis:'فرضیه / نیازمند آزمون',conflict:'ابهام / تعارض حل‌نشده',unclassified:'تعیین‌نشده'};
+function renderArexRiskSummary(){
+ const l=state.riskLimits||{},box=document.getElementById('arexRiskSummary');
+ if(box){box.innerHTML=[['موجودی تنظیم‌شده',Number(l.balance)>0?faDigits(Number(l.balance).toLocaleString()):'ثبت نشده','مقدار دستی؛ اتصال بروکر تأیید نشده'],['سقف افت روزانه',Number(l.dailyPct)>0?faDigits(Number(l.dailyPct))+'٪':'تنظیم نشده','طبق تنظیمات محلی'],['سقف افت هفتگی',Number(l.weeklyPct)>0?faDigits(Number(l.weeklyPct))+'٪':'تنظیم نشده','طبق تنظیمات محلی']].map(x=>'<div class="arex-kpi"><span class="label">'+x[0]+'</span><strong>'+x[1]+'</strong><small>'+x[2]+'</small></div>').join('');}
+ const limits=document.getElementById('arexRiskLimitsSummary');if(limits){limits.innerHTML=[['موجودی حساب تنظیم‌شده',Number(l.balance)>0?faDigits(Number(l.balance).toLocaleString()):'ثبت نشده'],['سقف افت روزانه',Number(l.dailyPct)>0?faDigits(Number(l.dailyPct))+'٪':'—'],['سقف افت هفتگی',Number(l.weeklyPct)>0?faDigits(Number(l.weeklyPct))+'٪':'—']].map(x=>'<div class="arex-limit-item"><span>'+x[0]+'</span><b>'+x[1]+'</b></div>').join('');}
+ const grid=document.getElementById('arexRiskDecisionGrid'),badge=document.getElementById('arexRiskDecisionBadge'),note=document.getElementById('arexRiskDecisionNote');if(!grid||!badge||!note)return;
+ const all=Array.isArray(state.trades)?state.trades:[],today=typeof todayIso==='function'?todayIso():new Date().toISOString().slice(0,10),now=new Date(),weekStart=new Date(now);weekStart.setHours(0,0,0,0);weekStart.setDate(weekStart.getDate()-((weekStart.getDay()+6)%7));
+ const hasPL=t=>t.usd!==''&&t.usd!==null&&t.usd!==undefined&&Number.isFinite(Number(t.usd)),valid=all.filter(hasPL),todayRows=valid.filter(t=>String(t.date||'')===today),weekRows=valid.filter(t=>{const d=new Date(String(t.date||'')+'T12:00:00');return !Number.isNaN(d.getTime())&&d>=weekStart;});
+ const pnl=rows=>rows.reduce((a,t)=>a+Number(t.usd),0),dayPnl=pnl(todayRows),weekPnl=pnl(weekRows),balance=Number(l.balance),dailyLimit=balance>0&&Number(l.dailyPct)>0?balance*Number(l.dailyPct)/100:null,weeklyLimit=balance>0&&Number(l.weeklyPct)>0?balance*Number(l.weeklyPct)/100:null;
+ const dayLoss=Math.max(0,-dayPnl),weekLoss=Math.max(0,-weekPnl),dayPct=dailyLimit?dayLoss/dailyLimit*100:null,weekPct=weeklyLimit?weekLoss/weeklyLimit*100:null;
+ let stateText='نیازمند بررسی',stateClass='review',reason='اطلاعات محدودیت‌ها یا نتایج مالی برای ارزیابی کافی نیست.';
+ if(dailyLimit!==null&&dayLoss>=dailyLimit){stateText='سقف روزانه بر اساس P/L ثبت‌شده';stateClass='stop';reason='زیان خالص ثبت‌شده امروز به سقف محاسبه‌شده رسیده یا از آن عبور کرده است. این هشدار را بررسی کن؛ اطلاعات معاملات باز و افت شناور ممکن است در این محاسبه نباشد.';}
+ else if(weeklyLimit!==null&&weekLoss>=weeklyLimit){stateText='سقف هفتگی بر اساس P/L ثبت‌شده';stateClass='stop';reason='زیان خالص ثبت‌شده از ابتدای هفته به سقف محاسبه‌شده رسیده یا از آن عبور کرده است. مقدار را با قوانین واقعی حساب یا پراپ‌فرم تطبیق بده.';}
+ else if(dailyLimit!==null&&weeklyLimit!==null&&balance>0){stateText='حدود تنظیم شده‌اند';stateClass='ok';reason='بر اساس P/L ثبت‌شده، سقف‌های محلی هنوز رد نشده‌اند؛ این به‌معنی ایمن بودن حساب یا مجاز بودن معامله بعدی نیست.';}
+ badge.className='arex-risk-status '+stateClass;badge.textContent=stateText;
+ const money=n=>faDigits(n.toLocaleString(undefined,{maximumFractionDigits:2}));
+ const card=(title,value,detail)=>'<div class="arex-risk-check"><b>'+title+'</b><strong>'+value+'</strong><small>'+detail+'</small></div>';
+ grid.innerHTML=card('P/L ثبت‌شده امروز',todayRows.length?((dayPnl>0?'+':'')+money(dayPnl)):'داده ناکافی',todayRows.length+' نتیجه مالی معتبر از '+all.filter(t=>String(t.date||'')===today).length+' معامله امروز')+
+ card('مصرف سقف روزانه',dailyLimit!==null?money(dayLoss)+' / '+money(dailyLimit):'قابل محاسبه نیست',dailyLimit!==null?(dayPct.toFixed(1)+'٪ از سقف بر مبنای موجودی تنظیم‌شده'):'موجودی و درصد سقف روزانه را تنظیم کن')+
+ card('مصرف سقف هفتگی',weeklyLimit!==null?money(weekLoss)+' / '+money(weeklyLimit):'قابل محاسبه نیست',weeklyLimit!==null?(weekPct.toFixed(1)+'٪ از سقف بر مبنای موجودی تنظیم‌شده'):'موجودی و درصد سقف هفتگی را تنظیم کن');
+ note.textContent=reason+' اعداد پولی با همان واحدی تفسیر می‌شوند که در ژورنال ثبت کرده‌ای؛ این پنل تبدیل ارز یا اتصال بروکر انجام نمی‌دهد.';
+}
 function getArexRuleMeta(){const x=state.arexRuleMeta;return x&&typeof x==='object'&&!Array.isArray(x)?x:{}}
 function saveArexRuleMeta(meta){state.arexRuleMeta=meta;queueSave('settings');return true}
 function arexRuleKey(rule){return String(rule).trim().toLocaleLowerCase()}
@@ -6818,6 +7201,31 @@ function renderArexStrategyPage(){
  const status=document.getElementById('arexStrategyNotesStatus');if(status)status.textContent='یادداشت و دسته‌بندی در تنظیمات محلی AREX ذخیره می‌شوند و در نسخه‌های پشتیبان تنظیمات قرار می‌گیرند.';
 }
 function initArexStrategyForm(){const form=document.getElementById('arexAddRuleForm');if(form&&!form.dataset.bound){form.dataset.bound='1';form.addEventListener('submit',e=>{e.preventDefault();const input=document.getElementById('arexNewRule'),value=input.value.trim();if(!value)return;if(!Array.isArray(state.tradeRules))state.tradeRules=[];if(state.tradeRules.some(x=>String(x).trim().toLocaleLowerCase()===value.toLocaleLowerCase())){toast('این قانون از قبل ثبت شده است');return;}state.tradeRules.push(value);queueSave('tradeRules');input.value='';renderArexStrategyPage();renderTradeRulesBox();renderArexAnalysisRules();toast('قانون اضافه شد');});}['arexStrategySearch','arexStrategyStatusFilter'].forEach(id=>{const el=document.getElementById(id);if(el&&!el.dataset.bound){el.dataset.bound='1';el.addEventListener(id==='arexStrategySearch'?'input':'change',renderArexStrategyPage);}});const save=document.getElementById('arexSaveStrategyNotes');if(save&&!save.dataset.bound){save.dataset.bound='1';save.addEventListener('click',()=>{state.arexStrategyNotes=document.getElementById('arexStrategyNotes').value;queueSave('settings');document.getElementById('arexStrategyNotesStatus').textContent='یادداشت برای ذخیره در تنظیمات ثبت شد.';toast('یادداشت ثبت شد');});}}
+
+
+function renderArexDashboardPerformance(){
+ const all=Array.isArray(state.trades)?state.trades:[],period=document.getElementById('arexDashPerformancePeriod')?.value||'30',cutoff=period==='all'?null:new Date(Date.now()-Number(period)*86400000);
+ const inPeriod=all.filter(t=>{if(!cutoff)return true;if(!t.date)return false;const d=new Date(String(t.date).slice(0,10)+'T23:59:59');return Number.isFinite(d.getTime())&&d>=cutoff;});
+ const withPL=inPeriod.filter(t=>t.usd!==''&&t.usd!==null&&t.usd!==undefined&&Number.isFinite(Number(t.usd))).sort((a,b)=>String(a.date||'').localeCompare(String(b.date||''))||String(a.time||'').localeCompare(String(b.time||'')));
+ const chart=document.getElementById('arexDashPerformanceChart'),sub=document.getElementById('arexDashPerformanceSub'),foot=document.getElementById('arexDashPerformanceFoot');
+ if(sub)sub.textContent=withPL.length?faDigits(withPL.length)+' معامله دارای P/L در بازه انتخاب‌شده':'در این بازه نتیجه مالی عددی ثبت نشده است';
+ if(chart){if(withPL.length<2){chart.innerHTML='<div class="arex-empty-state"><span class="arex-empty-icon">⌁</span><b>'+(withPL.length?'برای رسم روند، حداقل دو نتیجه لازم است':'داده کافی برای رسم روند نیست')+'</b><p>مقادیر ثبت‌نشده به‌عنوان صفر در نظر گرفته نمی‌شوند.</p></div>';}else{let acc=0;const vals=withPL.map(t=>(acc+=Number(t.usd))),min=Math.min(0,...vals),max=Math.max(0,...vals),range=max-min||1,w=640,h=220,l=54,r=12,top=18,bottom=28,pw=w-l-r,ph=h-top-bottom;const pts=vals.map((v,i)=>({x:l+i*pw/(vals.length-1),y:top+ph-(v-min)/range*ph,v,date:String(withPL[i].date||'—')}));const grid=Array.from({length:4},(_,i)=>{const v=max-range*i/3,y=top+ph*i/3;return '<line class="arex-chart-grid" x1="'+l+'" y1="'+y.toFixed(1)+'" x2="'+(w-r)+'" y2="'+y.toFixed(1)+'"/><text class="arex-chart-label" text-anchor="end" x="'+(l-7)+'" y="'+(y+3).toFixed(1)+'">'+faDigits(v.toFixed(1))+'</text>';}).join('');const path=pts.map((p,i)=>(i?'L':'M')+p.x.toFixed(1)+' '+p.y.toFixed(1)).join(' ');const dots=pts.map(p=>'<circle cx="'+p.x.toFixed(1)+'" cy="'+p.y.toFixed(1)+'" r="3" fill="var(--accent-soft)"><title>'+escapeHtml(p.date)+' · P/L تجمعی '+faDigits(p.v.toFixed(2))+'</title></circle>').join('');const zero=top+ph-(0-min)/range*ph;chart.innerHTML='<svg viewBox="0 0 '+w+' '+h+'" role="img" aria-label="روند سود و زیان تجمعی معاملات ثبت‌شده">'+grid+'<line x1="'+l+'" y1="'+zero.toFixed(1)+'" x2="'+(w-r)+'" y2="'+zero.toFixed(1)+'" stroke="var(--muted2)" stroke-width="1"/><path d="'+path+'" fill="none" stroke="var(--accent-soft)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>'+dots+'<text class="arex-chart-label" x="'+l+'" y="'+(h-5)+'">'+escapeHtml(String(withPL[0].date||'—'))+'</text><text class="arex-chart-label" text-anchor="end" x="'+(w-r)+'" y="'+(h-5)+'">'+escapeHtml(String(withPL[withPL.length-1].date||'—'))+'</text></svg>';}}
+ if(foot&&withPL.length){const total=withPL.reduce((a,t)=>a+Number(t.usd),0);foot.textContent='جمع P/L ثبت‌شده: '+(total>0?'+':'')+faDigits(total.toFixed(2))+' · ارز/واحد مطابق مقدار واردشده در ژورنال است؛ موجودی اولیه و معاملات واردنشده لحاظ نشده‌اند.';}
+ const mistakes=new Map();inPeriod.forEach(t=>(Array.isArray(t.mistakes)?t.mistakes:[]).forEach(m=>{const label=String(m||'').trim();if(label)mistakes.set(label,(mistakes.get(label)||0)+1);}));const topMistakes=[...mistakes.entries()].sort((a,b)=>b[1]-a[1]).slice(0,5),trend=document.getElementById('arexDashMistakeTrend'),badge=document.getElementById('arexDashMistakeTrendBadge');if(badge)badge.textContent=topMistakes.length?faDigits([...mistakes.values()].reduce((a,b)=>a+b,0))+' ثبت':'نیازمند داده';if(trend){if(!topMistakes.length)trend.innerHTML='<div class="arex-empty-state"><b>در این بازه برچسبی ثبت نشده</b><p>این به معنی نبود اشتباه نیست؛ فقط موردی در فیلد اشتباهات ژورنال ثبت نشده است.</p></div>';else{const maxCount=topMistakes[0][1];trend.innerHTML=topMistakes.map(([label,count])=>'<button type="button" class="arex-trend-row arex-trend-row-button" data-arex-mistake-select="'+escapeHtml(label)+'" aria-label="بررسی اشتباه '+escapeHtml(label)+'"><span class="arex-trend-label">'+escapeHtml(label)+'</span><span class="arex-trend-track"><i style="width:'+Math.max(4,count/maxCount*100)+'%"></i></span><b class="arex-trend-count">'+faDigits(count)+'</b></button>').join('');}}
+ const analysis=document.getElementById('arexDashMistakeAnalysis');if(analysis){const validPL=t=>t.usd!==''&&t.usd!==null&&t.usd!==undefined&&Number.isFinite(Number(t.usd));const stats=new Map();inPeriod.forEach(t=>(Array.isArray(t.mistakes)?t.mistakes:[]).forEach(raw=>{const label=String(raw||'').trim();if(!label)return;const x=stats.get(label)||{count:0,pl:0,plCount:0,trades:[]};x.count++;x.trades.push(t);if(validPL(t)){x.pl+=Number(t.usd);x.plCount++;}stats.set(label,x);}));const previousCutoff=cutoff?new Date(cutoff.getTime()-Number(period)*86400000):null;const previous=previousCutoff?all.filter(t=>t.date&&new Date(String(t.date).slice(0,10)+'T23:59:59')>=previousCutoff&&new Date(String(t.date).slice(0,10)+'T23:59:59')<cutoff):[];const previousCounts=new Map();previous.forEach(t=>(Array.isArray(t.mistakes)?t.mistakes:[]).forEach(raw=>{const label=String(raw||'').trim();if(label)previousCounts.set(label,(previousCounts.get(label)||0)+1);}));const ranked=[...stats.entries()].sort((a,b)=>b[1].count-a[1].count).slice(0,5);if(!ranked.length){analysis.innerHTML='<div class="arex-empty-state"><b>تحلیل تعاملی در انتظار داده است</b><p>برای مقایسه، برچسب اشتباه‌ها را در ژورنال ثبت کن.</p></div>';}else{analysis.innerHTML='<div class="section-sub" style="margin-bottom:8px">انتخاب هر مورد، معاملات مرتبط و شواهد مالی ثبت‌شده را نشان می‌دهد.</div><div class="arex-mistake-analysis-list">'+ranked.map(([label,x])=>{const prev=previousCounts.get(label)||0,delta=previousCutoff?x.count-prev:null,trendText=delta===null?'مقایسه بازه‌ای ندارد':delta>0?'افزایش '+faDigits(delta):delta<0?'کاهش '+faDigits(Math.abs(delta)):'بدون تغییر';const plText=x.plCount?((x.pl>0?'+':'')+faDigits(x.pl.toFixed(2))+' P/L · '+faDigits(x.plCount)+' نتیجه عددی'):'P/L ناکافی';return '<button type="button" class="arex-mistake-analysis-item" data-arex-mistake-select="'+escapeHtml(label)+'"><span><b>'+escapeHtml(label)+'</b><small>'+trendText+' · '+plText+'</small></span><span class="arex-mistake-analysis-metrics">'+faDigits(x.count)+' بار<br>جزئیات ←</span></button>';}).join('')+'</div><div class="arex-mistake-analysis-detail" id="arexDashMistakeEvidenceDetail"><b>یک اشتباه را انتخاب کن</b><p class="section-sub">معاملات مرتبط با برچسب انتخاب‌شده نمایش داده می‌شوند.</p></div>';analysis.querySelectorAll('[data-arex-mistake-select]').forEach(btn=>btn.addEventListener('click',()=>{const label=btn.dataset.arexMistakeSelect,entry=stats.get(label),detail=document.getElementById('arexDashMistakeEvidenceDetail');if(!entry||!detail)return;detail.innerHTML='<div class="arex-insight-head"><b>'+escapeHtml(label)+'</b><span class="arex-evidence-badge">'+faDigits(entry.count)+' بار ثبت</span></div><p class="section-sub">'+(entry.plCount?'جمع P/L معاملات برچسب‌خورده: '+(entry.pl>0?'+':'')+faDigits(entry.pl.toFixed(2))+' · '+faDigits(entry.plCount)+' نتیجه عددی':'برای این برچسب، P/L عددی کافی ثبت نشده است')+'. این هم‌زمانی به‌تنهایی ثابت نمی‌کند اشتباه علت سود یا زیان بوده است.</p>'+entry.trades.slice().sort((a,b)=>String(b.date||'').localeCompare(String(a.date||''))||String(b.time||'').localeCompare(String(a.time||''))).map(t=>'<div class="arex-mistake-evidence-trade"><span><b>'+escapeHtml(String(t.symbol||'نماد نامشخص'))+'</b><small>'+escapeHtml(String(t.date||'تاریخ نامشخص'))+(t.time?' · '+escapeHtml(String(t.time)):'')+' · '+escapeHtml(String(t.setup||t.direction||'ستاپ ثبت نشده'))+'</small></span><b>'+ (validPL(t)?((Number(t.usd)>0?'+':'')+faDigits(Number(t.usd).toFixed(2))):'P/L ثبت نشده')+'</b></div>').join('')+'<div style="margin-top:10px"><button type="button" class="btn ghost" data-arex-open-related-journal>باز کردن ژورنال معاملات</button></div>';detail.querySelector('[data-arex-open-related-journal]')?.addEventListener('click',()=>goView('trades'));}));}}
+ const recent=document.getElementById('arexDashRecentTrades');if(recent){const latest=[...all].sort((a,b)=>String(b.date||'').localeCompare(String(a.date||''))||String(b.time||'').localeCompare(String(a.time||''))).slice(0,5);recent.innerHTML=latest.length?latest.map((t)=>{const has=t.usd!==''&&t.usd!==null&&t.usd!==undefined&&Number.isFinite(Number(t.usd)),pl=has?Number(t.usd):null;return '<div class="arex-recent-trade"><div><b>'+escapeHtml(String(t.symbol||'نماد نامشخص'))+'</b><small>'+escapeHtml(String(t.date||'تاریخ نامشخص'))+(t.time?' · '+escapeHtml(String(t.time)):'')+'</small></div><div class="arex-recent-meta">'+escapeHtml(String(t.setup||t.direction||'جزئیات ثبت نشده'))+'<small>'+(Array.isArray(t.mistakes)&&t.mistakes.length?escapeHtml(t.mistakes.join('، ')):'برچسب اشتباه: ثبت نشده')+'</small></div><div class="arex-recent-pl '+(has?(pl>0?'positive':pl<0?'negative':''):'')+'">'+(has?((pl>0?'+':'')+faDigits(pl.toFixed(2))):'P/L ثبت نشده')+'</div><button type="button" class="btn ghost" data-arex-recent-open="1">ژورنال</button></div>';}).join(''):'<div class="arex-empty-state"><b>هنوز معامله‌ای ثبت نشده</b><p>پس از ثبت اولین معامله، خلاصه آن در این بخش دیده می‌شود.</p></div>';recent.querySelectorAll('[data-arex-recent-open]').forEach(b=>b.addEventListener('click',()=>goView('trades')));}
+}
+function initArexDashboardPerformance(){const period=document.getElementById('arexDashPerformancePeriod');if(period&&!period.dataset.bound){period.dataset.bound='1';period.addEventListener('change',renderArexDashboardPerformance);}const allBtn=document.getElementById('arexDashAllTrades');if(allBtn&&!allBtn.dataset.bound){allBtn.dataset.bound='1';allBtn.addEventListener('click',()=>goView('trades'));}renderArexDashboardPerformance();}
+
+function renderArexDecisionSupport(){
+ const trades=Array.isArray(state.trades)?state.trades:[],counts=new Map(),samples=new Map();
+ trades.forEach((t,index)=>{(Array.isArray(t.mistakes)?t.mistakes:[]).forEach(raw=>{const label=String(raw||'').trim();if(!label)return;const entry=counts.get(label)||{count:0,pl:0,plCount:0,indices:[]};entry.count++;entry.indices.push(index);if(t.usd!==''&&t.usd!==null&&t.usd!==undefined&&Number.isFinite(Number(t.usd))){entry.pl+=Number(t.usd);entry.plCount++;}counts.set(label,entry);if(!samples.has(label))samples.set(label,[]);samples.get(label).push(t);});});
+ const ranked=[...counts.entries()].sort((a,b)=>b[1].count-a[1].count);const title=document.getElementById('arexMainMistakeTitle'),detail=document.getElementById('arexMainMistakeDetail'),badge=document.getElementById('arexMistakeEvidenceBadge'),evidence=document.getElementById('arexMistakeEvidenceBody');
+ if(title&&detail&&badge&&evidence){if(!ranked.length){title.textContent='هنوز الگوی اشتباه قابل‌تشخیص نیست';detail.textContent=trades.length?'در معاملات ثبت‌شده برچسب اشتباهی پیدا نشد؛ ممکن است ثبت نشده باشد، بنابراین این نتیجه به معنی نبود اشتباه نیست.':'ابتدا چند معامله را ثبت کن و در صورت وجود، اشتباه‌های مربوط را علامت بزن.';badge.textContent='داده ناکافی';badge.classList.remove('has-data');evidence.textContent='تعداد معاملات ثبت‌شده: '+faDigits(trades.length)+'. این پنل فقط از فیلد mistakes ژورنال استفاده می‌کند و از متن آزاد، اشتباه استنباط نمی‌کند.';}else{const [name,x]=ranked[0];title.textContent=name;detail.textContent='در '+faDigits(x.count)+' ثبت معاملاتی، این برچسب بیشترین تکرار را داشته است. فراوانی به‌تنهایی ثابت نمی‌کند که این مورد پرهزینه‌ترین اشتباه یا علت زیان بوده است.';badge.textContent=faDigits(x.count)+' بار ثبت شده';badge.classList.add('has-data');const pl=x.plCount?((x.pl>0?'+':'')+faDigits(x.pl.toFixed(2))+' در ارز ثبت‌شده ژورنال'):'اثر مالی: داده ناکافی';evidence.textContent='شواهد: '+faDigits(x.count)+' معامله دارای این برچسب؛ '+faDigits(x.plCount)+' مورد دارای P/L عددی؛ '+pl+'. بازه بررسی: تمام معاملات ذخیره‌شده فعلی. ارتباط آماری، علت‌ومعلول یا میزان اطمینان پیش‌بینی نشده است.';}}
+ const readBadge=document.getElementById('arexReadinessBadge'),readTitle=document.getElementById('arexReadinessTitle'),readDetail=document.getElementById('arexReadinessDetail'),checks=document.getElementById('arexReadinessChecks');
+ if(readBadge&&readTitle&&readDetail&&checks){const d=todayIso(),log=(state.dailyLogs||{})[d],psych=(Array.isArray(state.psych)?state.psych:[]).some(x=>x.date===d),plan=state.tradingTargets?.day||{},limits=state.riskLimits||{},findings=typeof getArexRuleFindings==='function'?getArexRuleFindings():[],stop=findings.find(x=>x.level==='stop'),items=[{label:'برنامه روزانه',ok:!!(String(plan.behavior||'').trim()||String(plan.trades||'').trim()||String(log?.nextAction||'').trim()),hint:'هدف یا اقدام امروز ثبت نشده'},{label:'وضعیت روانی',ok:psych||!!log?.mood,hint:'وضعیت روانی امروز ثبت نشده'},{label:'محدودیت‌های ریسک',ok:Number(limits.balance)>0&&Number(limits.dailyPct)>0,hint:'موجودی و سقف افت روزانه را بررسی کن'}];checks.innerHTML=items.map(x=>'<li class="'+(x.ok?'ok':'warn')+'">'+escapeHtml(x.label)+(x.ok?' · ثبت شده':' · '+escapeHtml(x.hint))+'</li>').join('');if(stop){readBadge.textContent='توقف';readBadge.className='arex-readiness-badge stop';readTitle.textContent='فعلاً معامله نکن تا هشدار بررسی شود';readDetail.textContent='یک محدودیت یا هشدار توقف ثبت شده: '+String(stop.message||'جزئیات را در مدیریت ریسک بررسی کن')+'. این هشدار بر پایه تنظیمات محلی است.';}else if(items.every(x=>x.ok)){readBadge.textContent='آمادگی اولیه';readBadge.className='arex-readiness-badge ready';readTitle.textContent='آماده برای بررسی ستاپ؛ نه تأیید ورود';readDetail.textContent='اطلاعات پایه امروز ثبت شده است. هنوز باید ستاپ مطابق استراتژی را جداگانه تأیید کنی؛ این پنل سیگنال بازار تولید نمی‌کند.';}else{readBadge.textContent='نیازمند بررسی';readBadge.className='arex-readiness-badge review';readTitle.textContent='قبل از تصمیم، موارد ناقص را تکمیل کن';readDetail.textContent='اطلاعات آمادگی کامل نیست. موارد علامت‌خورده را بررسی کن؛ داده ناقص به‌تنهایی به معنی خوب یا بد بودن شرایط بازار نیست.';}}
+}
+function initArexDecisionSupportActions(){const bind=(id,fn)=>{const el=document.getElementById(id);if(el&&!el.dataset.bound){el.dataset.bound='1';el.addEventListener('click',fn);}};bind('arexViewMistakeTrades',()=>goView('trades'));bind('arexViewPsychJournal',()=>goView('psych'));bind('arexOpenDailyPlan',()=>goView('roadmap'));bind('arexOpenRiskPage',()=>goView('risk'));}
 
 function renderArexDashboardSummary(){
  const box=document.getElementById('arexDashboardKpis');if(!box)return;
@@ -6854,7 +7262,7 @@ function initArexV52Workspace(){
  initArexStrategyForm();
  ['arexAnalyticsPeriod','arexAnalyticsSymbol','arexAnalyticsSetup'].forEach(id=>{const el=document.getElementById(id);if(el&&!el.dataset.bound){el.dataset.bound='1';el.addEventListener(id==='arexAnalyticsPeriod'?'change':'input',renderArexAnalytics);}});
  const reset=document.getElementById('arexAnalyticsReset');if(reset&&!reset.dataset.bound){reset.dataset.bound='1';reset.addEventListener('click',()=>{document.getElementById('arexAnalyticsPeriod').value='all';document.getElementById('arexAnalyticsSymbol').value='';document.getElementById('arexAnalyticsSetup').value='';renderArexAnalytics();});}
- initRiskCalc('riskCalcMount_risk','rcR');renderArexRiskSummary();renderArexStrategyPage();renderArexAnalysisRules();renderArexAnalysisHistory();renderArexAnalytics();renderArexRoadmapPage();renderArexDashboardSummary();initArexSettingsJumpbar();
+ initRiskCalc('riskCalcMount_risk','rcR');renderArexRiskSummary();renderArexStrategyPage();renderArexAnalysisRules();renderArexAnalysisHistory();renderArexAnalytics();renderArexRoadmapPage();renderArexDashboardSummary();renderArexDecisionSupport();initArexDecisionSupportActions();initArexDashboardPerformance();initArexSettingsJumpbar();
 }
 const arexOriginalInitV5Assistant=initV5Assistant;
 initV5Assistant=function(){arexOriginalInitV5Assistant();initArexV52Workspace();};
@@ -6880,10 +7288,13 @@ window.arexRunRuntimeVerification = async function(options={}) {
  // Google Drive OAuth is the only login path. A local remembered-device flag never bypasses authentication.
  // Finance Calendar API. Its documented response separates ISO event time from local clock-only fields.
  // Use time_utc as the canonical timestamp; this avoids invalid Date("09:30") parsing and missing rows.
- let fcEvents=[], fcImpact='all', fcCountry='all', fcQuery='', fcLast=0, fcBusy=false;
+ let fcEvents=[], fcImpact='all', fcCountry='all', fcRange='7d', fcQuery='', fcLast=0, fcBusy=false;
  const fcEndpoint='https://www.financecalendar.com/wp-json/fc/v1/calendar?country=US,EU,DE,GB,JP,CA,AU,CH,NZ,NO,SE,CN&tz=Asia%2FTehran';
  const fcCountries={US:'USD · آمریکا',EU:'EUR · منطقه یورو',DE:'EUR · آلمان',GB:'GBP · بریتانیا',JP:'JPY · ژاپن',CA:'CAD · کانادا',AU:'AUD · استرالیا',CH:'CHF · سوئیس',NZ:'NZD · نیوزیلند',NO:'NOK · نروژ',SE:'SEK · سوئد',CN:'CNY · چین'};
- function fcDate(e){const v=e.time_utc||e.datetime_utc||e.datetime||e.date_time||'';if(v){const d=new Date(v);if(!Number.isNaN(d.getTime()))return d;}const date=e.date||'';const local=e.time_local||'';if(date&&/^\d{1,2}:\d{2}/.test(local)){const d=new Date(date+'T'+local+':00+03:30');if(!Number.isNaN(d.getTime()))return d;}if(date){const d=new Date(date);if(!Number.isNaN(d.getTime()))return d;}return null;}
+ function fcNormalizeCountry(value){const raw=String(value||'').trim().toUpperCase();if(fcCountries[raw])return raw;const aliases={USA:'US','UNITED STATES':'US','UNITED STATES OF AMERICA':'US','EURO AREA':'EU','EUROZONE':'EU','EUROPEAN UNION':'EU','GERMANY':'DE','UNITED KINGDOM':'GB','UK':'GB','JAPAN':'JP','CANADA':'CA','AUSTRALIA':'AU','SWITZERLAND':'CH','NEW ZEALAND':'NZ','NORWAY':'NO','SWEDEN':'SE','CHINA':'CN','EURO':'EU','USD':'US','EUR':'EU','GBP':'GB','JPY':'JP','CAD':'CA','AUD':'AU','CHF':'CH','NZD':'NZ','NOK':'NO','SEK':'SE','CNY':'CN'};return aliases[raw]||raw;}
+ function fcNormalizeImpact(value){const raw=String(value==null?'':value).trim().toLowerCase();if(raw==='3'||raw.includes('high')||raw.includes('strong')||raw.includes('بالا'))return 'high';if(raw==='2'||raw.includes('med')||raw.includes('moderate')||raw.includes('متوسط'))return 'medium';if(raw==='1'||raw.includes('low')||raw.includes('کم'))return 'low';return 'unknown';}
+ function fcZonedDate(dateText,timeText,tz='Asia/Tehran'){const m=String(dateText).match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/),t=String(timeText).match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?/);if(!m||!t)return null;const parts=[+m[1],+m[2],+m[3],+t[1],+t[2],+(t[3]||0)];const target=Date.UTC(parts[0],parts[1]-1,parts[2],parts[3],parts[4],parts[5]);let guess=target;for(let i=0;i<2;i++){const fmt=new Intl.DateTimeFormat('en-GB',{timeZone:tz,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'});const v=Object.fromEntries(fmt.formatToParts(new Date(guess)).map(x=>[x.type,x.value]));const represented=Date.UTC(+v.year,+v.month-1,+v.day,+v.hour,+v.minute,+v.second);guess+=target-represented;}const out=new Date(guess);return Number.isNaN(out.getTime())?null:out;}
+ function fcDate(e){const v=e.time_utc||e.datetime_utc||e.datetime||e.date_time||'';if(v){const d=new Date(v);if(!Number.isNaN(d.getTime()))return d;}const date=e.date||e.event_date||'';const local=e.time_local||e.local_time||'';if(date&&/^\d{1,2}:\d{2}/.test(local)){const d=fcZonedDate(date,local,e.timezone||'Asia/Tehran');if(d)return d;}if(date){const d=new Date(date);if(!Number.isNaN(d.getTime()))return d;}return null;}
  async function loadFc(force=false){
    const status=$('fcApiStatus'),box=$('fcApiEvents');if(!status||!box||fcBusy)return;
    if(!force&&fcEvents.length&&Date.now()-fcLast<300000){renderFc();return;}
@@ -6894,22 +7305,24 @@ window.arexRunRuntimeVerification = async function(options={}) {
      if(!res.ok)throw new Error('HTTP '+res.status);
      const data=await res.json();const raw=Array.isArray(data)?data:(Array.isArray(data.events)?data.events:Array.isArray(data.data)?data.data:[]);
      if(!raw.length&&data&&data.events===undefined)throw new Error('پاسخ API ساختار رویداد قابل تشخیص ندارد');
-     fcEvents=raw.map((e,i)=>{const dt=fcDate(e);return{id:e.id||e.series_code||String(i),name:e.name||e.event||e.title||'رویداد اقتصادی',country:e.country||e.currency||'',impact:String(e.impact||e.importance||'low').toLowerCase(),date:dt,source:e.source_url||e.url||'',period:e.period||'',consensus:e.consensus||e.forecast||'',prior:e.prior||e.previous||'',actual:e.actual||'',status:e.status||''};}).filter(e=>e.date&&!Number.isNaN(e.date.getTime())).sort((a,b)=>a.date-b.date);
-     fcLast=Date.now();const last=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Tehran',hour:'2-digit',minute:'2-digit'}).format(new Date(fcLast));status.textContent=fcEvents.length?`به‌روزرسانی ${last} · ${fcEvents.length} رویداد · زمان تهران`:'اتصال برقرار شد، اما API رویدادی برای بازه برنگرداند.';renderFc();
+     fcEvents=raw.map((e,i)=>{const dt=fcDate(e),rawCountry=e.country||e.currency||e.country_code||'';const src=String(e.source_url||e.url||'');let safeSource='';try{const u=new URL(src);if(u.protocol==='https:'||u.protocol==='http:')safeSource=u.href;}catch(_){}return{id:e.id||e.series_code||String(i),name:e.name||e.event||e.title||'رویداد اقتصادی',country:fcNormalizeCountry(rawCountry),countryRaw:String(rawCountry),impact:fcNormalizeImpact(e.impact??e.importance),date:dt,source:safeSource,period:e.period||'',consensus:e.consensus||e.forecast||'',prior:e.prior||e.previous||'',actual:e.actual||'',status:e.status||''};}).filter(e=>e.date&&!Number.isNaN(e.date.getTime())).sort((a,b)=>a.date-b.date);
+     fcLast=Date.now();const last=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Tehran',hour:'2-digit',minute:'2-digit'}).format(new Date(fcLast));status.textContent=fcEvents.length?`آخرین دریافت ${last} · ${fcEvents.length} رویداد معتبر · زمان تهران`:'اتصال موفق بود؛ برای بازه درخواست‌شده رویداد معتبری برنگشت.';renderFc();
    }catch(err){status.textContent='اتصال تقویم ناموفق بود؛ این خطا به معنی نبود خبر نیست.';box.innerHTML='<div class="fc-error-card"><div class="fc-error-icon">!</div><div><b>داده‌های تقویم دریافت نشد</b><p>'+safeText(err.name==='AbortError'?'درخواست بیش از حد طول کشید.':err.message||'خطای شبکه')+'</p><small>اتصال شبکه، دسترسی CORS یا وضعیت سرویس را بررسی کن.</small></div><button type="button" class="btn ghost" id="fcApiRetry">تلاش دوباره</button></div>';const retry=$('fcApiRetry');if(retry)retry.onclick=()=>loadFc(true);}
    finally{fcBusy=false;}
  }
  function renderFc(){
    const box=$('fcApiEvents');if(!box)return;const now=Date.now();
-   const rows=fcEvents.filter(e=>{const imp=e.impact.includes('high')||e.impact==='3'?'high':e.impact.includes('med')||e.impact==='2'?'medium':'low';e._impact=imp;const country=String(e.country||'').toUpperCase();const q=(e.name+' '+country+' '+(fcCountries[country]||'')).toLowerCase();return (fcImpact==='all'||imp===fcImpact)&&(fcCountry==='all'||country===fcCountry)&&(!fcQuery||q.includes(fcQuery.toLowerCase()))&&e.date.getTime()>now-6*3600000;}).slice(0,150);
+   const maxTime=fcRange==='24h'?now+86400000:fcRange==='30d'?now+30*86400000:fcRange==='all'?Infinity:now+7*86400000;
+   const rows=fcEvents.filter(e=>{const imp=e.impact;e._impact=imp;const country=String(e.country||'').toUpperCase();const q=(e.name+' '+country+' '+(e.countryRaw||'')+' '+(fcCountries[country]||'')).toLowerCase();const ts=e.date.getTime();return (fcImpact==='all'||imp===fcImpact)&&(fcCountry==='all'||country===fcCountry)&&(!fcQuery||q.includes(fcQuery.toLowerCase()))&&(fcRange==='all'||ts>now-6*3600000)&&ts<=maxTime;}).slice(0,150);
    if(!rows.length){box.innerHTML='<div class="fc-empty-state"><div>◷</div><b>رویدادی مطابق فیلترها پیدا نشد</b><p>فیلتر اهمیت یا کشور را تغییر بده، یا دوباره داده‌ها را دریافت کن.</p><button type="button" class="btn ghost" id="fcEmptyRefresh">بروزرسانی تقویم</button></div>';const r=$('fcEmptyRefresh');if(r)r.onclick=()=>loadFc(true);return;}
    const fmtTime=d=>new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Tehran',hour:'2-digit',minute:'2-digit'}).format(d);
    const fmtDate=d=>new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Tehran',weekday:'short',day:'2-digit',month:'short'}).format(d);
-   box.innerHTML=rows.map(e=>{const c=String(e.country||'').toUpperCase();const diff=e.date.getTime()-now;const countdown=diff<0?'منتشر شده':diff<3600000?`${Math.max(1,Math.round(diff/60000))} دقیقه دیگر`:diff<86400000?`${Math.floor(diff/3600000)} ساعت دیگر`:fmtDate(e.date);const imp=e._impact;return '<article class="fc-api-row"><div class="fc-api-time"><strong>'+safeText(fmtTime(e.date))+'</strong><small>'+safeText(fmtDate(e.date))+'</small></div><div class="fc-event-main"><div class="fc-event-topline"><span class="fc-country-code">'+safeText(c||'—')+'</span><span class="fc-countdown">'+safeText(countdown)+'</span></div><div class="fc-api-title">'+safeText(e.name)+'</div><div class="fc-api-meta">'+(e.period?safeText(e.period)+' · ':'')+(e.consensus?'پیش‌بینی: '+safeText(e.consensus)+' · ':'')+(e.prior?'قبلی: '+safeText(e.prior)+' · ':'')+(e.actual?'واقعی: '+safeText(e.actual):'')+'</div>'+(e.source?'<a class="fc-source-link" href="'+safeText(e.source)+'" target="_blank" rel="noopener noreferrer">منبع رسمی رویداد ↗</a>':'')+'</div><span class="fc-impact '+imp+'">'+(imp==='high'?'تأثیر بالا':imp==='medium'?'متوسط':'کم')+'</span></article>';}).join('');
+   box.innerHTML=rows.map(e=>{const c=String(e.country||'').toUpperCase();const diff=e.date.getTime()-now;const countdown=diff<0?'منتشر شده':diff<3600000?`${Math.max(1,Math.round(diff/60000))} دقیقه دیگر`:diff<86400000?`${Math.floor(diff/3600000)} ساعت دیگر`:fmtDate(e.date);const imp=e._impact;return '<article class="fc-api-row"><div class="fc-api-time"><strong>'+safeText(fmtTime(e.date))+'</strong><small>'+safeText(fmtDate(e.date))+'</small></div><div class="fc-event-main"><div class="fc-event-topline"><span class="fc-country-code">'+safeText(c||'—')+'</span><span class="fc-countdown">'+safeText(countdown)+'</span></div><div class="fc-api-title">'+safeText(e.name)+'</div><div class="fc-api-meta">'+(e.period?safeText(e.period)+' · ':'')+(e.consensus?'پیش‌بینی: '+safeText(e.consensus)+' · ':'')+(e.prior?'قبلی: '+safeText(e.prior)+' · ':'')+(e.actual?'واقعی: '+safeText(e.actual):'')+'</div>'+(e.source?'<a class="fc-source-link" href="'+safeText(e.source)+'" target="_blank" rel="noopener noreferrer">منبع رسمی رویداد ↗</a>':'')+'</div><span class="fc-impact '+imp+'">'+(imp==='high'?'تأثیر بالا':imp==='medium'?'متوسط':imp==='low'?'کم':'نامشخص')+'</span></article>';}).join('');
  }
  document.querySelectorAll('[data-fc-impact]').forEach(b=>b.addEventListener('click',()=>{fcImpact=b.dataset.fcImpact;document.querySelectorAll('[data-fc-impact]').forEach(x=>x.classList.toggle('active',x===b));renderFc();}));
  if($('fcApiRefresh'))$('fcApiRefresh').addEventListener('click',()=>loadFc(true));
  if($('fcCountryFilter'))$('fcCountryFilter').addEventListener('change',e=>{fcCountry=e.target.value;renderFc();});
+ if($('fcRangeFilter'))$('fcRangeFilter').addEventListener('change',e=>{fcRange=e.target.value;renderFc();});
  if($('fcSearch'))$('fcSearch').addEventListener('input',e=>{fcQuery=e.target.value.trim();renderFc();});
  window.arexLoadFreeCalendar=loadFc;
  // Make the structured API calendar the default view, with the licensed attribution visible.
@@ -6923,13 +7336,13 @@ window.arexRunRuntimeVerification = async function(options={}) {
  const endpointKey='arex_v55_ai_endpoint';
  if($('arexAiEndpoint'))$('arexAiEndpoint').value=localStorage.getItem(endpointKey)||'';
  function addChat(role,text){const h=$('arexChatHistory');if(!h)return;const el=document.createElement('div');el.className='arex-chat-msg '+role;const label=document.createElement('small');label.textContent=role==='user'?'شما':'آرکس';el.appendChild(label);el.appendChild(document.createTextNode(text));h.appendChild(el);h.scrollTop=h.scrollHeight;history.push({role:role==='user'?'user':'assistant',content:text});if(history.length>24)history.splice(0,2);}
- function contextSnapshot(){const st=(typeof state!=='undefined'&&state)||window.state||{};return {app:'AREX V9.6.3',language:st.language||'fa',timezone:'Asia/Tehran',tradesCount:Array.isArray(st.trades)?st.trades.length:0,psychNotesCount:Array.isArray(st.psych)?st.psych.length:0,goalsCount:Array.isArray(st.goals)?st.goals.length:0,confirmedRules:Array.isArray(st.tradeRules)?st.tradeRules:[],riskLimits:st.riskLimits||{},activePage:document.querySelector('.view.active')?.id||'unknown',instruction:'Do not invent user data, live prices, strategy rules, or news. If information is missing, ask a focused question. Do not promise profitable outcomes.'};}
+ function contextSnapshot(){const st=(typeof state!=='undefined'&&state)||window.state||{};return {app:'AREX V9.6.4',language:st.language||'fa',timezone:'Asia/Tehran',tradesCount:Array.isArray(st.trades)?st.trades.length:0,psychNotesCount:Array.isArray(st.psych)?st.psych.length:0,goalsCount:Array.isArray(st.goals)?st.goals.length:0,confirmedRules:Array.isArray(st.tradeRules)?st.tradeRules:[],riskLimits:st.riskLimits||{},activePage:document.querySelector('.view.active')?.id||'unknown',instruction:'Do not invent user data, live prices, strategy rules, or news. If information is missing, ask a focused question. Do not promise profitable outcomes.'};}
  function localAnswer(q){const x=q.toLowerCase();if(/سلام|درود|hello|hi\b/.test(x))return 'سلام! من آرکس هستم. می‌توانم در کار با بخش‌های AREX، نظم روزانه، ژورنال، مدیریت ریسک و مرور قوانین کمک کنم. برای پاسخ عمومی درباره هر موضوع، endpoint هوش مصنوعی را در تنظیمات وصل کن.';if(/از کجا شروع|شروع کنم|first|start/.test(x))return 'برای شروع این مسیر را برو: ۱) برنامه روزانه را باز کن و وضعیت و هدف امروز را ثبت کن؛ ۲) در مدیریت ریسک موجودی و ریسک مجاز را تنظیم کن؛ ۳) پیش از معامله قوانین استراتژی و تقویم اقتصادی را مرور کن؛ ۴) بعد از معامله نتیجه و اسکرین‌شات را در ژورنال ثبت کن؛ ۵) آخر روز عملکرد و روان‌شناسی را مرور کن.';if(/ریسک|risk|ضرر/.test(x))return 'پیش از هر معامله، حد ضرر و حجم را طوری تعیین کن که زیان احتمالی از سقف ریسک شخصی‌ات بیشتر نشود. اگر موجودی، درصد ریسک، نماد و فاصله SL را بدهی، می‌توانم داده‌های لازم برای محاسبه را بررسی کنم؛ برای محاسبه دقیق حجم، مشخصات قرارداد/ارزش هر پوینت بروکر هم لازم است.';if(/تقویم|خبر|news|calendar/.test(x))return 'از تب «تقویم اقتصادی» استفاده کن؛ تب «تقویم رایگان (API)» از Finance Calendar رویدادهای مهم را می‌گیرد. اگر فید خطا داد، خطا را بررسی کن و خالی بودن فهرست را به معنی نبود خبر تلقی نکن.';if(/ژورنال|ثبت معامله|journal/.test(x))return 'از «ژورنال معاملات» برای ثبت نماد، جهت، ورود/خروج، SL/TP، نتیجه و دلیل ورود استفاده کن. ثبت دلیل و رعایت قوانین از ثبت صرف سود و زیان مهم‌تر است.';if(/تنظیمات|settings/.test(x))return 'تنظیمات را به بخش‌های ظاهر، سشن‌ها، ریسک، قوانین، اتصال‌ها و پشتیبان‌گیری تقسیم کرده‌ایم. از نوار دسترسی سریع بالای تنظیمات برای رفتن به بخش موردنظر استفاده کن.';if(/استراتژی|قانون|strategy/.test(x))return 'قوانین تأییدشده‌ات باید بر دانش عمومی مقدم باشند. اگر شرط ورود، تایم‌فریم، حد ضرر یا استثنا مبهم است، آن را قطعی فرض نمی‌کنم. سؤال یا قانون دقیق را بنویس تا کمک کنم ابهامش را مشخص کنیم.';return 'برای این سؤال هنوز موتور هوش مصنوعی عمومی به AREX وصل نشده است؛ نمی‌خواهم پاسخ ساختگی بدهم. در تنظیمات ← «اتصال هوش مصنوعی آرکس»، آدرس یک backend امن سازگار را ثبت کن. تا آن زمان می‌توانم درباره امکانات داخلی، نظم معاملاتی، ژورنال و ریسک با اطلاعات موجود راهنمایی بدهم.';}
  async function askArex(text){if(chatBusy||!text.trim())return;chatBusy=true;const send=$('arexChatSend');if(send){send.disabled=true;send.textContent='…'}addChat('user',text.trim());const endpoint=localStorage.getItem(endpointKey)||'';try{if(endpoint){const res=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:history.slice(-16),context:contextSnapshot()}),signal:AbortSignal.timeout?AbortSignal.timeout(30000):undefined});if(!res.ok)throw new Error('HTTP '+res.status);const data=await res.json();const answer=data.answer||data.reply||data.text||data.choices?.[0]?.message?.content;if(typeof answer!=='string'||!answer.trim())throw new Error('پاسخ سرویس خالی یا ناشناخته است');addChat('assistant',answer.trim());}else addChat('assistant',localAnswer(text));}catch(e){addChat('assistant','اتصال به سرویس هوش مصنوعی ناموفق بود ('+e.message+'). آدرس endpoint، CORS و وضعیت backend را بررسی کن. پاسخ جایگزین ساختگی تولید نکردم.');}finally{chatBusy=false;if(send){send.disabled=false;send.textContent='ارسال ↗'}}}
  if($('arexChatForm'))$('arexChatForm').addEventListener('submit',e=>{e.preventDefault();const input=$('arexChatInput'),text=input.value.trim();if(!text)return;input.value='';askArex(text)});
  if($('arexChatInput'))$('arexChatInput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();$('arexChatForm').requestSubmit()}});
  if($('arexAiEndpointSave'))$('arexAiEndpointSave').addEventListener('click',()=>{const val=$('arexAiEndpoint').value.trim();if(val&&!/^https:\/\//i.test(val)){ $('arexAiEndpointStatus').textContent='آدرس باید با https:// شروع شود.';return;}try{if(val)localStorage.setItem(endpointKey,val);else localStorage.removeItem(endpointKey);$('arexAiEndpointStatus').textContent=val?'آدرس ذخیره شد. کلید محرمانه باید فقط در backend باشد.':'اتصال مدل زبانی پاک شد.';}catch(e){$('arexAiEndpointStatus').textContent='ذخیره در مرورگر انجام نشد.'}});
- if($('arexAiEndpointTest'))$('arexAiEndpointTest').addEventListener('click',async()=>{const val=$('arexAiEndpoint').value.trim();if(!val){$('arexAiEndpointStatus').textContent='ابتدا آدرس endpoint را وارد کن.';return;}try{const r=await fetch(val,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'user',content:'Reply with exactly: AREX_OK'}],context:{app:'AREX V9.6.3',test:true}})});if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();const ans=d.answer||d.reply||d.text||d.choices?.[0]?.message?.content;if(!ans)throw new Error('ساختار پاسخ نامعتبر');$('arexAiEndpointStatus').textContent='اتصال برقرار است؛ پاسخ سرویس دریافت شد.';}catch(e){$('arexAiEndpointStatus').textContent='آزمون ناموفق: '+e.message+' · CORS و فرمت پاسخ را بررسی کن.'}});
+ if($('arexAiEndpointTest'))$('arexAiEndpointTest').addEventListener('click',async()=>{const val=$('arexAiEndpoint').value.trim();if(!val){$('arexAiEndpointStatus').textContent='ابتدا آدرس endpoint را وارد کن.';return;}try{const r=await fetch(val,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'user',content:'Reply with exactly: AREX_OK'}],context:{app:'AREX V9.6.4',test:true}})});if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();const ans=d.answer||d.reply||d.text||d.choices?.[0]?.message?.content;if(!ans)throw new Error('ساختار پاسخ نامعتبر');$('arexAiEndpointStatus').textContent='اتصال برقرار است؛ پاسخ سرویس دریافت شد.';}catch(e){$('arexAiEndpointStatus').textContent='آزمون ناموفق: '+e.message+' · CORS و فرمت پاسخ را بررسی کن.'}});
  // First-visit guided tour. Only shown after the app's main shell is visible.
  const tourSteps=[
   {target:'#view-dashboard',title:'به AREX خوش آمدی',text:'داشبورد نمای کلی وضعیت و عملکرد است. برای شروع واقعی، مسیر روزانه را دنبال کن و داده‌های شخصی خودت را وارد کن.'},
@@ -7092,9 +7505,23 @@ function applyWidgets(){
 function safeText(el,value){if(el)el.textContent=value;}
 function renderDashboardCoach(){
  const el=$('arexDashboardCoachText');if(!el)return;
- let summary='ابتدا برنامه روزانه و حدود ریسک را بررسی کن.';
- try{if(typeof getArexCoachSummary==='function')summary=getArexCoachSummary();}catch{}
- safeText(el,summary);
+ const trades=Array.isArray(state.trades)?state.trades:[],today=todayIso(),todayTrades=trades.filter(t=>t.date===today),findings=typeof getArexRuleFindings==='function'?getArexRuleFindings():[];
+ const stop=findings.find(f=>f.level==='stop'),review=findings.find(f=>f.level==='review');
+ const mistakeCounts=new Map();trades.forEach(t=>(Array.isArray(t.mistakes)?t.mistakes:[]).forEach(m=>{const key=String(m||'').trim();if(key)mistakeCounts.set(key,(mistakeCounts.get(key)||0)+1);}));
+ const topMistake=[...mistakeCounts.entries()].sort((a,b)=>b[1]-a[1])[0];
+ const dailyLog=(state.dailyLogs||{})[today],plan=state.tradingTargets?.day||{},limits=state.riskLimits||{};
+ let summary='ابتدا برنامه روزانه و حدود ریسک را بررسی کن.',priority='مرور',evidence='پیشنهاد بر اساس داده‌های محلی AREX ساخته می‌شود؛ داده زنده بازار یا اطلاعات بروکر در این ارزیابی دخیل نیست.',motivation='پیشرفت را با کیفیت تصمیم‌ها و پایبندی به فرایند بسنج، نه فقط نتیجه یک معامله.';
+ if(stop){priority='مهم';summary='پیش از هر معامله، هشدار توقف را بررسی و برطرف کن: '+String(stop.title||'هشدار ریسک')+'.';evidence='دلیل اولویت بالا: '+String(stop.message||'هشدار توقف از کنترل‌های محلی ثبت شده است.')+' هیچ ستاپی با این پنل تأیید نمی‌شود.';}
+ else if(review){priority='مهم';summary='قبل از تصمیم معاملاتی، مورد نیازمند بررسی را روشن کن: '+String(review.title||'مورد نیازمند بررسی')+'.';evidence='مبنای پیشنهاد: '+String(review.message||'یک مورد برای مرور ثبت شده است')+'. پس از بررسی، قوانین و محدودیت‌های شخصی را دوباره ارزیابی کن.';}
+ else if(!String(plan.behavior||'').trim()&&!String(plan.trades||'').trim()&&!String(dailyLog?.nextAction||'').trim()){priority='شروع روز';summary='قدم بعدی: یک هدف رفتاری مشخص و سقف معاملات امروز را ثبت کن؛ بعد وضعیت روانی و محدودیت ریسک را مرور کن.';evidence='برنامه روزانه یا اقدام مشخصی برای امروز در تنظیمات محلی پیدا نشد. این پیشنهاد بر اساس ناقص بودن ثبت برنامه است، نه پیش‌بینی بازار.';}
+ else if(todayTrades.length&&!(dailyLog&&dailyLog.journalDone)){priority='تکمیل';summary='برای معاملات امروز، ژورنال و کیفیت اجرای قوانین را تکمیل کن؛ نتیجه مالی به‌تنهایی کیفیت تصمیم را نشان نمی‌دهد.';evidence='امروز '+faDigits(todayTrades.length)+' معامله در ژورنال ثبت شده و گزارش روزانه هنوز تکمیل نشده یا تکمیل ژورنال را تأیید نمی‌کند.';}
+ else if(topMistake){priority='بهبود';summary='قدم بعدی: آخرین معاملات دارای برچسب «'+topMistake[0]+'» را مرور کن و برای جلسه بعد یک اقدام اصلاحی قابل‌اندازه‌گیری تعیین کن.';evidence='این برچسب در '+faDigits(topMistake[1])+' معامله از تمام ژورنال ثبت شده است. فراوانی به‌تنهایی ثابت نمی‌کند که این اشتباه بیشترین زیان را ایجاد کرده است.';}
+ else if(todayTrades.length){priority='مرور';summary='اطلاعات امروز را مرور کن و بررسی کن آیا اجرای معاملات با پلن ثبت‌شده هماهنگ بوده است.';evidence='برای امروز '+faDigits(todayTrades.length)+' معامله ثبت شده است. این پیشنهاد از تعداد معاملات و وضعیت ژورنال استفاده می‌کند؛ کیفیت ستاپ را مستقل ارزیابی نمی‌کند.';}
+ const withPL=trades.filter(t=>t.usd!==''&&t.usd!==null&&t.usd!==undefined&&Number.isFinite(Number(t.usd))),wins=withPL.filter(t=>Number(t.usd)>0).length;
+ if(withPL.length>=3){const rate=Math.round(wins/withPL.length*100);motivation='تا اینجا '+faDigits(withPL.length)+' نتیجه مالی ثبت کرده‌ای و '+faDigits(rate)+'٪ آن‌ها مثبت بوده‌اند. این فقط توصیف نمونه ثبت‌شده است؛ روی تکرار فرایند درست تمرکز کن، نه تضمین نتیجه بعدی.';}
+ else if(topMistake){motivation='اینکه اشتباه «'+topMistake[0]+'» را ثبت کرده‌ای، یک نقطه شروع برای اصلاح آن است. برای جلسه بعد فقط یک تغییر رفتاری روشن تعریف و نتیجه‌اش را ثبت کن.';}
+ else if(trades.length===0){motivation='لازم نیست برای اثبات پیشرفت حتماً معامله کنی؛ برنامه‌ریزی، صبر برای ستاپ معتبر و ثبت تصمیم‌ها هم بخشی از فرایند حرفه‌ای است.';}
+ safeText(el,summary);safeText($('arexCoachPriority'),priority);safeText($('arexCoachEvidence'),evidence);safeText($('arexCoachMotivationText'),motivation);
  if($('mascotBubble'))safeText($('mascotBubble'),summary);
 }
 function formatEventDate(e){
@@ -7303,5 +7730,93 @@ button,select,input,textarea{max-width:100%} .table-wrap,.table-container,[data-
 @media(max-width:560px){.topbar{max-width:100%;}.top-actions,.top-quick-tools{min-width:0;flex-wrap:wrap}.grid{min-width:0}.card{min-width:0;overflow-wrap:anywhere}.modal,.modal-content,[role="dialog"]{max-width:calc(100vw - 20px)}input,select,textarea{font-size:16px!important}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
+
+<style id="arex-responsive-phase1">
+/* Phase 1 responsive foundation: preserve the existing desktop layout; improve touch layouts. */
+html,body{max-width:100%;}
+body{min-width:0;}
+.wrap,.content,.view,.card,.grid,.grid>*{min-width:0;}
+img,svg,canvas,video,iframe{max-width:100%;}
+pre,code{overflow-wrap:anywhere;}
+.table-wrap,.table-container,.table-responsive,.scroll-x{max-width:100%;overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;}
+.view table{max-width:100%;}
+.view input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),.view select,.view textarea{min-width:0;max-width:100%;}
+.view button,.sidebar button{touch-action:manipulation;}
+.arex-mobile-nav{display:none;}
+@media(max-width:680px){
+  .arex-mobile-nav{position:fixed;inset:auto 0 0;z-index:11000;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:7px max(8px,env(safe-area-inset-right)) calc(7px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));background:color-mix(in srgb,var(--panel) 91%,transparent);border-top:1px solid var(--border);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 -8px 28px rgba(0,0,0,.14)}
+  .arex-mobile-nav button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:0;min-height:48px;padding:5px 2px;border:1px solid transparent;border-radius:12px;background:transparent;color:var(--muted);font:inherit;font-size:10px;line-height:1.3;cursor:pointer}
+  .arex-mobile-nav button .mobile-nav-icon{font-size:18px;line-height:1.1}
+  .arex-mobile-nav button.active{color:var(--gold);background:rgba(var(--accent-rgb),.12);border-color:rgba(var(--accent-rgb),.18);font-weight:800}
+  .content{padding-bottom:calc(82px + env(safe-area-inset-bottom))!important;}
+  .mascot:not(.expanded){bottom:calc(72px + env(safe-area-inset-bottom))!important;}
+  #toast{bottom:calc(76px + env(safe-area-inset-bottom));max-width:calc(100vw - 24px);}
+  .modal,.dialog,[role="dialog"]{max-height:calc(100dvh - 24px);overflow-y:auto;overscroll-behavior:contain;}
+  .view .grid{grid-template-columns:minmax(0,1fr)!important;}
+  .view .grid.g2,.view .grid.g3,.view .grid.g4,.view .grid.g6{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+  .view .grid.g3:has(> :only-child),.view .grid.g4:has(> :only-child),.view .grid.g6:has(> :only-child){grid-template-columns:minmax(0,1fr)!important;}
+}
+@media(max-width:380px){
+  .arex-mobile-nav button{font-size:9px;min-height:46px}
+  .arex-mobile-nav button .mobile-nav-icon{font-size:16px}
+  .view .grid.g2,.view .grid.g3,.view .grid.g4,.view .grid.g6{grid-template-columns:minmax(0,1fr)!important;}
+}
+@media(min-width:681px){.arex-mobile-nav{display:none!important;}}
+@media(prefers-reduced-motion:reduce){.arex-mobile-nav *{transition:none!important;}}
+
+.arex-coach-heading{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.arex-coach-motivation{margin-top:10px;padding:10px 12px;border-inline-start:3px solid var(--accent-soft);background:var(--panel-soft,rgba(127,127,127,.07));border-radius:8px;display:grid;gap:4px}.arex-coach-motivation b{font-size:12px;color:var(--text)}.arex-coach-motivation span{font-size:12px;line-height:1.8;color:var(--muted)}#arexCoachEvidence{line-height:1.85}.arex-next-step-copy{min-width:0}@media(max-width:700px){.arex-next-step-card{align-items:flex-start;flex-wrap:wrap}.arex-next-step-card>#arexOpenCoach{margin-inline-start:48px}.arex-coach-motivation{width:100%}}
+
+.arex-tradeform-feedback{min-height:0;margin:8px 0;padding:0;color:var(--muted);font-size:12px;line-height:1.8;border-radius:8px;}
+.arex-tradeform-feedback:not(:empty){padding:8px 10px;background:var(--panel-soft,rgba(127,127,127,.07));}
+.arex-tradeform-feedback.is-error{color:var(--danger,#b42318);border-inline-start:3px solid var(--danger,#b42318);}
+.arex-tradeform-feedback.is-warning{color:var(--warning,#9a6700);border-inline-start:3px solid var(--warning,#9a6700);}
+.arex-field-invalid{outline:2px solid var(--danger,#b42318)!important;outline-offset:1px;}
+@media(max-width:680px){#view-trades .form-grid{grid-template-columns:minmax(0,1fr)!important;}#view-trades .modal-actions{position:sticky;bottom:calc(64px + env(safe-area-inset-bottom));z-index:3;padding:10px;background:var(--panel,Canvas);border-top:1px solid var(--border,rgba(127,127,127,.2));border-radius:10px;}#view-trades .modal-actions .btn{min-height:44px;}}
+
+
+/* Phase 20 — shared interaction and visual consistency across primary views */
+:root{--arex-radius-card:16px;--arex-focus-ring:rgba(var(--accent-rgb),.78)}
+.view .card{border-radius:var(--arex-radius-card);min-width:0;overflow-wrap:anywhere}
+.view .section-title,.view h2,.view h3{scroll-margin-top:18px}
+.view button:focus-visible,.view a:focus-visible,.sidebar button:focus-visible,.arex-mobile-nav button:focus-visible,
+.view input:focus-visible,.view select:focus-visible,.view textarea:focus-visible{outline:2px solid var(--arex-focus-ring);outline-offset:2px}
+.view .btn,.view button{max-width:100%;overflow-wrap:anywhere}
+.view .table-wrap table,.view .table-container table,.view .table-responsive table,.view .scroll-x table{min-width:560px}
+.view .muted,.view .text-muted{line-height:1.75}
+.view [role="status"],.view [role="alert"]{line-height:1.8;overflow-wrap:anywhere}
+.view .badge,.view .pill,.view .tag{max-width:100%;white-space:normal;overflow-wrap:anywhere}
+.view .form-grid>*{min-width:0}
+.view input[type="checkbox"],.view input[type="radio"]{accent-color:var(--accent,var(--gold));}
+@media(max-width:680px){
+  .view .card{border-radius:14px}
+  .view .section-title{line-height:1.65;overflow-wrap:anywhere}
+  .view .table-wrap,.view .table-container,.view .table-responsive,.view .scroll-x{margin-inline:-2px}
+  .view .btn,.view button{min-height:40px}
+}
+@media(prefers-reduced-motion:reduce){.view *, .sidebar *, .arex-mobile-nav *{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;}}
+
+
+/* Phase 22 — evidence-first backtest review */
+.arex-bt-evidence{margin:10px 0;padding:10px 12px;border:1px solid var(--border);border-radius:12px;background:var(--panel-hi);font-size:12px;line-height:1.9;color:var(--muted)}
+.arex-bt-evidence[data-level="warn"]{border-color:var(--warning,#c58b25)}
+.arex-bt-setup-insights{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+.arex-bt-setup-item{min-width:0;border:1px solid var(--border);border-radius:12px;padding:12px}
+.arex-bt-setup-item b{display:block;overflow-wrap:anywhere}.arex-bt-setup-item span{display:block;color:var(--muted);font-size:11px;line-height:1.8;margin-top:5px}
+.arex-bt-filters{margin-top:12px}.arex-bt-filters label{min-width:150px}.arex-bt-filters .btn{white-space:nowrap}
+@media(max-width:680px){.arex-bt-setup-insights{grid-template-columns:minmax(0,1fr)}.arex-bt-filters label{min-width:100%}.arex-bt-filters .btn{width:100%}}
+
+/* Phase 28: corrective-action follow-through */
+.phase28-actions-card{overflow:hidden}.phase28-action-row{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:14px 0;border-bottom:1px solid var(--border,rgba(140,160,190,.18))}.phase28-action-row:last-child{border-bottom:0}.phase28-action-main{min-width:0;flex:1}.phase28-action-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.phase28-action-main p{margin:8px 0 4px;line-height:1.7;overflow-wrap:anywhere}.phase28-status{font-size:.78rem;border-radius:999px;padding:4px 9px}.phase28-status.open{background:rgba(217,148,50,.13);color:var(--warning,#d99432)}.phase28-status.done{background:rgba(36,170,125,.13);color:var(--success,#24aa7d)}.phase28-action-buttons{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}.phase28-action-buttons .btn{white-space:nowrap}@media(max-width:680px){.phase28-action-row{flex-direction:column}.phase28-action-buttons{justify-content:flex-start;width:100%}}
+</style>
+<nav class="arex-mobile-nav" aria-label="ناوبری سریع موبایل">
+  <button type="button" data-mobile-view="dashboard" class="active" onclick="goView('dashboard')"><span class="mobile-nav-icon" aria-hidden="true">▦</span><span data-i18n="nav.dashboard">داشبورد</span></button>
+  <button type="button" data-mobile-view="trades" onclick="goView('trades')"><span class="mobile-nav-icon" aria-hidden="true">↗</span><span data-i18n="nav.trades">ژورنال</span></button>
+  <button type="button" data-mobile-view="analytics" onclick="goView('analytics')"><span class="mobile-nav-icon" aria-hidden="true">⌁</span><span data-i18n="nav.analytics">تحلیل عملکرد</span></button>
+  <button type="button" id="arexMobileMore" aria-label="باز کردن منوی همه بخش‌ها" onclick="document.getElementById('hamburgerBtn').click()"><span class="mobile-nav-icon" aria-hidden="true">☰</span><span id="arexMobileMoreLabel">بیشتر</span></button>
+</nav>
+<script>
+(()=>{const label=document.getElementById('arexMobileMoreLabel');if(!label)return;const update=()=>{const lang=document.documentElement.lang||'fa';label.textContent=lang==='fa'?'بیشتر':lang==='de'?'Mehr':'More';const nav=label.closest('nav');if(nav)nav.setAttribute('aria-label',lang==='fa'?'ناوبری سریع موبایل':lang==='de'?'Mobile Schnellnavigation':'Mobile quick navigation');};update();new MutationObserver(update).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});})();
+</script>
+
 </body>
 </html>

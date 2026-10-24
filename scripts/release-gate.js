@@ -3,6 +3,7 @@
 // Reproducible static release gate. This does not replace browser or live-service tests.
 const fs = require('node:fs');
 const path = require('node:path');
+const { spawnSync } = require('node:child_process');
 const root = path.resolve(__dirname, '..');
 const read = (name) => fs.readFileSync(path.join(root, name), 'utf8');
 const results = [];
@@ -29,6 +30,26 @@ check('Service Worker app-shell assets exist', () => {
   if (missing.length) fail(`missing cached assets: ${missing.join(', ')}`);
   if (!/const CACHE_VERSION\s*=\s*['"][^'"]+['"]/.test(sw)) fail('cache version missing');
   return `${assets.length} cached assets present`;
+});
+
+check('All local JavaScript files pass syntax validation', () => {
+  const files = [];
+  const walk = (dir) => {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      if (entry.name === '.git' || entry.name === 'node_modules') continue;
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) walk(full);
+      else if (entry.isFile() && entry.name.endsWith('.js')) files.push(full);
+    }
+  };
+  walk(root);
+  const failures = [];
+  for (const file of files) {
+    const result = spawnSync(process.execPath, ['--check', file], { encoding: 'utf8' });
+    if (result.status !== 0) failures.push(`${path.relative(root, file)}: ${(result.stderr || result.stdout || 'syntax check failed').trim()}`);
+  }
+  if (failures.length) fail(failures.join('\n'));
+  return `${files.length} JavaScript files passed node --check`;
 });
 
 check('HTML IDs are unique', () => {

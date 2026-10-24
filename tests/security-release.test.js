@@ -35,10 +35,10 @@ test('notification Worker restricts browser Origin and validates Google account 
 
 test('backtest cards escape user-controlled text before HTML insertion', () => {
   const html=read('index.html');
-  const start=html.indexOf("const box = document.getElementById('btList')");
+  const start=html.indexOf("const box=document.getElementById('btList')");
   assert.notEqual(start,-1);
-  const section=html.slice(start,start+2200);
-  for(const field of ['t.date','t.setup','t.symbol','t.note','t.r','t.id']) assert.match(section,new RegExp('escapeHtml\\('+field.replace('.','\\.')+'\\)'));
+  const section=html.slice(start,start+3200);
+  for(const field of ['t.date','t.setup','t.symbol','t.note','t.id','t.timeframe','t.session','t.regime']) assert.match(section,new RegExp('escapeHtml\\('+field.replace('.','\\.')));
 });
 
 test('release checklist distinguishes static checks from live-service verification', () => {

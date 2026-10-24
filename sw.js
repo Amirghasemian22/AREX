@@ -1,8 +1,9 @@
-const CACHE_VERSION = 'v9-6-4-drive-only-27';
+const CACHE_VERSION = 'v9-6-4-drive-only-final-quality-pass-33-journal-phase15-form-phase16-analytics-phase17-36-risk-phase18-37-psych-phase19-38-ui-phase20-39-calendar-phase21-40-backtest-phase22-41-propfirm-phase23-42-strategy-phase24-43-goals-plan-phase25-44-daily-learning-phase26-45-corrective-actions-phase28-47-workflows-phase29-48-runtime-verification-phase30-49-security-phase31-50-release-readiness-phase32-51-release-gate-js-syntax-phase33-52';
 const CACHE_NAME = 'fx-bootcamp-' + CACHE_VERSION;
 const APP_SHELL = [
   './',
   './index.html',
+  './js/ui/tradeform-ux-phase16.js',
   './arex-reference-ui.css',
   './manifest.json',
   './icon-192.png',
@@ -14,6 +15,8 @@ const APP_SHELL = [
   './js/core/ui-quality.js',
   './js/core/account-storage-policy.js',
   './js/core/analytics.js',
+  './js/core/daily-learning.js',
+  './js/core/mistake-trends.js',
   './js/core/trade-lifecycle.js',
   './js/core/trade-audit.js',
   './js/core/diagnostic-repair.js',

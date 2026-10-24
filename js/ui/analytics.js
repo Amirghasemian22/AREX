@@ -22,7 +22,7 @@
   function ensureContainers() {
     const host = document.getElementById('view-analytics'); if (!host || document.getElementById('arexV9Extra')) return;
     const d = document.createElement('div'); d.id = 'arexV9Extra';
-    d.innerHTML = '<div class="arex-v9-grid">' +
+    d.innerHTML = '<section class="card arex-analytics-insights" id="arexAnalyticsInsights" aria-live="polite"></section><div class="arex-v9-grid">' +
       '<section class="card" id="v9Heat"></section><section class="card" id="v9Drill" style="display:none"></section>' +
       '<section class="card" id="v9Errors"></section><section class="card" id="v9Alerts"></section><section class="card" id="v9RiskState"></section>' +
       '<section class="card" id="v9Quality"></section><section class="card" id="v9Diagnostics"></section><section class="card" id="v9Cfg"></section></div>';
@@ -31,6 +31,30 @@
   const badge = c => '<span class="v9-badge v9-' + esc(c) + '">' + V9T('conf.' + c) + '</span>';
   /* Core modules return stable ids/codes + params; text is translated here. */
   const tr = (key, fallback, params) => { const s = V9T(key, params); return s === key ? (fallback || key) : s; };
+
+  /* ---------- Evidence-first performance insights (Phase 17) ---------- */
+  function renderInsights(trades) {
+    const box = document.getElementById('arexAnalyticsInsights'); if (!box) return;
+    const A = C().analytics;
+    const summary = A.summarize(trades, {});
+    const validR = (Array.isArray(trades) ? trades : []).filter(t => A.outcome(t).r !== null);
+    const bySetup = A.byStrategy(validR, {}).filter(g => g.key !== '(نامشخص)' && g.rSample >= 5);
+    const bySession = A.bySession(validR, {}).filter(g => g.key !== '(نامشخص)' && g.rSample >= 5);
+    const best = list => list.slice().sort((a,b) => (b.expectancyR ?? -Infinity) - (a.expectancyR ?? -Infinity))[0];
+    const worst = list => list.slice().sort((a,b) => (a.expectancyR ?? Infinity) - (b.expectancyR ?? Infinity))[0];
+    const bestSetup = best(bySetup), worstSetup = worst(bySetup), bestSession = best(bySession);
+    const item = (label, value, detail, tone='neutral') => '<article class="arex-insight-item '+tone+'"><span>'+label+'</span><strong>'+value+'</strong><small>'+detail+'</small></article>';
+    const n = fa(summary.counted), threshold = fa(summary.minSample);
+    const sample = summary.counted === 0 ? 'هنوز معامله دارای نتیجه معتبر برای تحلیل وجود ندارد.' : summary.lowSample ? 'نمونه محدود است ('+n+' از '+threshold+'). از نتیجه‌گیری قطعی خودداری کن.' : 'تعداد نتایج به حداقل راهنمای تحلیل رسیده است؛ این به معنی تضمین آماری نیست.';
+    const fmtGroup = g => g ? esc(g.key)+' · '+num(g.expectancyR)+' R · '+fa(g.rSample)+' نتیجه' : 'داده کافی نیست';
+    box.innerHTML = '<div class="arex-analytics-insights-head"><div><div class="section-title">خلاصه شواهد عملکرد</div><div class="section-sub">این موارد توصیف داده‌های ثبت‌شده‌اند، نه پیش‌بینی بازار یا توصیه ورود.</div></div><span class="arex-status-pill '+(summary.lowSample?'warning':'neutral')+'">'+(summary.lowSample?'نمونه محدود':'بررسی داده')+'</span></div>'+
+      '<div class="arex-insight-grid">'+
+      item('کفایت نمونه', fa(summary.counted)+' نتیجه', sample, summary.lowSample?'warning':'neutral')+
+      item('بهترین ستاپ ثبت‌شده', fmtGroup(bestSetup), 'فقط ستاپ‌هایی با حداقل ۵ نتیجه R؛ مقایسه توصیفی است.', 'positive')+
+      item('ستاپ نیازمند بازبینی', fmtGroup(worstSetup), 'کمترین میانگین R در میان گروه‌های واجد حداقل نمونه.', 'warning')+
+      item('سشن با میانگین R بالاتر', fmtGroup(bestSession), 'فقط وقتی سشن و R در ژورنال ثبت شده باشند.', 'neutral')+
+      '</div><div class="arex-inline-note">توجه: گروه‌بندی‌ها بر اساس داده‌های دارای R انجام می‌شوند. گروه‌های کوچک‌تر از ۵ نتیجه پنهان می‌مانند؛ انتخاب «بهترین» در اینجا صرفاً مقایسه تاریخی است و برتری آینده را ثابت نمی‌کند.</div>';
+  }
 
   /* ---------- KPIs ---------- */
   function renderKpis(s) {
@@ -230,7 +254,7 @@
     const seq = ++renderSeq; lastTrades = trades || []; ensureContainers();
     const cfg = await loadCfg(), opts = {};
     if (seq !== renderSeq) return;   // a newer render started while config was loading: drop this stale one
-    renderKpis(AREXCore.analytics.summarize(lastTrades, opts)); renderGroups(lastTrades, opts); renderHeat(lastTrades, opts);
+    renderKpis(AREXCore.analytics.summarize(lastTrades, opts)); renderInsights(lastTrades); renderGroups(lastTrades, opts); renderHeat(lastTrades, opts);
     renderErrors(lastTrades, cfg); renderActionableAlerts(lastTrades, cfg); renderRiskState(lastTrades); renderQuality(lastTrades, cfg); renderDiagnostics(lastTrades); renderCfg(cfg);
     if (view.drill) { const keep = view.drill; const still = document.getElementById('v9Drill'); if (still && still.style.display !== 'none') showDrill(keep.title, keep.ids); }
   };
