@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v9-6-3-drive-only-26';
+const CACHE_VERSION = 'v9-6-4-drive-only-27';
 const CACHE_NAME = 'fx-bootcamp-' + CACHE_VERSION;
 const APP_SHELL = [
   './',

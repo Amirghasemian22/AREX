@@ -5793,18 +5793,7 @@ document.getElementById('tradeReportBtn').addEventListener('click', ()=>{
     '<p>تعداد معاملات: '+rValues.length+' | درصد برد: '+winRate+'٪ | مجموع R: '+totalR+'</p>'+
     '<table><tr><th>تاریخ</th><th>نماد</th><th>جهت</th><th>R</th><th>$</th><th>ستاپ</th></tr>'+
     state.trades.map(t=>'<tr><td>'+t.date+'</td><td>'+t.symbol+'</td><td>'+(t.dir==='buy'?'خرید':'فروش')+'</td><td>'+(t.r||'-')+'</td><td>'+(t.usd||'-')+'</td><td>'+(t.setup||'-')+'</td></tr>').join('')+
-    '</table><script>
-// Opt-in diagnostics; performs a temporary write/read/delete probe and never inspects trade contents.
-window.arexRunRuntimeVerification = async function(options={}) {
-  return AREXCore.runtimeVerification.run({
-    storage,
-    getSaveStatus: getSaveStatus,
-    flushSave: flushSave,
-    includeSnapshot: options.includeSnapshot === true
-  });
-};
-</script>
-</body></html>');
+    '</table></body></html>');
   win.document.close();
   setTimeout(()=>win.print(), 400);
 });
@@ -6870,8 +6859,18 @@ function initArexV52Workspace(){
 const arexOriginalInitV5Assistant=initV5Assistant;
 initV5Assistant=function(){arexOriginalInitV5Assistant();initArexV52Workspace();};
 
+// Opt-in diagnostics; performs a temporary write/read/delete probe and never inspects trade contents.
+window.arexRunRuntimeVerification = async function(options={}) {
+  return AREXCore.runtimeVerification.run({
+    storage,
+    getSaveStatus: getSaveStatus,
+    flushSave: flushSave,
+    includeSnapshot: options.includeSnapshot === true
+  });
+};
+
 </script>
-<script type="module" src="auth-client.js"></script>
+<script type="module" src="auth-client.js?v=9.6.4"></script>
 <script>
 
 /* ================= V5.5: onboarding, free calendar, conversational AREX ================= */

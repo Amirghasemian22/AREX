@@ -77,8 +77,17 @@ window.arexDriveLoginComplete = async () => {
 window.arexStartGoogleSignIn = async () => {
   if(loginInProgress) return;
   setError('');
-  if(!window.arexDriveIsEnabled || !window.arexDriveIsEnabled()) { setError(friendlyError(new Error('google_oauth_client_id_missing'))); return; }
-  if(!window.arexDriveStartOAuth) { setError('سرویس ورود Google Drive بارگذاری نشده است؛ صفحه را تازه‌سازی کن.'); return; }
+  if(typeof window.arexDriveIsEnabled !== 'function') {
+    setError('ماژول اصلی AREX کامل بارگذاری نشده است. فایل index.html را با نسخه 9.6.4 جایگزین و کش سایت را تازه‌سازی کن.');
+    console.error('AREX Drive bridge missing: window.arexDriveIsEnabled is not a function');
+    return;
+  }
+  if(!window.arexDriveIsEnabled()) { setError(friendlyError(new Error('google_oauth_client_id_missing'))); return; }
+  if(typeof window.arexDriveStartOAuth !== 'function') {
+    setError('ماژول Google Drive ناقص بارگذاری شده است. صفحه را تازه‌سازی کن و Console را بررسی کن.');
+    console.error('AREX Drive OAuth start function missing');
+    return;
+  }
   loginInProgress=true; setBusy(true); window.arexDriveLoginPending=true;
   try { window.arexDriveStartOAuth(); }
   catch(error){ console.error('AREX Google Drive OAuth start failed',error); window.arexDriveLoginFailed(friendlyError(error)); }
