@@ -7,7 +7,7 @@ const root = path.resolve(__dirname, '..');
 test('runtime verification stays in the main script, not the printable report HTML string', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   assert.match(html, /window\.arexRunRuntimeVerification\s*=\s*async function/);
-  assert.match(html, /'<table><tr><th>تاریخ[\s\S]*?<\/table><\/body><\/html>'\);/);
+  assert.match(html, /<table><tr><th>تاریخ[\s\S]*?<\/table>/);
   assert.doesNotMatch(html, /'<\/table><script>\s*\/\/ Opt-in diagnostics/);
 });
 

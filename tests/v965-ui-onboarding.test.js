@@ -1,0 +1,10 @@
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+test('V9.6.5 locks page scrolling behind auth gate', () => { assert.match(html, /arex-auth-open body\{height:100%;overflow:hidden/); assert.match(html, /#arexAuthGate\{position:fixed!important/); });
+test('V9.6.5 world clocks mount in the top quick tools', () => { assert.match(html, /quick\.insertBefore\(clocks,quick\.firstChild\)/); assert.match(html, /id="worldClocks"/); });
+test('V9.6.5 removes only dashboard calculator duplicate', () => { assert.match(html, /riskCalcMount_dash/); assert.match(html, /riskCalcMount_risk/); assert.match(html, /dashboard duplicate removed/); });
+test('V9.6.5 first-run tour includes key sections and replay control', () => { for (const v of ['arexTourNext','arexV965TourPrev','arexTourReplay','مدیریت ریسک','ژورنال معاملات','پشتیبان‌گیری']) assert.ok(html.includes(v), `missing ${v}`); });
+test('V9.6.5 retains settings and background responsiveness rules', () => { assert.match(html, /#view-settings \.card\{padding:12px!important/); assert.match(html, /arex-glass-wallpaper\.jpg/); assert.match(html, /@media\(max-width:700px\)/); });

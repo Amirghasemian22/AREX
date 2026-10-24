@@ -1617,6 +1617,46 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 @media(max-width:560px){:where(input,select,textarea){max-width:100%;min-width:0}:where(.modal-content,.modal,.arex-modal,.dialog,[role="dialog"]){max-height:calc(100dvh - 16px)}}
 </style>
+<style id="arex-v965-refinements">
+/* V9.6.5: login gate is a true viewport lock; prevent dashboard bleed-through while signed out. */
+html.arex-auth-open, html.arex-auth-open body{height:100%;overflow:hidden!important;overscroll-behavior:none!important}
+html.arex-auth-open body > :not(#arexAuthGate):not(script):not(style){visibility:hidden!important;pointer-events:none!important}
+#arexAuthGate{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;min-height:100vh!important;overflow-y:auto!important;overscroll-behavior:contain!important;z-index:2147483000!important}
+#arexAuthGate.visible{display:flex!important}
+/* A consistent, low-contrast background layer across every app view, not only the daily roadmap. */
+body{position:relative;isolation:isolate;background-attachment:fixed!important}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(135deg,rgba(5,12,24,.70),rgba(8,17,31,.48)),url("arex-glass-wallpaper.jpg") center/cover no-repeat;opacity:.34}
+:root[data-theme="light"] body::before{background:linear-gradient(135deg,rgba(235,242,251,.80),rgba(245,248,252,.70)),url("arex-glass-wallpaper.jpg") center/cover no-repeat;opacity:.34}
+body[data-bg="minimal"]::before{opacity:.12}
+/* Compact and consistent navbar across views and screen widths. */
+.topbar{box-sizing:border-box;min-width:0;width:100%;gap:12px;align-items:center;padding:10px 14px!important;border-radius:16px!important;min-height:76px!important}
+.topbar>div:first-child{min-width:0;flex:1 1 260px}
+.topbar h1{font-size:clamp(16px,1.5vw,22px);line-height:1.3;margin:0;overflow-wrap:anywhere}
+.topbar .sub{font-size:10px;line-height:1.5;max-width:48vw}
+.top-actions,.top-quick-tools{min-width:0;align-items:center}
+.top-quick-tools{gap:6px!important}
+.worldclocks{display:flex;align-items:center;gap:5px;flex-wrap:nowrap;max-width:min(43vw,620px);overflow-x:auto;overflow-y:hidden;margin:0;padding:2px 0;scrollbar-width:thin}
+.worldclocks .wc-chip{flex:0 0 auto;min-width:74px;padding:5px 7px;border-radius:10px;background:rgba(22,36,58,.55);backdrop-filter:blur(10px)}
+.worldclocks .wc-city{font-size:9px;white-space:nowrap;margin-bottom:2px}
+.worldclocks .wc-time{font-size:14px;line-height:1.25}
+.worldclocks .wc-session{font-size:8px;white-space:nowrap;margin-top:2px}
+#view-dashboard #worldClocks{display:none!important}
+#view-dashboard .grid.g2{gap:10px}
+#view-dashboard .card{margin-bottom:0}
+#view-dashboard #targetsHeading{margin-bottom:3px}
+#view-dashboard .targets-card{order:-1;}
+#view-dashboard .target-form-grid{gap:7px}
+#view-dashboard .target-tabs{margin:7px 0}
+#view-dashboard #riskCalcMount_dash{display:none!important}
+#view-settings .grid.g3{gap:8px!important}
+#view-settings .card{padding:12px!important;margin-bottom:8px!important;border-radius:13px!important}
+#view-settings .section-sub{margin-bottom:7px!important}
+#view-settings .settings-jumpbar{gap:5px!important;padding:6px!important}
+#view-settings .settings-jumpbar .chip{padding:5px 8px!important;min-height:29px!important}
+@media(min-width:1001px){#view-dashboard .grid,#view-settings .grid{gap:9px!important}#view-dashboard .card{padding:13px!important}#view-dashboard .targets-card{margin-top:-4px}}
+@media(max-width:1100px){.worldclocks{max-width:34vw}.worldclocks .wc-chip{min-width:65px;padding:4px 5px}.worldclocks .wc-time{font-size:12px}.topbar{flex-wrap:wrap!important}.topbar .sub{max-width:70vw}}
+@media(max-width:700px){.topbar{gap:7px!important;padding:8px!important;min-height:unset!important}.topbar>div:first-child{flex-basis:100%}.top-actions{width:100%;justify-content:space-between;flex-wrap:wrap}.worldclocks{order:3;flex:1 1 100%;max-width:100%;width:100%;justify-content:flex-start}.worldclocks .wc-chip{min-width:68px}.topbar .sub{max-width:88vw}.top-quick-tools{flex-wrap:wrap}}
+</style>
 </head>
 <body>
 
@@ -1647,7 +1687,7 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
 <aside class="sidebar" id="sidebar">
   <div class="brand" id="brandMenuToggle" role="button" tabindex="0" aria-label="باز و بسته کردن منوی AREX" title="برای باز و بسته کردن منو کلیک کن">
     <div class="brand-mark"><img src="icon-192.png" alt="لوگوی AREX" width="34" height="34" decoding="async"></div>
-    <div class="brand-text"><b>AREX</b><span data-i18n="brand.sub">V9.6.4 · دستیار معاملاتی هوشمند</span></div>
+    <div class="brand-text"><b>AREX</b><span data-i18n="brand.sub">V9.6.5 · دستیار معاملاتی هوشمند</span></div>
   </div>
   <label class="nav-search" for="navSearch">
     <span class="nav-search-icon" aria-hidden="true">⌕</span>
@@ -3857,7 +3897,7 @@ const I18N = {
     'nav.review':"مرورهای زمان‌بندی‌شده", 'nav.trades':"ژورنال معاملات", 'nav.psych':"ژورنال روان‌شناسی",
     'nav.goals':"اهداف و قوانین", 'nav.obsidian':"اتصال به Obsidian", 'nav.calendar':"تقویم اقتصادی", 'nav.path':"مسیر انضباط", 'nav.backtest':"بک‌تست", 'nav.propfirm':"پراپ‌فرم", 'nav.scenarios':"سناریوهای در انتظار", 'nav.settings':"تنظیمات", 'nav.roadmap':'برنامه روزانه', 'nav.assistant':'دستیار معاملاتی', 'nav.risk':'مدیریت ریسک', 'nav.strategy':'استراتژی و قوانین', 'nav.analytics':'تحلیل عملکرد',
     'page.backtestSub':"ثبت و بررسی بک‌تست — کاملاً جدا از معاملات واقعی", 'page.propfirmSub':"پیگیری چالش‌های پراپ‌فرم و سقف‌های ریسک", 'page.scenariosSub':"ایده‌های معاملاتی در انتظار ورود",
-    'brand.sub':"V9.6.4 · دستیار معاملاتی هوشمند", 'tk.title':"قیمت لحظه‌ای تتر", 'tk.refresh':"🔄 بروزرسانی", 'tk.obsidian':"🗒️ ورود به Obsidian", 'tk.sync':"☁️ همگام‌سازی با Drive",
+    'brand.sub':"V9.6.5 · دستیار معاملاتی هوشمند", 'tk.title':"قیمت لحظه‌ای تتر", 'tk.refresh':"🔄 بروزرسانی", 'tk.obsidian':"🗒️ ورود به Obsidian", 'tk.sync':"☁️ همگام‌سازی با Drive",
     'dash.newsSoonTitle':"📰 اخبار مهم ۳ روز آینده", 'dash.sessionTitle':"🕒 نمای هم‌پوشانی سشن‌های فارکس", 'dash.fngTitle':"😨 شاخص ترس و طمع (کریپتو)", 'sync.inprogress':"در حال همگام‌سازی...", 'sync.last':"آخرین همگام‌سازی:",
     'ui.language':'تغییر زبان', 'ui.lesson':"مرحله", 'ui.phase':"حوزه:", 'ui.startSession':"شروع این مرحله", 'ui.allDone':"همه‌ی مراحل این چرخه را تکمیل کرده‌اید!", 'ui.complete':"تکمیل", 'ui.watched':"تکمیل شد",
     'cal.title':'📰 تقویم اقتصادی زنده', 'cal.sub':'اخبار مهم اقتصادی (تأثیرگذار روی فارکس) به‌صورت زنده.', 'cal.tabWidget':'🌐 ویجت زنده (TradingView)', 'cal.tabFeed':'📋 فید شخصی من',
@@ -5656,7 +5696,8 @@ function initRiskCalc(mountId, prefix){
   computeRiskCalc(prefix);
 }
 // V5: the position-size calculator is available only on the dashboard.
-initRiskCalc('riskCalcMount_dash', 'rcD');
+/* V9.6.5: dashboard duplicate removed; dedicated calculator remains in Risk workspace. */
+const dashRiskCalcMount=document.getElementById('riskCalcMount_dash'); if(dashRiskCalcMount){dashRiskCalcMount.innerHTML='';dashRiskCalcMount.hidden=true;}
 
 const MISTAKE_TAGS = ['جابجایی حد ضرر','حجم بیش از حد','بدون پلن','FOMO','ورود زودهنگام','خروج زودهنگام','انتقام‌گیری','سایر'];
 let trSelectedMistakes = [];
@@ -6029,7 +6070,52 @@ document.getElementById('tradeReportBtn').addEventListener('click', ()=>{
     '<p>تعداد معاملات: '+rValues.length+' | درصد برد: '+winRate+'٪ | مجموع R: '+totalR+'</p>'+
     '<table><tr><th>تاریخ</th><th>نماد</th><th>جهت</th><th>R</th><th>$</th><th>ستاپ</th></tr>'+
     state.trades.map(t=>'<tr><td>'+t.date+'</td><td>'+t.symbol+'</td><td>'+(t.dir==='buy'?'خرید':'فروش')+'</td><td>'+(t.r||'-')+'</td><td>'+(t.usd||'-')+'</td><td>'+(t.setup||'-')+'</td></tr>').join('')+
-    '</table></body></html>');
+    '</table><script id="arex-v965-navbar-clocks">
+(function(){
+ function mount(){
+  const clocks=document.getElementById('worldClocks');
+  const quick=document.querySelector('.top-quick-tools');
+  if(clocks&&quick&&!clocks.dataset.navMounted){clocks.dataset.navMounted='1';clocks.classList.add('arex-navbar-clocks');quick.insertBefore(clocks,quick.firstChild);}
+  const gate=document.getElementById('arexAuthGate');
+  const syncLock=()=>{const open=!!(gate&&(gate.classList.contains('visible')||getComputedStyle(gate).display!=='none'));document.documentElement.classList.toggle('arex-auth-open',open);};
+  if(gate){syncLock();new MutationObserver(syncLock).observe(gate,{attributes:true,attributeFilter:['class','style']});}
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount,{once:true});else mount();
+})();
+</script>
+<style id="arex-v965-onboarding-css">
+#arexOnboarding{position:fixed;inset:0;z-index:2147482000;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(2,7,16,.76);backdrop-filter:blur(10px)}#arexOnboarding.open{display:flex}#arexOnboarding .tour-card{width:min(620px,100%);max-height:min(86dvh,760px);overflow:auto;border:1px solid var(--border);border-radius:22px;background:var(--panel);color:var(--text);box-shadow:0 30px 100px rgba(0,0,0,.4);padding:clamp(18px,4vw,30px)}#arexOnboarding .tour-kicker{font-size:10px;letter-spacing:.16em;color:var(--gold);font-weight:800}#arexOnboarding h2{font-size:clamp(20px,3vw,28px);margin:8px 0}#arexOnboarding p{font-size:13px;line-height:2;color:var(--muted)}#arexOnboarding .tour-stepnum{font-size:11px;color:var(--muted);margin:8px 0 12px}#arexOnboarding .tour-progress{height:5px;background:var(--panel-hi);border-radius:9px;overflow:hidden;margin:16px 0}#arexOnboarding .tour-progress i{display:block;height:100%;background:var(--gold);width:0;transition:width .2s}#arexOnboarding .tour-actions{display:flex;gap:8px;justify-content:space-between;align-items:center;flex-wrap:wrap;margin-top:18px}#arexOnboarding .tour-actions>div{display:flex;gap:8px}#arexOnboarding .tour-links{display:flex;gap:7px;flex-wrap:wrap;margin-top:14px}#arexOnboarding .tour-links button{font-size:11px}
+</style>
+<div id="arexOnboarding" role="dialog" aria-modal="true" aria-labelledby="arexV965TourTitle" aria-describedby="arexV965TourText">
+ <div class="tour-card"><div class="tour-kicker">AREX · QUICK START</div><div class="tour-stepnum" id="arexV965TourStep">مرحله ۱ از ۱۰</div><div class="tour-progress"><i id="arexV965TourProgress"></i></div><h2 id="arexV965TourTitle">به AREX خوش آمدی</h2><p id="arexV965TourText"></p><div class="tour-links" id="arexV965TourLinks"></div><div class="tour-actions"><button type="button" class="btn ghost" id="arexV965TourSkip">فعلاً رد کردن</button><div><button type="button" class="btn ghost" id="arexV965TourPrev">قبلی</button><button type="button" class="btn" id="arexV965TourNext">بعدی</button></div></div></div>
+</div>
+<script id="arex-v965-onboarding">
+(function(){
+ const steps=[
+  {title:'به AREX خوش آمدی 👋',text:'AREX فضای شخصی مدیریت معاملات توست؛ برای ثبت داده‌های خودت، اجرای قوانین، بررسی عملکرد و اصلاح عادت‌ها. این آموزش فقط یک معرفی است و هیچ معامله یا قانونی به‌جای تو ثبت نمی‌کند.'},
+  {title:'۱. داشبورد و شروع روز',text:'داشبورد خلاصه وضعیت، اهداف و حدود معاملاتی، عملکرد و ساعت بازارها را نشان می‌دهد. قبل از شروع، هدف و سقف‌های شخصی خودت را بررسی کن؛ هدف سود تضمین نتیجه نیست.',view:'dashboard'},
+  {title:'۲. برنامه روزانه',text:'در برنامه روزانه، کارهای پیش از بازار، یادداشت‌ها و مرور پایان روز را ثبت کن. از آن برای ساختن یک روال تکرارپذیر استفاده کن.',view:'roadmap'},
+  {title:'۳. ژورنال معاملات',text:'پس از معامله، نماد، جهت، ورود و خروج، نتیجه و شواهد مربوط را ثبت کن. کیفیت تحلیل را از سود و زیان جدا بررسی کن؛ داده ناقص باعث گزارش ناقص می‌شود.',view:'journal'},
+  {title:'۴. مدیریت ریسک',text:'محدودیت‌ها و محاسبات را بر اساس اطلاعات واقعی حساب و مشخصات بروکر وارد کن. خروجی محاسبه‌گر تقریبی است و تا وقتی اندازه قرارداد، ارزش پیپ/تیک و ارز حساب درست نباشد نباید مبنای قطعی معامله باشد.',view:'risk'},
+  {title:'۵. استراتژی و قوانین',text:'قوانین تأییدشده، ترجیحات، فرضیه‌ها و موارد نیازمند شفاف‌سازی را از هم جدا نگه دار. پیشنهاد جدید تا وقتی خودت تأییدش نکنی نباید قانون رسمی استراتژی تلقی شود.',view:'strategy'},
+  {title:'۶. تحلیل عملکرد',text:'گزارش‌ها را بر اساس معاملات واقعاً ثبت‌شده بخوان؛ به تعداد نمونه، بازه زمانی و داده‌های خالی توجه کن. نتیجه گذشته تضمین عملکرد آینده نیست.',view:'analytics'},
+  {title:'۷. روان‌شناسی و اصلاح اشتباه',text:'احساسات، خطاهای تکراری و اقدام اصلاحی بعدی را ثبت کن. اقدام اصلاحی زمانی مفید است که بتوانی بعداً بررسی کنی انجام شده یا نه.',view:'psych'},
+  {title:'۸. تقویم، سشن‌ها و ابزارها',text:'تقویم اقتصادی و ساعت بازارها برای برنامه‌ریزی‌اند؛ زمان و داده رویدادها را با منبع معتبر تطبیق بده. ابزارهای تکمیلی را فقط در صورت نیاز به کار بگیر.',view:'calendar'},
+  {title:'۹. تنظیمات و پشتیبان‌گیری',text:'زبان، ظاهر، سشن‌ها و محدودیت‌های شخصی را در تنظیمات بررسی کن. قبل از تغییرات مهم یا پاک‌کردن داده‌ها، از اطلاعات نسخه پشتیبان بگیر و بازیابی را با احتیاط انجام بده.',view:'settings'}
+ ];
+ let idx=0;const root=()=>document.getElementById('arexOnboarding');
+ function show(){const r=root();if(!r)return;const s=steps[idx];document.getElementById('arexV965TourStep').textContent='مرحله '+(idx+1)+' از '+steps.length;document.getElementById('arexV965TourTitle').textContent=s.title;document.getElementById('arexV965TourText').textContent=s.text;document.getElementById('arexV965TourProgress').style.width=((idx+1)/steps.length*100)+'%';document.getElementById('arexV965TourPrev').disabled=idx===0;document.getElementById('arexV965TourNext').textContent=idx===steps.length-1?'پایان آموزش':'بعدی';const links=document.getElementById('arexV965TourLinks');links.innerHTML='';if(s.view){const b=document.createElement('button');b.className='btn ghost';b.type='button';b.textContent='رفتن به این بخش ↗';b.addEventListener('click',()=>{const nav=document.querySelector('[data-view="'+s.view+'"]');if(nav)nav.click();});links.appendChild(b);} }
+ function open(force){const r=root();if(!r)return;idx=0;r.classList.add('open');show();if(force)try{localStorage.setItem('arex_v965_tour_seen','1')}catch(e){}}
+ function close(){const r=root();if(r)r.classList.remove('open');try{localStorage.setItem('arex_v965_tour_seen','1')}catch(e){}}
+ document.getElementById('arexV965TourNext').addEventListener('click',()=>{if(idx<steps.length-1){idx++;show()}else close()});document.getElementById('arexV965TourPrev').addEventListener('click',()=>{if(idx>0){idx--;show()}});document.getElementById('arexV965TourSkip').addEventListener('click',close);root().addEventListener('click',e=>{if(e.target===root())close()});
+ function installButton(){const actions=document.querySelector('.top-actions');if(actions&&!document.getElementById('arexTourReplay')){const b=document.createElement('button');b.id='arexTourReplay';b.type='button';b.className='icon-btn';b.title='نمایش دوباره آموزش';b.setAttribute('aria-label','نمایش دوباره آموزش');b.textContent='❔';b.addEventListener('click',()=>open(true));actions.insertBefore(b,actions.firstChild);}}
+ function maybeStart(){installButton();const gate=document.getElementById('arexAuthGate');const signedOut=gate&&(gate.classList.contains('visible')||getComputedStyle(gate).display!=='none');if(signedOut)return;let seen='1';try{seen=localStorage.getItem('arex_v965_tour_seen')||''}catch(e){}if(!seen)open(false);}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{installButton();setTimeout(maybeStart,1200)},{once:true});else{installButton();setTimeout(maybeStart,1200)}
+ const gate=document.getElementById('arexAuthGate');if(gate)new MutationObserver(()=>{if(!gate.classList.contains('visible')&&getComputedStyle(gate).display==='none')setTimeout(maybeStart,500)}).observe(gate,{attributes:true,attributeFilter:['class','style']});
+ window.arexStartOnboarding=()=>open(true);
+})();
+</script>
+</body></html>');
   win.document.close();
   setTimeout(()=>win.print(), 400);
 });
