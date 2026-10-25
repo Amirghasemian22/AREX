@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v9-7-2-oauth-client-config-2026-10-25';
+const CACHE_VERSION = 'v9-7-3-runtime-parse-repair-2026-10-25';
 const CACHE_NAME = 'arex-' + CACHE_VERSION;
 const APP_SHELL = [
   './',

@@ -1,4 +1,4 @@
-/* AREX V9.7.0 — resilient Google Drive-only authentication and backup adapter.
+/* AREX V9.7.3 — resilient Google Drive-only authentication and backup adapter.
  * No Firebase Authentication or Firestore calls are made by this file.
  * OAuth token stays in memory; persistent backups use the Drive appDataFolder API.
  */
