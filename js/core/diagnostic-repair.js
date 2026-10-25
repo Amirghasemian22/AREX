@@ -1,0 +1,13 @@
+/* AREX phase 25: conservative, explicit, stale-safe repair proposals. Never infers financial values. */
+(function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else{root.AREXCore=root.AREXCore||{};root.AREXCore.diagnosticRepair=api;}})(typeof self!=='undefined'?self:this,function(){
+  const isoDate=s=>/^\d{4}-\d{2}-\d{2}$/.test(s)&&!Number.isNaN(Date.parse(s+'T00:00:00Z'))&&new Date(s+'T00:00:00Z').toISOString().slice(0,10)===s;
+  function fingerprint(trade){try{return JSON.stringify(trade);}catch(e){return null;}}
+  function propose(trades){const rows=Array.isArray(trades)?trades:[],idCounts=new Map();rows.forEach(t=>{if(t&&t.id!==undefined&&t.id!==null&&String(t.id).trim())idCounts.set(String(t.id),(idCounts.get(String(t.id))||0)+1);});const out=[];
+    rows.forEach((t,index)=>{if(!t||typeof t!=='object'||Array.isArray(t)||t.id===undefined||t.id===null||String(t.id).trim()===''||idCounts.get(String(t.id))!==1)return;const base={tradeId:String(t.id),index,fingerprint:fingerprint(t)};
+      if(typeof t.symbol==='string'&&t.symbol!==t.symbol.trim()&&t.symbol.trim())out.push({...base,field:'symbol',before:t.symbol,after:t.symbol.trim(),reason:'trim_symbol_whitespace'});
+      if(typeof t.date==='string'&&t.date!==t.date.trim()&&isoDate(t.date.trim()))out.push({...base,field:'date',before:t.date,after:t.date.trim(),reason:'trim_iso_date_whitespace'});
+    });return out;
+  }
+  function apply(trades,proposal,options){if(!options||options.confirmed!==true)return{ok:false,code:'confirmation_required'};if(!proposal||typeof proposal.tradeId!=='string'||!['symbol','date'].includes(proposal.field)||typeof proposal.fingerprint!=='string')return{ok:false,code:'invalid_proposal'};const rows=Array.isArray(trades)?trades:[],matches=[];rows.forEach((t,i)=>{if(t&&String(t.id)===proposal.tradeId)matches.push(i);});if(matches.length!==1)return{ok:false,code:matches.length?'ambiguous_trade_id':'trade_not_found'};const i=matches[0],current=rows[i];if(fingerprint(current)!==proposal.fingerprint)return{ok:false,code:'stale_record'};if(current[proposal.field]!==proposal.before)return{ok:false,code:'field_changed'};if(proposal.field==='symbol'&&!(typeof current.symbol==='string'&&current.symbol.trim()===proposal.after&&proposal.after))return{ok:false,code:'invalid_symbol_repair'};if(proposal.field==='date'&&!(typeof current.date==='string'&&isoDate(proposal.after)&&current.date.trim()===proposal.after))return{ok:false,code:'invalid_date_repair'};const next=rows.slice();next[i]={...current,[proposal.field]:proposal.after};return{ok:true,code:'applied',trades:next,tradeId:proposal.tradeId,field:proposal.field,before:proposal.before,after:proposal.after};}
+  return{propose,apply,fingerprint};
+});
