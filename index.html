@@ -1657,6 +1657,73 @@ body[data-bg="minimal"]::before{opacity:.12}
 @media(max-width:1100px){.worldclocks{max-width:34vw}.worldclocks .wc-chip{min-width:65px;padding:4px 5px}.worldclocks .wc-time{font-size:12px}.topbar{flex-wrap:wrap!important}.topbar .sub{max-width:70vw}}
 @media(max-width:700px){.topbar{gap:7px!important;padding:8px!important;min-height:unset!important}.topbar>div:first-child{flex-basis:100%}.top-actions{width:100%;justify-content:space-between;flex-wrap:wrap}.worldclocks{order:3;flex:1 1 100%;max-width:100%;width:100%;justify-content:flex-start}.worldclocks .wc-chip{min-width:68px}.topbar .sub{max-width:88vw}.top-quick-tools{flex-wrap:wrap}}
 </style>
+
+<style id="arex-v966-responsive-polish">
+/* V9.6.7 responsive + visual consistency patch */
+:root{--arex-wallpaper-strength:.52;--arex-nav-active:rgba(var(--accent-rgb),.18);--arex-nav-ring:rgba(var(--accent-rgb),.44)}
+body::before{opacity:var(--arex-wallpaper-strength)!important;background-image:linear-gradient(135deg,rgba(5,12,24,.48),rgba(8,17,31,.30)),url("arex-glass-wallpaper.jpg")!important;background-position:center center!important;background-size:cover!important;background-repeat:no-repeat!important}
+:root[data-theme="light"] body::before{opacity:.24!important;background-image:linear-gradient(135deg,rgba(237,244,253,.62),rgba(247,250,255,.48)),url("arex-glass-wallpaper.jpg")!important}
+/* Keep glass panels legible over the mountain wallpaper in both themes. */
+:root[data-theme="dark"] .card,:root:not([data-theme="light"]) .card{background:linear-gradient(145deg,rgba(16,29,49,.91),rgba(8,16,30,.88))!important;border-color:rgba(129,173,224,.23)!important}
+:root[data-theme="light"] .card{background:rgba(255,255,255,.91)!important;border-color:rgba(89,119,158,.24)!important}
+:root[data-theme="dark"] .topbar,:root:not([data-theme="light"]) .topbar,:root[data-theme="dark"] .sidebar,:root:not([data-theme="light"]) .sidebar{background:rgba(7,13,25,.91)!important}
+:root[data-theme="light"] .topbar,:root[data-theme="light"] .sidebar{background:rgba(248,251,255,.93)!important}
+/* Reliable selected-state frame for all primary and mobile navigation items. */
+.navbtn{border:1px solid transparent!important;outline:none;min-width:0}
+.navbtn.active{border:1px solid var(--arex-nav-ring)!important;background:linear-gradient(110deg,var(--arex-nav-active),rgba(124,121,246,.09))!important;box-shadow:inset -3px 0 0 var(--gold),0 0 0 1px rgba(var(--accent-rgb),.05),0 6px 18px rgba(0,0,0,.08)!important}
+.arex-mobile-nav button{position:relative;min-width:0;border:1px solid transparent!important;border-radius:14px!important;color:var(--muted)!important;background:transparent!important;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:7px 4px;line-height:1.25;font-size:10px;font-weight:650}
+.arex-mobile-nav button.active{color:var(--gold)!important;border-color:var(--arex-nav-ring)!important;background:linear-gradient(145deg,rgba(var(--accent-rgb),.19),rgba(124,121,246,.10))!important;box-shadow:inset 0 0 0 1px rgba(var(--accent-rgb),.09),0 4px 14px rgba(0,0,0,.09)!important}
+.arex-mobile-nav button.active:before{content:"";position:absolute;top:3px;left:25%;right:25%;height:2px;border-radius:2px;background:var(--gold)}
+.mobile-nav-icon{display:grid;place-items:center;width:25px;height:25px;font-size:0!important;color:currentColor}
+.mobile-nav-icon svg{width:21px;height:21px;display:block}
+/* Top market toolbar: compact chips on mobile, no overflow. */
+.topbar,.topbar>div,.top-actions,.top-quick-tools,#worldClocks{min-width:0;max-width:100%}
+.top-quick-tools{flex-wrap:wrap;align-content:center;row-gap:6px;overflow:visible}
+.top-clock,.top-usdt,.top-language,.top-refresh,.streak-chip{max-width:100%;min-width:0}
+.top-usdt span,.top-clock span,.top-clock b{overflow:hidden;text-overflow:ellipsis}
+@media(max-width:760px){
+ body{min-width:0;display:block;padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+ .sidebar{width:min(320px,88vw);max-width:88vw;position:fixed;top:0;bottom:0;right:0;height:100dvh;z-index:1001;transform:translateX(105%);transition:transform .22s ease;box-shadow:-18px 0 48px rgba(0,0,0,.28);padding-top:max(16px,env(safe-area-inset-top,0px))}
+ .sidebar.open{transform:translateX(0)}
+ #backdrop{z-index:1000!important}
+ .wrap{width:100%;min-width:0}
+ .topbar{position:relative;top:auto;padding:10px 12px!important;gap:9px!important;align-items:stretch}
+ .topbar>div:first-child{flex:1 1 100%;width:100%}
+ .topbar h1{font-size:17px;line-height:1.45}
+ .topbar .sub{font-size:11px;max-width:100%;white-space:normal}
+ .top-actions{display:flex;width:100%;justify-content:flex-start;align-items:center;gap:6px;flex-wrap:wrap}
+ .top-quick-tools{order:5;flex:1 1 100%;width:100%;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px!important;padding:7px!important;border-radius:13px!important}
+ .top-quick-tools>*{min-width:0!important;width:100%;max-width:100%;justify-content:center}
+ .top-quick-tools .arex-navbar-clocks,.top-quick-tools #worldClocks{grid-column:1/-1;width:100%;display:flex;flex-wrap:wrap;justify-content:flex-start;gap:5px}
+ .worldclocks .wc-chip{min-width:0!important;flex:1 1 88px;max-width:calc(50% - 3px)}
+ .top-clock{min-width:0!important;padding:5px 7px!important;font-size:11px!important}
+ .top-clock small{display:inline!important;font-size:9px}
+ .top-usdt{padding:5px 7px!important;gap:4px!important}
+ .top-usdt span{max-width:100%!important;font-size:10px!important}
+ .content{padding:14px 12px 28px!important;width:100%;max-width:100%;overflow-x:clip}
+ .view{min-width:0;width:100%;overflow-wrap:anywhere}
+ .view .card{min-width:0;padding:15px!important;border-radius:15px!important}
+ .view .grid,.view [class*="grid-"]{min-width:0}
+ .view input,.view select,.view textarea{max-width:100%;min-width:0}
+ .view .table-wrap,.view .table-container,.view .table-responsive,.view .scroll-x{max-width:100%;overflow-x:auto}
+ .arex-mobile-nav{padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px))!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px!important;min-height:66px;backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px)}
+ #arexAuthGate{padding:calc(12px + env(safe-area-inset-top,0px)) 12px calc(14px + env(safe-area-inset-bottom,0px))!important;overflow-y:auto!important;align-items:flex-start!important;min-height:100dvh}
+ .auth-topbar{position:relative!important;inset:auto!important;width:100%;margin-bottom:8px;flex-shrink:0}
+ .auth-layout{display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;width:100%!important;max-width:460px!important;gap:14px!important;padding:8px 0 18px!important;margin:auto}
+ .auth-story{order:0;text-align:center!important;width:100%;min-width:0}
+ .auth-wordmark{font-size:clamp(38px,12vw,52px)!important;margin-bottom:4px!important}
+ .auth-story p{font-size:12px!important;line-height:1.75!important;max-width:34em;margin-inline:auto!important}
+ .auth-market-line{justify-content:center!important;gap:6px!important;margin-top:12px!important}
+ .auth-market-line span{padding:6px 9px!important;font-size:10px!important}
+ .auth-card{order:1;width:100%!important;max-width:440px!important;padding:clamp(18px,5vw,26px)!important;margin:0 auto!important;border-radius:20px!important}
+ .auth-card h2{font-size:22px!important}
+ .auth-card p{font-size:12px!important}
+}
+@media(max-width:390px){.top-quick-tools{grid-template-columns:minmax(0,1fr)!important}.top-quick-tools #worldClocks{grid-column:1}.auth-clock{padding:7px 9px!important}.auth-clock strong{font-size:14px!important}.auth-lang{height:38px;min-width:46px}.arex-mobile-nav button{font-size:9px;padding-inline:2px}.view .card{padding:12px!important}}
+@media(min-width:761px){body.sidebar-collapsed .sidebar{display:none}.arex-mobile-nav{display:none!important}}
+@media(prefers-reduced-motion:reduce){.sidebar,.arex-mobile-nav *,#arexAuthGate *{transition:none!important;animation:none!important}}
+</style>
+
 </head>
 <body>
 
@@ -6070,7 +6137,43 @@ document.getElementById('tradeReportBtn').addEventListener('click', ()=>{
     '<p>تعداد معاملات: '+rValues.length+' | درصد برد: '+winRate+'٪ | مجموع R: '+totalR+'</p>'+
     '<table><tr><th>تاریخ</th><th>نماد</th><th>جهت</th><th>R</th><th>$</th><th>ستاپ</th></tr>'+
     state.trades.map(t=>'<tr><td>'+t.date+'</td><td>'+t.symbol+'</td><td>'+(t.dir==='buy'?'خرید':'فروش')+'</td><td>'+(t.r||'-')+'</td><td>'+(t.usd||'-')+'</td><td>'+(t.setup||'-')+'</td></tr>').join('')+
-    '</table></body></html>');
+    '</table>
+<script id="arex-v967-contextual-help-and-nav-fix">
+(()=>{
+ const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+ const fa=document.documentElement.lang==='fa'||!document.documentElement.lang;
+ const copy={
+ dashboard:{title:'داشبورد',start:'از کارت‌های خلاصه شروع کن؛ سپس اهداف و محدودیت‌های امروز را مرور کن.',items:['شاخص‌ها را فقط بر اساس داده‌های ثبت‌شده بررسی کن.','برای دیدن جزئیات، از پیوند یا کارت مربوط استفاده کن.','پیش از شروع روز، حدود ریسک و برنامه معاملاتی را بررسی کن.']},
+ trades:{title:'ژورنال معاملات',start:'برای شروع، یک معامله واقعی ثبت کن یا داده‌های پشتیبانی‌شده را وارد کن.',items:['نماد، زمان، جهت، ورود، خروج و ریسک را ثبت کن.','دلیل ورود و خروج و میزان رعایت قوانین را اضافه کن.','از فیلترها برای مقایسه معاملات استفاده کن.']},
+ analytics:{title:'تحلیل عملکرد',start:'بازه زمانی را انتخاب کن و قبل از نتیجه‌گیری تعداد نمونه‌ها را بررسی کن.',items:['سود و زیان را از کیفیت اجرای قوانین جدا ببین.','عملکرد نمادها، سشن‌ها و استراتژی‌ها را مقایسه کن.','هم‌بستگی را علت قطعی تلقی نکن؛ داده بیشتر ممکن است لازم باشد.']},
+ risk:{title:'مدیریت ریسک',start:'ابتدا مشخصات حساب و محدودیت‌های واقعی خودت را تنظیم کن.',items:['درصد ریسک و فاصله حد ضرر را بررسی کن.','محدودیت روزانه و افت سرمایه را مطابق قوانین حساب وارد کن.','اگر ارزش پیپ/تیک یا مشخصات قرارداد نامشخص است، حجم قطعی فرض نکن.']},
+ strategy:{title:'استراتژی و قوانین',start:'استراتژی موردنظر را انتخاب کن و قوانین تأییدشده را مرور کن.',items:['قوانین رسمی را از فرضیه‌ها و پیشنهادها جدا نگه دار.','شرایط ورود، ابطال و استثناها را روشن ثبت کن.','تغییر قوانین را نسخه‌بندی کن و بدون تأیید، رسمی نکن.']},
+ psych:{title:'ژورنال روان‌شناسی',start:'پس از معامله، احساسات و رفتار واقعی خودت را ثبت کن.',items:['احساسات را با زمان و معامله مرتبط کن.','رفتار ثبت‌شده را از حدس درباره حالت روانی جدا کن.','برای الگوهای تکراری یک اقدام اصلاحی قابل اندازه‌گیری تعیین کن.']},
+ calendar:{title:'تقویم اقتصادی',start:'منبع و زمان آخرین به‌روزرسانی را بررسی کن.',items:['منطقه زمانی رویداد را کنترل کن.','فیلتر اهمیت و ارز را متناسب با بازار انتخاب کن.','اگر منبع قطع یا قدیمی است، اطلاعات را زنده فرض نکن.']},
+ sessions:{title:'سشن‌های بازار',start:'منطقه زمانی و تغییر ساعت تابستانی/زمستانی را در نظر بگیر.',items:['ساعت محلی را با ساعت بازار تفکیک کن.','سشن را با زمان ثبت معامله مقایسه کن.','زمان‌ها ممکن است با تغییر ساعت فصلی جابه‌جا شوند.']},
+ propfirm:{title:'مدیریت حساب پراپ',start:'ابتدا نوع حساب و قوانین همان شرکت را انتخاب کن.',items:['سقف ضرر روزانه و کلی را دقیق ثبت کن.','روش محاسبه Drawdown را بررسی کن.','قوانین شرکت‌های مختلف را یکسان فرض نکن.']},
+ backtest:{title:'بک‌تست',start:'قوانین استراتژی و بازه داده را قبل از اجرا مشخص کن.',items:['فرض‌های هزینه، اسپرد و لغزش را بررسی کن.','تعداد معاملات و افت سرمایه را همراه با سود ببین.','نتیجه گذشته تضمین عملکرد آینده نیست.']},
+ settings:{title:'تنظیمات',start:'تنظیمات را مرحله‌به‌مرحله تغییر بده و نتیجه را بررسی کن.',items:['زبان، تم و ترجیحات نمایش را انتخاب کن.','پیش از تغییرات مهم از داده‌ها نسخه پشتیبان بگیر.','ورود به حساب به‌تنهایی تضمین نمی‌کند داده محلی بکاپ شده باشد.']},
+ roadmap:{title:'برنامه روزانه',start:'پیش از بازار برنامه و محدودیت‌های امروز را ثبت کن.',items:['هدف‌های فرایندی و قابل‌کنترل انتخاب کن.','سناریوها و ستاپ‌های مجاز را یادداشت کن.','در پایان روز برنامه را با عملکرد واقعی مقایسه کن.']},
+ assistant:{title:'دستیار معاملاتی',start:'سؤال یا معامله مورد بررسی را با ذکر استراتژی و اطلاعات لازم وارد کن.',items:['قوانین موردنظر را مشخص کن.','اگر اطلاعات ناقص است، آن را کامل کن؛ از حدس پرهیز کن.','پاسخ را با قوانین و داده‌های منبع مقایسه کن.']}
+ };
+ function currentView(){const v=$('.view.active');if(v&&v.id)return v.id.replace(/^view-/,'');const n=$('.navbtn.active');return n?.dataset.view||'dashboard'}
+ function titleFor(key){const n=$(`.navbtn[data-view="${key}"]`);return n?.innerText?.trim()||copy[key]?.title||key}
+ function buildHelp(){if($('#arexContextHelp'))return;const b=document.createElement('button');b.type='button';b.id='arexContextHelp';b.className='icon-btn';b.setAttribute('aria-label','راهنمای این بخش');b.title='راهنمای این بخش';b.innerHTML='<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.6 9a2.5 2.5 0 1 1 4.1 1.9c-1.1.9-1.7 1.2-1.7 2.6"/><path d="M12 17h.01"/></svg>';b.addEventListener('click',openHelp);const actions=$('.top-actions');if(actions)actions.insertBefore(b,actions.firstChild);}
+ function openHelp(){const key=currentView(),data=copy[key]||{title:titleFor(key),start:'از عنوان‌ها و کارت‌های این بخش شروع کن؛ سپس فرم‌ها و فیلترهای موجود را بررسی کن.',items:['فیلدهای ضروری را با اطلاعات واقعی تکمیل کن.','از دکمه‌های همین بخش برای مشاهده، ثبت یا ویرایش استفاده کن.','اگر داده‌ای نمایش داده نمی‌شود، بازه زمانی، فیلترها و کامل‌بودن داده‌ها را بررسی کن.']};let modal=$('#arexContextHelpModal');if(!modal){modal=document.createElement('div');modal.id='arexContextHelpModal';modal.setAttribute('role','dialog');modal.setAttribute('aria-modal','true');modal.setAttribute('aria-labelledby','arexContextHelpTitle');modal.innerHTML='<div class="arex-help-backdrop" data-close="1"></div><section class="arex-help-panel"><header><div><small>AREX · GUIDE</small><h2 id="arexContextHelpTitle"></h2></div><button type="button" class="icon-btn" data-close="1" aria-label="بستن راهنما">×</button></header><p class="arex-help-intro"></p><h3>از کجا شروع کنم؟</h3><ol class="arex-help-steps"></ol><div class="arex-help-note">راهنما بر اساس بخش فعلی ساخته شده است. قابلیت‌های وابسته به داده یا سرویس خارجی ممکن است به تنظیمات یا اتصال نیاز داشته باشند.</div><footer><button type="button" class="btn" data-close="1">متوجه شدم</button></footer></section>';document.body.appendChild(modal);modal.addEventListener('click',e=>{if(e.target.dataset.close==='1')modal.classList.remove('open')});document.addEventListener('keydown',e=>{if(e.key==='Escape')modal.classList.remove('open')});}
+ modal.querySelector('h2').textContent=data.title||titleFor(key);modal.querySelector('.arex-help-intro').textContent=data.start;const ol=modal.querySelector('ol');ol.replaceChildren();(data.items||[]).forEach(t=>{const li=document.createElement('li');li.textContent=t;ol.appendChild(li)});modal.classList.add('open');modal.querySelector('[data-close="1"]:not(.arex-help-backdrop)')?.focus();}
+ function syncNav(){const key=currentView();$$('.arex-mobile-nav [data-mobile-view]').forEach(b=>{const active=b.dataset.mobileView===key||(b.dataset.mobileView==='more'&&!!$('.sidebar.open'));b.classList.toggle('active',active);b.setAttribute('aria-current',active?'page':'false');});$$('.navbtn').forEach(b=>{if(b.dataset.view)b.setAttribute('aria-current',b.dataset.view===key?'page':'false')})}
+ function polishIcons(){const icons={dashboard:'<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',trades:'<path d="M4 18V6M4 18h16"/><path d="m7 14 4-4 3 2 5-6"/>',analytics:'<path d="M4 19V5M4 19h16"/><path d="m7 15 3-4 3 2 4-6"/><circle cx="17" cy="7" r="1"/>'};$$('.arex-mobile-nav [data-mobile-view]').forEach(b=>{const key=b.dataset.mobileView;if(icons[key]){const span=$('.mobile-nav-icon',b);if(span)span.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+icons[key]+'</svg>'}else if(key==='more'){const span=$('.mobile-nav-icon',b);if(span)span.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>'}})}
+ function init(){buildHelp();syncNav();polishIcons();const nav=$('.arex-mobile-nav');if(nav){const more=$('#arexMobileMore');if(more){more.dataset.mobileView='more';more.addEventListener('click',()=>{more.classList.toggle('active');more.setAttribute('aria-expanded',String(!document.body.classList.contains('sidebar-collapsed')))},true)}}
+ const observer=new MutationObserver(()=>{syncNav();});$$('.view').forEach(v=>observer.observe(v,{attributes:true,attributeFilter:['class']}));document.addEventListener('click',e=>{if(e.target.closest('.navbtn,[data-mobile-view]'))setTimeout(syncNav,30)});window.addEventListener('resize',syncNav,{passive:true});}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+})();
+</script>
+<style id="arex-v967-context-help-css">
+#arexContextHelpModal{position:fixed;inset:0;z-index:2147483000;display:none;align-items:center;justify-content:center;padding:16px;color:var(--text)}#arexContextHelpModal.open{display:flex}#arexContextHelpModal .arex-help-backdrop{position:absolute;inset:0;background:rgba(2,7,16,.70);backdrop-filter:blur(8px)}#arexContextHelpModal .arex-help-panel{position:relative;width:min(560px,100%);max-height:min(84dvh,760px);overflow:auto;background:var(--panel);border:1px solid var(--border);border-radius:22px;padding:clamp(18px,4vw,28px);box-shadow:0 28px 90px rgba(0,0,0,.38)}#arexContextHelpModal header{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:14px}#arexContextHelpModal header small{font-size:10px;letter-spacing:1.6px;color:var(--gold);font-weight:800}#arexContextHelpModal h2{font-size:21px;margin-top:4px}#arexContextHelpModal h3{font-size:14px;margin:18px 0 8px}#arexContextHelpModal p,#arexContextHelpModal li{font-size:13px;line-height:1.95;color:var(--muted)}#arexContextHelpModal ol{padding-inline-start:24px}#arexContextHelpModal li{padding:3px 0}#arexContextHelpModal .arex-help-note{font-size:11px;line-height:1.9;padding:11px 12px;margin-top:16px;border:1px solid var(--border);background:var(--panel-hi);border-radius:12px;color:var(--muted)}#arexContextHelpModal footer{display:flex;justify-content:flex-end;margin-top:18px}@media(max-width:480px){#arexContextHelpModal{padding:8px}#arexContextHelpModal .arex-help-panel{max-height:calc(100dvh - 16px);border-radius:16px}}
+</style>
+
+</body></html>');
   win.document.close();
   setTimeout(()=>win.print(), 400);
 });
