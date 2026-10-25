@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AREX V9.7.1</title>
+<title>AREX V9.6.3 — دستیار هوشمند مدیریت معاملات</title>
 <meta name="description" content="AREX دستیار شخصی مدیریت معاملات است: ژورنال معاملاتی، مدیریت ریسک، قوانین استراتژی، تقویم اقتصادی، سشن‌های بازار، ثبت روان‌شناسی و تحلیل عملکرد در یک فضای کاری نصب‌شدنی.">
 <meta name="keywords" content="ژورنال معاملات فارکس, تریدینگ ژورنال, چک‌لیست بهبود عملکرد معاملاتی, مدیریت ریسک معاملات, ردیاب پراپ فرم, تقویم اقتصادی فارکس, forex trading journal, prop firm tracker">
 <meta name="robots" content="index, follow">
@@ -3367,6 +3367,9 @@ async function archiveLegacyChecklist(rawSessions, reason){
    4. Paste the Client ID below between the quotes
    Leave it empty ("") to keep this app 100% offline/local-only. */
 const GOOGLE_CLIENT_ID = "715202165384-63bbdp55cr31nfnb2npdpfrffal78bq9.apps.googleusercontent.com";
+// Public OAuth client ID is exposed explicitly so classic scripts, module adapters, and
+// diagnostic bridges all read the same configuration instead of relying on lexical scope.
+window.AREX_GOOGLE_CLIENT_ID = GOOGLE_CLIENT_ID;
 const DRIVE_SCOPE = "openid email profile https://www.googleapis.com/auth/drive.appdata";
 const DRIVE_BACKUP_PREFIX = "fx-backup-";
 const DRIVE_MAX_VERSIONS = 10;      // how many backup versions to keep on Drive
@@ -3379,7 +3382,7 @@ let driveSyncInProgress = false;
 let driveAutoReconnecting = false;
 let drivePendingConflict = null; // {id, modifiedTime} of a newer remote backup we haven't pulled yet
 
-function driveEnabled(){ return !!GOOGLE_CLIENT_ID; }
+function driveEnabled(){ return !!String(window.AREX_GOOGLE_CLIENT_ID || GOOGLE_CLIENT_ID || "").trim(); }
 
 async function fetchDriveAccountEmail(){
   try{
@@ -3401,7 +3404,7 @@ function initGoogleDrive(){
   script.onload = ()=>{
     driveGisLoaded = true;
     gTokenClient = google.accounts.oauth2.initTokenClient({
-      client_id: GOOGLE_CLIENT_ID,
+      client_id: String(window.AREX_GOOGLE_CLIENT_ID || GOOGLE_CLIENT_ID || "").trim(),
       scope: DRIVE_SCOPE,
       hint: state.driveAccountEmail || undefined,
       callback: async (resp)=>{
@@ -7422,7 +7425,7 @@ window.arexRunRuntimeVerification = async function(options={}) {
 };
 
 </script>
-<script id="arex-drive-bridge-bootstrap-v971">
+<script id="arex-drive-bridge-bootstrap-v972">
 /* Bootstrap bridge: expose lazy wrappers before the ES module evaluates.
    Functions are resolved at call time so this does not depend on declaration order. */
 (function(){
@@ -7430,7 +7433,8 @@ window.arexRunRuntimeVerification = async function(options={}) {
     window.arexDriveIsEnabled = function(){
       try {
         if (typeof driveEnabled === 'function') return !!driveEnabled();
-        if (typeof GOOGLE_CLIENT_ID !== 'undefined') return !!GOOGLE_CLIENT_ID;
+        if (window.AREX_GOOGLE_CLIENT_ID) return !!String(window.AREX_GOOGLE_CLIENT_ID).trim();
+        if (typeof GOOGLE_CLIENT_ID !== 'undefined') return !!String(GOOGLE_CLIENT_ID).trim();
       } catch (e) { console.error('AREX Drive enable bridge failed', e); }
       return false;
     };
@@ -7448,7 +7452,7 @@ window.arexRunRuntimeVerification = async function(options={}) {
   }
 })();
 </script>
-<script type="module" src="auth-client.js?v=9.7.1"></script>
+<script type="module" src="auth-client.js?v=9.7.2"></script>
 <script>
 
 /* ================= V5.5: onboarding, free calendar, conversational AREX ================= */
