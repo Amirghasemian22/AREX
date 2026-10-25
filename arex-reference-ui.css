@@ -1,0 +1,95 @@
+/* AREX V9.6.3 — reference-inspired visual-only patch. No behavior/state selectors are changed. */
+:root[data-theme="dark"]{--bg:#071326;--panel:#0b1b34;--panel-alt:#102544;--panel-hi:#173963;--border:rgba(100,164,231,.25);--text:#edf5ff;--muted:#a5b8d3;--gold:#18d9d0;--gold-dim:#167d9c;--green:#16e0b6;--red:#ff668d;--accent-rgb:24,177,255;--glass-bg:rgba(5,17,39,.82);--panel-grad:linear-gradient(145deg,rgba(13,35,67,.96),rgba(5,16,37,.94));--shadow:0 14px 42px rgba(0,0,0,.3)}
+body[data-bg="default"]{background-image:linear-gradient(180deg,rgba(4,12,29,.34),rgba(4,12,29,.55)),url("arex-glass-wallpaper.jpg")!important;background-size:cover!important;background-position:center!important;background-attachment:fixed!important}
+.sidebar{width:220px;background:rgba(5,17,41,.82);border-inline-end:1px solid rgba(113,176,246,.24);backdrop-filter:blur(24px);padding:18px 12px;box-shadow:10px 0 40px rgba(0,0,0,.14)}
+.brand{gap:9px;padding:0 5px 14px;border-bottom:1px solid rgba(113,176,246,.18);margin-bottom:12px}.brand-mark{background:linear-gradient(145deg,#18d9d0,#287bff);border-radius:12px;box-shadow:0 0 22px rgba(28,177,255,.3)}.brand-text b{font-family:Inter,'Vazirmatn',sans-serif;font-size:20px;letter-spacing:.06em}.brand-text span{font-size:9px;color:#91acd0}
+.nav-search,.topbar .icon-btn,.top-language,.top-usdt,.streak-chip{background:rgba(9,28,56,.7)!important;border-color:rgba(105,169,235,.22)!important;border-radius:999px!important}.navbtn{border-radius:11px;padding:11px 12px;color:#b6c7e0}.navbtn.active{background:linear-gradient(100deg,rgba(13,122,235,.92),rgba(27,94,220,.55));color:#fff;box-shadow:0 0 22px rgba(25,126,255,.22)}.navbtn.active::before{display:none}.navbtn:hover{background:rgba(34,111,205,.2);color:#fff}
+.wrap{background:transparent;min-height:100vh}.topbar{margin:12px 14px 0;padding:10px 18px;border:1px solid rgba(113,176,246,.25);border-radius:20px;background:rgba(4,17,42,.78);backdrop-filter:blur(24px);box-shadow:0 10px 38px rgba(0,0,0,.2)}.topbar h1{font-size:16px}.topbar .sub{font-size:10px}.icon-btn{border-radius:50%;background:rgba(15,41,77,.8);border-color:rgba(113,176,246,.2)}
+.content{padding:14px!important;max-width:1800px;width:100%;margin-inline:auto}.view{min-width:0}.view#view-dashboard{padding:12px;border:1px solid rgba(109,174,245,.26);border-radius:22px;background:rgba(4,16,38,.68);box-shadow:0 18px 60px rgba(0,0,0,.2);backdrop-filter:blur(20px)}
+.card,.arex-kpi,.arex-roadmap-main,.arex-roadmap-side{border:1px solid rgba(103,167,238,.26)!important;border-radius:17px!important;background:linear-gradient(145deg,rgba(12,34,67,.9),rgba(5,19,43,.88))!important;box-shadow:inset 0 1px rgba(255,255,255,.035),0 10px 28px rgba(0,0,0,.12)!important;backdrop-filter:blur(16px)}.section-title{color:#eef6ff}.section-sub,.muted{color:#9eb4d2}.btn{border-radius:10px;background:linear-gradient(115deg,#087cf0,#274fe1);box-shadow:0 5px 18px rgba(16,105,242,.2)}.btn.ghost{background:rgba(13,39,75,.65);border:1px solid rgba(112,174,239,.25);box-shadow:none}
+.arex-roadmap-main{background-image:linear-gradient(90deg,rgba(5,17,39,.25),rgba(5,17,39,.85)),url("arex-glass-wallpaper.jpg")!important;background-position:center!important;background-size:cover!important}.arex-roadmap-title{color:#fff}.arex-roadmap-kicker{color:#66e8e1}.arex-roadmap-step{background:rgba(10,34,66,.65);border-color:rgba(108,174,244,.18);border-radius:12px}
+.arex-dashboard-kpis .arex-kpi{position:relative;overflow:hidden;background:linear-gradient(140deg,rgba(14,51,91,.92),rgba(7,23,49,.94))!important}.arex-dashboard-kpis .arex-kpi strong{color:#f3f8ff}.arex-dashboard-kpis .arex-kpi .label{color:#a8c0de}.arex-dashboard-warnings{border-radius:12px!important;background:rgba(18,51,88,.45)!important;border-color:#1bd5c9!important}
+#dashboardTvCalendar .tv-mini-body{border:1px solid rgba(94,161,232,.2);border-radius:12px}.ticker{border-color:rgba(109,174,245,.22)!important;background:rgba(4,15,35,.88)!important;backdrop-filter:blur(18px)}.mascot-panel{background:linear-gradient(150deg,rgba(9,29,65,.97),rgba(13,18,59,.97))!important;border-color:rgba(104,145,255,.5)!important;box-shadow:0 0 36px rgba(65,76,255,.18)!important}
+input,select,textarea,.txt-input{background-color:rgba(4,18,40,.7)!important;border-color:rgba(105,169,235,.25)!important;color:var(--text)}
+@media(min-width:1200px){.content{padding:14px 16px!important}.view#view-dashboard{padding:13px}.topbar{position:sticky;top:8px;z-index:30}}
+@media(max-width:900px){.sidebar{width:250px}.topbar{margin:8px 8px 0;border-radius:15px}.view#view-dashboard{padding:8px;border-radius:16px}.content{padding:8px!important}}
+@media(prefers-reduced-motion:reduce){.view#view-dashboard,.card{scroll-behavior:auto}}
+
+/* Reference-match pass 2: load after the application's embedded styles. Visual-only overrides. */
+:root[data-theme="dark"] {
+  --bg:#061329; --panel:#0a1a33; --panel-alt:#102746; --panel-hi:#183b66;
+  --border:rgba(100,166,237,.25); --text:#edf5ff; --muted:#a4bad8; --muted2:#7890b5;
+  --gold:#19d9d0; --gold-dim:#167eaa; --green:#17dfb7; --red:#ff668b;
+  --accent-rgb:28,151,255; --glass-bg:rgba(4,16,39,.78);
+  --panel-grad:linear-gradient(145deg,rgba(12,34,67,.92),rgba(5,17,40,.92));
+  --shadow:0 16px 42px rgba(0,0,0,.34);
+}
+html,body{min-height:100%;}
+body[data-bg="default"]{background-color:#061329;background-image:linear-gradient(180deg,rgba(3,12,29,.12),rgba(3,12,29,.32)),url("arex-glass-wallpaper.jpg")!important;background-size:cover!important;background-position:center center!important;background-attachment:fixed!important}
+body{color:var(--text)}
+.sidebar{width:220px;min-width:220px;padding:18px 12px;background:rgba(4,16,40,.86)!important;border-inline-end:1px solid rgba(112,176,247,.23)!important;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:8px 0 35px rgba(0,0,0,.16)}
+.brand{gap:9px;padding:0 5px 14px;margin-bottom:12px;border-bottom:1px solid rgba(112,176,247,.16)}
+.brand-mark{background:linear-gradient(145deg,#20e4d5,#2477ff)!important;border-radius:11px;box-shadow:0 0 24px rgba(30,164,255,.28)}
+.brand-text b{font-family:Inter,'Vazirmatn',sans-serif;font-size:20px;letter-spacing:.045em}
+.brand-text span{font-size:9px;color:#91acd0}
+.nav-group{gap:4px}.nav-group+.nav-group{border-top:0;margin-top:7px;padding-top:0}.nav-group-title{display:none}
+.navbtn{min-height:43px;padding:10px 12px;border-radius:11px;color:#b5c8e4;font-size:13px}
+.navbtn.active{color:#fff;background:linear-gradient(100deg,rgba(10,120,235,.94),rgba(24,96,221,.62))!important;box-shadow:0 0 23px rgba(18,124,255,.22)}
+.navbtn.active::before{display:none}
+.navbtn .ic{width:22px}.sidebar-foot{border-top:0;padding-top:10px}
+.wrap{min-width:0;background:transparent}
+.topbar{margin:12px 14px 0!important;padding:10px 18px!important;min-height:58px;border:1px solid rgba(113,176,246,.25)!important;border-radius:19px!important;background:rgba(4,17,42,.79)!important;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:0 10px 38px rgba(0,0,0,.2)}
+.topbar h1{font-size:16px!important}.topbar .sub{font-size:10px!important}
+.topbar .icon-btn,.top-language,.top-usdt,.streak-chip,.nav-search{background:rgba(9,28,56,.72)!important;border-color:rgba(105,169,235,.22)!important;border-radius:999px!important}
+.content{padding:14px 16px 54px!important;max-width:1800px;width:100%;margin-inline:auto}
+.view#view-dashboard{padding:12px!important;border:1px solid rgba(109,174,245,.26);border-radius:22px;background:rgba(4,16,38,.68);box-shadow:0 18px 60px rgba(0,0,0,.2);backdrop-filter:blur(20px)}
+.card,.arex-kpi,.arex-roadmap-main,.arex-roadmap-side{border:1px solid rgba(103,167,238,.26)!important;border-radius:16px!important;background:linear-gradient(145deg,rgba(12,34,67,.91),rgba(5,19,43,.9))!important;box-shadow:inset 0 1px rgba(255,255,255,.035),0 10px 28px rgba(0,0,0,.13)!important;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.card:hover{transform:none;border-color:rgba(65,158,255,.42)!important}
+.section-title{color:#eef6ff}.section-sub,.muted{color:#9eb4d2}
+.btn{border-radius:10px;background:linear-gradient(115deg,#087cf0,#274fe1);box-shadow:0 5px 18px rgba(16,105,242,.2)}
+.btn.ghost{background:rgba(13,39,75,.65);border:1px solid rgba(112,174,239,.25);box-shadow:none}
+#arexDailyRoadmap{display:grid;grid-template-columns:minmax(0,2.2fr) minmax(260px,.8fr);gap:12px;margin:0 0 14px;align-items:stretch}
+#arexDailyRoadmap .arex-roadmap-main{min-height:164px;padding:24px 22px;background-image:linear-gradient(90deg,rgba(4,15,36,.24),rgba(4,15,36,.87)),url("arex-glass-wallpaper.jpg")!important;background-position:center 46%!important;background-size:cover!important}
+.arex-roadmap-kicker{color:#67e9e2;font-size:9px}.arex-roadmap-title{font-size:21px;line-height:1.5}.arex-roadmap-sub{font-size:12px;margin-bottom:12px}
+.arex-roadmap-steps{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.arex-roadmap-step{padding:8px;background:rgba(10,34,66,.68);border-color:rgba(108,174,244,.2);border-radius:11px}
+#arexDailyRoadmap .arex-roadmap-side{padding:16px;display:flex;flex-direction:column;justify-content:center}
+#arexDailyRoadmap .arex-roadmap-side h3{font-size:13px}
+.arex-dashboard-kpis{gap:10px!important;margin:0 0 12px!important}
+.arex-dashboard-kpis .arex-kpi{min-height:106px;padding:14px 15px!important;position:relative;overflow:hidden;background:linear-gradient(140deg,rgba(14,51,91,.93),rgba(7,23,49,.95))!important}
+.arex-dashboard-kpis .arex-kpi strong{color:#f3f8ff}.arex-dashboard-kpis .arex-kpi .label{color:#a8c0de}
+.arex-dashboard-warnings{border-radius:12px!important;background:rgba(18,51,88,.45)!important;border-color:rgba(27,213,201,.65)!important}
+#dashboardTvCalendar{margin:0 0 14px;overflow:hidden}#dashboardTvCalendar .tv-mini-body{border:1px solid rgba(94,161,232,.2);border-radius:12px}
+.ticker{border-color:rgba(109,174,245,.22)!important;background:rgba(4,15,35,.9)!important;backdrop-filter:blur(18px)}
+.mascot-panel{background:linear-gradient(150deg,rgba(9,29,65,.98),rgba(13,18,59,.98))!important;border-color:rgba(104,145,255,.5)!important;box-shadow:0 0 36px rgba(65,76,255,.18)!important}
+input,select,textarea,.txt-input{background-color:rgba(4,18,40,.72)!important;border-color:rgba(105,169,235,.25)!important;color:var(--text)}
+@media(min-width:1200px){.topbar{position:sticky;top:8px;z-index:30}.content{padding-inline:16px!important}}
+@media(max-width:1100px){.sidebar{width:220px;min-width:220px}#arexDailyRoadmap{grid-template-columns:minmax(0,1fr)}#arexDailyRoadmap .arex-roadmap-side{display:block}}
+@media(max-width:760px){.sidebar{width:250px;min-width:250px}.topbar{margin:8px 8px 0!important;border-radius:15px!important}.view#view-dashboard{padding:8px!important;border-radius:16px}.content{padding:8px!important}#arexDailyRoadmap .arex-roadmap-main{padding:16px}.arex-roadmap-steps{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.view#view-dashboard,.card{scroll-behavior:auto}}
+
+
+/* Reference-matched authentication gate — presentation-only patch. */
+#arexAuthGate{padding:clamp(16px,3vw,44px);background:#061329;}
+#arexAuthGate:before{background-color:#071329;background-image:linear-gradient(110deg,rgba(3,10,27,.72),rgba(5,16,39,.42) 48%,rgba(3,11,28,.76)),url("arex-glass-wallpaper.jpg"),radial-gradient(ellipse at 55% 25%,#17436b 0%,#091831 62%,#040a18 100%);background-position:center,center 48%,center;background-size:cover,cover,cover;filter:saturate(1.18);transform:scale(1.015);}
+#arexAuthGate:after{background:radial-gradient(ellipse at 16% 18%,rgba(25,115,255,.2),transparent 34%),radial-gradient(ellipse at 84% 78%,rgba(16,220,203,.13),transparent 33%),linear-gradient(90deg,rgba(2,9,24,.1),rgba(2,9,24,.28));}
+.auth-topbar{z-index:5;top:clamp(14px,2.2vw,30px);left:clamp(14px,2.2vw,30px);right:clamp(14px,2.2vw,30px);}
+.auth-clock{display:flex!important;visibility:visible;opacity:1;border-color:rgba(110,177,247,.24);border-radius:13px;background:rgba(4,18,43,.58);box-shadow:0 8px 28px rgba(0,0,0,.18);}
+.auth-layout{width:min(1080px,100%);grid-template-columns:minmax(0,1.12fr) minmax(320px,.88fr);gap:clamp(28px,5vw,76px);padding:64px 0 24px;}
+.auth-story{max-width:560px;text-shadow:0 3px 24px rgba(0,0,0,.35);}
+.auth-wordmark{font-size:clamp(52px,7.2vw,88px);letter-spacing:.075em;margin-bottom:16px;background:linear-gradient(115deg,#fff 12%,#a8d4ff 54%,#42e4dc 100%);-webkit-background-clip:text;background-clip:text;filter:drop-shadow(0 7px 26px rgba(24,130,255,.2));}
+.auth-story p{max-width:460px;font-size:clamp(14px,1.3vw,17px);line-height:2;color:#d0def2;}
+.auth-market-line{gap:9px;margin-top:30px;}
+.auth-market-line span{padding:9px 13px;border-color:rgba(124,184,247,.22);background:rgba(5,20,47,.48);box-shadow:inset 0 1px rgba(255,255,255,.035);backdrop-filter:blur(12px);color:#dcecff;letter-spacing:.035em;}
+.auth-card{width:min(430px,100%);justify-self:center;padding:clamp(26px,3.3vw,40px);border:1px solid rgba(113,179,247,.3);border-radius:25px;background:linear-gradient(150deg,rgba(9,29,61,.88),rgba(4,15,36,.91));box-shadow:0 30px 100px rgba(0,0,0,.46),inset 0 1px rgba(255,255,255,.07),0 0 45px rgba(23,100,218,.08);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);}
+.auth-card:before{background:linear-gradient(135deg,rgba(84,168,255,.48),transparent 42%,rgba(20,222,203,.24));}
+.auth-logo{width:88px;height:88px;border-radius:23px;margin:0 auto 22px;padding:5px;overflow:hidden;background:linear-gradient(145deg,rgba(31,124,255,.22),rgba(15,224,210,.12));border:1px solid rgba(94,177,255,.36);box-shadow:0 0 0 6px rgba(33,126,255,.055),0 12px 35px rgba(14,110,255,.19);}
+.auth-logo img{display:block;width:100%;height:100%;object-fit:cover;border-radius:17px;}
+.auth-card h2{font-size:26px;letter-spacing:.06em;color:#f5f9ff;}
+.auth-card>p:not(.auth-error):not(.auth-setup-note){font-size:13px;line-height:2;color:#b6c9e4;}
+.auth-google{min-height:49px;margin-top:19px;border:1px solid rgba(112,186,255,.45);border-radius:13px;background:linear-gradient(110deg,#1386ff,#254ee4);color:#fff;box-shadow:0 8px 26px rgba(14,105,245,.26),inset 0 1px rgba(255,255,255,.18);font-family:Inter,Vazirmatn,sans-serif;font-size:14px;transition:transform .2s,box-shadow .2s,filter .2s;}
+.auth-google:hover{transform:translateY(-2px);filter:brightness(1.08);box-shadow:0 13px 32px rgba(14,105,245,.32);}
+.auth-setup-note{border:1px solid rgba(106,169,236,.15);background:rgba(4,17,39,.46);color:#9fb6d6!important;}
+.auth-local{color:#9fc8fa;}
+.auth-error{color:#ff91a4!important;}
+@media(max-width:720px){#arexAuthGate{overflow-y:auto;align-items:flex-start}.auth-layout{grid-template-columns:minmax(0,1fr);gap:22px;padding-top:82px;padding-bottom:26px;max-width:460px}.auth-story{text-align:center;margin-inline:auto}.auth-wordmark{font-size:52px;margin-bottom:8px}.auth-story p{font-size:13px}.auth-market-line{justify-content:center;margin-top:17px}.auth-market-line span{font-size:9px;padding:7px 10px}.auth-card{padding:25px;width:100%;}.auth-logo{width:76px;height:76px}.auth-topbar{z-index:5;top:10px;left:10px;right:10px}.auth-clock{display:flex!important;visibility:visible;opacity:1;padding:8px 10px}.auth-clock strong{font-size:14px}}
+@media(max-width:380px){.auth-market-line span:last-child{display:none}.auth-card{padding:22px 18px}.auth-wordmark{font-size:46px}}
