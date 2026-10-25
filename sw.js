@@ -1,5 +1,5 @@
 const CACHE_VERSION = 'v9-7-0-login-bridge-recovery-2026-10-25';
-const CACHE_NAME = 'fx-bootcamp-' + CACHE_VERSION;
+const CACHE_NAME = 'arex-v9-7-1' + CACHE_VERSION;
 const APP_SHELL = [
   './',
   './index.html',
