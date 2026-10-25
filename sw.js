@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v9-6-9-login-bridge-cache-recovery-2026-10-25';
+const CACHE_VERSION = 'v9-7-0-login-bridge-recovery-2026-10-25';
 const CACHE_NAME = 'fx-bootcamp-' + CACHE_VERSION;
 const APP_SHELL = [
   './',
@@ -96,7 +96,7 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(fetch(event.request).then((res) => {
       if (res && res.ok) { const copy = res.clone(); caches.open(CACHE_NAME).then((c) => c.put('./auth-client.js', copy)); }
       return res;
-    }).catch(() => caches.match('./auth-client.js')));
+    }).catch(() => caches.match('./auth-client.js', {ignoreSearch:true})));
     return;
   }
 

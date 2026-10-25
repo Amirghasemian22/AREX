@@ -1,4 +1,4 @@
-/* AREX V9.6.3 — Google Drive-only authentication and backup adapter.
+/* AREX V9.7.0 — resilient Google Drive-only authentication and backup adapter.
  * No Firebase Authentication or Firestore calls are made by this file.
  * OAuth token stays in memory; persistent backups use the Drive appDataFolder API.
  */
@@ -74,22 +74,45 @@ window.arexDriveLoginComplete = async () => {
   }catch(error){ console.error('AREX Google Drive account setup failed',error); window.arexDriveLoginFailed(friendlyError(error)); }
 };
 
+// Resolve the bridge lazily. Classic-script function declarations from index.html
+// are exposed on window in the supported static build, so this also tolerates a
+// mixed deployment where the bridge aliases have not yet been assigned.
+function resolveDriveEnabled(){
+  if(typeof window.arexDriveIsEnabled==='function') return window.arexDriveIsEnabled;
+  if(typeof window.driveEnabled==='function') return window.driveEnabled;
+  return null;
+}
+function resolveDriveStartOAuth(){
+  if(typeof window.arexDriveStartOAuth==='function') return window.arexDriveStartOAuth;
+  if(typeof window.driveConnect==='function') return window.driveConnect;
+  return null;
+}
 window.arexStartGoogleSignIn = async () => {
   if(loginInProgress) return;
   setError('');
-  if(typeof window.arexDriveIsEnabled !== 'function') {
-    setError('ماژول اصلی AREX کامل بارگذاری نشده است. فایل index.html را با نسخه 9.6.4 جایگزین و کش سایت را تازه‌سازی کن.');
-    console.error('AREX Drive bridge missing: window.arexDriveIsEnabled is not a function');
+  const enabledCheck=resolveDriveEnabled();
+  const startOAuth=resolveDriveStartOAuth();
+  if(!enabledCheck || !startOAuth) {
+    // A short retry handles script/module scheduling and stale deployments without
+    // asking users to downgrade index.html or erase their local database.
+    await new Promise(resolve=>setTimeout(resolve,250));
+    const retryEnabled=resolveDriveEnabled();
+    const retryStart=resolveDriveStartOAuth();
+    if(!retryEnabled || !retryStart) {
+      const missing=[!retryEnabled?'Drive configuration bridge':'OAuth start bridge'].join(' and ');
+      setError('ماژول ورود با نسخه صفحه هماهنگ نیست ('+missing+'). صفحه را یک بار تازه‌سازی کن؛ اطلاعات ذخیره‌شده پاک نمی‌شود.');
+      console.error('AREX Drive bridge unavailable', {enabledCheck:!!retryEnabled,startOAuth:!!retryStart,href:location.href,script:document.querySelector('script[type="module"][src*="auth-client"]')?.src||'missing'});
+      return;
+    }
+    if(!retryEnabled()) { setError(friendlyError(new Error('google_oauth_client_id_missing'))); return; }
+    loginInProgress=true; setBusy(true); window.arexDriveLoginPending=true;
+    try { retryStart(); }
+    catch(error){ console.error('AREX Google Drive OAuth start failed',error); window.arexDriveLoginFailed(friendlyError(error)); }
     return;
   }
-  if(!window.arexDriveIsEnabled()) { setError(friendlyError(new Error('google_oauth_client_id_missing'))); return; }
-  if(typeof window.arexDriveStartOAuth !== 'function') {
-    setError('ماژول Google Drive ناقص بارگذاری شده است. صفحه را تازه‌سازی کن و Console را بررسی کن.');
-    console.error('AREX Drive OAuth start function missing');
-    return;
-  }
+  if(!enabledCheck()) { setError(friendlyError(new Error('google_oauth_client_id_missing'))); return; }
   loginInProgress=true; setBusy(true); window.arexDriveLoginPending=true;
-  try { window.arexDriveStartOAuth(); }
+  try { startOAuth(); }
   catch(error){ console.error('AREX Google Drive OAuth start failed',error); window.arexDriveLoginFailed(friendlyError(error)); }
 };
 
