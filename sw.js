@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v9-6-7-responsive-darkmode-context-help-2026-10-25';
+const CACHE_VERSION = 'v9-6-9-login-bridge-cache-recovery-2026-10-25';
 const CACHE_NAME = 'fx-bootcamp-' + CACHE_VERSION;
 const APP_SHELL = [
   './',
@@ -87,6 +87,16 @@ self.addEventListener('fetch', (event) => {
         })
         .catch(() => caches.match(event.request).then((c) => c || caches.match('./index.html')))
     );
+    return;
+  }
+
+  // The login module must stay in sync with index.html. Prefer the deployed file,
+  // then fall back to a cache entry only when offline.
+  if (url.pathname.endsWith('/auth-client.js')) {
+    event.respondWith(fetch(event.request).then((res) => {
+      if (res && res.ok) { const copy = res.clone(); caches.open(CACHE_NAME).then((c) => c.put('./auth-client.js', copy)); }
+      return res;
+    }).catch(() => caches.match('./auth-client.js')));
     return;
   }
 
