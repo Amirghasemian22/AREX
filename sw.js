@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v9-6-6-auth-gate-html-parser-fix-responsive-mobile-final-2026-10-25';
+const CACHE_VERSION = 'v9-6-7-responsive-darkmode-context-help-2026-10-25';
 const CACHE_NAME = 'fx-bootcamp-' + CACHE_VERSION;
 const APP_SHELL = [
   './',
