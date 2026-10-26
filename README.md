@@ -1,4 +1,4 @@
-AREX V9.7.12 --- Personal Trading Assistant & Management Workspace
+AREX V9.7.14 --- Personal Trading Assistant & Management Workspace
 
 <p align="center">
 
