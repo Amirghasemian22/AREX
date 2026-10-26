@@ -1,6 +1,6 @@
 {
-  "name": "AREX V9.7.15 — دستیار هوشمند مدیریت معاملات",
-  "short_name": "AREX V9.7.15",
+  "name": "AREX V9.7.15",
+  "short_name": "AREX",
   "description": "دستیار شخصی مدیریت معاملات، ژورنال، قوانین ریسک، روان‌شناسی و تحلیل عملکرد.",
   "start_url": "./index.html",
   "scope": "./",
