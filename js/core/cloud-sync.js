@@ -30,6 +30,6 @@
     if(Number.isInteger(meta.itemCount)&&Number.isInteger(itemCount)&&meta.itemCount!==itemCount)errors.push('item_count_mismatch');
     return{ok:errors.length===0,errors};
   }
-  function createManifest(data,createdAt){return{schemaVersion:6,createdAt:createdAt||new Date().toISOString(),itemCount:Object.keys(data||{}).length,appVersion:'AREX V9.7.13',complete:false};}
+  function createManifest(data,createdAt){return{schemaVersion:6,createdAt:createdAt||new Date().toISOString(),itemCount:Object.keys(data||{}).length,appVersion:'AREX V9.7.14',complete:false};}
   return{sameSnapshot,readStableSnapshot,validateCloudManifest,createManifest};
 });

@@ -52,6 +52,23 @@ check('All local JavaScript files pass syntax validation', () => {
   return `${files.length} JavaScript files passed node --check`;
 });
 
+check('Executable inline scripts in index.html pass syntax validation', () => {
+  const html = read('index.html');
+  const scripts = [...html.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script\s*>/gi)];
+  const executable = scripts.filter((m) => {
+    const tag = m[0].slice(0, m[0].indexOf('>') + 1);
+    const type = tag.match(/\btype\s*=\s*['"]([^'"]+)['"]/i)?.[1]?.toLowerCase();
+    return m[1].trim() && !['application/ld+json', 'application/json', 'importmap'].includes(type);
+  });
+  const failures = [];
+  executable.forEach((m, i) => {
+    const result = spawnSync(process.execPath, ['--check'], { input: m[1], encoding: 'utf8' });
+    if (result.status !== 0) failures.push(`inline script #${i + 1}: ${(result.stderr || result.stdout || 'syntax check failed').trim()}`);
+  });
+  if (failures.length) fail(failures.join('\n'));
+  return `${executable.length} executable inline scripts passed node --check`;
+});
+
 check('HTML IDs are unique', () => {
   const html = read('index.html');
   const ids = [...html.matchAll(/\bid\s*=\s*['"]([^'"]+)['"]/g)].map(m => m[1]);
