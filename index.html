@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AREX V9.7.13</title>
+<title>AREX V9.7.14</title>
 <meta name="description" content="AREX دستیار شخصی مدیریت معاملات است: ژورنال معاملاتی، مدیریت ریسک، قوانین استراتژی، تقویم اقتصادی، سشن‌های بازار، ثبت روان‌شناسی و تحلیل عملکرد در یک فضای کاری نصب‌شدنی.">
 <meta name="keywords" content="ژورنال معاملات فارکس, تریدینگ ژورنال, چک‌لیست بهبود عملکرد معاملاتی, مدیریت ریسک معاملات, ردیاب پراپ فرم, تقویم اقتصادی فارکس, forex trading journal, prop firm tracker">
 <meta name="robots" content="index, follow">
@@ -3519,9 +3519,14 @@ async function archiveLegacyChecklist(rawSessions, reason){
    4. Paste the Client ID below between the quotes
    Leave it empty ("") to keep this app 100% offline/local-only. */
 const GOOGLE_CLIENT_ID = "715202165384-63bbdp55cr31nfnb2npdpfrffal78bq9.apps.googleusercontent.com";
-// Public OAuth client ID is exposed explicitly so classic scripts, module adapters, and
-// diagnostic bridges all read the same configuration instead of relying on lexical scope.
-window.AREX_GOOGLE_CLIENT_ID = GOOGLE_CLIENT_ID;
+// Single resilient source of truth for Google OAuth configuration. The literal fallback
+// is the already-configured public Web OAuth client ID (not a secret); it also survives
+// stale/overwritten window bridges and older cached bootstrap code.
+function getArexGoogleClientId(){
+  const candidates = [window.AREX_GOOGLE_CLIENT_ID, (typeof GOOGLE_CLIENT_ID !== 'undefined' ? GOOGLE_CLIENT_ID : ''), "715202165384-63bbdp55cr31nfnb2npdpfrffal78bq9.apps.googleusercontent.com"];
+  return candidates.map(v => String(v || '').trim()).find(v => v && v.endsWith('.apps.googleusercontent.com')) || '';
+}
+window.AREX_GOOGLE_CLIENT_ID = getArexGoogleClientId();
 const DRIVE_SCOPE = "openid email profile https://www.googleapis.com/auth/drive.appdata";
 const DRIVE_BACKUP_PREFIX = "fx-backup-";
 const DRIVE_MAX_VERSIONS = 10;      // how many backup versions to keep on Drive
@@ -3534,7 +3539,7 @@ let driveSyncInProgress = false;
 let driveAutoReconnecting = false;
 let drivePendingConflict = null; // {id, modifiedTime} of a newer remote backup we haven't pulled yet
 
-function driveEnabled(){ return !!String(window.AREX_GOOGLE_CLIENT_ID || GOOGLE_CLIENT_ID || "").trim(); }
+function driveEnabled(){ return !!getArexGoogleClientId(); }
 
 async function fetchDriveAccountEmail(){
   try{
@@ -3556,7 +3561,7 @@ function initGoogleDrive(){
   script.onload = ()=>{
     driveGisLoaded = true;
     gTokenClient = google.accounts.oauth2.initTokenClient({
-      client_id: String(window.AREX_GOOGLE_CLIENT_ID || GOOGLE_CLIENT_ID || "").trim(),
+      client_id: getArexGoogleClientId(),
       scope: DRIVE_SCOPE,
       hint: state.driveAccountEmail || undefined,
       callback: async (resp)=>{
@@ -6312,10 +6317,7 @@ document.getElementById('tradeReportBtn').addEventListener('click', ()=>{
   const totalR = rValues.reduce((a,b)=>a+b,0).toFixed(1);
   const win = window.open('', '_blank');
   win.document.write('<html dir="rtl" lang="fa"><head><meta charset="utf-8"><title>گزارش معاملات AREX</title>'+
-    '<style>body{font-family:Tahoma,sans-serif;padding:30px;color:#111} h1{margin-bottom:4px} table{width:100%;border-collapse:collapse;margin-top:16px;font-size:13px} td,th{border:1px solid #ccc;padding:6px 8px;text-align:right}\n</style>
-
-
-</head><body>'+
+    '<style>body{font-family:Tahoma,sans-serif;padding:30px;color:#111} h1{margin-bottom:4px} table{width:100%;border-collapse:collapse;margin-top:16px;font-size:13px} td,th{border:1px solid #ccc;padding:6px 8px;text-align:right}\n</style></head><body>'+
     '<h1>گزارش عملکرد معاملاتی — AREX</h1><p>تاریخ تهیه: '+new Date().toLocaleDateString('fa-IR')+'</p>'+
     '<p>تعداد معاملات: '+rValues.length+' | درصد برد: '+winRate+'٪ | مجموع R: '+totalR+'</p>'+
     '<table><tr><th>تاریخ</th><th>نماد</th><th>جهت</th><th>R</th><th>$</th><th>ستاپ</th></tr>'+
@@ -7117,6 +7119,8 @@ document.getElementById('importFile').addEventListener('change', e=>{
 /* ================= GOOGLE DRIVE UI WIRING ================= */
 window.arexDriveIsEnabled = driveEnabled;
 window.arexDriveStartOAuth = function(){
+  // Rehydrate the bridge before checking configuration; do not trust a stale global.
+  window.AREX_GOOGLE_CLIENT_ID = getArexGoogleClientId();
   if(!driveEnabled()) throw new Error('google_oauth_client_id_missing');
   if(!driveGisLoaded || !gTokenClient) throw new Error('google_identity_services_loading');
   driveConnect();
@@ -7577,6 +7581,7 @@ window.arexRunRuntimeVerification = async function(options={}) {
     window.arexDriveIsEnabled = function(){
       try {
         if (typeof driveEnabled === 'function') return !!driveEnabled();
+        if (typeof getArexGoogleClientId === 'function') return !!getArexGoogleClientId();
         if (window.AREX_GOOGLE_CLIENT_ID) return !!String(window.AREX_GOOGLE_CLIENT_ID).trim();
         if (typeof GOOGLE_CLIENT_ID !== 'undefined') return !!String(GOOGLE_CLIENT_ID).trim();
       } catch (e) { console.error('AREX Drive enable bridge failed', e); }
@@ -7596,7 +7601,7 @@ window.arexRunRuntimeVerification = async function(options={}) {
   }
 })();
 </script>
-<script type="module" src="auth-client.js?v=9.7.13"></script>
+<script type="module" src="auth-client.js?v=9.7.14"></script>
 <script>
 
 /* ================= V5.5: onboarding, free calendar, conversational AREX ================= */
@@ -7656,13 +7661,13 @@ window.arexRunRuntimeVerification = async function(options={}) {
  const saveEndpoint=value=>AREXCore.accountLocalStorage.write(localStorage,endpointKey,String(value||''));
  if($('arexAiEndpoint'))$('arexAiEndpoint').value=readEndpoint();
  function addChat(role,text){const h=$('arexChatHistory');if(!h)return;const el=document.createElement('div');el.className='arex-chat-msg '+role;const label=document.createElement('small');label.textContent=role==='user'?'شما':'آرکس';el.appendChild(label);el.appendChild(document.createTextNode(text));h.appendChild(el);h.scrollTop=h.scrollHeight;history.push({role:role==='user'?'user':'assistant',content:text});if(history.length>24)history.splice(0,2);}
- function contextSnapshot(){const st=(typeof state!=='undefined'&&state)||window.state||{};return {app:'AREX V9.7.13',language:st.language||'fa',timezone:'Asia/Tehran',tradesCount:Array.isArray(st.trades)?st.trades.length:0,psychNotesCount:Array.isArray(st.psych)?st.psych.length:0,goalsCount:Array.isArray(st.goals)?st.goals.length:0,confirmedRules:Array.isArray(st.tradeRules)?st.tradeRules:[],riskLimits:st.riskLimits||{},activePage:document.querySelector('.view.active')?.id||'unknown',instruction:'Do not invent user data, live prices, strategy rules, or news. If information is missing, ask a focused question. Do not promise profitable outcomes.'};}
+ function contextSnapshot(){const st=(typeof state!=='undefined'&&state)||window.state||{};return {app:'AREX V9.7.14',language:st.language||'fa',timezone:'Asia/Tehran',tradesCount:Array.isArray(st.trades)?st.trades.length:0,psychNotesCount:Array.isArray(st.psych)?st.psych.length:0,goalsCount:Array.isArray(st.goals)?st.goals.length:0,confirmedRules:Array.isArray(st.tradeRules)?st.tradeRules:[],riskLimits:st.riskLimits||{},activePage:document.querySelector('.view.active')?.id||'unknown',instruction:'Do not invent user data, live prices, strategy rules, or news. If information is missing, ask a focused question. Do not promise profitable outcomes.'};}
  function localAnswer(q){const x=q.toLowerCase();if(/سلام|درود|hello|hi\b/.test(x))return 'سلام! من آرکس هستم. می‌توانم در کار با بخش‌های AREX، نظم روزانه، ژورنال، مدیریت ریسک و مرور قوانین کمک کنم. برای پاسخ عمومی درباره هر موضوع، endpoint هوش مصنوعی را در تنظیمات وصل کن.';if(/از کجا شروع|شروع کنم|first|start/.test(x))return 'برای شروع این مسیر را برو: ۱) برنامه روزانه را باز کن و وضعیت و هدف امروز را ثبت کن؛ ۲) در مدیریت ریسک موجودی و ریسک مجاز را تنظیم کن؛ ۳) پیش از معامله قوانین استراتژی و تقویم اقتصادی را مرور کن؛ ۴) بعد از معامله نتیجه و اسکرین‌شات را در ژورنال ثبت کن؛ ۵) آخر روز عملکرد و روان‌شناسی را مرور کن.';if(/ریسک|risk|ضرر/.test(x))return 'پیش از هر معامله، حد ضرر و حجم را طوری تعیین کن که زیان احتمالی از سقف ریسک شخصی‌ات بیشتر نشود. اگر موجودی، درصد ریسک، نماد و فاصله SL را بدهی، می‌توانم داده‌های لازم برای محاسبه را بررسی کنم؛ برای محاسبه دقیق حجم، مشخصات قرارداد/ارزش هر پوینت بروکر هم لازم است.';if(/تقویم|خبر|news|calendar/.test(x))return 'از تب «تقویم اقتصادی» استفاده کن؛ تب «تقویم رایگان (API)» از Finance Calendar رویدادهای مهم را می‌گیرد. اگر فید خطا داد، خطا را بررسی کن و خالی بودن فهرست را به معنی نبود خبر تلقی نکن.';if(/ژورنال|ثبت معامله|journal/.test(x))return 'از «ژورنال معاملات» برای ثبت نماد، جهت، ورود/خروج، SL/TP، نتیجه و دلیل ورود استفاده کن. ثبت دلیل و رعایت قوانین از ثبت صرف سود و زیان مهم‌تر است.';if(/تنظیمات|settings/.test(x))return 'تنظیمات را به بخش‌های ظاهر، سشن‌ها، ریسک، قوانین، اتصال‌ها و پشتیبان‌گیری تقسیم کرده‌ایم. از نوار دسترسی سریع بالای تنظیمات برای رفتن به بخش موردنظر استفاده کن.';if(/استراتژی|قانون|strategy/.test(x))return 'قوانین تأییدشده‌ات باید بر دانش عمومی مقدم باشند. اگر شرط ورود، تایم‌فریم، حد ضرر یا استثنا مبهم است، آن را قطعی فرض نمی‌کنم. سؤال یا قانون دقیق را بنویس تا کمک کنم ابهامش را مشخص کنیم.';return 'برای این سؤال هنوز موتور هوش مصنوعی عمومی به AREX وصل نشده است؛ نمی‌خواهم پاسخ ساختگی بدهم. در تنظیمات ← «اتصال هوش مصنوعی آرکس»، آدرس یک backend امن سازگار را ثبت کن. تا آن زمان می‌توانم درباره امکانات داخلی، نظم معاملاتی، ژورنال و ریسک با اطلاعات موجود راهنمایی بدهم.';}
  async function askArex(text){if(chatBusy||!text.trim())return;chatBusy=true;const send=$('arexChatSend');if(send){send.disabled=true;send.textContent='…'}addChat('user',text.trim());const endpoint=readEndpoint();try{if(endpoint){const res=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:history.slice(-16),context:contextSnapshot()}),signal:AbortSignal.timeout?AbortSignal.timeout(30000):undefined});if(!res.ok)throw new Error('HTTP '+res.status);const data=await res.json();const answer=data.answer||data.reply||data.text||data.choices?.[0]?.message?.content;if(typeof answer!=='string'||!answer.trim())throw new Error('پاسخ سرویس خالی یا ناشناخته است');addChat('assistant',answer.trim());}else addChat('assistant',localAnswer(text));}catch(e){addChat('assistant','اتصال به سرویس هوش مصنوعی ناموفق بود ('+e.message+'). آدرس endpoint، CORS و وضعیت backend را بررسی کن. پاسخ جایگزین ساختگی تولید نکردم.');}finally{chatBusy=false;if(send){send.disabled=false;send.textContent='ارسال ↗'}}}
  if($('arexChatForm'))$('arexChatForm').addEventListener('submit',e=>{e.preventDefault();const input=$('arexChatInput'),text=input.value.trim();if(!text)return;input.value='';askArex(text)});
  if($('arexChatInput'))$('arexChatInput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();$('arexChatForm').requestSubmit()}});
  if($('arexAiEndpointSave'))$('arexAiEndpointSave').addEventListener('click',()=>{const val=$('arexAiEndpoint').value.trim();if(val&&!/^https:\/\//i.test(val)){ $('arexAiEndpointStatus').textContent='آدرس باید با https:// شروع شود.';return;}try{saveEndpoint(val);$('arexAiEndpointStatus').textContent=val?'آدرس ذخیره شد. کلید محرمانه باید فقط در backend باشد.':'اتصال مدل زبانی پاک شد.';}catch(e){$('arexAiEndpointStatus').textContent='ذخیره در مرورگر انجام نشد.'}});
- if($('arexAiEndpointTest'))$('arexAiEndpointTest').addEventListener('click',async()=>{const val=$('arexAiEndpoint').value.trim();if(!val){$('arexAiEndpointStatus').textContent='ابتدا آدرس endpoint را وارد کن.';return;}try{const r=await fetch(val,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'user',content:'Reply with exactly: AREX_OK'}],context:{app:'AREX V9.7.13',test:true}})});if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();const ans=d.answer||d.reply||d.text||d.choices?.[0]?.message?.content;if(!ans)throw new Error('ساختار پاسخ نامعتبر');$('arexAiEndpointStatus').textContent='اتصال برقرار است؛ پاسخ سرویس دریافت شد.';}catch(e){$('arexAiEndpointStatus').textContent='آزمون ناموفق: '+e.message+' · CORS و فرمت پاسخ را بررسی کن.'}});
+ if($('arexAiEndpointTest'))$('arexAiEndpointTest').addEventListener('click',async()=>{const val=$('arexAiEndpoint').value.trim();if(!val){$('arexAiEndpointStatus').textContent='ابتدا آدرس endpoint را وارد کن.';return;}try{const r=await fetch(val,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'user',content:'Reply with exactly: AREX_OK'}],context:{app:'AREX V9.7.14',test:true}})});if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();const ans=d.answer||d.reply||d.text||d.choices?.[0]?.message?.content;if(!ans)throw new Error('ساختار پاسخ نامعتبر');$('arexAiEndpointStatus').textContent='اتصال برقرار است؛ پاسخ سرویس دریافت شد.';}catch(e){$('arexAiEndpointStatus').textContent='آزمون ناموفق: '+e.message+' · CORS و فرمت پاسخ را بررسی کن.'}});
  // First-visit guided tour. Only shown after the app's main shell is visible.
  const tourSteps=[
   {target:'#view-dashboard',title:'به AREX خوش آمدی',text:'داشبورد نمای کلی وضعیت و عملکرد است. برای شروع واقعی، مسیر روزانه را دنبال کن و داده‌های شخصی خودت را وارد کن.'},

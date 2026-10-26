@@ -10,7 +10,7 @@ const read = file => fs.readFileSync(path.join(root, file), 'utf8');
 test('phase 32 release gate passes against the current package', () => {
   const run = spawnSync(process.execPath, ['scripts/release-gate.js'], { cwd: root, encoding: 'utf8' });
   assert.equal(run.status, 0, `${run.stdout}\n${run.stderr}`);
-  assert.match(run.stdout, /Release gate: 8\/8 checks passed/);
+  assert.match(run.stdout, /Release gate: 9\/9 checks passed/);
 });
 
 test('release gate checks the complete declared Service Worker shell', () => {

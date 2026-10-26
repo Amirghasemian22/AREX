@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v9-7-13-oauth-client-id-bridge-fix-2026-10-26';
+const CACHE_VERSION = 'v9-7-14-oauth-id-fallback-cache-refresh-2026-10-26';
 const CACHE_NAME = 'arex-' + CACHE_VERSION;
 const APP_SHELL = [
   './',
@@ -52,10 +52,8 @@ const APP_SHELL = [
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL))
-    // NOTE: no self.skipWaiting() here — we let the page decide when to
-    // activate the new version, so an update never yanks the UI out from
-    // under the user mid-edit. See the 'SKIP_WAITING' message handler below.
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL)).then(() => self.skipWaiting())
+    // Activate the new shell after every required asset has downloaded successfully.
   );
 });
 

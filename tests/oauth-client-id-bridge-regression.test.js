@@ -7,11 +7,11 @@ const root = path.resolve(__dirname, '..');
 test('OAuth client ID remains configured and exposed by index.html', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   assert.match(html, /const GOOGLE_CLIENT_ID\s*=\s*"[0-9]+-[A-Za-z0-9_-]+\.apps\.googleusercontent\.com"/);
-  assert.match(html, /window\.AREX_GOOGLE_CLIENT_ID\s*=\s*GOOGLE_CLIENT_ID/);
+  assert.match(html, /window\.AREX_GOOGLE_CLIENT_ID\s*=\s*getArexGoogleClientId\(\)/);
 });
 
 test('auth adapter prioritizes configured public OAuth ID over stale false bridge', () => {
   const js = fs.readFileSync(path.join(root, 'auth-client.js'), 'utf8');
-  assert.match(js, /if\(String\(window\.AREX_GOOGLE_CLIENT_ID\s*\|\|\s*''\)\.trim\(\)\) return \(\) => true;/);
-  assert.ok(js.indexOf("if(String(window.AREX_GOOGLE_CLIENT_ID || '').trim()) return () => true;") < js.indexOf("if(typeof window.arexDriveIsEnabled==='function')"));
+  assert.match(js, /if\(String\(window\.AREX_GOOGLE_CLIENT_ID\s*\|\|\s*'715202165384-63bbdp55cr31nfnb2npdpfrffal78bq9\.apps\.googleusercontent\.com'\)\.trim\(\)\) return \(\) => true;/);
+  assert.ok(js.indexOf("if(String(window.AREX_GOOGLE_CLIENT_ID || '715202165384-63bbdp55cr31nfnb2npdpfrffal78bq9.apps.googleusercontent.com').trim()) return () => true;") < js.indexOf("if(typeof window.arexDriveIsEnabled==='function')"));
 });
