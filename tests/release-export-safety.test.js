@@ -25,12 +25,12 @@ test('CSV export neutralizes formula-like text and preserves ordinary negative n
 test('trade CSV and OHLC CSV exports both use formula-safe cell escaping', () => {
   assert.match(workspace, /cols\.map\(csvCell\)\.join\(','\)/);
   assert.match(workspace, /cols\.map\(k=>cell\(t\[k\]\)\)\.join\(','\)/);
-  assert.match(workspace, /AREX_V9\.7\.9-trades\.csv/);
+  assert.match(workspace, /AREX_V9\.7\.12-trades\.csv/);
 });
 
 test('new backup and migration metadata identify the active app version', () => {
   const snapshot = backupSafety.makeRestoreSnapshot({ trades: '[]' }, '2026-10-25T00:00:00Z');
-  assert.equal(snapshot.app, 'AREX V9.7.9');
-  assert.equal(cloudSync.createManifest({ trades: '[]' }, '2026-10-25T00:00:00Z').appVersion, 'AREX V9.7.9');
-  assert.equal(migration.APP_VERSION, 'AREX V9.7.9');
+  assert.equal(snapshot.app, 'AREX V9.7.12');
+  assert.equal(cloudSync.createManifest({ trades: '[]' }, '2026-10-25T00:00:00Z').appVersion, 'AREX V9.7.12');
+  assert.equal(migration.APP_VERSION, 'AREX V9.7.12');
 });

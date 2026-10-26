@@ -1,4 +1,4 @@
-/* AREX V9.7.9 — resilient Google Drive-only authentication and backup adapter.
+/* AREX V9.7.12 — resilient Google Drive-only authentication and backup adapter.
  * No Firebase Authentication or Firestore calls are made by this file.
  * OAuth token stays in memory; persistent backups use the Drive appDataFolder API.
  */
@@ -126,6 +126,7 @@ if(signout) signout.addEventListener('click',()=>{if(confirm('از حساب Goog
 
 // Alerts are authenticated by the Google OAuth access token; the deployed Worker must use the matching Google-token validation update.
 window.arexSendExternalAlert = async payload => {
+  if(window.AREX_LOCAL_TEST_MODE) throw new Error('حالت آزمایشی محلی فعال است؛ ارسال اعلان خارجی در این حالت غیرفعال است. برای آزمون سرویس واقعی از ورود Google استفاده کن.');
   const base=String((window.AREX_GET_EDGE_WORKER_URL&&window.AREX_GET_EDGE_WORKER_URL())||'').trim().replace(/\/$/,'');
   if(!base) throw new Error('worker_url_not_configured');
   if(!window.arexGetDriveAccessToken) throw new Error('google_drive_not_connected');
@@ -144,4 +145,4 @@ window.arexSendExternalAlert = async payload => {
 };
 
 if(byId('authSetupNote')) byId('authSetupNote').textContent='ورود و پشتیبان‌گیری با Google Drive انجام می‌شود؛ Firebase استفاده نمی‌شود.';
-if(byId('localPreviewBtn')) byId('localPreviewBtn').style.display='none';
+if(byId('localPreviewBtn')&&!window.AREX_LOCAL_TEST_ENTRY_ENABLED) byId('localPreviewBtn').style.display='none';

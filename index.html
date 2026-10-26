@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AREX V9.7.9</title>
+<title>AREX V9.7.12</title>
 <meta name="description" content="AREX دستیار شخصی مدیریت معاملات است: ژورنال معاملاتی، مدیریت ریسک، قوانین استراتژی، تقویم اقتصادی، سشن‌های بازار، ثبت روان‌شناسی و تحلیل عملکرد در یک فضای کاری نصب‌شدنی.">
 <meta name="keywords" content="ژورنال معاملات فارکس, تریدینگ ژورنال, چک‌لیست بهبود عملکرد معاملاتی, مدیریت ریسک معاملات, ردیاب پراپ فرم, تقویم اقتصادی فارکس, forex trading journal, prop firm tracker">
 <meta name="robots" content="index, follow">
@@ -1724,9 +1724,143 @@ body::before{opacity:var(--arex-wallpaper-strength)!important;background-image:l
 @media(prefers-reduced-motion:reduce){.sidebar,.arex-mobile-nav *,#arexAuthGate *{transition:none!important;animation:none!important}}
 </style>
 
+
+<style id="arex-v9711-mobile-app-shell">
+/* V9.7.12: stable glass header and native-feeling mobile/PWA shell. */
+:root{--arex-mobile-glass:rgba(7,14,27,.82);--arex-mobile-glass-light:rgba(248,251,255,.84)}
+@media(max-width:760px){
+  html,body{width:100%;max-width:100%;overflow-x:clip;overscroll-behavior-x:none}
+  body{padding-top:0!important;padding-bottom:calc(78px + env(safe-area-inset-bottom,0px))!important}
+  .wrap{display:block!important;width:100%;max-width:100%;min-height:100dvh;overflow:visible}
+  .topbar{
+    position:sticky!important;top:0!important;z-index:950!important;isolation:isolate;
+    display:grid!important;grid-template-columns:minmax(0,1fr);gap:7px!important;
+    width:100%;min-height:0!important;padding:calc(8px + env(safe-area-inset-top,0px)) 12px 8px!important;
+    margin:0!important;border:0!important;border-bottom:1px solid rgba(130,169,220,.22)!important;border-radius:0 0 17px 17px!important;
+    background:var(--arex-mobile-glass)!important;backdrop-filter:blur(24px) saturate(145%)!important;-webkit-backdrop-filter:blur(24px) saturate(145%)!important;
+    box-shadow:0 8px 26px rgba(0,0,0,.16)!important;flex-wrap:nowrap!important;
+  }
+  :root[data-theme="light"] .topbar{background:var(--arex-mobile-glass-light)!important;border-bottom-color:rgba(65,100,150,.18)!important}
+  .topbar>div:first-child{display:flex!important;align-items:center!important;gap:9px!important;flex:initial!important;width:100%!important;min-width:0!important}
+  .topbar .hamburger{width:40px;height:40px;flex:0 0 40px;border-radius:13px!important;background:rgba(75,112,168,.13)!important;border-color:rgba(125,170,230,.22)!important;font-size:17px}
+  .topbar h1{font-size:clamp(15px,4.2vw,18px)!important;font-weight:850;line-height:1.25!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .topbar .sub{max-width:100%!important;margin-top:3px!important;font-size:10px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.78}
+  .top-actions{display:flex!important;align-items:center!important;justify-content:flex-start!important;flex-wrap:nowrap!important;gap:7px!important;width:100%!important;min-width:0!important;overflow-x:auto!important;overflow-y:hidden!important;padding:1px 0 3px!important;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .top-actions::-webkit-scrollbar{display:none}
+  .top-quick-tools{display:flex!important;align-items:center!important;justify-content:flex-start!important;flex:0 0 auto!important;flex-wrap:nowrap!important;gap:6px!important;width:auto!important;padding:0!important;margin:0!important;border:0!important;background:transparent!important;overflow:visible!important}
+  .top-quick-tools>*{width:auto!important;flex:0 0 auto!important;min-height:36px;max-width:none!important}
+  .top-clock,.top-usdt,.top-language,.top-refresh,.streak-chip,.top-actions>.icon-btn,.changelog-wrap{flex:0 0 auto!important;min-width:max-content!important;max-width:none!important}
+  .top-clock{padding:5px 9px!important;border-radius:11px!important;background:rgba(100,140,200,.11)!important}
+  .top-clock-line span{font-size:12px!important}.top-clock-line b{font-size:8px!important}.top-clock small{font-size:9px!important}
+  .top-usdt{display:flex!important;align-items:center!important;gap:6px!important;padding:5px 8px!important;border-radius:11px!important}
+  .top-usdt span{max-width:100px!important;font-size:10px!important}
+  .top-language{height:36px!important;min-width:42px!important;padding-inline:7px!important}
+  .top-actions>.icon-btn,.top-actions .changelog-wrap>.icon-btn{width:36px!important;height:36px!important}
+  .streak-chip{white-space:nowrap!important;padding:7px 9px!important}
+  .changelog-panel{position:fixed!important;top:calc(env(safe-area-inset-top,0px) + 116px)!important;left:10px!important;right:10px!important;width:auto!important;max-width:none!important;max-height:65dvh;overflow:auto;z-index:1200!important}
+  .worldclocks{flex:0 0 auto!important;width:auto!important;max-width:none!important;overflow:visible!important;display:flex!important;flex-wrap:nowrap!important}
+  .worldclocks .wc-chip{flex:0 0 auto!important;min-width:78px!important;max-width:none!important}
+  .content{padding:13px 11px calc(22px + env(safe-area-inset-bottom,0px))!important;min-height:calc(100dvh - 100px);overflow-x:clip!important}
+  .view .card{box-shadow:0 8px 24px rgba(0,0,0,.10)!important}
+  .arex-mobile-nav{position:fixed!important;inset:auto 0 0!important;z-index:11000!important;display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:5px!important;padding:7px max(9px,env(safe-area-inset-right)) calc(7px + env(safe-area-inset-bottom,0px)) max(9px,env(safe-area-inset-left))!important;min-height:calc(70px + env(safe-area-inset-bottom,0px))!important;background:rgba(7,13,25,.84)!important;border-top:1px solid rgba(132,173,230,.22)!important;backdrop-filter:blur(26px) saturate(155%)!important;-webkit-backdrop-filter:blur(26px) saturate(155%)!important;box-shadow:0 -10px 32px rgba(0,0,0,.20)!important}
+  :root[data-theme="light"] .arex-mobile-nav{background:rgba(248,251,255,.88)!important}
+  .arex-mobile-nav button{min-height:50px!important;border-radius:14px!important;font-size:10px!important;gap:4px!important}
+  .arex-mobile-nav button.active{transform:translateY(-2px);box-shadow:0 5px 15px rgba(0,0,0,.12)!important}
+  .mobile-nav-icon{width:25px!important;height:25px!important}.mobile-nav-icon svg{width:22px!important;height:22px!important}
+  #arexAuthGate{z-index:2147483000!important}
+  input,select,textarea,button{touch-action:manipulation}
+}
+@media(max-width:390px){
+  .topbar{padding-inline:9px!important}.topbar .sub{font-size:9px!important}
+  .top-clock-line b{display:none!important}.top-clock{min-width:0!important}
+  .top-usdt span{max-width:80px!important}.arex-mobile-nav button{font-size:9px!important}
+}
+@media(prefers-reduced-motion:reduce){.topbar,.arex-mobile-nav,.arex-mobile-nav *{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+</style>
+
+
+<style id="arex-v9712-mobile-login-polish">
+/* V9.7.12: mobile-first sign-in refinement and final responsive safety pass. */
+#arexAuthGate{box-sizing:border-box;min-width:0;padding:clamp(12px,3vw,28px)!important;overflow-x:hidden!important;overflow-y:auto!important;scrollbar-gutter:stable;}
+#arexAuthGate *,#arexAuthGate *::before,#arexAuthGate *::after{box-sizing:border-box;min-width:0;}
+.auth-topbar{left:clamp(12px,3vw,28px)!important;right:clamp(12px,3vw,28px)!important;top:clamp(12px,2.5vh,24px)!important;}
+.auth-layout{width:min(960px,100%)!important;max-width:100%;gap:clamp(18px,4vw,44px)!important;}
+.auth-card{min-width:0;max-width:100%;}
+.auth-card img{max-width:100%;height:auto;}
+.auth-google,.auth-local,.auth-lang{min-height:44px;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+.auth-error{overflow-wrap:anywhere;}
+@media(max-width:760px){
+ #arexAuthGate{display:none;}
+ #arexAuthGate.visible{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:flex-start!important;gap:clamp(12px,2.5dvh,22px)!important;padding:calc(10px + env(safe-area-inset-top,0px)) calc(14px + env(safe-area-inset-right,0px)) calc(18px + env(safe-area-inset-bottom,0px)) calc(14px + env(safe-area-inset-left,0px))!important;min-height:100dvh!important;height:100dvh!important;}
+ .auth-topbar{position:relative!important;inset:auto!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:10px!important;width:100%!important;max-width:520px!important;margin:0 auto!important;flex:0 0 auto!important;}
+ .auth-clock{max-width:calc(100% - 60px);padding:8px 10px!important;gap:8px!important;border-radius:12px!important;}
+ .auth-clock strong{font-size:clamp(13px,3.8vw,17px)!important;font-variant-numeric:tabular-nums;}
+ #authClockDate{font-size:10px;line-height:1.5;overflow-wrap:anywhere;}
+ .auth-lang{width:44px!important;min-width:44px!important;height:44px!important;padding:0!important;flex:0 0 44px!important;border-radius:13px!important;}
+ .auth-layout{display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:center!important;gap:clamp(12px,2.2dvh,20px)!important;width:100%!important;max-width:440px!important;flex:1 0 auto!important;margin:0 auto!important;padding:0 0 calc(6px + env(safe-area-inset-bottom,0px))!important;}
+ .auth-story{order:0!important;width:100%!important;text-align:center!important;padding:0 4px!important;}
+ .auth-wordmark{font-size:clamp(34px,10vw,48px)!important;line-height:1.05!important;letter-spacing:.07em!important;margin:0 0 8px!important;}
+ .auth-story p{max-width:32em!important;margin:0 auto!important;font-size:clamp(11px,3.2vw,13px)!important;line-height:1.7!important;}
+ .auth-market-line{justify-content:center!important;gap:6px!important;margin-top:12px!important;}
+ .auth-market-line span{font-size:9px!important;padding:6px 8px!important;line-height:1.4!important;}
+ .auth-card{order:1!important;width:100%!important;max-width:440px!important;padding:clamp(17px,5vw,24px)!important;margin:0 auto!important;border-radius:20px!important;}
+ .auth-logo{width:50px!important;height:50px!important;border-radius:15px!important;margin:0 auto 12px!important;}
+ .auth-logo img{width:50px!important;height:50px!important;object-fit:contain;}
+ .auth-card h2{font-size:22px!important;margin-bottom:6px!important;}
+ .auth-card>p{font-size:12px!important;line-height:1.75!important;margin:6px 0!important;}
+ .auth-google{min-height:48px!important;margin-top:14px!important;padding:13px 12px!important;border-radius:13px!important;font-size:14px!important;}
+ .auth-setup-note{font-size:11px!important;line-height:1.8!important;padding:9px 10px!important;margin-top:10px!important;text-align:start!important;}
+ .auth-error{min-height:0!important;margin:6px 0!important;line-height:1.7!important;}
+ .auth-local{font-size:12px!important;margin-top:10px!important;padding:8px 10px!important;}
+}
+@media(max-width:390px){
+ #arexAuthGate.visible{gap:10px!important;padding-inline:12px!important;}
+ .auth-layout{gap:10px!important;max-width:360px!important;}
+ .auth-wordmark{font-size:36px!important;}
+ .auth-market-line{gap:4px!important;margin-top:9px!important;}
+ .auth-market-line span{padding:5px 6px!important;font-size:8px!important;}
+ .auth-card{padding:16px!important;border-radius:17px!important;}
+ .auth-logo,.auth-logo img{width:44px!important;height:44px!important;}
+ .auth-logo{margin-bottom:9px!important;}
+ .auth-card h2{font-size:20px!important;}
+ .auth-card>p{font-size:11px!important;}
+ .auth-setup-note{font-size:10px!important;}
+}
+@media(max-height:700px) and (max-width:760px){
+ #arexAuthGate.visible{justify-content:flex-start!important;gap:8px!important;}
+ .auth-layout{flex:0 0 auto!important;gap:9px!important;}
+ .auth-wordmark{font-size:34px!important;margin-bottom:5px!important;}
+ .auth-story p{font-size:11px!important;}
+ .auth-market-line{margin-top:7px!important;}
+ .auth-card{padding:14px 16px!important;}
+ .auth-logo,.auth-logo img{width:38px!important;height:38px!important;}
+ .auth-logo{margin-bottom:7px!important;}
+ .auth-card h2{font-size:19px!important;}
+ .auth-card>p{line-height:1.55!important;margin:4px 0!important;}
+ .auth-google{min-height:44px!important;margin-top:8px!important;padding:10px!important;}
+ .auth-setup-note{margin-top:7px!important;padding:7px 9px!important;}
+}
+@media(orientation:landscape) and (max-height:520px) and (max-width:900px){
+ #arexAuthGate.visible{display:block!important;padding:calc(8px + env(safe-area-inset-top,0px)) 14px calc(12px + env(safe-area-inset-bottom,0px))!important;}
+ .auth-topbar{margin-bottom:10px!important;}
+ .auth-layout{display:grid!important;grid-template-columns:minmax(0,.85fr) minmax(0,1fr)!important;align-items:center!important;gap:14px!important;max-width:760px!important;padding:0 0 12px!important;margin:0 auto!important;}
+ .auth-story{text-align:start!important;}
+ .auth-market-line{justify-content:flex-start!important;}
+ .auth-card{padding:12px 16px!important;}
+ .auth-logo,.auth-logo img{width:36px!important;height:36px!important;}
+ .auth-logo{margin-bottom:6px!important;}
+ .auth-card h2{font-size:18px!important;}
+ .auth-card>p{margin:4px 0!important;}
+ .auth-google{min-height:40px!important;margin-top:7px!important;padding:9px!important;}
+ .auth-setup-note{margin-top:6px!important;padding:6px 8px!important;}
+}
+@media(prefers-reduced-motion:reduce){.auth-card{animation:none!important}.auth-google,.auth-lang{transition:none!important}}
+</style>
+
 </head>
 <body>
 
+<div id="arexLocalTestBanner" role="status" aria-live="polite" style="display:none;position:fixed;top:0;left:0;right:0;z-index:2147482500;padding:9px 14px;background:#7c2d12;color:#fff7ed;border-bottom:1px solid #fb923c;text-align:center;font:700 12px/1.6 Inter,Vazirmatn,sans-serif;box-shadow:0 5px 20px rgba(0,0,0,.22)">حالت آزمایشی محلی فعال است — ورود Google و همگام‌سازی ابری تأیید نشده‌اند؛ داده‌های آزمایشی روی همین مرورگر ذخیره می‌شوند.</div>
 <div id="arexAuthGate" class="visible" role="dialog" aria-modal="true" aria-labelledby="authTitle">
   <div class="auth-topbar"><div class="auth-clock" aria-live="polite"><span>◷</span><div><strong id="authClockTime">--:--:--</strong><div id="authClockDate">Tehran · Local time</div></div></div><button class="auth-lang" id="authLanguageBtn" type="button" aria-label="Switch language" title="فارسی / English">EN</button></div>
   <div class="auth-layout"><div class="auth-story"><div class="auth-wordmark">AREX</div><p id="authTagline">A focused trading workspace for your journal, risk rules and performance.</p><div class="auth-market-line"><span>FOREX</span><span>GOLD</span><span>DOW JONES</span><span>RISK · JOURNAL · DISCIPLINE</span></div></div>
@@ -1734,13 +1868,29 @@ body::before{opacity:var(--arex-wallpaper-strength)!important;background-image:l
     <button class="auth-google" id="googleSignInBtn" type="button">ورود با Google Drive&nbsp; ↗</button>
     <p id="authError" class="auth-error" role="status"></p>
     <p id="authSetupNote" class="auth-setup-note">برای ورود به AREX، حساب Google و دسترسی فضای اختصاصی Google Drive را تأیید کن.</p>
-    <button class="auth-local" id="localPreviewBtn" type="button" style="display:none">حالت محلی</button>
+    <button class="auth-local" id="localPreviewBtn" type="button" style="display:none">ورود موقت برای تست محلی</button>
     <div id="authUserRow" style="display:none;margin-top:14px;font-size:11px;color:var(--muted)"></div>
   </div></div>
 </div>
 <script>
 /* Early login controls initialize before the larger application bundle. */
 (function(){
+ const localPreviewBtn=document.getElementById('localPreviewBtn');
+ const localHost=location.protocol==='file:'||['localhost','127.0.0.1','::1'].includes(String(location.hostname||'').toLowerCase());
+ const localTestRequested=new URLSearchParams(location.search).get('arex-test')==='1';
+ window.AREX_LOCAL_TEST_ENTRY_ENABLED=Boolean(localHost&&localTestRequested);
+ if(localPreviewBtn&&window.AREX_LOCAL_TEST_ENTRY_ENABLED){
+   localPreviewBtn.style.display='inline-block';
+   localPreviewBtn.setAttribute('aria-label','ورود موقت به حالت آزمایشی محلی؛ فقط برای توسعه');
+   localPreviewBtn.addEventListener('click',function(){
+     if(!window.AREX_LOCAL_TEST_ENTRY_ENABLED||!['file:','http:','https:'].includes(location.protocol)||!(location.protocol==='file:'||['localhost','127.0.0.1','::1'].includes(String(location.hostname||'').toLowerCase())))return;
+     try{localStorage.setItem('arex-auth-uid','local-test');sessionStorage.setItem('arex-local-test-mode','1');}catch(e){}
+     window.AREX_LOCAL_TEST_MODE=true;
+     const banner=document.getElementById('arexLocalTestBanner');if(banner)banner.style.display='block';
+     if(typeof window.arexEnterApp==='function')window.arexEnterApp();
+     else {const error=document.getElementById('authError');if(error)error.textContent='برنامه هنوز در حال آماده‌شدن است؛ یک لحظه دیگر تلاش کن.';}
+   });
+ }
  const clock=document.getElementById('authClockTime'),date=document.getElementById('authClockDate');
  function update(){if(!clock||!date)return;const n=new Date();try{clock.textContent=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Tehran',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(n);date.textContent=new Intl.DateTimeFormat(document.documentElement.lang==='fa'?'fa-IR':'en-GB',{timeZone:'Asia/Tehran',weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(n)+' · Tehran';}catch(e){clock.textContent=n.toLocaleTimeString();}}
  update();setInterval(update,1000);
@@ -1754,7 +1904,7 @@ body::before{opacity:var(--arex-wallpaper-strength)!important;background-image:l
 <aside class="sidebar" id="sidebar">
   <div class="brand" id="brandMenuToggle" role="button" tabindex="0" aria-label="باز و بسته کردن منوی AREX" title="برای باز و بسته کردن منو کلیک کن">
     <div class="brand-mark"><img src="icon-192.png" alt="لوگوی AREX" width="34" height="34" decoding="async"></div>
-    <div class="brand-text"><b>AREX</b><span data-i18n="brand.sub">V9.7.9 · دستیار معاملاتی هوشمند</span></div>
+    <div class="brand-text"><b>AREX</b><span data-i18n="brand.sub">V9.7.12 · دستیار معاملاتی هوشمند</span></div>
   </div>
   <label class="nav-search" for="navSearch">
     <span class="nav-search-icon" aria-hidden="true">⌕</span>
@@ -3994,7 +4144,7 @@ const I18N = {
     'nav.review':"مرورهای زمان‌بندی‌شده", 'nav.trades':"ژورنال معاملات", 'nav.psych':"ژورنال روان‌شناسی",
     'nav.goals':"اهداف و قوانین", 'nav.obsidian':"اتصال به Obsidian", 'nav.calendar':"تقویم اقتصادی", 'nav.path':"مسیر انضباط", 'nav.backtest':"بک‌تست", 'nav.propfirm':"پراپ‌فرم", 'nav.scenarios':"سناریوهای در انتظار", 'nav.settings':"تنظیمات", 'nav.roadmap':'برنامه روزانه', 'nav.assistant':'دستیار معاملاتی', 'nav.risk':'مدیریت ریسک', 'nav.strategy':'استراتژی و قوانین', 'nav.analytics':'تحلیل عملکرد',
     'page.backtestSub':"ثبت و بررسی بک‌تست — کاملاً جدا از معاملات واقعی", 'page.propfirmSub':"پیگیری چالش‌های پراپ‌فرم و سقف‌های ریسک", 'page.scenariosSub':"ایده‌های معاملاتی در انتظار ورود",
-    'brand.sub':"V9.7.9 · دستیار معاملاتی هوشمند", 'tk.title':"قیمت لحظه‌ای تتر", 'tk.refresh':"🔄 بروزرسانی", 'tk.obsidian':"🗒️ ورود به Obsidian", 'tk.sync':"☁️ همگام‌سازی با Drive",
+    'brand.sub':"V9.7.12 · دستیار معاملاتی هوشمند", 'tk.title':"قیمت لحظه‌ای تتر", 'tk.refresh':"🔄 بروزرسانی", 'tk.obsidian':"🗒️ ورود به Obsidian", 'tk.sync':"☁️ همگام‌سازی با Drive",
     'dash.newsSoonTitle':"📰 اخبار مهم ۳ روز آینده", 'dash.sessionTitle':"🕒 نمای هم‌پوشانی سشن‌های فارکس", 'dash.fngTitle':"😨 شاخص ترس و طمع (کریپتو)", 'sync.inprogress':"در حال همگام‌سازی...", 'sync.last':"آخرین همگام‌سازی:",
     'ui.language':'تغییر زبان', 'ui.lesson':"مرحله", 'ui.phase':"حوزه:", 'ui.startSession':"شروع این مرحله", 'ui.allDone':"همه‌ی مراحل این چرخه را تکمیل کرده‌اید!", 'ui.complete':"تکمیل", 'ui.watched':"تکمیل شد",
     'cal.title':'📰 تقویم اقتصادی زنده', 'cal.sub':'اخبار مهم اقتصادی (تأثیرگذار روی فارکس) به‌صورت زنده.', 'cal.tabWidget':'🌐 ویجت زنده (TradingView)', 'cal.tabFeed':'📋 فید شخصی من',
@@ -4051,7 +4201,7 @@ const I18N = {
     'nav.review':"Spaced Reviews", 'nav.trades':"Trade Journal", 'nav.psych':"Psychology Journal",
     'nav.goals':"Goals & Rules", 'nav.obsidian':"Connect Obsidian", 'nav.calendar':"Economic Calendar", 'nav.path':"Discipline Path", 'nav.backtest':"Backtest", 'nav.propfirm':"Prop Firm", 'nav.scenarios':"Pending Scenarios", 'nav.settings':"Settings", 'nav.roadmap':'Daily Roadmap', 'nav.assistant':'Trading Assistant', 'nav.risk':'Risk Management', 'nav.strategy':'Strategy & Rules', 'nav.analytics':'Performance Analytics',
     'page.backtestSub':"Log and review backtests — fully separate from live trades", 'page.propfirmSub':"Track prop-firm challenges and risk limits", 'page.scenariosSub':"Trade ideas waiting to be entered",
-    'brand.sub':"V9.7.9 · Trading Assistant", 'tk.title':"Live Tether (USDT/USD) rate", 'tk.refresh':"🔄 Refresh", 'tk.obsidian':"🗒️ Open Obsidian", 'tk.sync':"☁️ Sync with Drive",
+    'brand.sub':"V9.7.12 · Trading Assistant", 'tk.title':"Live Tether (USDT/USD) rate", 'tk.refresh':"🔄 Refresh", 'tk.obsidian':"🗒️ Open Obsidian", 'tk.sync':"☁️ Sync with Drive",
     'dash.newsSoonTitle':"📰 Important news — next 3 days", 'dash.sessionTitle':"🕒 Forex session overlap", 'dash.fngTitle':"😨 Crypto Fear & Greed Index", 'sync.inprogress':"Syncing...", 'sync.last':"Last synced:",
     'ui.language':'Change language', 'ui.lesson':"Checkpoint", 'ui.phase':"Focus:", 'ui.startSession':"Start this checkpoint", 'ui.allDone':"All improvement checkpoints completed!", 'ui.complete':"Complete", 'ui.watched':"completed",
     'cal.title':'📰 Live economic calendar', 'cal.sub':'Market-moving economic news, live.', 'cal.tabWidget':'🌐 Live widget (TradingView)', 'cal.tabFeed':'📋 My own feed',
@@ -4108,7 +4258,7 @@ const I18N = {
     'nav.review':"Geplante Wiederholungen", 'nav.trades':"Handelsjournal", 'nav.psych':"Psychologie-Journal",
     'nav.goals':"Ziele & Regeln", 'nav.obsidian':"Mit Obsidian verbinden", 'nav.calendar':"Wirtschaftskalender", 'nav.path':"Disziplin-Pfad", 'nav.backtest':"Backtest", 'nav.propfirm':"Prop-Firma", 'nav.scenarios':"Offene Szenarien", 'nav.settings':"Einstellungen", 'nav.roadmap':'Tagesplan', 'nav.assistant':'Trading-Assistent', 'nav.risk':'Risikomanagement', 'nav.strategy':'Strategie & Regeln', 'nav.analytics':'Performance-Analyse',
     'page.backtestSub':"Backtests erfassen — getrennt von echten Trades", 'page.propfirmSub':"Prop-Firma-Challenges und Risikolimits verfolgen", 'page.scenariosSub':"Trade-Ideen, die noch nicht eröffnet wurden",
-    'brand.sub':"V9.7.9 · Handelsassistent", 'tk.title':"Live Tether-Kurs (USDT/USD)", 'tk.refresh':"🔄 Aktualisieren", 'tk.obsidian':"🗒️ Obsidian öffnen", 'tk.sync':"☁️ Mit Drive synchronisieren",
+    'brand.sub':"V9.7.12 · Handelsassistent", 'tk.title':"Live Tether-Kurs (USDT/USD)", 'tk.refresh':"🔄 Aktualisieren", 'tk.obsidian':"🗒️ Obsidian öffnen", 'tk.sync':"☁️ Mit Drive synchronisieren",
     'dash.newsSoonTitle':"📰 Wichtige News — nächste 3 Tage", 'dash.sessionTitle':"🕒 Forex-Sitzungsüberschneidung", 'dash.fngTitle':"😨 Crypto Fear & Greed Index", 'sync.inprogress':"Synchronisiere...", 'sync.last':"Letzte Synchronisierung:",
     'ui.language':'Sprache ändern', 'ui.lesson':"Schritt", 'ui.phase':"Focus:", 'ui.startSession':"Diesen Schritt starten", 'ui.allDone':"Alle Verbesserungsschritte abgeschlossen!", 'ui.complete':"Abgeschlossen", 'ui.watched':"abgeschlossen",
     'cal.title':'📰 Live-Wirtschaftskalender', 'cal.sub':'Marktbewegende Wirtschaftsnachrichten, live.', 'cal.tabWidget':'🌐 Live-Widget (TradingView)', 'cal.tabFeed':'📋 Mein eigener Feed',
@@ -6162,7 +6312,10 @@ document.getElementById('tradeReportBtn').addEventListener('click', ()=>{
   const totalR = rValues.reduce((a,b)=>a+b,0).toFixed(1);
   const win = window.open('', '_blank');
   win.document.write('<html dir="rtl" lang="fa"><head><meta charset="utf-8"><title>گزارش معاملات AREX</title>'+
-    '<style>body{font-family:Tahoma,sans-serif;padding:30px;color:#111} h1{margin-bottom:4px} table{width:100%;border-collapse:collapse;margin-top:16px;font-size:13px} td,th{border:1px solid #ccc;padding:6px 8px;text-align:right}\n</style></head><body>'+
+    '<style>body{font-family:Tahoma,sans-serif;padding:30px;color:#111} h1{margin-bottom:4px} table{width:100%;border-collapse:collapse;margin-top:16px;font-size:13px} td,th{border:1px solid #ccc;padding:6px 8px;text-align:right}\n</style>
+
+
+</head><body>'+
     '<h1>گزارش عملکرد معاملاتی — AREX</h1><p>تاریخ تهیه: '+new Date().toLocaleDateString('fa-IR')+'</p>'+
     '<p>تعداد معاملات: '+rValues.length+' | درصد برد: '+winRate+'٪ | مجموع R: '+totalR+'</p>'+
     '<table><tr><th>تاریخ</th><th>نماد</th><th>جهت</th><th>R</th><th>$</th><th>ستاپ</th></tr>'+
@@ -7156,7 +7309,7 @@ function startApp(){ if(__arexAppStarted) return; __arexAppStarted = true; loadA
 /* ===== Login gate wiring: Google Drive OAuth is the sole sign-in path ===== */
 (function(){
  const gate=document.getElementById('arexAuthGate'),app=document.querySelector('.wrap'),mascot=document.getElementById('mascot');
- function enter(){if(gate)gate.classList.remove('visible');if(app)app.style.visibility='visible';if(mascot)mascot.style.visibility='visible';const note=document.getElementById('authSetupNote');if(note)note.style.display='none';startApp();}
+ function enter(){if(gate)gate.classList.remove('visible');if(app)app.style.visibility='visible';if(mascot)mascot.style.visibility='visible';const note=document.getElementById('authSetupNote');if(note)note.style.display='none';if(window.AREX_LOCAL_TEST_MODE){const banner=document.getElementById('arexLocalTestBanner');if(banner)banner.style.display='block';}startApp();}
  if(app)app.style.visibility='hidden';if(mascot)mascot.style.visibility='hidden';
  const btn=document.getElementById('googleSignInBtn'),err=document.getElementById('authError'),note=document.getElementById('authSetupNote');
  if(note)note.textContent='برای ورود به AREX، حساب Google و دسترسی فضای اختصاصی Google Drive را تأیید کن.';
@@ -7443,7 +7596,7 @@ window.arexRunRuntimeVerification = async function(options={}) {
   }
 })();
 </script>
-<script type="module" src="auth-client.js?v=9.7.9"></script>
+<script type="module" src="auth-client.js?v=9.7.12"></script>
 <script>
 
 /* ================= V5.5: onboarding, free calendar, conversational AREX ================= */
@@ -7503,13 +7656,13 @@ window.arexRunRuntimeVerification = async function(options={}) {
  const saveEndpoint=value=>AREXCore.accountLocalStorage.write(localStorage,endpointKey,String(value||''));
  if($('arexAiEndpoint'))$('arexAiEndpoint').value=readEndpoint();
  function addChat(role,text){const h=$('arexChatHistory');if(!h)return;const el=document.createElement('div');el.className='arex-chat-msg '+role;const label=document.createElement('small');label.textContent=role==='user'?'شما':'آرکس';el.appendChild(label);el.appendChild(document.createTextNode(text));h.appendChild(el);h.scrollTop=h.scrollHeight;history.push({role:role==='user'?'user':'assistant',content:text});if(history.length>24)history.splice(0,2);}
- function contextSnapshot(){const st=(typeof state!=='undefined'&&state)||window.state||{};return {app:'AREX V9.7.9',language:st.language||'fa',timezone:'Asia/Tehran',tradesCount:Array.isArray(st.trades)?st.trades.length:0,psychNotesCount:Array.isArray(st.psych)?st.psych.length:0,goalsCount:Array.isArray(st.goals)?st.goals.length:0,confirmedRules:Array.isArray(st.tradeRules)?st.tradeRules:[],riskLimits:st.riskLimits||{},activePage:document.querySelector('.view.active')?.id||'unknown',instruction:'Do not invent user data, live prices, strategy rules, or news. If information is missing, ask a focused question. Do not promise profitable outcomes.'};}
+ function contextSnapshot(){const st=(typeof state!=='undefined'&&state)||window.state||{};return {app:'AREX V9.7.12',language:st.language||'fa',timezone:'Asia/Tehran',tradesCount:Array.isArray(st.trades)?st.trades.length:0,psychNotesCount:Array.isArray(st.psych)?st.psych.length:0,goalsCount:Array.isArray(st.goals)?st.goals.length:0,confirmedRules:Array.isArray(st.tradeRules)?st.tradeRules:[],riskLimits:st.riskLimits||{},activePage:document.querySelector('.view.active')?.id||'unknown',instruction:'Do not invent user data, live prices, strategy rules, or news. If information is missing, ask a focused question. Do not promise profitable outcomes.'};}
  function localAnswer(q){const x=q.toLowerCase();if(/سلام|درود|hello|hi\b/.test(x))return 'سلام! من آرکس هستم. می‌توانم در کار با بخش‌های AREX، نظم روزانه، ژورنال، مدیریت ریسک و مرور قوانین کمک کنم. برای پاسخ عمومی درباره هر موضوع، endpoint هوش مصنوعی را در تنظیمات وصل کن.';if(/از کجا شروع|شروع کنم|first|start/.test(x))return 'برای شروع این مسیر را برو: ۱) برنامه روزانه را باز کن و وضعیت و هدف امروز را ثبت کن؛ ۲) در مدیریت ریسک موجودی و ریسک مجاز را تنظیم کن؛ ۳) پیش از معامله قوانین استراتژی و تقویم اقتصادی را مرور کن؛ ۴) بعد از معامله نتیجه و اسکرین‌شات را در ژورنال ثبت کن؛ ۵) آخر روز عملکرد و روان‌شناسی را مرور کن.';if(/ریسک|risk|ضرر/.test(x))return 'پیش از هر معامله، حد ضرر و حجم را طوری تعیین کن که زیان احتمالی از سقف ریسک شخصی‌ات بیشتر نشود. اگر موجودی، درصد ریسک، نماد و فاصله SL را بدهی، می‌توانم داده‌های لازم برای محاسبه را بررسی کنم؛ برای محاسبه دقیق حجم، مشخصات قرارداد/ارزش هر پوینت بروکر هم لازم است.';if(/تقویم|خبر|news|calendar/.test(x))return 'از تب «تقویم اقتصادی» استفاده کن؛ تب «تقویم رایگان (API)» از Finance Calendar رویدادهای مهم را می‌گیرد. اگر فید خطا داد، خطا را بررسی کن و خالی بودن فهرست را به معنی نبود خبر تلقی نکن.';if(/ژورنال|ثبت معامله|journal/.test(x))return 'از «ژورنال معاملات» برای ثبت نماد، جهت، ورود/خروج، SL/TP، نتیجه و دلیل ورود استفاده کن. ثبت دلیل و رعایت قوانین از ثبت صرف سود و زیان مهم‌تر است.';if(/تنظیمات|settings/.test(x))return 'تنظیمات را به بخش‌های ظاهر، سشن‌ها، ریسک، قوانین، اتصال‌ها و پشتیبان‌گیری تقسیم کرده‌ایم. از نوار دسترسی سریع بالای تنظیمات برای رفتن به بخش موردنظر استفاده کن.';if(/استراتژی|قانون|strategy/.test(x))return 'قوانین تأییدشده‌ات باید بر دانش عمومی مقدم باشند. اگر شرط ورود، تایم‌فریم، حد ضرر یا استثنا مبهم است، آن را قطعی فرض نمی‌کنم. سؤال یا قانون دقیق را بنویس تا کمک کنم ابهامش را مشخص کنیم.';return 'برای این سؤال هنوز موتور هوش مصنوعی عمومی به AREX وصل نشده است؛ نمی‌خواهم پاسخ ساختگی بدهم. در تنظیمات ← «اتصال هوش مصنوعی آرکس»، آدرس یک backend امن سازگار را ثبت کن. تا آن زمان می‌توانم درباره امکانات داخلی، نظم معاملاتی، ژورنال و ریسک با اطلاعات موجود راهنمایی بدهم.';}
  async function askArex(text){if(chatBusy||!text.trim())return;chatBusy=true;const send=$('arexChatSend');if(send){send.disabled=true;send.textContent='…'}addChat('user',text.trim());const endpoint=readEndpoint();try{if(endpoint){const res=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:history.slice(-16),context:contextSnapshot()}),signal:AbortSignal.timeout?AbortSignal.timeout(30000):undefined});if(!res.ok)throw new Error('HTTP '+res.status);const data=await res.json();const answer=data.answer||data.reply||data.text||data.choices?.[0]?.message?.content;if(typeof answer!=='string'||!answer.trim())throw new Error('پاسخ سرویس خالی یا ناشناخته است');addChat('assistant',answer.trim());}else addChat('assistant',localAnswer(text));}catch(e){addChat('assistant','اتصال به سرویس هوش مصنوعی ناموفق بود ('+e.message+'). آدرس endpoint، CORS و وضعیت backend را بررسی کن. پاسخ جایگزین ساختگی تولید نکردم.');}finally{chatBusy=false;if(send){send.disabled=false;send.textContent='ارسال ↗'}}}
  if($('arexChatForm'))$('arexChatForm').addEventListener('submit',e=>{e.preventDefault();const input=$('arexChatInput'),text=input.value.trim();if(!text)return;input.value='';askArex(text)});
  if($('arexChatInput'))$('arexChatInput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();$('arexChatForm').requestSubmit()}});
  if($('arexAiEndpointSave'))$('arexAiEndpointSave').addEventListener('click',()=>{const val=$('arexAiEndpoint').value.trim();if(val&&!/^https:\/\//i.test(val)){ $('arexAiEndpointStatus').textContent='آدرس باید با https:// شروع شود.';return;}try{saveEndpoint(val);$('arexAiEndpointStatus').textContent=val?'آدرس ذخیره شد. کلید محرمانه باید فقط در backend باشد.':'اتصال مدل زبانی پاک شد.';}catch(e){$('arexAiEndpointStatus').textContent='ذخیره در مرورگر انجام نشد.'}});
- if($('arexAiEndpointTest'))$('arexAiEndpointTest').addEventListener('click',async()=>{const val=$('arexAiEndpoint').value.trim();if(!val){$('arexAiEndpointStatus').textContent='ابتدا آدرس endpoint را وارد کن.';return;}try{const r=await fetch(val,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'user',content:'Reply with exactly: AREX_OK'}],context:{app:'AREX V9.7.9',test:true}})});if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();const ans=d.answer||d.reply||d.text||d.choices?.[0]?.message?.content;if(!ans)throw new Error('ساختار پاسخ نامعتبر');$('arexAiEndpointStatus').textContent='اتصال برقرار است؛ پاسخ سرویس دریافت شد.';}catch(e){$('arexAiEndpointStatus').textContent='آزمون ناموفق: '+e.message+' · CORS و فرمت پاسخ را بررسی کن.'}});
+ if($('arexAiEndpointTest'))$('arexAiEndpointTest').addEventListener('click',async()=>{const val=$('arexAiEndpoint').value.trim();if(!val){$('arexAiEndpointStatus').textContent='ابتدا آدرس endpoint را وارد کن.';return;}try{const r=await fetch(val,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'user',content:'Reply with exactly: AREX_OK'}],context:{app:'AREX V9.7.12',test:true}})});if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();const ans=d.answer||d.reply||d.text||d.choices?.[0]?.message?.content;if(!ans)throw new Error('ساختار پاسخ نامعتبر');$('arexAiEndpointStatus').textContent='اتصال برقرار است؛ پاسخ سرویس دریافت شد.';}catch(e){$('arexAiEndpointStatus').textContent='آزمون ناموفق: '+e.message+' · CORS و فرمت پاسخ را بررسی کن.'}});
  // First-visit guided tour. Only shown after the app's main shell is visible.
  const tourSteps=[
   {target:'#view-dashboard',title:'به AREX خوش آمدی',text:'داشبورد نمای کلی وضعیت و عملکرد است. برای شروع واقعی، مسیر روزانه را دنبال کن و داده‌های شخصی خودت را وارد کن.'},
@@ -8001,7 +8154,7 @@ pre,code{overflow-wrap:anywhere;}
 </script>
 <style id="arex-v965-onboarding-css">#arexOnboarding{position:fixed;inset:0;z-index:2147482000;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(2,7,16,.78);backdrop-filter:blur(10px)}#arexOnboarding.open{display:flex}#arexOnboarding .tour-card{width:min(620px,100%);max-height:calc(100dvh - 32px);overflow:auto;border:1px solid var(--border);border-radius:20px;background:var(--panel);color:var(--text);padding:clamp(16px,4vw,28px)}#arexOnboarding p{font-size:13px;line-height:2;color:var(--muted)}#arexOnboarding .tour-actions{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:16px}#arexOnboarding .tour-actions>div{display:flex;gap:8px}@media(max-width:480px){#arexOnboarding{padding:8px}#arexOnboarding .tour-card{max-height:calc(100dvh - 16px);border-radius:14px}}</style>
 <div id="arexOnboarding" role="dialog" aria-modal="true" aria-labelledby="arexV965TourTitle" aria-describedby="arexV965TourText"><div class="tour-card"><div>AREX · QUICK START</div><div id="arexV965TourStep">مرحله ۱ از ۱۰</div><h2 id="arexV965TourTitle">به AREX خوش آمدی</h2><p id="arexV965TourText">این راهنمای کوتاه بخش‌های اصلی برنامه را معرفی می‌کند.</p><div class="tour-actions"><button type="button" class="btn ghost" id="arexV965TourSkip">فعلاً رد کردن</button><div><button type="button" class="btn ghost" id="arexV965TourPrev">قبلی</button><button type="button" class="btn" id="arexV965TourNext">بعدی</button></div></div></div></div>
-<script id="arex-v965-onboarding">(function(){const steps=[['به AREX خوش آمدی','فضای شخصی مدیریت معاملات، ثبت قوانین و بررسی عملکرد.'],['داشبورد','اهداف، حدود معاملاتی و خلاصه عملکرد را بررسی کن.'],['برنامه روزانه','روال پیش از بازار و مرور پایان روز را ثبت کن.'],['ژورنال معاملات','معاملات و شواهد واقعی را ثبت کن.'],['مدیریت ریسک','محدودیت‌ها را با اطلاعات واقعی حساب تنظیم کن.'],['استراتژی و قوانین','قوانین تأییدشده را از فرضیه‌ها جدا نگه دار.'],['تحلیل عملکرد','گزارش‌ها را با توجه به کیفیت و حجم داده‌ها بخوان.'],['روان‌شناسی','احساسات و اقدامات اصلاحی را ثبت کن.'],['تقویم و سشن‌ها','زمان رویدادها را با منبع معتبر تطبیق بده.'],['تنظیمات و پشتیبان‌گیری','قبل از تغییرات مهم نسخه پشتیبان بگیر.']];let i=0;const $=id=>document.getElementById(id),root=$('arexOnboarding');function paint(){$('arexV965TourStep').textContent='مرحله '+(i+1)+' از '+steps.length;$('arexV965TourTitle').textContent=steps[i][0];$('arexV965TourText').textContent=steps[i][1];$('arexV965TourPrev').disabled=i===0;$('arexV965TourNext').textContent=i===steps.length-1?'پایان آموزش':'بعدی'}function close(){root.classList.remove('open');try{localStorage.setItem('arex_v965_tour_seen','1')}catch(e){}}function open(){i=0;paint();root.classList.add('open')} $('arexV965TourNext').addEventListener('click',()=>{if(i<steps.length-1){i++;paint()}else close()});$('arexV965TourPrev').addEventListener('click',()=>{if(i){i--;paint()}});$('arexV965TourSkip').addEventListener('click',close);root.addEventListener('click',e=>{if(e.target===root)close()});function maybe(){const g=$('arexAuthGate');if(g&&getComputedStyle(g).display!=='none')return;let seen='';try{seen=localStorage.getItem('arex_v965_tour_seen')||''}catch(e){}if(!seen)open()}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(maybe,1200),{once:true});else setTimeout(maybe,1200);const g=$('arexAuthGate');if(g)new MutationObserver(()=>{if(getComputedStyle(g).display==='none')setTimeout(maybe,500)}).observe(g,{attributes:true,attributeFilter:['class','style']});function installReplay(){const actions=document.querySelector('.top-actions');if(actions&&!document.getElementById('arexTourReplay')){const b=document.createElement('button');b.id='arexTourReplay';b.type='button';b.className='icon-btn';b.title='نمایش دوباره آموزش';b.setAttribute('aria-label','نمایش دوباره آموزش');b.textContent='❔';b.addEventListener('click',open);actions.insertBefore(b,actions.firstChild)}}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',installReplay,{once:true});else installReplay();window.arexStartOnboarding=open;})();</script>
+<script id="arex-v965-onboarding">(function(){const steps=[['به AREX خوش آمدی','فضای شخصی مدیریت معاملات، ثبت قوانین و بررسی عملکرد.'],['داشبورد','اهداف، حدود معاملاتی و خلاصه عملکرد را بررسی کن.'],['برنامه روزانه','روال پیش از بازار و مرور پایان روز را ثبت کن.'],['ژورنال معاملات','معاملات و شواهد واقعی را ثبت کن.'],['مدیریت ریسک','محدودیت‌ها را با اطلاعات واقعی حساب تنظیم کن.'],['استراتژی و قوانین','قوانین تأییدشده را از فرضیه‌ها جدا نگه دار.'],['تحلیل عملکرد','گزارش‌ها را با توجه به کیفیت و حجم داده‌ها بخوان.'],['روان‌شناسی','احساسات و اقدامات اصلاحی را ثبت کن.'],['تقویم و سشن‌ها','زمان رویدادها را با منبع معتبر تطبیق بده.'],['تنظیمات و پشتیبان‌گیری','قبل از تغییرات مهم نسخه پشتیبان بگیر.']];let i=0;const $=id=>document.getElementById(id),root=$('arexOnboarding');function paint(){$('arexV965TourStep').textContent='مرحله '+(i+1)+' از '+steps.length;$('arexV965TourTitle').textContent=steps[i][0];$('arexV965TourText').textContent=steps[i][1];$('arexV965TourPrev').disabled=i===0;$('arexV965TourNext').textContent=i===steps.length-1?'پایان آموزش':'بعدی'}function close(){root.classList.remove('open');try{localStorage.setItem('arex_v965_tour_seen','1')}catch(e){}}function open(){i=0;paint();root.classList.add('open')} $('arexV965TourNext').addEventListener('click',()=>{if(i<steps.length-1){i++;paint()}else close()});$('arexV965TourPrev').addEventListener('click',()=>{if(i){i--;paint()}});$('arexV965TourSkip').addEventListener('click',close);root.addEventListener('click',e=>{if(e.target===root)close()});function maybe(){const g=$('arexAuthGate');if(g&&getComputedStyle(g).display!=='none')return;let seen='';try{seen=localStorage.getItem('arex_v965_tour_seen')||''}catch(e){}if(!seen)open()}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(maybe,1200),{once:true});else setTimeout(maybe,1200);const g=$('arexAuthGate');if(g)new MutationObserver(()=>{if(getComputedStyle(g).display==='none')setTimeout(maybe,500)}).observe(g,{attributes:true,attributeFilter:['class','style']});window.arexStartOnboarding=open;})();</script>
 
 
 <script id="arex-v967-contextual-help-and-nav-fix">
