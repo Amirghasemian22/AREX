@@ -65,8 +65,9 @@ async function fetchQuotes(request, env){
     try{
       const endpoint=new URL('https://api.twelvedata.com/price'); endpoint.searchParams.set('symbol',MARKET_SYMBOLS[symbol]); endpoint.searchParams.set('apikey',env.TWELVEDATA_API_KEY);
       const r=await fetch(endpoint,{headers:{Accept:'application/json'},cf:{cacheTtl:30}}); const data=await r.json();
-      if(!r.ok||data.status==='error'||data.code||data.price==null) return {symbol,price:null,error:String(data.message||data.code||`HTTP ${r.status}`),source:'Twelve Data'};
-      return {symbol,price:Number(data.price),source:'Twelve Data'};
+      const price=Number(data?.price);
+      if(!r.ok||data.status==='error'||data.code||data.price==null||!Number.isFinite(price)||price<=0) return {symbol,price:null,error:String(data.message||data.code||(!Number.isFinite(price)||price<=0?'invalid_price':`HTTP ${r.status}`)),source:'Twelve Data'};
+      return {symbol,price,source:'Twelve Data'};
     }catch(e){return {symbol,price:null,error:String(e?.message||e),source:'Twelve Data'};}
   }));
   return json({fetchedAt:new Date().toISOString(),source:'Twelve Data',quotes},200,{'Cache-Control':'no-store'});
@@ -135,7 +136,7 @@ async function sendAlerts(request, env){
   if (!notifyOriginAllowed(request, env)) return json({error:'origin_not_allowed'},403,{'Cache-Control':'no-store'});
   const authorization=request.headers.get('Authorization')||'';
   if(!authorization.startsWith('Bearer ')) return json({error:'unauthorized'},401,{'Cache-Control':'no-store'});
-  let claims; try{claims=await verifyGoogleAccessToken(authorization.slice(7));}catch(e){return json({error:'unauthorized',detail:String(e?.message||e)},401,{'Cache-Control':'no-store'});}
+  let claims; try{claims=await verifyGoogleAccessToken(authorization.slice(7));}catch{return json({error:'unauthorized',message:'Google access token is missing, expired, or invalid.'},401,{'Cache-Control':'no-store'});}
   const allowedEmail=String(env.ALERT_ALLOWED_GOOGLE_EMAIL||'').trim().toLowerCase();
   if(!allowedEmail) return json({error:'alerts_not_enabled',message:'Set ALERT_ALLOWED_GOOGLE_EMAIL to the owner Google email before enabling external alerts.'},503,{'Cache-Control':'no-store'});
   if(claims.email!==allowedEmail) return json({error:'forbidden'},403,{'Cache-Control':'no-store'});

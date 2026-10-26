@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v9-7-3-runtime-parse-repair-2026-10-25';
+const CACHE_VERSION = 'v9-7-9-ai-worker-rate-limit-origin-hardening-2026-10-25';
 const CACHE_NAME = 'arex-' + CACHE_VERSION;
 const APP_SHELL = [
   './',
@@ -14,6 +14,7 @@ const APP_SHELL = [
   './js/core/util.js',
   './js/core/ui-quality.js',
   './js/core/account-storage-policy.js',
+  './js/core/account-local-storage.js',
   './js/core/analytics.js',
   './js/core/daily-learning.js',
   './js/core/mistake-trends.js',
