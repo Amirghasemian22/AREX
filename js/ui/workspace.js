@@ -172,11 +172,11 @@ function csvCell(value){
  return '"'+safe.replace(/"/g,'""')+'"';
 }
 async function exportData(kind){
- const s=appState(),payload={app:'AREX',version:'V9.7.9',exportedAt:new Date().toISOString(),kind,workspace:s,trades:trades(),dailyLogs:state.dailyLogs||{}};
- if(kind==='json'){payload.tradeImages={};for(const t of trades()){for(const k of ['entry','exit']){try{const row=await storage.get(`tradeshot:${t.id}:${k}`);if(row&&row.value)payload.tradeImages[`${t.id}:${k}`]=row.value;}catch(e){}}}download('AREX_V9.7.9-data-export.json',JSON.stringify(payload,null,2),'application/json');return;}
+ const s=appState(),payload={app:'AREX',version:'V9.7.12',exportedAt:new Date().toISOString(),kind,workspace:s,trades:trades(),dailyLogs:state.dailyLogs||{}};
+ if(kind==='json'){payload.tradeImages={};for(const t of trades()){for(const k of ['entry','exit']){try{const row=await storage.get(`tradeshot:${t.id}:${k}`);if(row&&row.value)payload.tradeImages[`${t.id}:${k}`]=row.value;}catch(e){}}}download('AREX_V9.7.12-data-export.json',JSON.stringify(payload,null,2),'application/json');return;}
  const rows=trades(),cols=['id','date','time','symbol','dir','entry','sl','slOriginal','tp','exit','r','usd','riskPct','setup','ruleCompliance','emotionBefore','emotionAfter','note'];
  const csv=[cols.map(csvCell).join(','),...rows.map(t=>cols.map(c=>csvCell(Array.isArray(t[c])?t[c].join('|'):(t[c]??''))).join(','))].join('\r\n');
- download('AREX_V9.7.9-trades.csv','\ufeff'+csv,'text/csv;charset=utf-8');
+ download('AREX_V9.7.12-trades.csv','\ufeff'+csv,'text/csv;charset=utf-8');
 }
 function printReport(){window.print();}
 function focusToggle(){

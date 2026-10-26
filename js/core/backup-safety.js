@@ -16,7 +16,7 @@
     if(full&&parsed.app!==undefined&&String(parsed.app).length>80)errors.push('invalid_app');
     return{ok:errors.length===0,errors,kind:full?'full':'legacy',data};
   }
-  function makeRestoreSnapshot(data,now){return{kind:'arex-pre-restore-backup',app:'AREX V9.7.9',createdAt:now||new Date().toISOString(),data:JSON.parse(JSON.stringify(data||{}))};}
+  function makeRestoreSnapshot(data,now){return{kind:'arex-pre-restore-backup',app:'AREX V9.7.12',createdAt:now||new Date().toISOString(),data:JSON.parse(JSON.stringify(data||{}))};}
   function rollbackSnapshot(snapshot){if(!snapshot||snapshot.kind!=='arex-pre-restore-backup'||!snapshot.data||typeof snapshot.data!=='object'||Array.isArray(snapshot.data))throw new Error('invalid_restore_snapshot');return JSON.parse(JSON.stringify(snapshot.data));}
   return{MAX_BYTES,MAX_KEYS,validateEnvelope,makeRestoreSnapshot,rollbackSnapshot};
 });
