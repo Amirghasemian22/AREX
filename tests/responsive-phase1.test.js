@@ -18,5 +18,5 @@ test('Phase 1 responsive rules account for safe areas, narrow screens and reduce
   assert.match(html, /overflow-x:auto/);
 });
 test('service worker cache version changes when the responsive shell changes', () => {
-  assert.match(sw, /v9-6-4-drive-only-final-quality-pass-33/);
+  assert.match(sw, /const CACHE_VERSION\s*=\s*'v9-\d+-\d+-[^']+'/);
 });

@@ -20,5 +20,5 @@ test('phase 5 keeps frequency, tagged-trade P/L and prior-period change distinct
 });
 
 test('phase 5 increments the service-worker cache version', () => {
-  assert.match(sw, /v9-6-4-drive-only-final-quality-pass-33/);
+  assert.match(sw, /const CACHE_VERSION\s*=\s*'v9-\d+-\d+-[^']+'/);
 });

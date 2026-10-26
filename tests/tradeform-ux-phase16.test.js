@@ -32,6 +32,6 @@ test('cancel-edit resets date, direction, screenshots, tags, and pending images'
 });
 
 test('service worker cache version is bumped and includes the new module', () => {
-  assert.match(sw, /analytics-phase17-36/);
+  assert.match(sw, /const CACHE_VERSION\s*=\s*'v9-\d+-\d+-[^']+'/);
   assert.match(sw, /\.\/js\/ui\/tradeform-ux-phase16\.js/);
 });

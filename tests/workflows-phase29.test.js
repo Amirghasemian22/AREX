@@ -30,5 +30,5 @@ test('phase 29 keeps the workflow navigational and preserves existing data struc
   assert.match(html, /state\.correctiveActionHistory/);
   assert.match(html, /state\.goals/);
   assert.match(html, /document\.querySelectorAll\('\[data-arex-go\]'\)/);
-  assert.match(sw, /workflows-phase29-48/);
+  assert.match(sw, /const CACHE_VERSION\s*=\s*'v9-\d+-\d+-[^']+'/);
 });

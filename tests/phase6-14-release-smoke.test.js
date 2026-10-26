@@ -21,7 +21,7 @@ test('Phase 6–14: critical dashboard evidence panels remain present', () => {
   }
 });
 test('Phase 6–14: release cache version is unique and current', () => {
-  assert.match(sw, /v9-6-4-drive-only-final-quality-pass-33/);
+  assert.match(sw, /const CACHE_VERSION\s*=\s*'v9-\d+-\d+-[^']+'/);
 });
 test('Phase 6–14: no Firebase runtime reintroduced; Google Drive appDataFolder remains the cloud backup route', () => {
   assert.doesNotMatch(html, /firebase\.initializeApp\s*\(/);

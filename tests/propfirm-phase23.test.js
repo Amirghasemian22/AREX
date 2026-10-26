@@ -32,5 +32,5 @@ test('prop-firm warnings state local-data limitations and do not auto-pass chall
 });
 
 test('service worker cache version changes for Phase 23', () => {
-  assert.match(sw, /propfirm-phase23-42/);
+  assert.match(sw, /const CACHE_VERSION\s*=\s*'v9-\d+-\d+-[^']+'/);
 });

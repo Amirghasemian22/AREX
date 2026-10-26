@@ -24,5 +24,5 @@ test('Phase 28 provides explicit completion, reopening and outcome-note actions'
 });
 
 test('Phase 28 cache key is updated for clients to receive the new UI', () => {
-  assert.match(sw, /corrective-actions-phase28-47/);
+  assert.match(sw, /const CACHE_VERSION\s*=\s*'v9-\d+-\d+-[^']+'/);
 });

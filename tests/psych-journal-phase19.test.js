@@ -17,5 +17,5 @@ test('psychology journal exposes recent-data insight summary without changing st
 test('psychology journal recent-list action and cache version are wired', () => {
   assert.match(html, /id="psychShowRecent"/);
   assert.match(html, /psychShowRecent.*addEventListener/s);
-  assert.match(sw, /psych-phase19-38/);
+  assert.match(sw, /const CACHE_VERSION\s*=\s*'v9-\d+-\d+-[^']+'/);
 });

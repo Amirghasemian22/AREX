@@ -129,7 +129,7 @@ async function loadOhlc(){const file=$('arexWOhlcFile').files?.[0];if(!file)thro
 function fmtNum(v,suffix=''){return v===null||v===undefined?'—':v===Infinity?'∞':Number(v).toFixed(2)+suffix;}
 function renderOhlcResult(result,title){const box=$('arexWOhlcResults');if(result.metrics){const m=result.metrics;box.innerHTML=`<h4>${esc(title)}</h4><div class="arex-w-grid three"><div class="arex-w-stat"><span>تعداد معاملات</span><b>${m.count}</b></div><div class="arex-w-stat"><span>Win rate</span><b>${fmtNum(m.winRate,'%')}</b></div><div class="arex-w-stat"><span>Expectancy خالص</span><b>${fmtNum(m.expectancyR,'R')}</b></div><div class="arex-w-stat"><span>Net R</span><b>${fmtNum(m.netR,'R')}</b></div><div class="arex-w-stat"><span>Profit Factor</span><b>${fmtNum(m.profitFactor)}</b></div><div class="arex-w-stat"><span>بیشترین افت سرمایه</span><b>${fmtNum(m.maxDrawdownR,'R')}</b></div></div><p class="arex-w-muted">${result.bars} کندل بررسی شد. پارامترها: ${esc(JSON.stringify(result.parameters))}</p><ul class="arex-w-muted">${(result.limitations||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`;}else{box.innerHTML=`<h4>${esc(title)}</h4>`+(result.folds||[]).map(f=>`<article class="arex-w-result"><div><strong>بخش ${f.fold} · ${esc(f.testStart)} تا ${esc(f.testEnd)}</strong><small>کندل‌های آزمون: ${f.testBars} · معاملات: ${f.tradeCount}</small><p>Net R: ${fmtNum(f.metrics.netR,'R')} · Expectancy: ${fmtNum(f.metrics.expectancyR,'R')} · Win rate: ${fmtNum(f.metrics.winRate,'%')} · Max DD: ${fmtNum(f.metrics.maxDrawdownR,'R')}</p></div></article>`).join('')+`<ul class="arex-w-muted">${(result.limitations||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`;}}
 async function runOhlc(walkForward=false){try{const bars=await loadOhlc(),opts=ohlcOptions(),engine=window.AREXCore.ohlcBacktest;let result;if(walkForward){result=engine.walkForward(bars, Object.assign({},opts,{folds:num($('arexWOhlcFolds').value)}));lastOhlcResult=null;$('arexWOhlcExport').disabled=true;renderOhlcResult(result,'Walk-Forward با پنجره آموزش گسترش‌یابنده');}else{result=engine.run(bars,opts);lastOhlcResult=result;$('arexWOhlcExport').disabled=!result.trades.length;renderOhlcResult(result,'نتیجه بک‌تست قیمت تاریخی');}}catch(e){$('arexWOhlcResults').innerHTML=`<p class="arex-w-error">${esc(e.message||'اجرای بک‌تست ناموفق بود.')}</p>`;}}
-function exportOhlcTrades(){if(!lastOhlcResult)return;const cols=['entryTime','exitTime','side','entry','exit','reason','grossR','netR','entryIndex','exitIndex'];const csv=[cols.join(','),...lastOhlcResult.trades.map(t=>cols.map(k=>'"'+String(t[k]??'').replace(/"/g,'""')+'"').join(','))].join('\r\n');download('AREX-OHLC-backtest-trades.csv','\ufeff'+csv,'text/csv;charset=utf-8');}
+function exportOhlcTrades(){if(!lastOhlcResult)return;const cols=['entryTime','exitTime','side','entry','exit','reason','grossR','netR','entryIndex','exitIndex'];const cell=value=>{const raw=String(value??''),numeric=/^-?\d+(?:\.\d+)?$/.test(raw.trim()),safe=/^[\t\r\n ]*[=+\-@]/.test(raw)&&!numeric?"'"+raw:raw;return '"'+safe.replace(/"/g,'""')+'"';};const csv=[cols.map(cell).join(','),...lastOhlcResult.trades.map(t=>cols.map(k=>cell(t[k])).join(','))].join('\r\n');download('AREX-OHLC-backtest-trades.csv','\ufeff'+csv,'text/csv;charset=utf-8');}
 
 function renderBacktest(){
  const box=$('arexWBacktestResults'); if(!box)return;
@@ -163,12 +163,20 @@ function renderWeekly(){
 function download(name,data,type){
  const blob=new Blob([data],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
+// Spreadsheet applications may evaluate CSV cells beginning with formula markers.
+// Preserve ordinary numeric values (including negative P/L), but neutralize formula-like text.
+function csvCell(value){
+ const raw=String(value??'');
+ const numeric=/^-?\d+(?:\.\d+)?$/.test(raw.trim());
+ const safe=/^[\t\r\n ]*[=+\-@]/.test(raw)&&!numeric?"'"+raw:raw;
+ return '"'+safe.replace(/"/g,'""')+'"';
+}
 async function exportData(kind){
- const s=appState(),payload={app:'AREX',version:'V9.6.3',exportedAt:new Date().toISOString(),kind,workspace:s,trades:trades(),dailyLogs:state.dailyLogs||{}};
- if(kind==='json'){payload.tradeImages={};for(const t of trades()){for(const k of ['entry','exit']){try{const row=await storage.get(`tradeshot:${t.id}:${k}`);if(row&&row.value)payload.tradeImages[`${t.id}:${k}`]=row.value;}catch(e){}}}download('AREX_V9.6.3-data-export.json',JSON.stringify(payload,null,2),'application/json');return;}
+ const s=appState(),payload={app:'AREX',version:'V9.7.9',exportedAt:new Date().toISOString(),kind,workspace:s,trades:trades(),dailyLogs:state.dailyLogs||{}};
+ if(kind==='json'){payload.tradeImages={};for(const t of trades()){for(const k of ['entry','exit']){try{const row=await storage.get(`tradeshot:${t.id}:${k}`);if(row&&row.value)payload.tradeImages[`${t.id}:${k}`]=row.value;}catch(e){}}}download('AREX_V9.7.9-data-export.json',JSON.stringify(payload,null,2),'application/json');return;}
  const rows=trades(),cols=['id','date','time','symbol','dir','entry','sl','slOriginal','tp','exit','r','usd','riskPct','setup','ruleCompliance','emotionBefore','emotionAfter','note'];
- const csv=[cols.join(','),...rows.map(t=>cols.map(c=>{const v=t[c]??'';return '"'+String(Array.isArray(v)?v.join('|'):v).replace(/"/g,'""')+'"';}).join(','))].join('\r\n');
- download('AREX_V9.6.3-trades.csv','\ufeff'+csv,'text/csv;charset=utf-8');
+ const csv=[cols.map(csvCell).join(','),...rows.map(t=>cols.map(c=>csvCell(Array.isArray(t[c])?t[c].join('|'):(t[c]??''))).join(','))].join('\r\n');
+ download('AREX_V9.7.9-trades.csv','\ufeff'+csv,'text/csv;charset=utf-8');
 }
 function printReport(){window.print();}
 function focusToggle(){

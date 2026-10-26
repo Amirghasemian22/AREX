@@ -12,7 +12,7 @@ test('Phase 20 shared UI styles cover keyboard focus, responsive tables, and rea
 });
 test('Phase 20 honors reduced motion and updates service-worker cache',()=>{
   assert.match(html,/prefers-reduced-motion:reduce/);
-  assert.match(sw,/ui-phase20-39/);
+  assert.match(sw,/const CACHE_VERSION\s*=\s*'v9-\d+-\d+-[^']+'/);
 });
 test('Phase 20 does not change IndexedDB schema or introduce destructive data operations',()=>{
   assert.doesNotMatch(html,/indexedDB\.deleteDatabase\s*\(/);

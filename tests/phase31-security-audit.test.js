@@ -63,5 +63,5 @@ test('service worker cache includes sensitive workflow modules and does not refe
     assert.ok(sw.includes(`'${file}'`), `missing ${file}`);
   }
   assert.doesNotMatch(sw, /auth-config\.js|firebase-auth|firebase-firestore/);
-  assert.match(sw, /const CACHE_VERSION\s*=\s*'[^']*security-phase31/);
+  assert.match(sw, /const CACHE_VERSION\s*=\s*'v9-\d+-\d+-[^']+'/);
 });

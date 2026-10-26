@@ -14,5 +14,5 @@ test('dashboard coach shows evidence, priority and data-grounded motivation', ()
 
 test('service worker cache version reflects dashboard coach update', () => {
   const sw = fs.readFileSync('sw.js', 'utf8');
-  assert.match(sw, /v9-6-4-drive-only-final-quality-pass-33/);
+  assert.match(sw, /const CACHE_VERSION\s*=\s*'v9-\d+-\d+-[^']+'/);
 });

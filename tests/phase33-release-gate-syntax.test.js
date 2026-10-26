@@ -17,5 +17,5 @@ test('Phase 33: release gate runs successfully and reports JavaScript syntax cov
   const run = spawnSync(process.execPath, ['scripts/release-gate.js'], { cwd: root, encoding: 'utf8' });
   assert.equal(run.status, 0, run.stderr || run.stdout);
   assert.match(run.stdout, /All local JavaScript files pass syntax validation \| \d+ JavaScript files passed node --check/);
-  assert.match(run.stdout, /Release gate: 7\/7 checks passed/);
+  assert.match(run.stdout, /Release gate: 8\/8 checks passed/);
 });

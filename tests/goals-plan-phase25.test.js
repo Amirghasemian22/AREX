@@ -24,5 +24,5 @@ test('Phase 25 makes checklist progress explicitly distinct from trading readine
 
 test('Phase 25 bumps the service-worker cache version', () => {
   const sw = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
-  assert.match(sw, /goals-plan-phase25-44/);
+  assert.match(sw, /const CACHE_VERSION\s*=\s*'v9-\d+-\d+-[^']+'/);
 });

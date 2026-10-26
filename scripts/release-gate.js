@@ -87,6 +87,15 @@ check('Google Drive-only authentication and backup are wired', () => {
   return 'Google OAuth + private Drive appDataFolder; no Firebase login/backup runtime';
 });
 
+check('AI Worker enforces exact-origin checks and request throttling', () => {
+  const worker = read('arex-ai-worker.js');
+  if (!/if \(origin !== allowed\) return json\(\{ error: 'origin_not_allowed' \}/.test(worker)) fail('AI chat must reject missing/unapproved origins');
+  if (!/allowAiRate\(env, `ai:\$\{ip\}`, 12, 60\)/.test(worker)) fail('AI chat rate limiter missing');
+  if (!/env\.GEMINI_API_KEY/.test(worker)) fail('AI provider secret must be server-side');
+  if (!/request_too_large/.test(worker)) fail('AI request size guard missing');
+  return 'exact-origin guard, per-IP throttle, payload bound, server-side provider key';
+});
+
 check('Browser code has no obvious private key or service-account payload', () => {
   const files = ['index.html', 'auth-client.js', 'fx_widget.js'];
   const patterns = [/BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY/, /"type"\s*:\s*"service_account"/, /private_key_id\s*:/i];

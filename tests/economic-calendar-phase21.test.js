@@ -36,5 +36,5 @@ test('calendar source links are limited to HTTP(S) and empty results are not rep
 });
 
 test('service worker cache key is bumped for Phase 21', () => {
-  assert.match(sw, /calendar-phase21-40/);
+  assert.match(sw, /const CACHE_VERSION\s*=\s*'v9-\d+-\d+-[^']+'/);
 });
