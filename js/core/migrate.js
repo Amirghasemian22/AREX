@@ -6,7 +6,7 @@
   else { root.AREXCore = root.AREXCore || {}; root.AREXCore.migrate = api; }
 })(typeof self !== 'undefined' ? self : this, function () {
   const SCHEMA_VERSION = 2;       // 1 = V5.x state (no schemaVersion field); 2 = V9.6.3
-  const APP_VERSION = 'AREX V9.7.12';
+  const APP_VERSION = 'AREX V9.7.13';
   const clone = o => JSON.parse(JSON.stringify(o));
 
   const steps = {
