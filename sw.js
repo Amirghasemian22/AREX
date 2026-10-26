@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v9-7-12-mobile-login-responsive-2026-10-26';
+const CACHE_VERSION = 'v9-7-13-oauth-client-id-bridge-fix-2026-10-26';
 const CACHE_NAME = 'arex-' + CACHE_VERSION;
 const APP_SHELL = [
   './',

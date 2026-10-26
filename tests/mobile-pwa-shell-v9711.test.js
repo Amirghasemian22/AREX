@@ -24,7 +24,7 @@ test('mobile navigation retains the core views and the all-sections menu', () =>
   assert.match(html, /id="hamburgerBtn"/);
   assert.match(html, /id="sidebar"/);
 });
-test('PWA metadata and cache version are bumped for V9.7.12', () => {
-  assert.equal(manifest.short_name, 'AREX V9.7.12');
-  assert.match(sw, /v9-7-12-mobile-login-responsive-2026-10-26/);
+test('PWA metadata and cache version are bumped for V9.7.13', () => {
+  assert.equal(manifest.short_name, 'AREX V9.7.13');
+  assert.match(sw, /v9-7-13-oauth-client-id-bridge-fix-2026-10-26/);
 });

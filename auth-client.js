@@ -1,4 +1,4 @@
-/* AREX V9.7.12 — resilient Google Drive-only authentication and backup adapter.
+/* AREX V9.7.13 — resilient Google Drive-only authentication and backup adapter.
  * No Firebase Authentication or Firestore calls are made by this file.
  * OAuth token stays in memory; persistent backups use the Drive appDataFolder API.
  */
@@ -78,6 +78,10 @@ window.arexDriveLoginComplete = async () => {
 // are exposed on window in the supported static build, so this also tolerates a
 // mixed deployment where the bridge aliases have not yet been assigned.
 function resolveDriveEnabled(){
+  // Prefer the explicitly exposed client ID. A stale/older bootstrap bridge can
+  // otherwise report `false` even though index.html contains a valid public ID.
+  // This check only detects configuration; OAuth still validates the ID with Google.
+  if(String(window.AREX_GOOGLE_CLIENT_ID || '').trim()) return () => true;
   if(typeof window.arexDriveIsEnabled==='function') return window.arexDriveIsEnabled;
   if(typeof window.driveEnabled==='function') return window.driveEnabled;
   return null;
