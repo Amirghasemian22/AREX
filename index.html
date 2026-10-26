@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AREX V9.7.14</title>
+<title>AREX V9.7.15</title>
 <meta name="description" content="AREX دستیار شخصی مدیریت معاملات است: ژورنال معاملاتی، مدیریت ریسک، قوانین استراتژی، تقویم اقتصادی، سشن‌های بازار، ثبت روان‌شناسی و تحلیل عملکرد در یک فضای کاری نصب‌شدنی.">
 <meta name="keywords" content="ژورنال معاملات فارکس, تریدینگ ژورنال, چک‌لیست بهبود عملکرد معاملاتی, مدیریت ریسک معاملات, ردیاب پراپ فرم, تقویم اقتصادی فارکس, forex trading journal, prop firm tracker">
 <meta name="robots" content="index, follow">
@@ -1598,7 +1598,25 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
     .daily-action-callout{border-inline-start:3px solid var(--accent,#4f8cff);padding:12px 14px;margin:12px 0;border-radius:8px;background:var(--surface-2,rgba(100,130,180,.08))}
     .daily-action-callout small{display:block;opacity:.72;margin-top:5px}
     @media(max-width:700px){.daily-evidence-summary{grid-template-columns:repeat(2,minmax(0,1fr))}}
-    </style>
+    
+/* V9.7.15 quick sync control */
+.arex-quick-sync{position:relative;display:inline-flex;align-items:center;justify-content:center}
+.arex-quick-sync svg{width:19px;height:19px}
+.arex-sync-dot{position:absolute;right:5px;top:5px;width:7px;height:7px;border-radius:50%;background:#94a3b8;border:1px solid var(--surface,#0b1020)}
+.arex-quick-sync[data-sync-state="connected"] .arex-sync-dot{background:#22c55e}
+.arex-quick-sync[data-sync-state="syncing"] .arex-sync-dot{background:#f59e0b;animation:arexSyncPulse 1s infinite}
+.arex-quick-sync[data-sync-state="error"] .arex-sync-dot{background:#ef4444}
+@keyframes arexSyncPulse{50%{opacity:.35}}
+.arex-risk-settings-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px}
+.arex-risk-settings-grid label{display:flex;flex-direction:column;gap:6px;min-width:0}
+.arex-risk-settings-grid .field-lbl{font-size:12px;color:var(--muted)}
+.arex-risk-settings-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px}
+.arex-risk-settings-hint{font-size:12px;color:var(--muted);line-height:1.8}
+@media(max-width:680px){.arex-risk-settings-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:420px){.arex-risk-settings-grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.arex-sync-dot{animation:none!important}}
+
+</style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Markazi+Text:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -1972,6 +1990,7 @@ body::before{opacity:var(--arex-wallpaper-strength)!important;background-image:l
         <div class="top-usdt" title="قیمت لحظه‌ای تتر"><b>USDT</b><span id="tkPriceTop">—</span><button class="top-refresh" id="tkRefreshTop" aria-label="بروزرسانی قیمت تتر" title="بروزرسانی قیمت تتر">↻</button></div>
         <select class="top-language" id="topLangSelect" aria-label="تغییر زبان" title="تغییر زبان"><option value="fa">فا</option><option value="en">EN</option><option value="de">DE</option></select><button class="icon-btn" id="accountTopBtn" title="حساب کاربری" style="font-size:12px">👤</button>
       </div>
+      <button class="icon-btn arex-quick-sync" id="driveQuickSyncBtn" type="button" title="همگام‌سازی با Google Drive" aria-label="همگام‌سازی با Google Drive" aria-describedby="driveQuickSyncStatus"><svg class="nav-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7v5h-5"/><path d="M4.8 9A7.5 7.5 0 0 1 18 6l2 6"/><path d="M4 17v-5h5"/><path d="M19.2 15A7.5 7.5 0 0 1 6 18l-2-6"/></svg><span class="arex-sync-dot" id="driveQuickSyncDot"></span></button><span id="driveQuickSyncStatus" class="sr-only" aria-live="polite">وضعیت همگام‌سازی نامشخص</span>
       <span class="streak-chip" id="streakChip" title="نمایش خلاصه عملکرد هفتگی">📊 <span id="topWinRate">—</span></span>
       <div class="changelog-wrap">
         <button class="icon-btn" id="changelogBtn" title="تغییرات و اعلان‌ها">🔔<span class="changelog-dot" id="changelogDot" style="display:none;"></span></button>
@@ -2746,6 +2765,19 @@ body::before{opacity:var(--arex-wallpaper-strength)!important;background-image:l
 
     <section class="view arex-workspace-view" id="view-risk">
       <div class="arex-page-hero"><div><div class="eyebrow">CAPITAL PRESERVATION</div><h2>مدیریت ریسک</h2><p>محاسبه حجم فقط با مشخصات واردشده انجام می‌شود. اندازه قرارداد، ارزش پیپ/تیک و تبدیل ارز را با مشخصات واقعی بروکر تطبیق بده؛ مقادیر پیش‌فرض برای همه نمادها دقیق نیستند.</p></div><span class="arex-status-pill warning">! محاسبه وابسته به مشخصات بروکر</span></div>
+      <section class="card arex-risk-settings-card" id="arexRiskSettingsCard" style="margin:16px 0">
+        <div class="section-title">تنظیم دستی حساب و محدودیت‌های ریسک</div>
+        <p class="arex-risk-settings-hint">این مقادیر مبنای محاسبات و هشدارهای AREX هستند. آن‌ها به‌صورت خودکار از بروکر دریافت نمی‌شوند. واحد مبلغ را با واحد P/L ژورنال یکسان نگه دار.</p>
+        <div class="arex-risk-settings-grid">
+          <label><span class="field-lbl">موجودی مرجع حساب</span><input class="txt-input" id="riskBalanceInput" type="number" min="0" step="any" inputmode="decimal" placeholder="مثلاً 10000"></label>
+          <label><span class="field-lbl">سقف ضرر روزانه (%)</span><input class="txt-input" id="riskDailyPctInput" type="number" min="0.1" max="100" step="0.1" inputmode="decimal" placeholder="مثلاً 3"></label>
+          <label><span class="field-lbl">سقف ضرر هفتگی (%)</span><input class="txt-input" id="riskWeeklyPctInput" type="number" min="0.1" max="100" step="0.1" inputmode="decimal" placeholder="مثلاً 8"></label>
+          <label><span class="field-lbl">ریسک هدف هر معامله (%)</span><input class="txt-input" id="riskPerTradePctInput" type="number" min="0.1" max="100" step="0.1" inputmode="decimal" placeholder="مثلاً 1"></label>
+          <label><span class="field-lbl">حداکثر معاملات روزانه</span><input class="txt-input" id="riskMaxTradesInput" type="number" min="1" max="100" step="1" inputmode="numeric" placeholder="مثلاً 4"></label>
+          <label><span class="field-lbl">حداکثر ضررهای روزانه</span><input class="txt-input" id="riskMaxLossesInput" type="number" min="1" max="20" step="1" inputmode="numeric" placeholder="مثلاً 3"></label>
+        </div>
+        <div class="arex-risk-settings-actions"><button class="btn" type="button" id="riskSettingsSaveBtn">ذخیره محدودیت‌ها</button><button class="btn ghost" type="button" id="riskSettingsResetBtn">بازنشانی فرم</button><span id="riskSettingsStatus" class="arex-risk-settings-hint" role="status" aria-live="polite">محدودیت‌ها را وارد و ذخیره کن تا در ارزیابی ژورنال استفاده شوند.</span></div>
+      </section>
       <div class="arex-kpi-grid" id="arexRiskSummary"></div>
       <section class="arex-risk-decision" id="arexRiskDecisionPanel" aria-live="polite">
         <div class="arex-risk-decision-head"><div><h3>وضعیت ریسک بر اساس داده‌های ثبت‌شده</h3><p>این بررسی فقط ژورنال محلی و محدودیت‌های تنظیم‌شده را می‌خواند؛ به بروکر وصل نیست و ریسک معاملات باز یا افت شناور را لزوماً پوشش نمی‌دهد.</p></div><span class="arex-risk-status review" id="arexRiskDecisionBadge">نیازمند بررسی</span></div>
@@ -2949,6 +2981,7 @@ body::before{opacity:var(--arex-wallpaper-strength)!important;background-image:l
             <div><div class="field-lbl">سقف ضرر روزانه (%)</div><input class="txt-input" id="rlDailyPct" type="number" step="any" value="3"></div>
             <div><div class="field-lbl">سقف ضرر هفتگی (%)</div><input class="txt-input" id="rlWeeklyPct" type="number" step="any" value="8"></div>
           </div>
+          <div class="modal-actions" style="justify-content:flex-start;margin-top:10px"><button class="btn ghost" type="button" id="settingsRiskOpenBtn">ویرایش کامل محدودیت‌ها در مدیریت ریسک</button></div>
         </div>
         <div class="card" id="settingsRules">
           <div class="section-title">✅ قوانین چک‌لیست پیش از معامله</div>
@@ -3206,7 +3239,7 @@ let state = {
   tradeRules: [
     'حد ضرر گذاشتم', 'طبق پلن از پیش تعیین‌شده وارد شدم', 'حجم معامله متناسب با ریسک مجاز بود', 'تحت تأثیر احساسات (ترس/طمع/انتقام) نبودم'
   ],
-  riskLimits: { balance:0, dailyPct:3, weeklyPct:8 },
+  riskLimits: { balance:0, dailyPct:3, weeklyPct:8, riskPerTradePct:1, maxTradesPerDay:4, maxLossesPerDay:3 },
   propChallenges: [],
   backtests: [],
   scenarios: [],
@@ -3925,9 +3958,14 @@ function toast(msg){
   clearTimeout(t._tm); t._tm = setTimeout(()=>t.classList.remove('show'), 1800);
 }
 
+let arexNextStepTimer=null;
 function queueSave(key){
   if(isResetting) return;
   dirty[key] = true;
+  if(['trades','riskLimits','assistantState','psych','tradeRules','settings'].includes(key)){
+    if(arexNextStepTimer)clearTimeout(arexNextStepTimer);
+    arexNextStepTimer=setTimeout(()=>{try{renderArexNextStepNudge();}catch(e){}},650);
+  }
   if(Object.prototype.hasOwnProperty.call(dirtyRevision,key)) dirtyRevision[key]++;
   saveRetryAttempt = 0;
   if(saveRetryTimer){ clearTimeout(saveRetryTimer); saveRetryTimer=null; }
@@ -4368,22 +4406,42 @@ document.getElementById('addRuleBtn').addEventListener('click', ()=>{
   const v = inp.value.trim(); if(!v) return;
   state.tradeRules.push(v); inp.value=''; queueSave('tradeRules'); renderSettingsRules(); renderTradeRulesBox();
 });
-['rlBalance','rlDailyPct','rlWeeklyPct'].forEach(id=>{
-  document.getElementById(id).addEventListener('input', ()=>{
-    state.riskLimits = {
-      balance: parseFloat(document.getElementById('rlBalance').value)||0,
-      dailyPct: parseFloat(document.getElementById('rlDailyPct').value)||0,
-      weeklyPct: parseFloat(document.getElementById('rlWeeklyPct').value)||0
-    };
-    queueSave('riskLimits'); updateRiskWarnBanner(); if(typeof renderArexRiskSummary==='function') renderArexRiskSummary();
-  });
-});
-function loadRiskLimitInputs(){
-  const l = state.riskLimits||{};
-  document.getElementById('rlBalance').value = l.balance||'';
-  document.getElementById('rlDailyPct').value = l.dailyPct||3;
-  document.getElementById('rlWeeklyPct').value = l.weeklyPct||8;
+function applyRiskLimitsToState(values){
+  const previous=state.riskLimits||{};
+  state.riskLimits=Object.assign({},previous,values);
+  queueSave('riskLimits');updateRiskWarnBanner();
+  if(typeof renderArexRiskSummary==='function')renderArexRiskSummary();
+  if(typeof renderArexDashboardSummary==='function')renderArexDashboardSummary();
+  if(typeof renderArexDailyRoadmap==='function')renderArexDailyRoadmap();
 }
+function loadRiskLimitInputs(){
+  const l=state.riskLimits||{};
+  const values={rlBalance:l.balance,riskBalanceInput:l.balance,rlDailyPct:l.dailyPct??3,riskDailyPctInput:l.dailyPct??3,rlWeeklyPct:l.weeklyPct??8,riskWeeklyPctInput:l.weeklyPct??8,riskPerTradePctInput:l.riskPerTradePct??1,riskMaxTradesInput:l.maxTradesPerDay??4,riskMaxLossesInput:l.maxLossesPerDay??3};
+  Object.entries(values).forEach(([id,value])=>{const el=document.getElementById(id);if(el)el.value=value==null?'':String(value);});
+}
+function saveRiskLimitsFromUi(){
+  const read=id=>String(document.getElementById(id)?.value??'').trim();
+  const raw={balance:read('riskBalanceInput'),dailyPct:read('riskDailyPctInput'),weeklyPct:read('riskWeeklyPctInput'),riskPerTradePct:read('riskPerTradePctInput'),maxTradesPerDay:read('riskMaxTradesInput'),maxLossesPerDay:read('riskMaxLossesInput')};
+  const nums=Object.fromEntries(Object.entries(raw).map(([k,v])=>[k,v===''?null:Number(v)]));
+  const status=document.getElementById('riskSettingsStatus');
+  if(nums.balance===null||!Number.isFinite(nums.balance)||nums.balance<=0){if(status)status.textContent='موجودی باید عددی بزرگ‌تر از صفر باشد.';return false;}
+  for(const key of ['dailyPct','weeklyPct','riskPerTradePct'])if(nums[key]===null||!Number.isFinite(nums[key])||nums[key]<=0||nums[key]>100){if(status)status.textContent='درصدها باید بزرگ‌تر از صفر و حداکثر ۱۰۰ باشند.';return false;}
+  for(const key of ['maxTradesPerDay','maxLossesPerDay'])if(nums[key]===null||!Number.isInteger(nums[key])||nums[key]<1||nums[key]>100){if(status)status.textContent='سقف تعداد معاملات و ضررها باید عدد صحیح مثبت باشد.';return false;}
+  applyRiskLimitsToState({balance:nums.balance,dailyPct:nums.dailyPct,weeklyPct:nums.weeklyPct,riskPerTradePct:nums.riskPerTradePct,maxTradesPerDay:nums.maxTradesPerDay,maxLossesPerDay:nums.maxLossesPerDay});
+  const legacy={rlBalance:nums.balance,rlDailyPct:nums.dailyPct,rlWeeklyPct:nums.weeklyPct};Object.entries(legacy).forEach(([id,v])=>{const el=document.getElementById(id);if(el)el.value=String(v);});
+  if(status)status.textContent='محدودیت‌های ریسک ذخیره شد و در محاسبات محلی AREX استفاده می‌شود.';
+  toast('محدودیت‌های ریسک ذخیره شد');return true;
+}
+['rlBalance','rlDailyPct','rlWeeklyPct'].forEach(id=>{const el=document.getElementById(id);el?.addEventListener('change',()=>{
+  const ids={rlBalance:'riskBalanceInput',rlDailyPct:'riskDailyPctInput',rlWeeklyPct:'riskWeeklyPctInput'};
+  const other=document.getElementById(ids[id]);if(other)other.value=el.value;
+  const l=state.riskLimits||{};const b=Number(document.getElementById('rlBalance').value),d=Number(document.getElementById('rlDailyPct').value),w=Number(document.getElementById('rlWeeklyPct').value);
+  if(b>0&&d>0&&w>0)applyRiskLimitsToState({balance:b,dailyPct:d,weeklyPct:w});
+});});
+document.getElementById('riskSettingsSaveBtn')?.addEventListener('click',saveRiskLimitsFromUi);
+document.getElementById('riskSettingsResetBtn')?.addEventListener('click',loadRiskLimitInputs);
+document.getElementById('settingsRiskOpenBtn')?.addEventListener('click',()=>goView('risk')); 
+['riskBalanceInput','riskDailyPctInput','riskWeeklyPctInput','riskPerTradePctInput','riskMaxTradesInput','riskMaxLossesInput'].forEach(id=>document.getElementById(id)?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();saveRiskLimitsFromUi();}}));
 
 document.getElementById('langSelect').addEventListener('change', e=>{
   applyLanguage(e.target.value);
@@ -5932,6 +5990,10 @@ function initRiskCalc(mountId, prefix){
   const mount = document.getElementById(mountId);
   if(!mount) return;
   mount.innerHTML = riskCalcTemplate(prefix);
+  const configuredRisk=state.riskLimits||{};
+  const balanceField=document.getElementById(prefix+'Balance'),riskPctField=document.getElementById(prefix+'RiskPct');
+  if(balanceField&&Number(configuredRisk.balance)>0)balanceField.value=String(configuredRisk.balance);
+  if(riskPctField&&Number(configuredRisk.riskPerTradePct)>0)riskPctField.value=String(configuredRisk.riskPerTradePct);
   document.getElementById(prefix+'Instrument').addEventListener('change', e=>{
     const preset = RISK_PRESETS[e.target.value];
     if(preset && preset.lot){ document.getElementById(prefix+'LotSize').value = preset.lot; const ps=document.getElementById(prefix+'PipSize'),pv=document.getElementById(prefix+'PipValue'); if(e.target.value==='gold'){ps.value='0.1';pv.value='10';} else if(e.target.value==='silver'){ps.value='0.01';pv.value='50';} else if(e.target.value==='forex'){ps.value='0.0001';pv.value='10';} else if(e.target.value==='index'){ps.value='1';pv.value='1';} computeRiskCalc(prefix); }
@@ -6851,6 +6913,30 @@ function loadDashboardTvCalendar(){
   sc.innerHTML=JSON.stringify({colorTheme:document.documentElement.getAttribute('data-theme')==='light'?'light':'dark',isTransparent:true,locale:state.language==='fa'?'en':(state.language==='de'?'de_DE':'en'),width:'100%',height:'100%',importanceFilter:'-1,0,1',countryFilter:'us,eu,gb,jp,au,ca,ch,nz,cn,de,fr,it,es'});
   sc.onerror=fallback;wrap.firstChild.appendChild(sc);setTimeout(fallback,12000);
 }
+function getArexNextTradingStep(){
+ const d=todayIso(),trades=(state.trades||[]).filter(t=>String(t.date||'')===d),log=(state.dailyLogs||{})[d]||{},lim=state.riskLimits||{},findings=typeof getArexRuleFindings==='function'?getArexRuleFindings():[],stop=findings.find(x=>x.level==='stop');
+ if(stop)return {title:'توقف و بررسی ریسک',detail:String(stop.message||'هشدار توقف فعال است.'),view:'risk',priority:'توقف'};
+ if(!(Number(lim.balance)>0&&Number(lim.dailyPct)>0))return {title:'تنظیم موجودی و سقف ضرر',detail:'برای فعال‌شدن محاسبات ژورنال، موجودی حساب و سقف ضرر روزانه را در مدیریت ریسک وارد و ذخیره کن.',view:'risk',priority:'قدم بعدی'};
+ if(Array.isArray(window.AREX_ROADMAP_TASKS)||typeof AREX_ROADMAP_TASKS!=='undefined'){
+   const tasks=typeof AREX_ROADMAP_TASKS!=='undefined'?AREX_ROADMAP_TASKS:window.AREX_ROADMAP_TASKS;
+   const saved=typeof getArexRoadmapState==='function'?getArexRoadmapState():{};
+   const nextTask=(tasks||[]).find(t=>!saved[t.id]);
+   if(nextTask){const route={market:'dashboard',calendar:'calendar',risk:'risk',strategy:'strategy',psych:'psych',execution:'assistant',journal:'trades'};return {title:nextTask.title,detail:nextTask.detail,view:route[nextTask.id]||'dashboard',priority:'مرحله بعدی'};}
+ }
+ if(!String(state.tradingTargets?.day?.behavior||'').trim()&&!String(state.tradingTargets?.day?.trades||'').trim())return {title:'ثبت برنامه معاملاتی امروز',detail:'یک هدف رفتاری روشن و سقف تعداد معاملات امروز را ثبت کن؛ سپس تقویم و وضعیت روانی را مرور کن.',view:'dashboard',priority:'برنامه‌ریزی'};
+ if(!state.ffCache?.events?.length&&!state.calendarFeedUrl)return {title:'بررسی تقویم اقتصادی',detail:'تقویم اقتصادی را باز کن و منبع/رویدادهای امروز را بررسی کن؛ در نبود داده، زمان خبر را حدس نزن.',view:'calendar',priority:'بررسی'};
+ if(trades.length&&trades.some(t=>!(t.usd!==''&&t.usd!==null&&t.usd!==undefined&&Number.isFinite(Number(t.usd)))))return {title:'تکمیل نتیجه معاملات ژورنال',detail:'برای هر معامله امروز نتیجه پولی را ثبت کن؛ بدون نتیجه معتبر، محاسبه سقف ضرر کامل نیست.',view:'trades',priority:'ژورنال'};
+ if(trades.length&&!(log&&log.journalDone))return {title:'تکمیل ژورنال و مرور پایان روز',detail:'معاملات امروز را از نظر رعایت قوانین، نتیجه، اشتباهات و یک اقدام اصلاحی مرور کن؛ سپس گزارش روزانه را تکمیل کن.',view:'trades',priority:'تکمیل'};
+ if(trades.length&&!(Array.isArray(state.psych)?state.psych:[]).some(x=>x.date===d))return {title:'ثبت وضعیت روان‌شناسی',detail:'وضعیت ذهنی، احساس غالب و کیفیت تصمیم‌ها را ثبت کن؛ این مرحله به معنی توصیه به معامله بیشتر نیست.',view:'psych',priority:'مرور'};
+ if(trades.length)return {title:'مرور و اقدام اصلاحی',detail:'معاملات امروز را با پلن مقایسه کن و فقط یک اقدام قابل‌اندازه‌گیری برای جلسه بعد بنویس.',view:'daily',priority:'بهبود'};
+ return {title:'آمادگی پیش از ورود',detail:'تقویم، حدود ریسک و وضعیت روانی را بررسی کن؛ فقط در صورت وجود ستاپ معتبر طبق قوانین خودت اقدام کن.',view:'calendar',priority:'آمادگی'};
+}
+function renderArexNextStepNudge(){
+ const step=getArexNextTradingStep(),bubble=document.getElementById('mascotBubble'),advice=document.getElementById('arexRoadmapAdvice'),coach=document.getElementById('arexDashboardCoachText'),priority=document.getElementById('arexCoachPriority');
+ const msg='قدم بعدی امروز: '+step.title+'. '+step.detail;
+ if(bubble)bubble.textContent=msg;if(advice)advice.textContent=msg;if(coach)coach.textContent=msg;if(priority)priority.textContent=step.priority;
+ const chips=document.getElementById('mascotChips');if(chips&&!chips.querySelector('[data-next-step-action]')){const b=document.createElement('button');b.type='button';b.className='chip';b.dataset.nextStepAction='1';b.textContent='انجام قدم بعدی';b.addEventListener('click',()=>{if(step.view==='daily'&&typeof loadDailyReview==='function')loadDailyReview();goView(step.view);});chips.prepend(b);}else if(chips){const b=chips.querySelector('[data-next-step-action]');if(b)b.onclick=()=>{if(step.view==='daily'&&typeof loadDailyReview==='function')loadDailyReview();goView(step.view);};}
+}
 function renderArexDailyRoadmap(){
  const title=document.getElementById('arexRoadmapTitle'),sub=document.getElementById('arexRoadmapSubtitle'),advice=document.getElementById('arexRoadmapAdvice'),steps=document.getElementById('arexRoadmapSteps');if(!title||!steps)return;
  const d=todayIso(),trades=state.trades.filter(x=>x.date===d),log=state.dailyLogs[d],findings=getArexRuleFindings();
@@ -7142,6 +7228,18 @@ if(driveEnabled()) initGoogleDrive();
 document.getElementById('driveConnectBtn').addEventListener('click', driveConnect);
 document.getElementById('driveSignOutBtn').addEventListener('click', ()=>{ if(confirm('از حساب Google Drive خارج شوید؟')) driveSignOut(); });
 document.getElementById('driveBackupBtn').addEventListener('click', ()=> driveBackupNow());
+function setDriveQuickSyncState(kind,message){const btn=document.getElementById('driveQuickSyncBtn'),status=document.getElementById('driveQuickSyncStatus');if(btn)btn.dataset.syncState=kind||'unknown';if(status)status.textContent=message||'وضعیت همگام‌سازی نامشخص';if(btn&&message)btn.title=message;}
+function updateDriveQuickSyncState(){const connected=!!(state.driveConnected||state.driveAccountId||state.driveAccountEmail);setDriveQuickSyncState(connected?'connected':'unknown',connected?'Google Drive در AREX متصل تشخیص داده شده؛ برای همگام‌سازی کلیک کن.':'برای اتصال یا همگام‌سازی Google Drive کلیک کن.');}
+document.getElementById('driveQuickSyncBtn')?.addEventListener('click',async()=>{
+ const btn=document.getElementById('driveQuickSyncBtn');if(btn?.dataset.busy==='1')return;
+ if(!driveEnabled()){setDriveQuickSyncState('error','شناسه OAuth تنظیم نشده یا Google Drive غیرفعال است؛ تنظیمات ورود را بررسی کن.');toast('اتصال Google Drive در این نسخه فعال نیست؛ تنظیمات OAuth را بررسی کن.');goView('settings');return;}
+ if(!(state.driveConnected||state.driveAccountId||state.driveAccountEmail)){goView('settings');const connect=document.getElementById('driveConnectBtn');if(connect&&!connect.disabled){connect.click();}else toast('ابتدا از تنظیمات به Google Drive متصل شو.');return;}
+ if(btn)btn.dataset.busy='1';setDriveQuickSyncState('syncing','همگام‌سازی با Google Drive در حال انجام است…');
+ try{const ok=await driveBackupNow({silent:false});setDriveQuickSyncState(ok?'connected':'error',ok?'همگام‌سازی با Google Drive انجام شد.':'همگام‌سازی کامل نشد؛ وضعیت Drive را بررسی کن.');}
+ catch(e){setDriveQuickSyncState('error','همگام‌سازی ناموفق بود: '+String(e.message||e));toast('همگام‌سازی ناموفق بود؛ جزئیات را در تنظیمات بررسی کن.');}
+ finally{if(btn)delete btn.dataset.busy;}
+});
+updateDriveQuickSyncState();
 
 
 /* ================= AREX V5: DAILY ACCOUNTABILITY, TARGETS & PERSONAL ASSISTANT ================= */
@@ -7229,8 +7327,9 @@ function getArexRuleFindings(){
  const d=todayIso(), all=(state.trades||[]).filter(t=>t.date===d), findings=[];
  const results=all.map(arexTradeResult), known=results.filter(v=>v!==null);
  const losses=known.filter(v=>v<0).length;
- if(losses>=3) findings.push({level:'stop',title:'توقف روزانه فعال',message:'۳ معامله زیان‌ده امروز ثبت شده است. طبق قانون قطعی تو، امروز دیگر معامله نکن.'});
- else if(losses===2) findings.push({level:'review',title:'دو معامله زیان‌ده',message:'دو نتیجه زیان‌ده امروز ثبت شده است. پیش از هر تصمیم بعدی، شرایط، ریسک و پایبندی به پلن را دوباره بررسی کن.'});
+ const maxLosses=Math.max(1,Number((state.riskLimits||{}).maxLossesPerDay)||3);
+ if(losses>=maxLosses) findings.push({level:'stop',title:'توقف روزانه فعال',message:faDigits(losses)+' معامله زیان‌ده امروز ثبت شده است و به سقف تنظیم‌شده '+faDigits(maxLosses)+' زیان رسیده‌ای. امروز دیگر معامله نکن.'});
+ else if(losses===maxLosses-1) findings.push({level:'review',title:'نزدیک سقف تعداد ضررها',message:'تا اینجا '+faDigits(losses)+' نتیجه زیان‌ده ثبت شده؛ پیش از هر تصمیم بعدی، شرایط، ریسک و پایبندی به پلن را دوباره بررسی کن.'});
  const lim=state.riskLimits||{};
  const balance=Number(lim.balance);
  // Daily drawdown is evaluated only when balance and realized USD results are available.
@@ -7238,10 +7337,13 @@ function getArexRuleFindings(){
  if(balance>0 && usdResults.length===all.length && all.length){
    const realizedLoss=Math.max(0,-usdResults.reduce((a,b)=>a+b,0));
    const pct=realizedLoss/balance*100;
-   if(pct>=3 && !findings.some(f=>f.level==='stop')) findings.unshift({level:'stop',title:'سقف افت روزانه ۳٪',message:'افت تحقق‌یافته ثبت‌شده امروز حدود '+faDigits(pct.toFixed(2))+'٪ از موجودی مرجع است و به سقف ۳٪ رسیده/از آن عبور کرده؛ امروز معامله را متوقف کن.'});
-   else if(pct>=2.1) findings.push({level:'review',title:'نزدیک سقف افت روزانه',message:'افت تحقق‌یافته ثبت‌شده امروز حدود '+faDigits(pct.toFixed(2))+'٪ است؛ سقف روزانه ۳٪ را جدی بگیر.'});
+   const dailyLimitPct=Number(lim.dailyPct)||3;
+   if(pct>=dailyLimitPct && !findings.some(f=>f.level==='stop')) findings.unshift({level:'stop',title:'سقف افت روزانه',message:'افت تحقق‌یافته ثبت‌شده امروز حدود '+faDigits(pct.toFixed(2))+'٪ از موجودی مرجع است و به سقف تنظیم‌شده '+faDigits(dailyLimitPct)+'٪ رسیده/از آن عبور کرده؛ امروز معامله را متوقف کن.'});
+   else if(pct>=dailyLimitPct*0.7) findings.push({level:'review',title:'نزدیک سقف افت روزانه',message:'افت تحقق‌یافته ثبت‌شده امروز حدود '+faDigits(pct.toFixed(2))+'٪ است؛ سقف روزانه تنظیم‌شده '+faDigits(dailyLimitPct)+'٪ را جدی بگیر.'});
  } else if(all.length && !findings.some(f=>f.level==='stop')) findings.push({level:'note',title:'افت روزانه نیازمند داده کامل',message:'برای بررسی دقیق سقف افت ۳٪، موجودی مرجع و نتیجه پولی تمام معاملات امروز باید ثبت شده باشد؛ داده ناقص را به‌عنوان تأیید ایمنی تلقی نکن.'});
- if(all.some(t=>Number(t.riskPct)>1)) findings.push({level:'stop',title:'ریسک معامله بیش از ۱٪',message:'حداقل یک معامله با ریسک ثبت‌شده بیش از ۱٪ پیدا شد. این هشدار بر اساس فیلد riskPct ژورنال است؛ اگر فیلد درست ثبت نشده، آن را اصلاح کن.'});
+ const maxRiskPct=Number(lim.riskPerTradePct)||1;
+ if(all.some(t=>Number(t.riskPct)>maxRiskPct)) findings.push({level:'stop',title:'ریسک معامله بیش از حد تنظیم‌شده',message:'حداقل یک معامله با ریسک ثبت‌شده بیش از سقف تنظیم‌شده '+faDigits(maxRiskPct)+'٪ پیدا شد. این هشدار بر اساس فیلد riskPct ژورنال است؛ اگر فیلد درست ثبت نشده، آن را اصلاح کن.'});
+ const maxTrades=Math.max(1,Number(lim.maxTradesPerDay)||4);if(all.length>=maxTrades&&!findings.some(f=>f.level==='stop'))findings.push({level:'review',title:'سقف تعداد معاملات روزانه',message:'امروز '+faDigits(all.length)+' معامله ثبت شده و به سقف تنظیم‌شده '+faDigits(maxTrades)+' معامله رسیده‌ای؛ پیش از معامله جدید، پلن روزانه را بررسی کن.'});
  if(all.length && !(state.dailyLogs||{})[d]) findings.push({level:'note',title:'ژورنال روزانه',message:'برای امروز معامله ثبت شده اما گزارش روزانه هنوز ثبت نشده است.'});
  const log=(state.dailyLogs||{})[d]; if(log&&log.status==='yes'&&!log.journalDone) findings.push({level:'note',title:'تکمیل ژورنال',message:'گزارش روزانه ثبت شده، اما تکمیل ژورنال همه معاملات را تأیید نکرده‌ای.'});
  const events=(state.calendarEvents||[]).filter(e=>e.date===d);
@@ -7305,7 +7407,7 @@ function getArexCoachSummary(){
  if(!logs.journalDone)return 'معامله ثبت شده؛ ژورنال و پایبندی به پلن را تکمیل کن تا بتوانیم کیفیت اجرا را از نتیجه تصادفی جدا کنیم.';
  return 'اطلاعات ثبت‌شده امروز را مرور کن. من فقط بر اساس ژورنال و قوانین تأییدشده نتیجه‌گیری می‌کنم؛ داده زنده بازار هنوز متصل نیست.';
 }
-function initV5Assistant(){document.getElementById('arexRoadmapJournal')?.addEventListener('click',()=>goView('trades'));document.getElementById('arexRoadmapRisk')?.addEventListener('click',()=>goView('dashboard'));document.getElementById('arexRoadmapCalendar')?.addEventListener('click',()=>goView('calendar'));document.getElementById('openFullCalendar')?.addEventListener('click',()=>goView('calendar'));loadDashboardTvCalendar();renderArexDailyRoadmap();document.getElementById('arexCoachBtn')?.addEventListener('click',()=>{const ans=document.getElementById('mascotAnswer');if(ans){ans.textContent=getArexCoachSummary();ans.style.display='block';}});document.getElementById('arexNotifPermissionBtn')?.addEventListener('click',requestArexNotificationPermission);document.querySelectorAll('[data-target-period]').forEach(b=>b.addEventListener('click',()=>setTargetPeriod(b.dataset.targetPeriod)));document.getElementById('saveTargetsBtn').addEventListener('click',saveCurrentTargets);document.getElementById('openDailyReviewBtn').addEventListener('click',()=>{loadDailyReview();goView('daily');});document.getElementById('saveDailyReviewBtn').addEventListener('click',saveDailyReview);document.getElementById('dailyReviewDate').addEventListener('change',e=>loadDailyReview(e.target.value||todayIso()));document.querySelectorAll('[data-traded]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-traded]').forEach(x=>x.classList.toggle('active',x===b));document.getElementById('noTradeReasonWrap').style.display=b.dataset.traded==='no'?'block':'none';}));['dailyFocus','dailyDiscipline'].forEach(id=>document.getElementById(id).addEventListener('input',e=>{document.getElementById(id+'Value').textContent=faDigits(e.target.value)+' از ۵';}));document.getElementById('refreshEconomicCalendar')?.addEventListener('click',()=>{loadTvCalendar(true);fetchFFCalendar(true);const dw=document.getElementById('dashboardTvWrap');if(dw){dw.dataset.loaded='';loadDashboardTvCalendar();}});document.getElementById('refreshNewsSoon')?.addEventListener('click',()=>fetchFFCalendar(true));document.getElementById('topLangSelect').value=state.language;setTargetPeriod(state.targetPeriod||'day');loadDailyReview();renderDailyHistory();renderCorrectiveActionHistory();renderStrategyInsights();renderTradeWeekMap();renderDashboardDailyStatus();renderAssistantWidget();updateWeeklyWinrate();showTargetPrompts();setInterval(()=>{renderAssistantWidget();renderDashboardDailyStatus();renderArexDailyRoadmap();updateWeeklyWinrate();checkEndOfDayAssistantReminder();showTargetPrompts();},30000);checkEndOfDayAssistantReminder();setInterval(()=>{if(document.getElementById('view-daily').classList.contains('active'))renderDailyHistory();},60000);}
+function initV5Assistant(){document.getElementById('arexRoadmapJournal')?.addEventListener('click',()=>goView('trades'));document.getElementById('arexRoadmapRisk')?.addEventListener('click',()=>goView('dashboard'));document.getElementById('arexRoadmapCalendar')?.addEventListener('click',()=>goView('calendar'));document.getElementById('openFullCalendar')?.addEventListener('click',()=>goView('calendar'));loadDashboardTvCalendar();renderArexDailyRoadmap();renderArexNextStepNudge();document.getElementById('arexCoachBtn')?.addEventListener('click',()=>{const ans=document.getElementById('mascotAnswer');if(ans){ans.textContent=getArexCoachSummary();ans.style.display='block';}});document.getElementById('arexNotifPermissionBtn')?.addEventListener('click',requestArexNotificationPermission);document.querySelectorAll('[data-target-period]').forEach(b=>b.addEventListener('click',()=>setTargetPeriod(b.dataset.targetPeriod)));document.getElementById('saveTargetsBtn').addEventListener('click',saveCurrentTargets);document.getElementById('openDailyReviewBtn').addEventListener('click',()=>{loadDailyReview();goView('daily');});document.getElementById('saveDailyReviewBtn').addEventListener('click',saveDailyReview);document.getElementById('dailyReviewDate').addEventListener('change',e=>loadDailyReview(e.target.value||todayIso()));document.querySelectorAll('[data-traded]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-traded]').forEach(x=>x.classList.toggle('active',x===b));document.getElementById('noTradeReasonWrap').style.display=b.dataset.traded==='no'?'block':'none';}));['dailyFocus','dailyDiscipline'].forEach(id=>document.getElementById(id).addEventListener('input',e=>{document.getElementById(id+'Value').textContent=faDigits(e.target.value)+' از ۵';}));document.getElementById('refreshEconomicCalendar')?.addEventListener('click',()=>{loadTvCalendar(true);fetchFFCalendar(true);const dw=document.getElementById('dashboardTvWrap');if(dw){dw.dataset.loaded='';loadDashboardTvCalendar();}});document.getElementById('refreshNewsSoon')?.addEventListener('click',()=>fetchFFCalendar(true));document.getElementById('topLangSelect').value=state.language;setTargetPeriod(state.targetPeriod||'day');loadDailyReview();renderDailyHistory();renderCorrectiveActionHistory();renderStrategyInsights();renderTradeWeekMap();renderDashboardDailyStatus();renderAssistantWidget();updateWeeklyWinrate();showTargetPrompts();setInterval(()=>{renderAssistantWidget();renderDashboardDailyStatus();renderArexDailyRoadmap();updateWeeklyWinrate();checkEndOfDayAssistantReminder();showTargetPrompts();},30000);checkEndOfDayAssistantReminder();setInterval(()=>{if(document.getElementById('view-daily').classList.contains('active'))renderDailyHistory();},60000);}
 
 let __arexAppStarted = false;
 function startApp(){ if(__arexAppStarted) return; __arexAppStarted = true; loadAll(); }
@@ -7415,11 +7517,11 @@ function renderArexRoadmapPage(){
  const dateEl=document.getElementById('arexRoadmapDate');if(dateEl)dateEl.textContent=new Date().toLocaleDateString(state.language==='fa'?'fa-IR':'en-GB',{weekday:'long',year:'numeric',month:'long',day:'numeric',timeZone:'Asia/Tehran'});
  const saved=getArexRoadmapState();const taskBox=document.getElementById('arexRoadmapTasks');if(!taskBox)return;
  taskBox.innerHTML=AREX_ROADMAP_TASKS.map(t=>'<label class="arex-task '+(saved[t.id]?'done':'')+'"><input type="checkbox" data-roadmap-task="'+t.id+'" '+(saved[t.id]?'checked':'')+'><span><b>'+escapeHtml(t.title)+'</b><small>'+escapeHtml(t.detail)+'</small></span></label>').join('');
- taskBox.querySelectorAll('[data-roadmap-task]').forEach(cb=>cb.addEventListener('change',()=>{const next=getArexRoadmapState();next[cb.dataset.roadmapTask]=cb.checked;saveArexRoadmapState(next);cb.closest('.arex-task').classList.toggle('done',cb.checked);updateArexRoadmapProgress();}));
+ taskBox.querySelectorAll('[data-roadmap-task]').forEach(cb=>cb.addEventListener('change',()=>{const next=getArexRoadmapState();next[cb.dataset.roadmapTask]=cb.checked;saveArexRoadmapState(next);cb.closest('.arex-task').classList.toggle('done',cb.checked);updateArexRoadmapProgress();renderArexNextStepNudge();}));
  const note=document.getElementById('arexRoadmapNote');if(note)note.value=saved.note||'';
  const save=document.getElementById('arexRoadmapSaveNote');if(save&&!save.dataset.bound){save.dataset.bound='1';save.addEventListener('click',()=>{const next=getArexRoadmapState();next.note=document.getElementById('arexRoadmapNote').value;const ok=saveArexRoadmapState(next);toast(ok?'یادداشت برنامه ذخیره شد':'ذخیره‌سازی محلی در دسترس نیست');});}
  document.querySelectorAll('[data-arex-go]').forEach(b=>{if(!b.dataset.bound){b.dataset.bound='1';b.addEventListener('click',()=>goView(b.dataset.arexGo));}});
- updateArexRoadmapProgress();
+ updateArexRoadmapProgress();renderArexNextStepNudge();
 }
 function updateArexRoadmapProgress(){const saved=getArexRoadmapState(),done=AREX_ROADMAP_TASKS.filter(t=>saved[t.id]).length,pct=Math.round(done/AREX_ROADMAP_TASKS.length*100);const text=document.getElementById('arexRoadmapProgressText'),bar=document.getElementById('arexRoadmapProgressBar');if(text)text.textContent=faDigits(pct)+'٪';if(bar)bar.style.width=pct+'%';const summary=document.getElementById('arexRoadmapSummary');if(summary)summary.innerHTML=[['تکمیل‌شده',faDigits(done)+' / '+faDigits(AREX_ROADMAP_TASKS.length),'مراحل علامت‌خورده'],['معاملات امروز',faDigits((state.trades||[]).filter(t=>t.date===todayIso()).length),'از ژورنال ذخیره‌شده'],['تقویم اقتصادی',state.ffCache&&Array.isArray(state.ffCache.events)&&state.ffCache.events.length?'رویدادهای کش‌شده موجود':'رویداد کش‌شده‌ای نیست','منبع را در صفحه تقویم بررسی کن'],['وضعیت اتصال',navigator.onLine?'اینترنت در دسترس':'آفلاین','این وضعیت به معنی اتصال سرویس‌ها نیست']].map(x=>'<div class="arex-kpi"><span class="label">'+x[0]+'</span><strong>'+x[1]+'</strong><small>'+x[2]+'</small></div>').join('');}
 
@@ -7601,7 +7703,7 @@ window.arexRunRuntimeVerification = async function(options={}) {
   }
 })();
 </script>
-<script type="module" src="auth-client.js?v=9.7.14"></script>
+<script type="module" src="auth-client.js?v=9.7.15"></script>
 <script>
 
 /* ================= V5.5: onboarding, free calendar, conversational AREX ================= */
@@ -7661,13 +7763,13 @@ window.arexRunRuntimeVerification = async function(options={}) {
  const saveEndpoint=value=>AREXCore.accountLocalStorage.write(localStorage,endpointKey,String(value||''));
  if($('arexAiEndpoint'))$('arexAiEndpoint').value=readEndpoint();
  function addChat(role,text){const h=$('arexChatHistory');if(!h)return;const el=document.createElement('div');el.className='arex-chat-msg '+role;const label=document.createElement('small');label.textContent=role==='user'?'شما':'آرکس';el.appendChild(label);el.appendChild(document.createTextNode(text));h.appendChild(el);h.scrollTop=h.scrollHeight;history.push({role:role==='user'?'user':'assistant',content:text});if(history.length>24)history.splice(0,2);}
- function contextSnapshot(){const st=(typeof state!=='undefined'&&state)||window.state||{};return {app:'AREX V9.7.14',language:st.language||'fa',timezone:'Asia/Tehran',tradesCount:Array.isArray(st.trades)?st.trades.length:0,psychNotesCount:Array.isArray(st.psych)?st.psych.length:0,goalsCount:Array.isArray(st.goals)?st.goals.length:0,confirmedRules:Array.isArray(st.tradeRules)?st.tradeRules:[],riskLimits:st.riskLimits||{},activePage:document.querySelector('.view.active')?.id||'unknown',instruction:'Do not invent user data, live prices, strategy rules, or news. If information is missing, ask a focused question. Do not promise profitable outcomes.'};}
+ function contextSnapshot(){const st=(typeof state!=='undefined'&&state)||window.state||{};return {app:'AREX V9.7.15',language:st.language||'fa',timezone:'Asia/Tehran',tradesCount:Array.isArray(st.trades)?st.trades.length:0,psychNotesCount:Array.isArray(st.psych)?st.psych.length:0,goalsCount:Array.isArray(st.goals)?st.goals.length:0,confirmedRules:Array.isArray(st.tradeRules)?st.tradeRules:[],riskLimits:st.riskLimits||{},activePage:document.querySelector('.view.active')?.id||'unknown',instruction:'Do not invent user data, live prices, strategy rules, or news. If information is missing, ask a focused question. Do not promise profitable outcomes.'};}
  function localAnswer(q){const x=q.toLowerCase();if(/سلام|درود|hello|hi\b/.test(x))return 'سلام! من آرکس هستم. می‌توانم در کار با بخش‌های AREX، نظم روزانه، ژورنال، مدیریت ریسک و مرور قوانین کمک کنم. برای پاسخ عمومی درباره هر موضوع، endpoint هوش مصنوعی را در تنظیمات وصل کن.';if(/از کجا شروع|شروع کنم|first|start/.test(x))return 'برای شروع این مسیر را برو: ۱) برنامه روزانه را باز کن و وضعیت و هدف امروز را ثبت کن؛ ۲) در مدیریت ریسک موجودی و ریسک مجاز را تنظیم کن؛ ۳) پیش از معامله قوانین استراتژی و تقویم اقتصادی را مرور کن؛ ۴) بعد از معامله نتیجه و اسکرین‌شات را در ژورنال ثبت کن؛ ۵) آخر روز عملکرد و روان‌شناسی را مرور کن.';if(/ریسک|risk|ضرر/.test(x))return 'پیش از هر معامله، حد ضرر و حجم را طوری تعیین کن که زیان احتمالی از سقف ریسک شخصی‌ات بیشتر نشود. اگر موجودی، درصد ریسک، نماد و فاصله SL را بدهی، می‌توانم داده‌های لازم برای محاسبه را بررسی کنم؛ برای محاسبه دقیق حجم، مشخصات قرارداد/ارزش هر پوینت بروکر هم لازم است.';if(/تقویم|خبر|news|calendar/.test(x))return 'از تب «تقویم اقتصادی» استفاده کن؛ تب «تقویم رایگان (API)» از Finance Calendar رویدادهای مهم را می‌گیرد. اگر فید خطا داد، خطا را بررسی کن و خالی بودن فهرست را به معنی نبود خبر تلقی نکن.';if(/ژورنال|ثبت معامله|journal/.test(x))return 'از «ژورنال معاملات» برای ثبت نماد، جهت، ورود/خروج، SL/TP، نتیجه و دلیل ورود استفاده کن. ثبت دلیل و رعایت قوانین از ثبت صرف سود و زیان مهم‌تر است.';if(/تنظیمات|settings/.test(x))return 'تنظیمات را به بخش‌های ظاهر، سشن‌ها، ریسک، قوانین، اتصال‌ها و پشتیبان‌گیری تقسیم کرده‌ایم. از نوار دسترسی سریع بالای تنظیمات برای رفتن به بخش موردنظر استفاده کن.';if(/استراتژی|قانون|strategy/.test(x))return 'قوانین تأییدشده‌ات باید بر دانش عمومی مقدم باشند. اگر شرط ورود، تایم‌فریم، حد ضرر یا استثنا مبهم است، آن را قطعی فرض نمی‌کنم. سؤال یا قانون دقیق را بنویس تا کمک کنم ابهامش را مشخص کنیم.';return 'برای این سؤال هنوز موتور هوش مصنوعی عمومی به AREX وصل نشده است؛ نمی‌خواهم پاسخ ساختگی بدهم. در تنظیمات ← «اتصال هوش مصنوعی آرکس»، آدرس یک backend امن سازگار را ثبت کن. تا آن زمان می‌توانم درباره امکانات داخلی، نظم معاملاتی، ژورنال و ریسک با اطلاعات موجود راهنمایی بدهم.';}
  async function askArex(text){if(chatBusy||!text.trim())return;chatBusy=true;const send=$('arexChatSend');if(send){send.disabled=true;send.textContent='…'}addChat('user',text.trim());const endpoint=readEndpoint();try{if(endpoint){const res=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:history.slice(-16),context:contextSnapshot()}),signal:AbortSignal.timeout?AbortSignal.timeout(30000):undefined});if(!res.ok)throw new Error('HTTP '+res.status);const data=await res.json();const answer=data.answer||data.reply||data.text||data.choices?.[0]?.message?.content;if(typeof answer!=='string'||!answer.trim())throw new Error('پاسخ سرویس خالی یا ناشناخته است');addChat('assistant',answer.trim());}else addChat('assistant',localAnswer(text));}catch(e){addChat('assistant','اتصال به سرویس هوش مصنوعی ناموفق بود ('+e.message+'). آدرس endpoint، CORS و وضعیت backend را بررسی کن. پاسخ جایگزین ساختگی تولید نکردم.');}finally{chatBusy=false;if(send){send.disabled=false;send.textContent='ارسال ↗'}}}
  if($('arexChatForm'))$('arexChatForm').addEventListener('submit',e=>{e.preventDefault();const input=$('arexChatInput'),text=input.value.trim();if(!text)return;input.value='';askArex(text)});
  if($('arexChatInput'))$('arexChatInput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();$('arexChatForm').requestSubmit()}});
  if($('arexAiEndpointSave'))$('arexAiEndpointSave').addEventListener('click',()=>{const val=$('arexAiEndpoint').value.trim();if(val&&!/^https:\/\//i.test(val)){ $('arexAiEndpointStatus').textContent='آدرس باید با https:// شروع شود.';return;}try{saveEndpoint(val);$('arexAiEndpointStatus').textContent=val?'آدرس ذخیره شد. کلید محرمانه باید فقط در backend باشد.':'اتصال مدل زبانی پاک شد.';}catch(e){$('arexAiEndpointStatus').textContent='ذخیره در مرورگر انجام نشد.'}});
- if($('arexAiEndpointTest'))$('arexAiEndpointTest').addEventListener('click',async()=>{const val=$('arexAiEndpoint').value.trim();if(!val){$('arexAiEndpointStatus').textContent='ابتدا آدرس endpoint را وارد کن.';return;}try{const r=await fetch(val,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'user',content:'Reply with exactly: AREX_OK'}],context:{app:'AREX V9.7.14',test:true}})});if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();const ans=d.answer||d.reply||d.text||d.choices?.[0]?.message?.content;if(!ans)throw new Error('ساختار پاسخ نامعتبر');$('arexAiEndpointStatus').textContent='اتصال برقرار است؛ پاسخ سرویس دریافت شد.';}catch(e){$('arexAiEndpointStatus').textContent='آزمون ناموفق: '+e.message+' · CORS و فرمت پاسخ را بررسی کن.'}});
+ if($('arexAiEndpointTest'))$('arexAiEndpointTest').addEventListener('click',async()=>{const val=$('arexAiEndpoint').value.trim();if(!val){$('arexAiEndpointStatus').textContent='ابتدا آدرس endpoint را وارد کن.';return;}try{const r=await fetch(val,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'user',content:'Reply with exactly: AREX_OK'}],context:{app:'AREX V9.7.15',test:true}})});if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();const ans=d.answer||d.reply||d.text||d.choices?.[0]?.message?.content;if(!ans)throw new Error('ساختار پاسخ نامعتبر');$('arexAiEndpointStatus').textContent='اتصال برقرار است؛ پاسخ سرویس دریافت شد.';}catch(e){$('arexAiEndpointStatus').textContent='آزمون ناموفق: '+e.message+' · CORS و فرمت پاسخ را بررسی کن.'}});
  // First-visit guided tour. Only shown after the app's main shell is visible.
  const tourSteps=[
   {target:'#view-dashboard',title:'به AREX خوش آمدی',text:'داشبورد نمای کلی وضعیت و عملکرد است. برای شروع واقعی، مسیر روزانه را دنبال کن و داده‌های شخصی خودت را وارد کن.'},

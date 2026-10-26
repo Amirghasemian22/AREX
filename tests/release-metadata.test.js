@@ -7,12 +7,12 @@ const manifest = JSON.parse(fs.readFileSync('manifest.json', 'utf8'));
 const readme = fs.readFileSync('README.md', 'utf8');
 const sw = fs.readFileSync('sw.js', 'utf8');
 
-test('release metadata consistently identifies the current AREX V9.7.14 build', () => {
-  assert.match(html, /<title>AREX V9\.7\.14<\/title>/);
-  assert.equal(manifest.name.split(' — ')[0], 'AREX V9.7.14');
-  assert.equal(manifest.short_name, 'AREX V9.7.14');
-  assert.match(readme, /^# AREX V9\.7\.14/m);
-  assert.match(readme, /version-9\.7\.14-/);
+test('release metadata consistently identifies the current AREX V9.7.15 build', () => {
+  assert.match(html, /<title>AREX V9\.7\.15<\/title>/);
+  assert.equal(manifest.name.split(' — ')[0], 'AREX V9.7.15');
+  assert.equal(manifest.short_name, 'AREX V9.7.15');
+  assert.match(readme, /^# AREX V9\.7\.15/m);
+  assert.match(readme, /version-9\.7\.15-/);
 });
 
 test('Google Drive OAuth config and adapter bridges are present in the current page', () => {
@@ -20,7 +20,7 @@ test('Google Drive OAuth config and adapter bridges are present in the current p
   assert.match(html, /window\.AREX_GOOGLE_CLIENT_ID\s*=\s*getArexGoogleClientId\(\)/);
   assert.match(html, /window\.arexDriveIsEnabled\s*=\s*driveEnabled/);
   assert.match(html, /window\.arexDriveStartOAuth\s*=/);
-  assert.match(html, /<script type="module" src="auth-client\.js\?v=9\.7\.14"><\/script>/);
+  assert.match(html, /<script type="module" src="auth-client\.js\?v=9\.7\.15"><\/script>/);
   assert.match(sw, /'\.\/auth-client\.js'/);
-  assert.match(sw, /const CACHE_VERSION = 'v9-7-14-oauth-id-fallback-cache-refresh-2026-10-26'/);
+  assert.match(sw, /const CACHE_VERSION = 'v9-7-15-risk-sync-nextstep-2026-10-26'/);
 });

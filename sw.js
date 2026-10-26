@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v9-7-14-oauth-id-fallback-cache-refresh-2026-10-26';
+const CACHE_VERSION = 'v9-7-15-risk-sync-nextstep-2026-10-26';
 const CACHE_NAME = 'arex-' + CACHE_VERSION;
 const APP_SHELL = [
   './',
