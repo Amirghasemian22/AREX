@@ -1,4 +1,4 @@
-AREX V9.7.14 --- Personal Trading Assistant & Management Workspace
+AREX V9.8.0 --- Personal Trading Assistant & Management Workspace
 
 <p align="center">
 
@@ -21,7 +21,7 @@ Report an Issue</a>{=html}
 
 <p align="center">
 
-<img src="https://img.shields.io/badge/Version-9.7.14-00B8D9?style=for-the-badge" alt="Version 9.7.14">{=html}
+<img src="https://img.shields.io/badge/Version-9.8.0-00B8D9?style=for-the-badge" alt="Version 9.8.0">{=html}
 <img src="https://img.shields.io/badge/Platform-Web%20App%20%7C%20PWA-243B59?style=for-the-badge" alt="Web application and PWA">{=html}
 <img src="https://img.shields.io/badge/Focus-Trading%20Management-16A085?style=for-the-badge" alt="Trading Management">{=html}
 <img src="https://img.shields.io/badge/Build-Mobile%20Test%20Build-orange?style=for-the-badge" alt="Mobile test build">{=html}
