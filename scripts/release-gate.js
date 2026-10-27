@@ -107,7 +107,8 @@ check('Google Drive-only authentication and backup are wired', () => {
 check('AI Worker enforces exact-origin checks and request throttling', () => {
   const worker = read('arex-ai-worker.js');
   if (!/if \(origin !== allowed\) return json\(\{ error: 'origin_not_allowed' \}/.test(worker)) fail('AI chat must reject missing/unapproved origins');
-  if (!/allowAiRate\(env, `ai:\$\{ip\}`, 12, 60\)/.test(worker)) fail('AI chat rate limiter missing');
+  if (!/verifyGoogleUser\(request, env\)/.test(worker) || !/aud !== clientId/.test(worker)) fail('AI chat must require an audience-checked Google token');
+  if (!/allowAiRate\(env, `ai:\$\{user\.sub\}`, 12, 60\)/.test(worker)) fail('AI chat per-user rate limiter missing');
   if (!/env\.GEMINI_API_KEY/.test(worker)) fail('AI provider secret must be server-side');
   if (!/request_too_large/.test(worker)) fail('AI request size guard missing');
   return 'exact-origin guard, per-IP throttle, payload bound, server-side provider key';

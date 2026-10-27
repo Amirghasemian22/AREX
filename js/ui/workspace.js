@@ -22,6 +22,8 @@ function render(){
  $('arexWFocusBtn').textContent=s.focusMode?'خروج از حالت تمرکز':'فعال‌کردن حالت تمرکز';
  renderGoals(); renderImageTools(); renderSearch(); renderBacktest(); renderRisk(); renderPsychSignals(); renderWeekly(); renderMemory(); checkWeeklyNotify();
 }
+/* V9.8.0: was called but never defined, which aborted this render chain (weekly summary + weekly notification never ran). */
+function renderPsychSignals(){ /* psych signals now come from AREXCore.brain (verdict + alerts); no dedicated container */ }
 function savePlan(){
  const s=appState(),d=dateKey();
  s.dailyPlans[d]={session:$('arexWSession').value,prep:$('arexWPrep').value,events:$('arexWEvents').value,checklist:$('arexWChecklist').value,review:$('arexWReview').value,nextAction:$('arexWNext').value,updatedAt:new Date().toISOString()};
@@ -153,7 +155,7 @@ function renderPsych(){
  $('arexWPsych').innerHTML=(out.signals.length?out.signals.map(s=>`<article class="arex-w-signal ${esc(s.level)}"><strong>${esc(s.code.replaceAll('_',' '))}</strong><p>${esc(s.evidence)}</p><small>سطح هشدار: ${esc(s.level)} · شواهد: ${s.count}</small></article>`).join(''):'<p class="arex-w-muted">با داده‌های فعلی الگوی پرخطر کافی برای هشدار پیدا نشد. این به‌معنای نبود ریسک نیست؛ فقط شواهد ثبت‌شده کافی نیست.</p>')+`<p class="arex-w-muted">${esc(out.disclaimer)}</p>`;
 }
 function range(){
- const now=new Date(),end=now.toISOString().slice(0,10),start=new Date(now.getTime()-6*86400000).toISOString().slice(0,10);return {start,end};
+ const loc=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'),now=new Date(),end=loc(now),start=loc(new Date(now.getTime()-6*86400000));return {start,end};
 }
 function renderWeekly(){
  const r=range(),report=window.AREXExtended.weeklyReport(trades(),state.dailyLogs||{},r.start,r.end);
