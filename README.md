@@ -1,766 +1,412 @@
-AREX V9.8.0 --- Personal Trading Assistant & Management Workspace
+::: {align="center"}
 
-<p align="center">
+AREX
 
-<strong>{=html}A personal trading workspace for trade journaling, risk
-management, strategy discipline, trading psychology, and performance
-analysis.</strong>{=html}
+Trade with a process --- not a guess.
 
-</p>
+Your personal trading workspace for clearer decisions, disciplined
+risk, and meaningful reviews.
 
-<p align="center">
+Open AREX ↗ · GitHub
+Repository · Report a
+Bug
 
-<a href="https://amirghasemian22.github.io/AREX/">{=html}🚀 Open
-AREX</a>{=html} ·
-<a href="https://github.com/Amirghasemian22/AREX">{=html}💻 GitHub
-Repository</a>{=html} ·
-<a href="https://github.com/Amirghasemian22/AREX/issues">{=html}🐛
-Report an Issue</a>{=html}
+<br>{=html}
 
-</p>
 
-<p align="center">
 
-<img src="https://img.shields.io/badge/Version-9.8.0-00B8D9?style=for-the-badge" alt="Version 9.8.0">{=html}
-<img src="https://img.shields.io/badge/Platform-Web%20App%20%7C%20PWA-243B59?style=for-the-badge" alt="Web application and PWA">{=html}
-<img src="https://img.shields.io/badge/Focus-Trading%20Management-16A085?style=for-the-badge" alt="Trading Management">{=html}
-<img src="https://img.shields.io/badge/Build-Mobile%20Test%20Build-orange?style=for-the-badge" alt="Mobile test build">{=html}
 
-</p>
+:::
 
-📌 What Is AREX?
+The goal: make every trade teach you something
 
-AREX is a personal trading assistant and management workspace designed
-to help traders structure their decisions, manage risk, document trades,
-and review their trading process over time.
+A trading day is more than entries and exits. It is a series of
+decisions: preparing for the session, checking risk, following a
+strategy, managing emotions, and reviewing what happened.
 
-Rather than serving only as a trade recorder, AREX brings several
-trading workflows together:
+AREX brings those steps into one workspace. Use it to document your
+process, keep your rules visible, understand your results, and identify
+what to improve next.
 
-Trading dashboard and daily planning
+AREX is a trading-management and decision-support tool---not a signal
+service, broker, or promise of profit.
 
-Trade journaling and trade-history review
+Your trading workflow, in one place
 
-Risk-management tools and risk-limit awareness
+<table>
 
-Strategy rules and execution discipline
+<tr>
 
-AI-assisted decision support, with attention to missing information
-and defined rules
+<td width="50%" valign="top">
 
-Trading psychology and behavioral reviews
+📊 See the bigger picture
 
-Performance statistics and visual analytics
+Review your recorded activity, performance summaries, daily priorities,
+and items that need attention from the dashboard.
 
-Economic-calendar and market-session tools
+📝 Keep a useful trade journal
 
-Prop-firm challenge tracking
+Record the setup, direction, entry, exit, stop-loss, take-profit,
+position size, outcome, notes, and execution quality---where supported
+by the current build.
 
-Personal goals, reviews, and routines
+🛡️ Plan risk before entry
 
-Local data management, export, backup, and restore workflows
+Work with account values, risk percentage, monetary risk, stop distance,
+position sizing, risk-to-reward, and configured daily limits.
 
-Responsive desktop and mobile layouts, with PWA support where
-available
+</td>
 
-AREX is intended to help traders understand not only what happened in
-a trade, but why it was taken, whether defined rules were followed, and
-what can be improved next time.
+<td width="50%" valign="top">
 
-Project Status
+🧭 Follow your process
 
-Version: V9.7.12
+Organize your daily routine and compare proposed trades with the
+strategy rules and conditions you have defined.
 
-Build designation: Mobile Login Test Build
+🧠 Learn from your decisions
 
-Status: Pre-release / testing build
+Record emotions, hesitation, impulsive actions, rule violations, and
+post-trade reflections to make recurring patterns easier to spot.
 
-V9.7.12 includes responsive-login and mobile-interface improvements. It
-is a testing build, not a claim that every external integration or every
-supported mobile device has been verified. Authentication, cloud backup,
-live data sources, notifications, and deployed behavior depend on
-configuration and require environment-specific testing.
+🤖 Get structured decision support
 
-Before publishing: The ?arex-test=1 local test entry is intended
-only for local testing. Verify that the temporary test-login path is
-disabled or unavailable in the production build before deploying
-publicly. Never deploy a test-bypass build to a public domain.
+The AI-assisted workflow can help explain which defined conditions are
+met, what is missing, and why a reliable evaluation may not yet be
+possible---when the relevant feature and provider are configured.
 
-✨ Core Features
+</td>
 
-📊 1. Trading Dashboard
+</tr>
 
-The dashboard brings important trading information and workflow prompts
-into one place. Depending on available records and configuration, it can
-display or help review:
+<tr>
 
-Trading activity and account performance
+<td width="50%" valign="top">
 
-Profit-and-loss summaries
+📈 Review performance, not just outcomes
 
-Daily plans and priorities
+Explore available statistics and visualizations, such as win/loss
+results, P&L, R-multiples, equity trends, and comparisons by setup,
+symbol, or session.
 
-Journal records and recent activity
+🗓️ Prepare around the market
 
-Performance charts and visual summaries
+Use the economic-calendar and market-session areas to organize your
+routine. Verify important event times and session hours with current,
+reliable sources.
 
-Risk and discipline reminders
+</td>
 
-Items that need more information before a decision can be evaluated
+<td width="50%" valign="top">
 
-The dashboard should be interpreted using the data actually available in
-the application; missing or unverified data should not be treated as
-live account information.
+🏆 Keep goals and limits visible
 
-📈 2. Trading Journal
+Organize personal objectives and track configured prop-firm challenge
+rules. Always verify the firm's current drawdown and evaluation
+requirements.
 
-Record trades and build a structured history of trading decisions.
-Journal records may include:
+💾 Keep control of your records
 
-Symbol and trade direction
+Use the data export, import, backup, and restore options available in
+your build. Optional cloud features depend on correct configuration and
+successful connection.
 
-Entry and exit prices
+</td>
 
-Stop-loss and take-profit
+</tr>
 
-Position size and planned risk
+</table>
 
-Strategy or setup
+A simple way to use AREX
 
-Trade outcome and R-multiple
+01 --- Prepare
+Set your priorities, review the market calendar and sessions, and check
+the rules that matter for the day.
 
-Notes before and after the trade
+02 --- Check risk
+Confirm account values, risk limits, stop-loss, and position size before
+relying on a calculation.
 
-Execution quality and rule adherence
+03 --- Record
+Document the trade and the reasoning behind it---not only the final
+result.
 
-Use the journal to review setups, identify recurring mistakes, and
-better understand trading behavior. Back up important records regularly.
+04 --- Review
+Compare the trade with your strategy, note emotional or execution
+mistakes, and capture what you learned.
 
-🧮 3. Risk Management
+05 --- Improve
+Use your journal and available analytics to find repeated patterns and
+choose one specific improvement for the next session.
 
-Plan and review risk before entering a trade. Depending on the selected
-tool and supplied information, risk workflows can include:
+The aim is not to take more trades. It is to make your process more
+deliberate and your reviews more useful.
 
-Account balance or equity inputs
+Workspace areas
 
-Risk percentage and monetary risk
+AREX is organized around these main workflows; exact labels and
+availability can vary by build.
 
-Entry and stop-loss distance
+Area                                What it helps you do
 
-Take-profit and risk-to-reward ratio
+Dashboard                           Review activity, priorities, and
+available performance information
 
-Position-size calculations
+Daily Roadmap                       Organize the daily routine and
+pre-trade checks
 
-Daily limits and risk warnings
+Trade Journal                       Record and review trading decisions
 
-Important: Results depend on the accuracy of supplied values and
-instrument specifications. Verify tick value, contract size, lot size,
-account currency, and broker requirements before placing a trade.
+AI Trading Assistant                Evaluate defined conditions and
+surface missing information
 
-🧠 4. Trading Psychology
-
-Document the behavioral side of trading, including:
-
-Emotional state and mood
-
-Fear, hesitation, and impulsive decisions
-
-Discipline and rule adherence
-
-Trading mistakes and behavioral patterns
-
-Personal observations and post-trade reflections
-
-Goals for improving consistency
-
-The purpose is to make behavioral patterns easier to recognize and
-review---not to provide medical or psychological diagnosis.
-
-📋 5. Strategy Rules & Trading Discipline
-
-Keep the trading process organized around explicit rules. This workflow
-supports the management and review of:
-
-Personal trading rules and strategy conditions
-
-Trade evaluation against defined criteria
-
-Rule violations and repeated mistakes
-
-Planned versus impulsive trades
-
-Missing information that prevents a reliable evaluation
-
-Undefined or conflicting strategy conditions should be clarified rather
-than silently treated as confirmed rules. AI-assisted evaluations are
-decision-support tools, not guarantees of a trade outcome.
-
-🤖 6. AI Trading Assistant
-
-The AI assistant is intended to help users review their process and
-reason against supplied rules and information. Depending on
-configuration and available data, it may help with:
-
-Reviewing a proposed trade against defined conditions
-
-Highlighting missing information
-
-Explaining why a setup may or may not satisfy specified criteria
-
-Reviewing journal notes and recurring mistakes
-
-Supporting risk and discipline workflows
-
-The assistant should not be treated as a source of guaranteed signals,
-guaranteed returns, or a substitute for independent verification. AI
-features that rely on an external provider require the appropriate
-service configuration and network access.
-
-📉 7. Performance Analytics
-
-Review recorded trading data instead of relying only on memory or
-isolated outcomes. Depending on the available records and
-implementation, analytics may include:
-
-Win/loss statistics
-
-Profit-and-loss summaries
-
-Equity-curve visualization
-
-R-multiple analysis
-
-Setup, symbol, or session comparisons
-
-Trading-history reviews
-
-Progress in reducing recurring mistakes
-
-Discipline and execution reviews
-
-Meaningful conclusions require sufficient and accurate data. Historical
-performance does not guarantee future results.
-
-📅 8. Economic Calendar
-
-The economic-calendar area is intended to help users review scheduled
-events relevant to their trading routine. Depending on the configured
-source, available information may include:
-
-Upcoming economic events
-
-Event impact and currency information
-
-Event timing
-
-Event filters and personal notes
-
-Data availability and freshness depend on the configured integration.
-Verify important events and release times against a reliable, current
-source. A visible calendar interface does not by itself prove that a
-live provider connection is active.
-
-🌍 9. Market Sessions & Time Tools
-
-Market-session tools can help organize trading routines across time
-zones. Depending on the current implementation, they may include:
-
-Forex market-session timelines
-
-World-clock information
-
-Session planning
-
-Time-related dashboard information
-
-Market hours may change because of daylight-saving transitions,
-holidays, and provider differences. Confirm relevant times when
-precision matters.
-
-🏆 10. Goals & Prop-Firm Challenge
-
-AREX is designed to help organize trading objectives and risk awareness.
-Depending on the configured workflow, this may include:
-
-Personal trading goals
-
-Daily and weekly limits
-
-Risk-related rules
-
-Progress reviews
-
-Prop-firm challenge tracking
-
-Discipline and consistency checks
-
-Challenge requirements vary by provider. Verify the firm's current
-rules, drawdown calculations, and limits before relying on any tracker.
-
-🎨 11. Interface, Language & Customization
-
-AREX provides a dark trading-workspace interface and responsive layouts.
-Depending on the current build, customization may include:
-
-Theme and appearance settings
-
-Language selection
-
-Layout adjustments for desktop and mobile
-
-Mobile navigation designed for touch interaction
-
-A sticky, translucent top bar on supported layouts
-
-PWA installation support where the browser and deployment permit it
-
-Exact appearance and install behavior can vary by browser, operating
-system, viewport size, and deployment configuration.
-
-💾 12. Local Data, Export & Backup
-
-AREX uses browser-side data-management mechanisms for supported
-workflows. Depending on the current implementation, features may
-include:
-
-IndexedDB and browser storage
-
-JSON export and import
-
-Backup and restore workflows
-
-Recovery of previously exported data
-
-Optional cloud-backup integrations
-
-Important: Browser storage is not a substitute for an independent
-backup. Clearing browser data, changing browsers, switching devices, or
-browser-storage problems may affect access to local records. Export
-backups regularly and verify that they can be restored.
-
-☁️ 13. Optional Cloud Integrations
-
-The project has been developed with support for external-service
-integrations, depending on configuration. These may include
-authentication, remote storage, and cloud backup.
-
-Cloud functionality requires correct provider configuration, authorized
-domains, security rules, and any required server-side components. Do not
-assume a cloud feature is operational just because its interface is
-present. Confirm successful requests and test restore workflows in the
-target environment.
-
-📱 14. Mobile Experience & Progressive Web App
-
-V9.7.12 is a mobile-login test build focused on responsive login layout
-and mobile usability. The project is intended to provide a web-based,
-app-like experience on compatible devices.
-
-Depending on the deployed build and browser, PWA-related capabilities
-may include:
-
-Responsive mobile interface
-
-Installable app experience
-
-Web App Manifest
-
-Service Worker asset caching
-
-Access to some cached resources while offline
-
-Touch-friendly navigation and controls
-
-PWA behavior varies by browser and operating system. Offline
-availability does not mean all features work without a network:
-authentication, cloud synchronization, AI providers, notifications, and
-live market data may require connectivity. Test installation and
-behavior on the actual Android and iOS devices you intend to support.
-
-🧭 Main Workspace Areas
-
-The main functional areas are intended to cover the following workflows.
-Exact labels and availability may differ between builds.
-
-Area                                Purpose
-
-Dashboard                           Review trading activity,
-priorities, and available
-performance information
-
-Daily Roadmap                       Organize the daily trading routine
-and pre-trade checks
-
-Trade Journal                       Record, organize, and review trades
-
-AI Trading Assistant                Support rule-based review and
-identify missing information
-
-Risk Management                     Review planned risk, position
-sizing, and risk limits
+Risk Management                     Review risk, position sizing, and
+configured limits
 
 Strategy & Rules                    Maintain strategy conditions and
 execution rules
 
-Performance Analytics               Evaluate recorded results and
+Performance Analytics               Explore recorded results and
 trading behavior
 
 Psychology Journal                  Document emotions and behavioral
 patterns
 
-Economic Calendar                   Review scheduled market events from
-the configured source
+Economic Calendar                   Review scheduled events from the
+configured source
 
-Market Sessions                     Organize activity around market
-hours
+Market Sessions                     Plan around market hours and time
+zones
 
-Prop-Firm Challenge                 Track configured challenge
-objectives and risk limits
+Prop-Firm Challenge                 Track configured objectives and
+risk limits
 
-🖥️ Live Application
+Honest by design
 
-Open AREX:
+A clear interface should never make uncertain information look certain.
 
-https://amirghasemian22.github.io/AREX/
+No guaranteed signals or returns. AREX supports your decision
+process; it cannot guarantee a trade outcome.
 
-The public URL may not contain the latest test build until it has been
-explicitly deployed. Check the deployed version before assuming that it
-matches V9.7.12.
+Your rules matter. Undefined or conflicting strategy conditions
+should be clarified rather than silently treated as confirmed.
 
-🛠️ Technology
+Missing data is still missing. A visible calendar, chart, or
+connection control does not by itself prove a live provider is
+connected.
 
-AREX is a browser-based application built with standard web
-technologies.
+Calculations need correct inputs. Instrument specifications,
+tick value, contract size, lot size, and account currency can affect
+risk calculations.
 
-Core Technologies
+External services need testing. Authentication, cloud backup, AI
+providers, notifications, and market data depend on configuration,
+network access, and deployment.
 
-HTML5
+A successful test suite is not a production guarantee. Test the
+actual deployed site and devices before relying on a workflow.
 
-CSS3
+Open AREX
 
-JavaScript
+Try the deployed application:
+amirghasemian22.github.io/AREX
 
-Browser Capabilities
+The public site may not always match the newest local or testing build.
+Check the version shown by the running app and the repository's latest
+release or commit before reporting a version-specific issue.
 
-Depending on the implementation and browser:
+Run locally
 
-IndexedDB and browser storage
+What you need
 
-Service Workers
-
-Web App Manifest
-
-File APIs
-
-Web Notifications
-
-External Integrations
-
-Depending on configuration:
-
-Google authentication
-
-Cloud database or storage services
-
-Google Drive backup
-
-Economic-calendar or market-data sources
-
-Optional AI service through a configured backend or provider
-
-Hosting
-
-GitHub Pages for static web hosting
-
-Optional separately deployed backend or Worker for features that
-cannot safely run entirely in the browser
-
-Some integrations require a separately configured service. Do not place
-private API keys, service-account credentials, or other server secrets
-in client-side files or a public repository.
-
-🚀 Run AREX Locally
-
-Requirements
-
-Git (optional if downloading the repository ZIP)
+A modern web browser
 
 Python 3 or another local HTTP server
 
-A modern browser
+Git (optional, if you download the repository ZIP)
 
-1. Clone the Repository
+1. Get the project
 
 git clone https://github.com/Amirghasemian22/AREX.git
 cd AREX
 
-Alternatively, download the project ZIP and extract it while preserving
-the directory structure.
+Or download the repository ZIP and extract it, keeping the directory
+structure intact.
 
-2. Start a Local HTTP Server
-
-With Python installed:
+2. Start a local server
 
 python -m http.server 8000
 
-On Windows, if python is not recognized, try:
+On Windows, if python is not recognized:
 
 py -m http.server 8000
 
-3. Open the Application
+3. Open it
 
-For a normal local run, visit:
+Visit:
 
 http://localhost:8000/
 
-4. Local Test Entry (Testing Builds Only)
+Keep the project folders in place. The app expects its JavaScript,
+styles, assets, and configuration files at their defined paths.
 
-If the exact build you are testing includes the temporary local
-test-login feature, open:
+About the local test entry
 
-http://localhost:8000/?arex-test=1
+Some testing builds may include a temporary ?arex-test=1 entry for
+local UI testing. It is not production authentication. Never publish
+a build that exposes a test-login bypass on a public site. Before
+deployment, verify that this path is disabled or excluded from the
+production build.
 
-This parameter is intended only for local testing. It must not be
-treated as production authentication or used to bypass authentication on
-a public deployment. Before publishing, verify that the test-login code
-is disabled or excluded from the production build.
+A local launch does not verify OAuth, cloud sync, external APIs, or
+real-device PWA behavior. Authentication providers may also require
+localhost or the deployed domain to be configured as an authorized
+origin.
 
-Local Run Notes
+Data, backups, and privacy
 
-Keep the repository's directory structure intact.
+AREX may use browser storage for supported workflows. Depending on the
+build, it may also provide JSON export/import, backup and restore, or
+optional cloud integrations.
 
-Do not move JavaScript, CSS, assets, or configuration files away
-from the paths expected by the application.
+Export important records regularly.
 
-Authentication providers may require localhost or the deployed
-domain to be configured as an authorized domain.
+Keep a backup somewhere separate from the browser and device you
+normally use.
 
-Features that depend on external APIs or cloud services may need
-additional configuration.
+Test restoring a backup before you need it.
 
-A successful local launch does not verify every external
-integration.
+Do not assume data has synced until the application confirms
+success.
 
-localhost on a phone points to the phone itself, not your
-computer. To test on a physical device, serve the project from a
-network address reachable by that device or use a properly
-configured HTTPS test deployment.
+Clearing browser data, changing browsers, or switching devices may
+affect access to locally stored records.
 
-🧪 Testing & Release Validation
+Keep private strategy files private unless you have deliberately
+reviewed and approved their publication.
 
-The repository may include automated tests and validation scripts. If
-the relevant files are present, run the tests from the project root
-using the commands documented by the project, for example:
+Security essentials
+
+Never commit private API keys, access tokens, service-account
+credentials, or other secrets.
+
+Protect cloud databases with appropriate authentication and
+restrictive security rules.
+
+Do not rely on frontend code to protect server-side secrets.
+
+Firebase client configuration values are not a replacement for
+proper authorization and API restrictions.
+
+Treat test-login functionality as development-only.
+
+Technology
+
+AREX is a browser-based application built with standard web
+technologies.
+
+Core: HTML, CSS, and JavaScript
+
+Browser capabilities: IndexedDB/browser storage, Service
+Workers, Web App Manifest, File APIs, and Web Notifications where
+supported
+
+Hosting: GitHub Pages for static web hosting
+
+Optional integrations: Google authentication, Google Drive
+backup, cloud services, economic-calendar or market-data sources,
+and AI providers
+
+Optional backend: A separately deployed backend or Worker for
+capabilities that cannot safely run entirely in the browser
+
+The availability of each integration depends on the current build and
+its configuration.
+
+Test before release
+
+If the repository includes the relevant scripts, run them from the
+project root:
 
 node --test tests/*.test.js
-
-If a release-gate script is included, run:
-
 node scripts/release-gate.js
 
-Use the actual scripts included in the checked-out build as the source
-of truth. Passing automated tests does not prove that OAuth, cloud
-backup and restore, external data providers, notifications, or
-real-device PWA behavior work in production.
+Use the scripts present in the checked-out build as the source of truth.
+Passing automated tests is valuable, but it does not prove that every
+external integration works in production.
 
-Before a public release, verify at minimum:
+Before a public release, check:
 
-Login and logout with the configured authentication provider
+Login and logout with the configured provider
 
-Separation of data between different user accounts
+Data separation between user accounts
 
-Backup and restore with real test data
+Backup and restore using real test data
 
-Worker/backend behavior in the deployed environment
+Backend/Worker behavior in the deployed environment
 
-Economic-calendar and market-data availability
+Calendar and market-data freshness
 
-Notification permissions and actual delivery, where configured
+Notification permissions and delivery, if configured
 
-Mobile layout on real Android and iOS devices
+Layout on actual Android and iOS devices
 
-PWA installation, update, and offline behavior
+PWA installation, updates, and offline behavior
 
-Production build does not expose the temporary local test-login path
+Removal or disabling of temporary test-login paths
 
-No private credentials or personal strategy files are included in
-the public repository
+No private credentials or unapproved strategy files in the
+public repository
 
-📂 Project Structure
+Project direction
 
-The exact structure depends on the checked-out release. A typical
-project may contain:
+AREX is being developed as a personal trading-management assistant---not
+merely a course or a trade recorder. The long-term direction is to make
+the trading process easier to follow, review, and improve while keeping
+rules and data limitations explicit.
 
-AREX/
-├── index.html
-├── README.md
-├── manifest.json
-├── sw.js
-├── js/
-├── scripts/
-├── tests/
-├── assets/                 # If included
-├── css/                    # If included
-├── mt5/                    # If included in the selected distribution
-└── ...                     # Other application and configuration files
+Potential areas for future improvement include richer strategy reports,
+repeated-mistake detection, chart annotations, broker/platform imports,
+comparisons by symbol or session, expanded strategy knowledge
+management, and additional backup options. These are development
+directions, not a claim that every item is already available.
 
-Directory Guidelines
+Contributing and feedback
 
-index.html --- Application entry point.
+Found a bug or have an idea?
 
-js/ --- JavaScript modules and application logic, if used by
-the build.
+Open an issue
 
-scripts/ --- Development, validation, build, or maintenance
-scripts.
+Browse the repository
 
-tests/ --- Automated tests and validation files.
+Star the project if you find it useful.
 
-manifest.json --- PWA metadata, if present.
+Helpful bug reports include the app version, browser/device, steps to
+reproduce, expected behavior, and what happened instead. Do not
+include passwords, access tokens, private account details, or
+confidential strategy files.
 
-sw.js --- Service Worker, if present.
+About
 
-assets/ and css/ --- Visual resources and stylesheets, if
-present.
+Created and maintained by Amir Ghasemian Moghadam
+GitHub: @Amirghasemian22 ·
+LinkedIn
 
-mt5/ --- Platform-related files, if included in the
-distribution.
-
-Preserve the directory structure when uploading or deploying. Do not
-remove files merely because they appear to be development files; first
-verify whether scripts, tests, runtime code, or deployment workflows
-depend on them.
-
-🔒 Security & Privacy
-
-AREX may store information locally and may use external services when
-configured.
-
-Back up important trading records regularly.
-
-Avoid using shared devices for sensitive personal data.
-
-Never publish private API keys, service-account credentials, access
-tokens, or other secrets.
-
-Restrict cloud-database access using appropriate authentication and
-security rules.
-
-Do not rely on frontend code alone to protect server-side secrets.
-
-Keep private strategy knowledge files out of a public repository
-unless you have intentionally reviewed and approved their
-publication.
-
-Confirm that data export and restore workflows work before relying
-on them.
-
-Treat temporary test-login functionality as development-only and
-never expose it as a public authentication bypass.
-
-Firebase web configuration values are often designed to be present in
-client applications, but they do not replace proper authentication,
-restrictive database rules, and API restrictions.
-
-Do not assume that local data is automatically synchronized to the
-cloud. Confirm that each backup or synchronization operation completed
-successfully.
-
-🗺️ Project Direction
-
-AREX is being developed as a personal trading-management assistant
-rather than a course or a trade recorder alone. Development priorities
-include reliability, explicit strategy rules, safe data management,
-usability, and careful integration with external services.
-
-Potential future improvements may include:
-
-More detailed strategy-performance reports
-
-Repeated-mistake detection
-
-Improved trade-review workflows
-
-Chart screenshots and trade annotations
-
-Broker and trading-platform import workflows
-
-Comparisons by symbol, strategy, or market session
-
-Expanded strategy knowledge management
-
-More advanced decision-support workflows
-
-Additional backup and synchronization options
-
-Improved mobile accessibility and PWA behavior
-
-These are possible development directions, not guarantees that every
-item is already implemented.
-
-📜 Version History
-
-V9.7.12 --- Mobile Login Test Build
-
-Responsive-login and mobile-usability refinements.
-
-Continued work on mobile navigation and PWA-oriented layouts.
-
-Testing-build designation; external integrations and real-device
-behavior still require verification in the target environment.
-
-Earlier Builds
-
-AREX evolved from an earlier Forex learning planner into a broader
-trading-management workspace. Previous builds developed workflows for
-journaling, risk management, trading psychology, dashboard analytics,
-market tools, customization, and data management.
-
-For exact code changes, consult the repository's commit history and
-release notes included with each build where available.
-
-⚠️ Financial Disclaimer
+Financial disclaimer
 
 AREX is a trading-management, journaling, and productivity tool. It is
-not a broker, investment adviser, or financial institution.
-
-AREX does not guarantee profitable trading outcomes and should not be
-treated as a source of guaranteed trading signals or returns.
+not a broker, investment adviser, or financial institution, and it does
+not guarantee profitable results or provide guaranteed trading signals.
 
 Trading Forex, futures, CFDs, cryptocurrencies, and other financial
 instruments involves substantial risk and may result in the loss of some
-or all of your capital.
+or all of your capital. You are responsible for your trading decisions,
+risk management, and compliance with applicable laws and broker
+requirements. Verify calculations, instrument specifications, and market
+information before making trading decisions.
 
-You are responsible for your trading decisions, risk management, and
-compliance with applicable laws and broker requirements.
+License
 
-Always verify calculations, instrument specifications, market
-information, and external data before making a trading decision.
-
-👨‍💻 Author
-
-Created and maintained by Amir Ghasemian Moghadam.
-
-GitHub: @Amirghasemian22
-
-LinkedIn: [Amir](https://www.linkedin.com/in/amirghasemiian-ai-vision/)
-
-⭐ Support AREX
-
-If you find AREX useful:
-
-⭐ Star the repository.
-
-🐛 Report bugs through GitHub
-Issues.
-
-💡 Suggest improvements.
-
-🔀 Contribute to the project.
-
-Feedback helps AREX continue to improve.
-
-📄 License
-
-See the repository's license file for applicable terms. If no license is
-included, reuse and redistribution permissions may be limited.
+See the repository's LICENSE file for the applicable terms. If no
+license file is present, reuse and redistribution permissions may be
+limited.
