@@ -1,7 +1,7 @@
 /**
  * AREX Edge Worker: economic calendar proxy, live quotes, Telegram/email alerts.
  * Deploy on Cloudflare Workers. Configure secrets as described in EDGE_WORKER_SETUP_FA.md.
- * Secrets are server-side only: TWELVEDATA_API_KEY, TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID,
+ * Set GOOGLE_CLIENT_ID (Var) to the AREX OAuth client so tokens are audience-checked. Secrets are server-side only: TWELVEDATA_API_KEY, TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID,
  * RESEND_API_KEY, ALERT_EMAIL_TO, ALERT_EMAIL_FROM, ALERT_ALLOWED_GOOGLE_EMAIL. Set ALERT_ALLOWED_GOOGLE_EMAIL to the owner Google email and optionally AREX_ALLOWED_ORIGINS as comma-separated exact origins.
  */
 const CALENDAR_UPSTREAM = 'https://nfs.faireconomy.media/ff_calendar_thisweek.json';
@@ -35,12 +35,15 @@ async function allowRate(env, key, limit, windowSeconds) {
   return bucket.count <= limit;
 }
 
-async function verifyGoogleAccessToken(token){
+async function verifyGoogleAccessToken(token, env){
   if(!token || token.length>8192) throw new Error('missing_or_invalid_google_access_token');
-  const response=await fetch('https://www.googleapis.com/oauth2/v3/userinfo',{headers:{Authorization:`Bearer ${token}`},cf:{cacheTtl:0}});
+  const clientId=String((env&&env.GOOGLE_CLIENT_ID)||'').trim();
+  if(!clientId) throw new Error('google_client_id_not_configured');
+  const response=await fetch('https://oauth2.googleapis.com/tokeninfo?access_token='+encodeURIComponent(token),{cf:{cacheTtl:0}});
   if(!response.ok) throw new Error('google_access_token_invalid');
   const profile=await response.json();
-  if(!profile.sub || !profile.email || profile.email_verified!==true) throw new Error('google_identity_unverified');
+  if(profile.aud!==clientId && profile.azp!==clientId) throw new Error('google_token_wrong_audience');
+  if(!profile.sub || !profile.email || String(profile.email_verified)!=='true') throw new Error('google_identity_unverified');
   return {sub:String(profile.sub),email:String(profile.email).toLowerCase(),email_verified:true};
 }
 async function fetchCalendar(ctx){
@@ -136,7 +139,7 @@ async function sendAlerts(request, env){
   if (!notifyOriginAllowed(request, env)) return json({error:'origin_not_allowed'},403,{'Cache-Control':'no-store'});
   const authorization=request.headers.get('Authorization')||'';
   if(!authorization.startsWith('Bearer ')) return json({error:'unauthorized'},401,{'Cache-Control':'no-store'});
-  let claims; try{claims=await verifyGoogleAccessToken(authorization.slice(7));}catch{return json({error:'unauthorized',message:'Google access token is missing, expired, or invalid.'},401,{'Cache-Control':'no-store'});}
+  let claims; try{claims=await verifyGoogleAccessToken(authorization.slice(7),env);}catch(e){if(String(e&&e.message)==='google_client_id_not_configured')return json({error:'auth_not_configured',message:'Set GOOGLE_CLIENT_ID as a Worker variable.'},503,{'Cache-Control':'no-store'});return json({error:'unauthorized',message:'Google access token is missing, expired, or invalid.'},401,{'Cache-Control':'no-store'});}
   const allowedEmail=String(env.ALERT_ALLOWED_GOOGLE_EMAIL||'').trim().toLowerCase();
   if(!allowedEmail) return json({error:'alerts_not_enabled',message:'Set ALERT_ALLOWED_GOOGLE_EMAIL to the owner Google email before enabling external alerts.'},503,{'Cache-Control':'no-store'});
   if(claims.email!==allowedEmail) return json({error:'forbidden'},403,{'Cache-Control':'no-store'});

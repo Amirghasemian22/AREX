@@ -1,11 +1,11 @@
 {
-  "name": "AREX V9.7.15",
+  "name": "AREX V9.8.0 — دستیار معاملاتی",
   "short_name": "AREX",
   "description": "دستیار شخصی مدیریت معاملات، ژورنال، قوانین ریسک، روان‌شناسی و تحلیل عملکرد.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "orientation": "any",
+  "orientation": "portrait-primary",
   "background_color": "#070B14",
   "theme_color": "#070B14",
   "dir": "rtl",
@@ -15,13 +15,56 @@
       "src": "icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "id": "./index.html",
+  "categories": [
+    "finance",
+    "productivity"
+  ],
+  "shortcuts": [
+    {
+      "name": "ثبت معامله",
+      "url": "./index.html?go=trades",
+      "icons": [
+        {
+          "src": "icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "دستیار آرکس",
+      "url": "./index.html?go=assistant",
+      "icons": [
+        {
+          "src": "icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "تقویم اقتصادی",
+      "url": "./index.html?go=calendar",
+      "icons": [
+        {
+          "src": "icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     }
   ]
 }

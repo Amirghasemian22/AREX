@@ -2,8 +2,8 @@
 <html lang="fa" dir="rtl" data-style="journal" data-theme="dark">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AREX V9.7.15</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>AREX V9.8.0</title>
 <meta name="description" content="AREX دستیار شخصی مدیریت معاملات است: ژورنال معاملاتی، مدیریت ریسک، قوانین استراتژی، تقویم اقتصادی، سشن‌های بازار، ثبت روان‌شناسی و تحلیل عملکرد در یک فضای کاری نصب‌شدنی.">
 <meta name="keywords" content="ژورنال معاملات فارکس, تریدینگ ژورنال, چک‌لیست بهبود عملکرد معاملاتی, مدیریت ریسک معاملات, ردیاب پراپ فرم, تقویم اقتصادی فارکس, forex trading journal, prop firm tracker">
 <meta name="robots" content="index, follow">
@@ -1143,7 +1143,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 #dashboardTvCalendar .tv-mini-body{height:280px;overflow:hidden;border-radius:12px}#dashboardTvCalendar .tv-mini-body iframe{width:100%;height:100%;border:0}
 #dashboardTvCalendar .tv-mini-foot{font-size:10px;color:var(--muted);margin-top:8px}
 .auth-setup-note{line-height:1.9}.auth-google{background:linear-gradient(110deg,#f5f8ff,#d4e4ff);box-shadow:0 8px 24px rgba(90,143,230,.13)}
-#localPreviewBtn{display:none!important}
+/* V9.8.0: test entry is shown only by the localhost-gated script (inline display) */
 @media(max-width:760px){#arexDailyRoadmap{grid-template-columns:1fr}.arex-roadmap-title{font-size:17px}.arex-roadmap-steps{grid-template-columns:1fr}.arex-roadmap-step{padding:8px}#dashboardTvCalendar .tv-mini-body{height:320px}}
 
 
@@ -1599,7 +1599,7 @@ html:not([lang="fa"]):not([dir="rtl"]) .mascot,html[dir="ltr"] .mascot{left:auto
     .daily-action-callout small{display:block;opacity:.72;margin-top:5px}
     @media(max-width:700px){.daily-evidence-summary{grid-template-columns:repeat(2,minmax(0,1fr))}}
     
-/* V9.7.15 quick sync control */
+/* V9.8.0 quick sync control */
 .arex-quick-sync{position:relative;display:inline-flex;align-items:center;justify-content:center}
 .arex-quick-sync svg{width:19px;height:19px}
 .arex-sync-dot{position:absolute;right:5px;top:5px;width:7px;height:7px;border-radius:50%;background:#94a3b8;border:1px solid var(--surface,#0b1020)}
@@ -3216,6 +3216,7 @@ body::before{opacity:var(--arex-wallpaper-strength)!important;background-image:l
 <script src="js/core/strategykb.js"></script>
 <script src="js/core/ruleaudit.js"></script>
 <script src="js/core/pretrade.js"></script>
+<script src="js/core/brain.js"></script>
 <script src="js/ui/analytics.js"></script>
 <script src="js/i18n/v9.js"></script>
 <script src="js/ui/propguard.js"></script>
@@ -3285,6 +3286,7 @@ let state = {
   workspaceState: {dailyPlans:{},behaviorGoals:[],attachments:{},focusMode:false,weeklyReports:[],savedSearches:[]}
 };
 window.AREX_APP_STATE = state;
+window.AREX_RULE_KINDS={unclassified:'دسته‌بندی‌نشده',mandatory:'الزامی',confirmed:'تأییدشده',preference:'ترجیح شخصی',hypothesis:'فرضیه',conflict:'متناقض'};
 let dirty = { sessions:false, trades:false, psych:false, goalsrules:false, settings:false, calendarEvents:false, tradeRules:false, riskLimits:false, propChallenges:false, backtests:false, scenarios:false, notifLog:false, assistantState:false };
 const dirtyRevision = Object.fromEntries(Object.keys(dirty).map(k=>[k,0]));
 let saveTimer = null;
@@ -3410,7 +3412,7 @@ function persianDateFor(gregDate){
   return { day, month: PERSIAN_MONTHS[m % 12], year };
 }
 function gregLabel(d){ return faDigits(d.getUTCDate())+" "+GREG_MONTHS[d.getUTCMonth()]; }
-function isoOf(d){ return d.toISOString().slice(0,10); }
+function isoOf(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 const WEEK_BOUNDS = [6,17,26,35,44,53,62,68,76,78]; // cumulative checkpoint boundaries for the 10-stage improvement cycle
 function weekOf(lessonNo){ for(let i=0;i<WEEK_BOUNDS.length;i++){ if(lessonNo<=WEEK_BOUNDS[i]) return i+1; } return 10; }
 
@@ -5107,7 +5109,13 @@ function fmtDur(ms){
   return parts.join(' ');
 }
 /* the FX market is closed from Friday 22:00 UTC until Sunday 22:00 UTC */
-function isForexWeekend(date){ const d = date.getUTCDay(), h = date.getUTCHours(); return (d===5 && h>=22) || d===6 || (d===0 && h<22); }
+function isForexWeekend(date){
+  try{
+    const p=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',weekday:'short',hour:'2-digit',hourCycle:'h23'}).formatToParts(date);
+    const wd=p.find(x=>x.type==='weekday').value,h=Number(p.find(x=>x.type==='hour').value);
+    return (wd==='Fri'&&h>=17)||wd==='Sat'||(wd==='Sun'&&h<17);
+  }catch(e){ const d=date.getUTCDay(),h=date.getUTCHours(); return (d===5&&h>=21)||d===6||(d===0&&h<22); }
+}
 function msUntilForexOpen(date){
   const add = (7 - date.getUTCDay()) % 7;
   let ms = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()+add, 22, 0, 0) - date.getTime();
@@ -5264,7 +5272,7 @@ async function fetchFxMood(force){
   const lbl = document.getElementById('fxmLabel'), note = document.getElementById('fxmNote');
   try{
     if(force || fxMoodCache.pct===null || Date.now()-fxMoodCache.t > 3600e3){
-      const end = new Date(), start = new Date(end.getTime() - 18*864e5), iso = d=>d.toISOString().slice(0,10);
+      const end = new Date(), start = new Date(end.getTime() - 18*864e5), iso = d=>isoLocal(d);
       let data = null;
       for(const base of ['https://api.frankfurter.dev/v1','https://api.frankfurter.app']){
         try{ const r = await fetch(base+'/'+iso(start)+'..'+iso(end)+'?base=AUD&symbols=JPY'); if(!r.ok) throw new Error('http'); data = await r.json(); break; }catch(e){}
@@ -5553,7 +5561,7 @@ function renderHeatmap(doneList){
     col.forEach(cellDate=>{
       const sq = document.createElement('div'); sq.className='hm-cell';
       if(cellDate){
-        const iso = cellDate.toISOString().slice(0,10);
+        const iso = isoLocal(cellDate);
         const c = countByDate[iso] || 0;
         let lvl = c>=4?4 : c>=3?3 : c>=2?2 : c>=1?1 : 0;
         if(lvl>0) sq.classList.add('lvl'+lvl);
@@ -5847,7 +5855,7 @@ function renderReviews(){
   box.innerHTML='';
   items.forEach(it=>{
     const row = document.createElement('div'); row.className='review-item'; row.style.marginBottom='8px';
-    row.innerHTML = '<span>'+(it.overdue?'⏰ ':it.isToday?'🔔 ':'📅 ')+t('ui.lesson')+' '+faDigits(it.sid)+' — '+it.title+' <span style="color:var(--muted)">('+it.date+')</span></span>';
+    row.innerHTML = '<span>'+(it.overdue?'⏰ ':it.isToday?'🔔 ':'📅 ')+t('ui.lesson')+' '+faDigits(it.sid)+' — '+escapeHtml(String(it.title))+' <span style="color:var(--muted)">('+it.date+')</span></span>';
     const btn = document.createElement('button'); btn.textContent='باز کردن';
     btn.addEventListener('click', ()=>openSession(it.sid));
     row.appendChild(btn);
@@ -5898,6 +5906,7 @@ function riskCalcTemplate(p){
         <div><div class="field-lbl">نقطه ورود</div><input class="txt-input" id="${p}Entry" type="number" step="any"></div>
         <div><div class="field-lbl">حد ضرر</div><input class="txt-input" id="${p}SL" type="number" step="any"></div>
         <div><div class="field-lbl">حد سود (اختیاری — برای محاسبه R:R)</div><input class="txt-input" id="${p}TP" type="number" step="any"></div>
+        <div><div class="field-lbl">گام لات بروکر (مثلاً ۰٫۰۱)</div><input class="txt-input" id="${p}LotStep" type="number" step="any" value="0.01" min="0"></div>
       </div>
 
       <div class="calc-result" id="${p}CalcResult"></div>
@@ -5939,6 +5948,7 @@ function computeRiskCalc(p){
   const pipSize = parseFloat(document.getElementById(p+'PipSize').value);
   const pipValue = parseFloat(document.getElementById(p+'PipValue').value);
   const costPerLot = Math.max(0,parseFloat(document.getElementById(p+'CostPerLot').value)||0);
+  const lotStepRaw = parseFloat((document.getElementById(p+'LotStep')||{}).value), lotStep = lotStepRaw>0 ? lotStepRaw : 0.01;
 
   const usingOverride = !isNaN(riskAmtOverride) && riskAmtOverride > 0;
   const validBalance=Number.isFinite(balance)&&balance>0;
@@ -5949,29 +5959,36 @@ function computeRiskCalc(p){
   }
   const riskAmount = usingOverride ? riskAmtOverride : (validBalance ? balance * riskPct / 100 : NaN);
   if(!(riskAmount>0)){box.innerHTML='<div class="empty">موجودی، درصد ریسک یا مبلغ ثابت ریسک را به‌درستی وارد کن.</div>';gaugeBar.style.width='0%';gaugeNote.textContent='';return;}
-  const effectivePct = validBalance ? (riskAmount / balance * 100) : null;
+  let effectivePct = validBalance ? (riskAmount / balance * 100) : null;
   const priceDist = Math.abs(entry - sl);
   const pipsAtRisk = priceDist / pipSize;
   const riskPerLot = pipsAtRisk * pipValue + costPerLot;
   if(!(riskPerLot>0)){box.innerHTML='<div class="empty">اندازه پیپ، ارزش پیپ و هزینه‌ها را بررسی کن.</div>';gaugeBar.style.width='0%';gaugeNote.textContent='';return;}
-  const lots = riskAmount / riskPerLot;
+  const rawLots = riskAmount / riskPerLot;
+  const lots = Math.floor(rawLots / lotStep + 1e-9) * lotStep;   // never round UP: that would exceed the allowed risk
+  if(!(lots>0)){
+    const minRisk = lotStep * riskPerLot;
+    box.innerHTML = '<div class="empty" style="padding:2px 0;">⛔ حتی کمترین لات ('+faDigits(lotStep)+') ریسک '+faDigits(minRisk.toFixed(2))+'$ دارد که از ریسک مجاز ('+faDigits(riskAmount.toFixed(2))+'$) بیشتر است. حد ضرر را نزدیک‌تر کن یا ریسک را بالا نبر.</div>';
+    gaugeBar.style.width='100%'; gaugeBar.style.background='var(--red)'; gaugeNote.textContent='ورود با این حد ضرر مجاز نیست'; return;
+  }
   const units = lots * lotSize;
   const actualRisk = lots * riskPerLot;
+  if(validBalance) effectivePct = actualRisk / balance * 100;
 
   let resultHtml =
     '<div class="cr-item"><div class="cr-lbl">مبلغ ریسک این معامله</div><div class="cr-val">$'+faDigits(riskAmount.toFixed(2))+'</div></div>'+
     '<div class="cr-item"><div class="cr-lbl">فاصله تا حد ضرر</div><div class="cr-val">'+faDigits(priceDist.toFixed(5))+' ('+faDigits(pipsAtRisk.toFixed(1))+' پیپ/تیک)</div></div>'+
     '<div class="cr-item"><div class="cr-lbl">حجم پیشنهادی (واحد)</div><div class="cr-val">'+faDigits(Math.round(units))+'</div></div>'+
-    '<div class="cr-item"><div class="cr-lbl">حجم پیشنهادی (لات)</div><div class="cr-val">'+faDigits(lots.toFixed(3))+'</div></div>'+
-    '<div class="cr-item"><div class="cr-lbl">ریسک با هزینه‌ها</div><div class="cr-val">$'+faDigits(actualRisk.toFixed(2))+'</div></div>';
+    '<div class="cr-item"><div class="cr-lbl">حجم پیشنهادی (لات، گردشده به پایین)</div><div class="cr-val">'+faDigits(lots.toFixed(Math.max(2,(String(lotStep).split('.')[1]||'').length)))+'</div></div>'+
+    '<div class="cr-item"><div class="cr-lbl">ریسک واقعی (با هزینه‌ها و پس از گرد کردن لات)</div><div class="cr-val">$'+faDigits(actualRisk.toFixed(2))+'</div></div>';
 
   if(!isNaN(tp) && tp !== entry){
     const rewardDist = Math.abs(tp - entry);
     const rr = (rewardDist / priceDist);
-    const potentialProfit = Math.max(0,riskAmount - lots*costPerLot) * rr;
+    const potentialProfit = Math.max(0, lots*pipsAtRisk*pipValue*rr - lots*costPerLot);
     resultHtml +=
       '<div class="cr-item cr-rr"><div class="cr-lbl">نسبت ریسک به ریوارد</div><div class="cr-val">۱ : '+faDigits(rr.toFixed(2))+'</div></div>'+
-      '<div class="cr-item cr-rr"><div class="cr-lbl">سود بالقوه در تارگت</div><div class="cr-val">$'+faDigits(potentialProfit.toFixed(2))+'</div></div>';
+      '<div class="cr-item cr-rr"><div class="cr-lbl">سود بالقوه خالص در تارگت</div><div class="cr-val">$'+faDigits(potentialProfit.toFixed(2))+'</div></div>';
   }
   box.innerHTML = resultHtml;
 
@@ -5998,7 +6015,7 @@ function initRiskCalc(mountId, prefix){
     const preset = RISK_PRESETS[e.target.value];
     if(preset && preset.lot){ document.getElementById(prefix+'LotSize').value = preset.lot; const ps=document.getElementById(prefix+'PipSize'),pv=document.getElementById(prefix+'PipValue'); if(e.target.value==='gold'){ps.value='0.1';pv.value='10';} else if(e.target.value==='silver'){ps.value='0.01';pv.value='50';} else if(e.target.value==='forex'){ps.value='0.0001';pv.value='10';} else if(e.target.value==='index'){ps.value='1';pv.value='1';} computeRiskCalc(prefix); }
   });
-  ['LotSize','PipSize','PipValue','CostPerLot','Balance','RiskPct','RiskAmt','Entry','SL','TP'].forEach(suffix=>{
+  ['LotSize','PipSize','PipValue','CostPerLot','Balance','RiskPct','RiskAmt','Entry','SL','TP','LotStep'].forEach(suffix=>{
     document.getElementById(prefix+suffix).addEventListener('input', ()=>computeRiskCalc(prefix));
   });
   const helpToggle = document.getElementById(prefix+'HelpToggle');
@@ -7703,7 +7720,7 @@ window.arexRunRuntimeVerification = async function(options={}) {
   }
 })();
 </script>
-<script type="module" src="auth-client.js?v=9.7.15"></script>
+<script type="module" src="auth-client.js?v=9.8.0"></script>
 <script>
 
 /* ================= V5.5: onboarding, free calendar, conversational AREX ================= */
@@ -7731,7 +7748,7 @@ window.arexRunRuntimeVerification = async function(options={}) {
      const data=await res.json();const raw=Array.isArray(data)?data:(Array.isArray(data.events)?data.events:Array.isArray(data.data)?data.data:[]);
      if(!raw.length&&data&&data.events===undefined)throw new Error('پاسخ API ساختار رویداد قابل تشخیص ندارد');
      fcEvents=raw.map((e,i)=>{const dt=fcDate(e),rawCountry=e.country||e.currency||e.country_code||'';const src=String(e.source_url||e.url||'');let safeSource='';try{const u=new URL(src);if(u.protocol==='https:'||u.protocol==='http:')safeSource=u.href;}catch(_){}return{id:e.id||e.series_code||String(i),name:e.name||e.event||e.title||'رویداد اقتصادی',country:fcNormalizeCountry(rawCountry),countryRaw:String(rawCountry),impact:fcNormalizeImpact(e.impact??e.importance),date:dt,source:safeSource,period:e.period||'',consensus:e.consensus||e.forecast||'',prior:e.prior||e.previous||'',actual:e.actual||'',status:e.status||''};}).filter(e=>e.date&&!Number.isNaN(e.date.getTime())).sort((a,b)=>a.date-b.date);
-     fcLast=Date.now();const last=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Tehran',hour:'2-digit',minute:'2-digit'}).format(new Date(fcLast));status.textContent=fcEvents.length?`آخرین دریافت ${last} · ${fcEvents.length} رویداد معتبر · زمان تهران`:'اتصال موفق بود؛ برای بازه درخواست‌شده رویداد معتبری برنگشت.';renderFc();
+     fcLast=Date.now();window.__arexFcEvents=fcEvents;const last=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Tehran',hour:'2-digit',minute:'2-digit'}).format(new Date(fcLast));status.textContent=fcEvents.length?`آخرین دریافت ${last} · ${fcEvents.length} رویداد معتبر · زمان تهران`:'اتصال موفق بود؛ برای بازه درخواست‌شده رویداد معتبری برنگشت.';renderFc();
    }catch(err){status.textContent='اتصال تقویم ناموفق بود؛ این خطا به معنی نبود خبر نیست.';box.innerHTML='<div class="fc-error-card"><div class="fc-error-icon">!</div><div><b>داده‌های تقویم دریافت نشد</b><p>'+safeText(err.name==='AbortError'?'درخواست بیش از حد طول کشید.':err.message||'خطای شبکه')+'</p><small>اتصال شبکه، دسترسی CORS یا وضعیت سرویس را بررسی کن.</small></div><button type="button" class="btn ghost" id="fcApiRetry">تلاش دوباره</button></div>';const retry=$('fcApiRetry');if(retry)retry.onclick=()=>loadFc(true);}
    finally{fcBusy=false;}
  }
@@ -7759,17 +7776,17 @@ window.arexRunRuntimeVerification = async function(options={}) {
  // Chat UI. Backend contract: POST {messages:[{role,content}],context:{...}} -> {answer:"..."}.
  const history=[];let chatBusy=false;
  const endpointKey='arex_v55_ai_endpoint';
- const readEndpoint=()=>String(AREXCore.accountLocalStorage.read(localStorage,endpointKey,'')||'');
+ const readEndpoint=()=>String(AREXCore.accountLocalStorage.read(localStorage,endpointKey,'')||'');window.arexReadAiEndpoint=readEndpoint;
  const saveEndpoint=value=>AREXCore.accountLocalStorage.write(localStorage,endpointKey,String(value||''));
  if($('arexAiEndpoint'))$('arexAiEndpoint').value=readEndpoint();
  function addChat(role,text){const h=$('arexChatHistory');if(!h)return;const el=document.createElement('div');el.className='arex-chat-msg '+role;const label=document.createElement('small');label.textContent=role==='user'?'شما':'آرکس';el.appendChild(label);el.appendChild(document.createTextNode(text));h.appendChild(el);h.scrollTop=h.scrollHeight;history.push({role:role==='user'?'user':'assistant',content:text});if(history.length>24)history.splice(0,2);}
- function contextSnapshot(){const st=(typeof state!=='undefined'&&state)||window.state||{};return {app:'AREX V9.7.15',language:st.language||'fa',timezone:'Asia/Tehran',tradesCount:Array.isArray(st.trades)?st.trades.length:0,psychNotesCount:Array.isArray(st.psych)?st.psych.length:0,goalsCount:Array.isArray(st.goals)?st.goals.length:0,confirmedRules:Array.isArray(st.tradeRules)?st.tradeRules:[],riskLimits:st.riskLimits||{},activePage:document.querySelector('.view.active')?.id||'unknown',instruction:'Do not invent user data, live prices, strategy rules, or news. If information is missing, ask a focused question. Do not promise profitable outcomes.'};}
+ function contextSnapshot(){const st=(typeof state!=='undefined'&&state)||window.state||{};return {app:'AREX V9.8.0',language:st.language||'fa',timezone:'Asia/Tehran',tradesCount:Array.isArray(st.trades)?st.trades.length:0,psychNotesCount:Array.isArray(st.psych)?st.psych.length:0,goalsCount:Array.isArray(st.goals)?st.goals.length:0,confirmedRules:Array.isArray(st.tradeRules)?st.tradeRules:[],riskLimits:st.riskLimits||{},activePage:document.querySelector('.view.active')?.id||'unknown',instruction:'Do not invent user data, live prices, strategy rules, or news. If information is missing, ask a focused question. Do not promise profitable outcomes.'};}
  function localAnswer(q){const x=q.toLowerCase();if(/سلام|درود|hello|hi\b/.test(x))return 'سلام! من آرکس هستم. می‌توانم در کار با بخش‌های AREX، نظم روزانه، ژورنال، مدیریت ریسک و مرور قوانین کمک کنم. برای پاسخ عمومی درباره هر موضوع، endpoint هوش مصنوعی را در تنظیمات وصل کن.';if(/از کجا شروع|شروع کنم|first|start/.test(x))return 'برای شروع این مسیر را برو: ۱) برنامه روزانه را باز کن و وضعیت و هدف امروز را ثبت کن؛ ۲) در مدیریت ریسک موجودی و ریسک مجاز را تنظیم کن؛ ۳) پیش از معامله قوانین استراتژی و تقویم اقتصادی را مرور کن؛ ۴) بعد از معامله نتیجه و اسکرین‌شات را در ژورنال ثبت کن؛ ۵) آخر روز عملکرد و روان‌شناسی را مرور کن.';if(/ریسک|risk|ضرر/.test(x))return 'پیش از هر معامله، حد ضرر و حجم را طوری تعیین کن که زیان احتمالی از سقف ریسک شخصی‌ات بیشتر نشود. اگر موجودی، درصد ریسک، نماد و فاصله SL را بدهی، می‌توانم داده‌های لازم برای محاسبه را بررسی کنم؛ برای محاسبه دقیق حجم، مشخصات قرارداد/ارزش هر پوینت بروکر هم لازم است.';if(/تقویم|خبر|news|calendar/.test(x))return 'از تب «تقویم اقتصادی» استفاده کن؛ تب «تقویم رایگان (API)» از Finance Calendar رویدادهای مهم را می‌گیرد. اگر فید خطا داد، خطا را بررسی کن و خالی بودن فهرست را به معنی نبود خبر تلقی نکن.';if(/ژورنال|ثبت معامله|journal/.test(x))return 'از «ژورنال معاملات» برای ثبت نماد، جهت، ورود/خروج، SL/TP، نتیجه و دلیل ورود استفاده کن. ثبت دلیل و رعایت قوانین از ثبت صرف سود و زیان مهم‌تر است.';if(/تنظیمات|settings/.test(x))return 'تنظیمات را به بخش‌های ظاهر، سشن‌ها، ریسک، قوانین، اتصال‌ها و پشتیبان‌گیری تقسیم کرده‌ایم. از نوار دسترسی سریع بالای تنظیمات برای رفتن به بخش موردنظر استفاده کن.';if(/استراتژی|قانون|strategy/.test(x))return 'قوانین تأییدشده‌ات باید بر دانش عمومی مقدم باشند. اگر شرط ورود، تایم‌فریم، حد ضرر یا استثنا مبهم است، آن را قطعی فرض نمی‌کنم. سؤال یا قانون دقیق را بنویس تا کمک کنم ابهامش را مشخص کنیم.';return 'برای این سؤال هنوز موتور هوش مصنوعی عمومی به AREX وصل نشده است؛ نمی‌خواهم پاسخ ساختگی بدهم. در تنظیمات ← «اتصال هوش مصنوعی آرکس»، آدرس یک backend امن سازگار را ثبت کن. تا آن زمان می‌توانم درباره امکانات داخلی، نظم معاملاتی، ژورنال و ریسک با اطلاعات موجود راهنمایی بدهم.';}
- async function askArex(text){if(chatBusy||!text.trim())return;chatBusy=true;const send=$('arexChatSend');if(send){send.disabled=true;send.textContent='…'}addChat('user',text.trim());const endpoint=readEndpoint();try{if(endpoint){const res=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:history.slice(-16),context:contextSnapshot()}),signal:AbortSignal.timeout?AbortSignal.timeout(30000):undefined});if(!res.ok)throw new Error('HTTP '+res.status);const data=await res.json();const answer=data.answer||data.reply||data.text||data.choices?.[0]?.message?.content;if(typeof answer!=='string'||!answer.trim())throw new Error('پاسخ سرویس خالی یا ناشناخته است');addChat('assistant',answer.trim());}else addChat('assistant',localAnswer(text));}catch(e){addChat('assistant','اتصال به سرویس هوش مصنوعی ناموفق بود ('+e.message+'). آدرس endpoint، CORS و وضعیت backend را بررسی کن. پاسخ جایگزین ساختگی تولید نکردم.');}finally{chatBusy=false;if(send){send.disabled=false;send.textContent='ارسال ↗'}}}
+ async function askArex(text){if(window.arexBrainAsk&&text.trim()){return window.arexBrainAsk(text.trim());}if(chatBusy||!text.trim())return;chatBusy=true;const send=$('arexChatSend');if(send){send.disabled=true;send.textContent='…'}addChat('user',text.trim());const endpoint=readEndpoint();try{if(endpoint){const res=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:history.slice(-16),context:contextSnapshot()}),signal:AbortSignal.timeout?AbortSignal.timeout(30000):undefined});if(!res.ok)throw new Error('HTTP '+res.status);const data=await res.json();const answer=data.answer||data.reply||data.text||data.choices?.[0]?.message?.content;if(typeof answer!=='string'||!answer.trim())throw new Error('پاسخ سرویس خالی یا ناشناخته است');addChat('assistant',answer.trim());}else addChat('assistant',localAnswer(text));}catch(e){addChat('assistant','اتصال به سرویس هوش مصنوعی ناموفق بود ('+e.message+'). آدرس endpoint، CORS و وضعیت backend را بررسی کن. پاسخ جایگزین ساختگی تولید نکردم.');}finally{chatBusy=false;if(send){send.disabled=false;send.textContent='ارسال ↗'}}}
  if($('arexChatForm'))$('arexChatForm').addEventListener('submit',e=>{e.preventDefault();const input=$('arexChatInput'),text=input.value.trim();if(!text)return;input.value='';askArex(text)});
  if($('arexChatInput'))$('arexChatInput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();$('arexChatForm').requestSubmit()}});
  if($('arexAiEndpointSave'))$('arexAiEndpointSave').addEventListener('click',()=>{const val=$('arexAiEndpoint').value.trim();if(val&&!/^https:\/\//i.test(val)){ $('arexAiEndpointStatus').textContent='آدرس باید با https:// شروع شود.';return;}try{saveEndpoint(val);$('arexAiEndpointStatus').textContent=val?'آدرس ذخیره شد. کلید محرمانه باید فقط در backend باشد.':'اتصال مدل زبانی پاک شد.';}catch(e){$('arexAiEndpointStatus').textContent='ذخیره در مرورگر انجام نشد.'}});
- if($('arexAiEndpointTest'))$('arexAiEndpointTest').addEventListener('click',async()=>{const val=$('arexAiEndpoint').value.trim();if(!val){$('arexAiEndpointStatus').textContent='ابتدا آدرس endpoint را وارد کن.';return;}try{const r=await fetch(val,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'user',content:'Reply with exactly: AREX_OK'}],context:{app:'AREX V9.7.15',test:true}})});if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();const ans=d.answer||d.reply||d.text||d.choices?.[0]?.message?.content;if(!ans)throw new Error('ساختار پاسخ نامعتبر');$('arexAiEndpointStatus').textContent='اتصال برقرار است؛ پاسخ سرویس دریافت شد.';}catch(e){$('arexAiEndpointStatus').textContent='آزمون ناموفق: '+e.message+' · CORS و فرمت پاسخ را بررسی کن.'}});
+ if($('arexAiEndpointTest'))$('arexAiEndpointTest').addEventListener('click',async()=>{const val=$('arexAiEndpoint').value.trim();if(!val){$('arexAiEndpointStatus').textContent='ابتدا آدرس endpoint را وارد کن.';return;}try{const r=await fetch(val,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'user',content:'Reply with exactly: AREX_OK'}],context:{app:'AREX V9.8.0',test:true}})});if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();const ans=d.answer||d.reply||d.text||d.choices?.[0]?.message?.content;if(!ans)throw new Error('ساختار پاسخ نامعتبر');$('arexAiEndpointStatus').textContent='اتصال برقرار است؛ پاسخ سرویس دریافت شد.';}catch(e){$('arexAiEndpointStatus').textContent='آزمون ناموفق: '+e.message+' · CORS و فرمت پاسخ را بررسی کن.'}});
  // First-visit guided tour. Only shown after the app's main shell is visible.
  const tourSteps=[
   {target:'#view-dashboard',title:'به AREX خوش آمدی',text:'داشبورد نمای کلی وضعیت و عملکرد است. برای شروع واقعی، مسیر روزانه را دنبال کن و داده‌های شخصی خودت را وارد کن.'},
@@ -8149,6 +8166,8 @@ body[data-bg="minimal"]{background-image:radial-gradient(ellipse at 80% 0%,rgba(
 <script src="js/core/extended.js"></script>
 <script src="js/core/ohlc-backtest.js"></script>
 <script src="js/ui/workspace.js"></script>
+<script src="js/ui/brain-ui.js"></script>
+<script src="js/ui/mobile-shell.js"></script>
 <style id="phase20-ui-quality">
 /* Phase 20: direction-safe controls, keyboard focus, and narrow viewport resilience. */
 html{scrollbar-gutter:stable} body{max-width:100%;}
@@ -8239,6 +8258,7 @@ pre,code{overflow-wrap:anywhere;}
 <nav class="arex-mobile-nav" aria-label="ناوبری سریع موبایل">
   <button type="button" data-mobile-view="dashboard" class="active" onclick="goView('dashboard')"><span class="mobile-nav-icon" aria-hidden="true">▦</span><span data-i18n="nav.dashboard">داشبورد</span></button>
   <button type="button" data-mobile-view="trades" onclick="goView('trades')"><span class="mobile-nav-icon" aria-hidden="true">↗</span><span data-i18n="nav.trades">ژورنال</span></button>
+  <button type="button" id="arexMobileBot" class="arex-tab-bot" aria-label="دستیار آرکس" onclick="window.arexBrainOpen&&window.arexBrainOpen()"><span class="mobile-nav-icon" aria-hidden="true">✦</span><span>آرکس</span></button>
   <button type="button" data-mobile-view="analytics" onclick="goView('analytics')"><span class="mobile-nav-icon" aria-hidden="true">⌁</span><span data-i18n="nav.analytics">تحلیل عملکرد</span></button>
   <button type="button" id="arexMobileMore" aria-label="باز کردن منوی همه بخش‌ها" onclick="document.getElementById('hamburgerBtn').click()"><span class="mobile-nav-icon" aria-hidden="true">☰</span><span id="arexMobileMoreLabel">بیشتر</span></button>
 </nav>
@@ -8298,5 +8318,6 @@ pre,code{overflow-wrap:anywhere;}
 <style id="arex-v967-context-help-css">
 #arexContextHelpModal{position:fixed;inset:0;z-index:2147483000;display:none;align-items:center;justify-content:center;padding:16px;color:var(--text)}#arexContextHelpModal.open{display:flex}#arexContextHelpModal .arex-help-backdrop{position:absolute;inset:0;background:rgba(2,7,16,.70);backdrop-filter:blur(8px)}#arexContextHelpModal .arex-help-panel{position:relative;width:min(560px,100%);max-height:min(84dvh,760px);overflow:auto;background:var(--panel);border:1px solid var(--border);border-radius:22px;padding:clamp(18px,4vw,28px);box-shadow:0 28px 90px rgba(0,0,0,.38)}#arexContextHelpModal header{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:14px}#arexContextHelpModal header small{font-size:10px;letter-spacing:1.6px;color:var(--gold);font-weight:800}#arexContextHelpModal h2{font-size:21px;margin-top:4px}#arexContextHelpModal h3{font-size:14px;margin:18px 0 8px}#arexContextHelpModal p,#arexContextHelpModal li{font-size:13px;line-height:1.95;color:var(--muted)}#arexContextHelpModal ol{padding-inline-start:24px}#arexContextHelpModal li{padding:3px 0}#arexContextHelpModal .arex-help-note{font-size:11px;line-height:1.9;padding:11px 12px;margin-top:16px;border:1px solid var(--border);background:var(--panel-hi);border-radius:12px;color:var(--muted)}#arexContextHelpModal footer{display:flex;justify-content:flex-end;margin-top:18px}@media(max-width:480px){#arexContextHelpModal{padding:8px}#arexContextHelpModal .arex-help-panel{max-height:calc(100dvh - 16px);border-radius:16px}}
 </style>
+<link rel="stylesheet" href="arex-mobile.css">
 </body>
 </html>

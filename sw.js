@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v9-7-15-risk-sync-nextstep-2026-10-26';
+const CACHE_VERSION = 'v9-8-0-brain-mobile-2026-10-27';
 const CACHE_NAME = 'arex-' + CACHE_VERSION;
 const APP_SHELL = [
   './',
@@ -8,6 +8,7 @@ const APP_SHELL = [
   './manifest.json',
   './icon-192.png',
   './icon-512.png',
+  './icon-maskable-512.png',
   './arex-glass-wallpaper.jpg',
   './auth-client.js',
   './fx_widget.js',
@@ -47,7 +48,11 @@ const APP_SHELL = [
   './js/core/extended.js',
   './js/core/ohlc-backtest.js',
   './js/ui/workspace.js',
-  './js/ui/workspace.css'
+  './js/ui/mobile-shell.js',
+  './js/ui/workspace.css',
+  './js/core/brain.js',
+  './js/ui/brain-ui.js',
+  './arex-mobile.css'
 ];
 
 self.addEventListener('install', (event) => {
@@ -103,38 +108,3 @@ self.addEventListener('fetch', (event) => {
     caches.match(event.request).then((cached) => cached || fetch(event.request).catch(() => cached))
   );
 });
-
-self.addEventListener('periodicsync', (event) => {
-  if (event.tag === 'daily-review-check') {
-    event.waitUntil(checkReviewsAndNotify());
-  }
-});
-
-async function checkReviewsAndNotify() {
-  try {
-    const db = await new Promise((resolve, reject) => {
-      const req = indexedDB.open('forexBootcampDB', 1);
-      req.onsuccess = () => resolve(req.result);
-      req.onerror = () => reject(req.error);
-    });
-    const sessions = await new Promise((resolve, reject) => {
-      const tx = db.transaction('kv', 'readonly');
-      const req = tx.objectStore('kv').get('sessions');
-      req.onsuccess = () => resolve(req.result ? JSON.parse(req.result) : {});
-      req.onerror = () => reject(req.error);
-    });
-    const today = new Date().toISOString().slice(0, 10);
-    let due = 0;
-    Object.values(sessions).forEach((s) => {
-      (s.reviews || []).forEach((r) => { if (!r.done && r.date <= today) due++; });
-    });
-    if (due > 0) {
-      await self.registration.showNotification('یادآور بهبود عملکرد معاملاتی', {
-        body: due + ' مرور عملکرد برای امروز دارید.',
-        icon: 'icon-192.png'
-      });
-    }
-  } catch (e) {
-    // silent — best-effort only
-  }
-}

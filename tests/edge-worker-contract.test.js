@@ -66,7 +66,7 @@ test('invalid Google token response is generic and does not expose verifier inte
   const response = await worker.fetch(req('/notify', {
     method: 'POST', headers: { Origin: 'https://amirghasemian22.github.io', Authorization: 'Bearer invalid-token', 'Content-Type': 'application/json' },
     body: JSON.stringify({ eventId: 'test-3', body: 'test' }),
-  }), { ALERT_ALLOWED_GOOGLE_EMAIL: 'owner@example.com' }, ctx);
+  }), { ALERT_ALLOWED_GOOGLE_EMAIL: 'owner@example.com', GOOGLE_CLIENT_ID: 'arex-client' }, ctx);
   const data = await response.json();
   assert.equal(response.status, 401);
   assert.equal(data.error, 'unauthorized');
@@ -92,4 +92,11 @@ test('market route returns only finite positive prices from the provider', async
   assert.equal(response.status, 200);
   assert.equal(data.quotes[0].price, 1.08321);
   assert.equal(data.quotes[0].error, undefined);
+});
+
+test('Google token for another OAuth client is rejected and a missing client id fails closed', async () => {
+  const other = loadWorker(async () => new Response(JSON.stringify({ aud: 'someone-elses-app', sub: '1', email: 'owner@example.com', email_verified: 'true' }), { status: 200 }));
+  const mk = () => req('/notify', { method: 'POST', headers: { Origin: 'https://amirghasemian22.github.io', Authorization: 'Bearer t', 'Content-Type': 'application/json' }, body: JSON.stringify({ eventId: 'aud-1', body: 'x' }) });
+  assert.equal((await other.fetch(mk(), { ALERT_ALLOWED_GOOGLE_EMAIL: 'owner@example.com', GOOGLE_CLIENT_ID: 'arex-client' }, ctx)).status, 401);
+  assert.equal((await other.fetch(mk(), { ALERT_ALLOWED_GOOGLE_EMAIL: 'owner@example.com' }, ctx)).status, 503);
 });

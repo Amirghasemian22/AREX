@@ -17,7 +17,7 @@ test('login actions meet minimum touch target sizing and reduced-motion is respe
   assert.match(html, /\.auth-google,\.auth-local,\.auth-lang\s*\{[^}]*min-height:44px/s);
   assert.match(html, /prefers-reduced-motion:reduce\)\{\.auth-card\{animation:none!important\}/);
 });
-test('version metadata and PWA cache match V9.7.15', () => {
-  assert.equal(manifest.short_name, 'AREX V9.7.15');
-  assert.match(sw, /v9-7-15-risk-sync-nextstep-2026-10-26/);
+test('version metadata and PWA cache match V9.8.0', () => {
+  assert.equal(manifest.short_name, 'AREX');
+  assert.match(sw, /v9-8-0-brain-mobile-2026-10-27/);
 });

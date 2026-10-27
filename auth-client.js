@@ -1,4 +1,4 @@
-/* AREX V9.7.14 — resilient Google Drive-only authentication and backup adapter.
+/* AREX V9.8.0 — resilient Google Drive-only authentication and backup adapter.
  * No Firebase Authentication or Firestore calls are made by this file.
  * OAuth token stays in memory; persistent backups use the Drive appDataFolder API.
  */
@@ -81,7 +81,7 @@ function resolveDriveEnabled(){
   // Prefer the explicitly exposed client ID. A stale/older bootstrap bridge can
   // otherwise report `false` even though index.html contains a valid public ID.
   // This check only detects configuration; OAuth still validates the ID with Google.
-  if(String(window.AREX_GOOGLE_CLIENT_ID || '715202165384-63bbdp55cr31nfnb2npdpfrffal78bq9.apps.googleusercontent.com').trim()) return () => true;
+  if(String(window.AREX_GOOGLE_CLIENT_ID || '').trim()) return () => true;
   if(typeof window.arexDriveIsEnabled==='function') return window.arexDriveIsEnabled;
   if(typeof window.driveEnabled==='function') return window.driveEnabled;
   return null;
@@ -128,12 +128,26 @@ if(loadBtn){loadBtn.disabled=false;loadBtn.addEventListener('click',async()=>{lo
 const signout=byId('accountSignOutBtn');
 if(signout) signout.addEventListener('click',()=>{if(confirm('از حساب Google Drive خارج شوی؟')){try{if(window.arexDriveSignOut)window.arexDriveSignOut();else location.reload();}catch{location.reload();}}});
 
+
+// The Google access token is a bearer credential: only send it to HTTPS hosts the user has trusted.
+window.arexAssertTrustedWorker = url => {
+  let u; try{ u=new URL(String(url||'')); }catch{ throw new Error('آدرس Worker معتبر نیست.'); }
+  if(u.protocol!=='https:') throw new Error('آدرس Worker باید HTTPS باشد.');
+  const host=u.hostname.toLowerCase();
+  if(/\.workers\.dev$/.test(host)||/\.pages\.dev$/.test(host)) return u.origin;
+  let trusted=[]; try{ trusted=JSON.parse(localStorage.getItem('arex-trusted-worker-hosts')||'[]'); }catch{}
+  if(trusted.includes(host)) return u.origin;
+  if(!confirm('توکن حساب Google فقط باید به سرویس خودت فرستاده شود.\nاین میزبان مورد اعتماد توست؟\n'+host)) throw new Error('میزبان Worker تأیید نشد.');
+  trusted.push(host); try{ localStorage.setItem('arex-trusted-worker-hosts',JSON.stringify(trusted.slice(-10))); }catch{}
+  return u.origin;
+};
 // Alerts are authenticated by the Google OAuth access token; the deployed Worker must use the matching Google-token validation update.
 window.arexSendExternalAlert = async payload => {
   if(window.AREX_LOCAL_TEST_MODE) throw new Error('حالت آزمایشی محلی فعال است؛ ارسال اعلان خارجی در این حالت غیرفعال است. برای آزمون سرویس واقعی از ورود Google استفاده کن.');
   const base=String((window.AREX_GET_EDGE_WORKER_URL&&window.AREX_GET_EDGE_WORKER_URL())||'').trim().replace(/\/$/,'');
   if(!base) throw new Error('worker_url_not_configured');
   if(!window.arexGetDriveAccessToken) throw new Error('google_drive_not_connected');
+  window.arexAssertTrustedWorker(base);
   const eventId=String(payload?.eventId||'').trim();
   if(!/^[a-zA-Z0-9._:-]{1,160}$/.test(eventId)) throw new Error('برای جلوگیری از ارسال تکراری، eventId معتبر و ثابت لازم است.');
   const token=await window.arexGetDriveAccessToken();
