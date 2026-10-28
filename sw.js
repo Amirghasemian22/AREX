@@ -49,6 +49,7 @@ const APP_SHELL = [
   './js/core/ohlc-backtest.js',
   './js/ui/workspace.js',
   './js/ui/mobile-shell.js',
+  './js/ui/shell.js',
   './js/ui/workspace.css',
   './js/core/brain.js',
   './js/ui/brain-ui.js',

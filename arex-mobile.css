@@ -123,3 +123,85 @@
 @media(min-width:761px){html body .wrap>.topbar.topbar{flex:0 0 auto!important;align-self:stretch!important}}
 /* mid-size desktops: keep the bar to one row by dropping the London/New York mini clocks (they remain in "Market Sessions") */
 @media(min-width:761px) and (max-width:1560px){html body #worldClocks{display:none!important}html body .topbar .sub{display:none!important}}
+
+/* =====================================================================
+   Layout v2 — one navigation model, two layouts (desktop workspace / phone app)
+   ===================================================================== */
+.arex-acc-h,.arex-form-sheet-bar,.arex-fab,.arex-more-sheet{display:none}
+.arex-acc-h.arex-acc-always{display:flex}
+.arex-acc-always-el.arex-acc-closed{display:none!important}
+.arex-acc-h{align-items:center;justify-content:space-between;gap:8px;width:100%;min-height:46px;padding:0 14px;border:1px solid var(--border);border-radius:14px;background:var(--panel);color:var(--text);font:700 14px inherit;text-align:start;cursor:pointer}
+.arex-acc-h i{font-style:normal;transition:transform .15s}
+.arex-acc-h[aria-expanded="true"] i{transform:rotate(180deg)}
+.arex-merged-into-brain{display:none!important}
+.arex-nav-v2 .nav-group-title{display:block!important;padding:10px 12px 4px;font-size:11px;font-weight:800;letter-spacing:.3px;color:var(--muted);opacity:.9}
+.arex-nav-v2:first-of-type .nav-group-title{padding-top:2px}
+.arex-nav-label{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* ---------- desktop (>=1100px): dashboard = main + rail ---------- */
+@media(min-width:1100px){
+  html body .view.active#view-dashboard{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(320px,1fr);gap:16px;align-items:start}
+  #view-dashboard>#overdueBanner,#view-dashboard>#arexBrainCard{grid-column:1/-1}
+  .arex-dash-rail>.arex-acc-h:not(.arex-acc-always){display:none}
+  .arex-dash-main,.arex-dash-rail{display:grid;gap:16px;min-width:0;align-content:start}
+  .arex-dash-rail>.card,.arex-dash-rail>section{margin:0}
+  /* journal workspace: list on the leading side, entry form pinned on the other */
+  html body .view.active#view-trades{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(400px,1fr);gap:16px;align-items:start}
+  #view-trades>#riskCalcMount_trade,#view-trades>#riskWarnBanner{grid-column:1/-1;margin:0}
+  #view-trades>#riskCalcMount_trade:empty,#view-trades>#riskWarnBanner:empty{display:none}
+  #view-trades>.arex-trade-stats,#view-trades>.arex-trade-history{grid-column:1;margin:0}
+  #view-trades>.arex-trade-form{grid-column:2;grid-row:1/span 3;position:sticky;top:96px;max-height:calc(100vh - 116px);overflow:auto;margin:0}
+}
+@media(min-width:761px) and (max-width:1099px){
+  html body .view.active#view-dashboard>.arex-dash-main,html body .view.active#view-dashboard>.arex-dash-rail{margin-bottom:16px}
+  .arex-dash-main,.arex-dash-rail{display:grid;gap:16px}
+}
+
+/* ---------- tablet + phone (<=1099px): entry form becomes a sheet ---------- */
+@media(max-width:1099px){
+  html body .arex-trade-form{display:none!important}
+  html body .arex-trade-form.arex-sheet-open{display:block!important;position:fixed;inset:0;z-index:11800;overflow:auto;border-radius:0!important;margin:0!important;max-height:none;background:var(--bg);padding:0 14px calc(28px + env(safe-area-inset-bottom,0px))!important}
+  .arex-form-sheet-bar{display:flex!important;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:2;margin:0 -14px 10px;padding:calc(10px + env(safe-area-inset-top,0px)) 14px 10px;background:var(--bg);border-bottom:1px solid var(--border)}
+  html.arex-sheet-lock,html.arex-sheet-lock body{overflow:hidden!important}
+  .arex-fab{position:fixed;inset-inline-start:14px;bottom:calc(88px + env(safe-area-inset-bottom,0px));z-index:10900;min-height:48px;padding:0 18px;border:0;border-radius:999px;font:800 14px inherit;color:#fff;background:linear-gradient(135deg,#1e90ff,#2b5be0);box-shadow:0 10px 26px rgba(30,110,255,.45);cursor:pointer}
+  html.arex-sheet-lock .arex-fab,html.arex-more-open .arex-fab{display:none!important}
+}
+@media(min-width:1100px){.arex-fab{display:none!important}}
+
+/* ---------- phone: ordered stack + accordions + More sheet ---------- */
+@media(max-width:760px){
+  html.arex-phone body .view.active#view-dashboard{display:flex;flex-direction:column;gap:12px}
+  html.arex-phone .arex-dash-main,html.arex-phone .arex-dash-rail{display:contents}
+  html.arex-phone #view-dashboard>*,html.arex-phone .arex-dash-main>*,html.arex-phone .arex-dash-rail>*,html.arex-phone .arex-acc-h{order:var(--o,20)}
+  .arex-acc-h{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;min-height:48px;padding:0 14px;border:1px solid var(--border);border-radius:14px;background:var(--panel);color:var(--text);font:700 14px inherit;text-align:start;cursor:pointer}
+  .arex-acc-h i{font-style:normal;transition:transform .15s}
+  .arex-acc-h[aria-expanded="true"] i{transform:rotate(180deg)}
+  .arex-acc-h[aria-expanded="true"]{border-end-start-radius:0;border-end-end-radius:0;border-bottom-color:transparent}
+  .arex-acc-closed{display:none!important}
+  html.arex-phone #view-settings .settings-jumpbar{display:none}
+  html.arex-phone #view-settings>.grid{display:flex;flex-direction:column;gap:10px}
+  html.arex-phone #view-settings>.grid>.arex-acc-h{order:0}
+
+  html.arex-more-open body{overflow:hidden}
+  .arex-more-sheet{position:fixed;inset:0;z-index:11900;background:rgba(2,6,14,.6);align-items:flex-end}
+  .arex-more-sheet.open{display:flex}
+  .arex-more-card{width:100%;max-height:88dvh;overflow:auto;background:var(--bg);border:1px solid var(--border);border-radius:22px 22px 0 0;padding:12px 14px calc(18px + env(safe-area-inset-bottom,0px))}
+  .arex-more-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;font-size:16px}
+  .arex-more-title{margin:14px 2px 8px;font-size:12px;font-weight:800;letter-spacing:.3px;color:var(--muted)}
+  .arex-more-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .arex-more-tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:78px;padding:8px 4px;border:1px solid var(--border);border-radius:14px;background:var(--panel);color:var(--text);font:600 12px/1.35 inherit;text-align:center;cursor:pointer}
+  .arex-more-tile .ic{display:inline-flex;font-size:20px;color:var(--gold)}
+  .arex-more-tile .nav-ic{width:22px;height:22px}
+  /* the old drawer is replaced by the More sheet */
+  html.arex-phone .hamburger{display:none!important}
+}
+body.sidebar-collapsed .arex-nav-v2 .nav-group-title{display:none!important}
+body.sidebar-collapsed .arex-nav-label{display:none}
+@media(max-width:760px){html.arex-phone #arexBrainCard{--o:1}}
+@media(max-width:1099px){
+  .arex-fab{display:inline-flex;align-items:center;gap:6px}
+  html body .arex-trade-form.arex-sheet-open.arex-sheet-open .form-grid.form-grid,html body .arex-trade-form.arex-sheet-open.arex-sheet-open .arex-form-grid.arex-form-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+  html body .arex-trade-form.arex-sheet-open.arex-sheet-open .form-grid>*:has(textarea),html body .arex-trade-form.arex-sheet-open.arex-sheet-open .form-grid>*:has(.chips),html body .arex-trade-form.arex-sheet-open.arex-sheet-open .form-grid>*:has(input[type=checkbox]),html body .arex-trade-form.arex-sheet-open.arex-sheet-open .form-grid>*:has(input[type=file]){grid-column:1/-1}
+  html body .arex-trade-form.arex-sheet-open.arex-sheet-open>.card-title:first-of-type,html body .arex-trade-form.arex-sheet-open.arex-sheet-open>h2:first-of-type{display:none}
+}
+html.arex-sheet-lock body .arex-mobile-nav.arex-mobile-nav{display:none!important}
