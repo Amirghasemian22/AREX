@@ -52,6 +52,20 @@ const APP_SHELL = [
   './js/ui/shell.js',
   './js/ui/workspace.css',
   './js/core/brain.js',
+  './js/core/tradecalc.js',
+  './js/core/ledger.js',
+  './js/core/quant.js',
+  './js/core/mt5.js',
+  './js/core/report.js',
+  './js/ui/views.js',
+  './js/ui/trade-form-v2.js',
+  './js/ui/accounts.js',
+  './js/ui/quant-ui.js',
+  './js/ui/import-ui.js',
+  './js/ui/market.js',
+  './js/ui/reviewcenter.js',
+  './js/ui/onboarding.js',
+  './tools/AREX_Exporter.mq5',
   './js/ui/brain-ui.js',
   './arex-mobile.css'
 ];
@@ -108,4 +122,13 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request).then((cached) => cached || fetch(event.request).catch(() => cached))
   );
+});
+
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  const view = (event.notification.data && event.notification.data.view) || '';
+  event.waitUntil(self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((list) => {
+    for (const c of list) { if ('focus' in c) { c.postMessage({ type: 'AREX_GO', view }); return c.focus(); } }
+    return self.clients.openWindow('./index.html' + (view ? '?go=' + view : ''));
+  }));
 });

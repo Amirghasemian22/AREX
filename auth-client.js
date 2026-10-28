@@ -61,10 +61,17 @@ window.arexDriveLoginFailed = message => {
 };
 window.arexDriveLoginComplete = async () => {
   try{
+    const prevUid=localStorage.getItem('arex-last-auth-uid')||'';
     const identity=window.arexGetDriveIdentity?window.arexGetDriveIdentity():{};
     if(!identity.id) throw new Error('شناسه پایدار حساب Google دریافت نشد. مجوزهای OAuth را بررسی کن.');
+    if(prevUid==='local-device' && identity.id!=='local-device'){
+      // first Google connection after using the app without login: carry the local journal over to the Google account
+      const pol=window.AREXAccountStoragePolicy, from=await readDb(pol.databaseNameForUid('local-device')), to=await readDb(pol.databaseNameForUid(identity.id));
+      if(Object.keys(from).length && !Object.keys(to).length) await writeDb(pol.databaseNameForUid(identity.id),from);
+    }
     await window.arexPrepareAuthenticatedUser(identity.id);
-    localStorage.setItem('arex-last-auth-uid',identity.id);
+    localStorage.setItem('arex-last-auth-uid',identity.id); localStorage.removeItem('arex-force-login');
+    if(prevUid==='local-device' && identity.id!=='local-device'){ setTimeout(()=>location.reload(),300); return; }
     const row=byId('authUserRow'); if(row){row.style.display='block';row.textContent='واردشده با '+(identity.email||'Google Drive');}
     setStatus('متصل به '+(identity.email||'Google Drive')+' · داده‌های محلی این حساب از سایر حساب‌ها جداست.');
     const signout=byId('accountSignOutBtn'); if(signout) signout.style.display='inline-flex';
@@ -164,3 +171,21 @@ window.arexSendExternalAlert = async payload => {
 
 if(byId('authSetupNote')) byId('authSetupNote').textContent='ورود و پشتیبان‌گیری با Google Drive انجام می‌شود؛ Firebase استفاده نمی‌شود.';
 if(byId('localPreviewBtn')&&!window.AREX_LOCAL_TEST_ENTRY_ENABLED) byId('localPreviewBtn').style.display='none';
+
+
+/* ---- Silent entry: after the first sign-in the app opens straight into the journal (no login screen, no token needed).
+   Google is contacted only when the user presses Sync (a user gesture), so there is nothing to re-authenticate on every launch. ---- */
+(async () => {
+  try{
+    if(window.AREX_LOCAL_TEST_MODE) return;
+    const uid=localStorage.getItem('arex-last-auth-uid');
+    if(!uid || localStorage.getItem('arex-force-login')==='1'){ document.documentElement.classList.remove('arex-silent-entry'); return; }
+    await window.arexPrepareAuthenticatedUser(uid);
+    const row=byId('authUserRow'); if(row){row.style.display='block';row.textContent=(uid==='local-device'?'حالت محلی (بدون ورود)':'حساب Google ذخیره‌شده')+' · برای همگام‌سازی دکمه Sync را بزن.';}
+    const signout=byId('accountSignOutBtn'); if(signout) signout.style.display='inline-flex';
+    if(window.arexEnterApp) window.arexEnterApp(false);
+    window.arexSilentSession=true;
+  }catch(error){ console.warn('AREX silent entry failed; showing the login screen',error); document.documentElement.classList.remove('arex-silent-entry'); }
+})();
+// "Continue without signing in": a local-only profile; connect Google later from Sync.
+(() => { const b=byId('arexLocalOnlyBtn'); if(!b) return; b.addEventListener('click',async()=>{ try{ await window.arexPrepareAuthenticatedUser('local-device'); localStorage.setItem('arex-last-auth-uid','local-device'); localStorage.removeItem('arex-force-login'); if(window.arexEnterApp) window.arexEnterApp(false); }catch(e){ setError('ورود محلی ممکن نشد: '+(e&&e.message||e)); } }); })();

@@ -100,3 +100,24 @@ test('Google token for another OAuth client is rejected and a missing client id 
   assert.equal((await other.fetch(mk(), { ALERT_ALLOWED_GOOGLE_EMAIL: 'owner@example.com', GOOGLE_CLIENT_ID: 'arex-client' }, ctx)).status, 401);
   assert.equal((await other.fetch(mk(), { ALERT_ALLOWED_GOOGLE_EMAIL: 'owner@example.com' }, ctx)).status, 503);
 });
+
+function kv() { const m = new Map(); return { m, put: async (k, v) => { m.set(k, v); }, get: async (k, t) => (m.has(k) ? (t === 'json' ? JSON.parse(m.get(k)) : m.get(k)) : null), delete: async k => { m.delete(k); }, list: async ({ prefix }) => ({ keys: [...m.keys()].filter(k => k.startsWith(prefix)).map(name => ({ name })) }) }; }
+const deal = (o = {}) => Object.assign({ ticket: '1001', login: '555', symbol: 'EURUSD', dir: 'buy', lots: 0.5, entry: 1.1, exit: 1.105, sl: 1.095, tp: 1.11, openedAt: '2026-10-27T08:15:01', closedAt: '2026-10-27T11:40:30', commission: -3.5, swap: 0, gross: 250 }, o);
+
+test('EA ingest: needs the shared secret, validates deals, and the owner (Google token) pulls then acknowledges', async () => {
+  const store = kv(), env = { AREX_INGEST_KEY: 'secret-key-123', AREX_INGEST: store, GOOGLE_CLIENT_ID: 'arex-client', ALERT_ALLOWED_GOOGLE_EMAIL: 'owner@example.com' };
+  const worker = loadWorker(async url => new Response(JSON.stringify({ aud: 'arex-client', sub: 'u1', email: String(url).includes('bad') ? 'x@example.com' : 'owner@example.com', email_verified: 'true' }), { status: 200 }));
+  const post = (key, body) => req('/ingest', { method: 'POST', headers: { 'X-AREX-Key': key, 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+  assert.equal((await worker.fetch(post('wrong', [deal()]), env, ctx)).status, 401);
+  assert.equal((await worker.fetch(post('secret-key-123', [deal()]), { AREX_INGEST_KEY: 'secret-key-123' }, ctx)).status, 503);
+  const ok = await worker.fetch(post('secret-key-123', [deal(), deal({ ticket: 'x y' }), deal({ dir: 'balance', ticket: '2' }), deal({ ticket: '1002', symbol: 'xau<usd>' })]), env, ctx);
+  assert.equal((await ok.json()).accepted, 2);                                       // bad ticket + non-trade type are dropped
+  assert.equal(store.m.size, 2);
+  assert.equal((await worker.fetch(req('/ingest/pending'), env, ctx)).status, 401);   // no Google token
+  const pend = await worker.fetch(req('/ingest/pending', { headers: { Authorization: 'Bearer t' } }), env, ctx), data = await pend.json();
+  assert.equal(data.deals.length, 2); assert.equal(data.deals.find(d => d.ticket === '1002').symbol, 'XAUUSD');
+  const ack = await worker.fetch(req('/ingest/pending', { method: 'POST', headers: { Authorization: 'Bearer t', 'Content-Type': 'application/json' }, body: JSON.stringify({ ack: data.deals.map(d => d._key) }) }), env, ctx);
+  assert.equal((await ack.json()).deleted, 2); assert.equal(store.m.size, 0);
+  const stranger = loadWorker(async () => new Response(JSON.stringify({ aud: 'arex-client', sub: 'u2', email: 'someone@else.com', email_verified: 'true' }), { status: 200 }));
+  assert.equal((await stranger.fetch(req('/ingest/pending', { headers: { Authorization: 'Bearer t' } }), env, ctx)).status, 403);
+});

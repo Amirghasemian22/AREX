@@ -78,3 +78,12 @@ test('best/worst groups need a minimum sample; AI context is compact and contain
   assert.ok(JSON.stringify(ctx).length < 9000);
   assert.equal(JSON.stringify(ctx).includes('data:image'), false);
 });
+
+test('nightly sync reminder: due after the configured hour when not synced today; clears once synced; off when disabled', () => {
+  const late = new Date(2026, 9, 27, 22, 0), mk = sync => B.snapshot({ now: late, trades: [], sync });
+  assert.equal(mk({ enabled: true, hour: 21, lastSyncAt: new Date(2026, 9, 26, 22).toISOString() }).syncDue, true);
+  assert.equal(mk({ enabled: true, hour: 21, lastSyncAt: new Date(2026, 9, 27, 18).toISOString() }).syncDue, false);
+  assert.equal(mk({ enabled: false, hour: 21 }).syncDue, false);
+  assert.equal(B.snapshot({ now: new Date(2026, 9, 27, 15), trades: [], sync: { enabled: true, hour: 21 } }).syncDue, false);
+  const a = B.proactive(mk({ enabled: true, hour: 21 })).find(x => x.id === 'sync-night'); assert.ok(a && a.view === 'sync');
+});

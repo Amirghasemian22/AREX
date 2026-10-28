@@ -59,10 +59,37 @@ async function fetchCalendar(ctx){
   }
   return response;
 }
-const MARKET_SYMBOLS={ 'EUR/USD':'EUR/USD','GBP/USD':'GBP/USD','USD/JPY':'USD/JPY','XAU/USD':'XAU/USD','DJI':'DJI' };
+const MARKET_SYMBOLS={ 'EUR/USD':'EUR/USD','GBP/USD':'GBP/USD','USD/JPY':'USD/JPY','USD/CHF':'USD/CHF','USD/CAD':'USD/CAD','AUD/USD':'AUD/USD','NZD/USD':'NZD/USD','EUR/JPY':'EUR/JPY','GBP/JPY':'GBP/JPY','EUR/GBP':'EUR/GBP','XAU/USD':'XAU/USD','XAG/USD':'XAG/USD','DJI':'DJI','SPX':'SPX','NDX':'NDX' };
+
+/* ---- MT4/MT5 auto-import: the EA POSTs closed positions with a shared secret; the app pulls them with the owner's Google token ---- */
+function safeEq(a,b){ a=String(a||''); b=String(b||''); if(a.length!==b.length) return false; let d=0; for(let i=0;i<a.length;i++) d|=a.charCodeAt(i)^b.charCodeAt(i); return d===0; }
+const INGEST_PREFIX='ing:';
+function cleanDeal(d){
+  if(!d||typeof d!=='object') return null;
+  const ticket=String(d.ticket||'').trim(); if(!/^[0-9A-Za-z._-]{1,40}$/.test(ticket)) return null;
+  const dir=String(d.dir||d.type||'').toLowerCase(); if(dir!=='buy'&&dir!=='sell') return null;
+  const n=v=>{const x=Number(v);return Number.isFinite(x)?x:null;}, t=v=>/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?$/.test(String(v||''))?String(v):'';
+  return {ticket,symbol:String(d.symbol||'').toUpperCase().replace(/[^A-Z0-9._#-]/g,'').slice(0,20),dir,lots:n(d.lots),entry:n(d.entry),exit:n(d.exit),sl:n(d.sl),tp:n(d.tp),openedAt:t(d.openedAt),closedAt:t(d.closedAt),commission:n(d.commission)||0,swap:n(d.swap)||0,gross:n(d.gross),login:String(d.login||'').replace(/[^0-9A-Za-z]/g,'').slice(0,20)};
+}
+async function handleIngest(request, env){
+  if(!env.AREX_INGEST_KEY||!env.AREX_INGEST) return json({error:'ingest_not_configured',message:'Set the AREX_INGEST_KEY secret and bind a KV namespace named AREX_INGEST.'},503,{'Cache-Control':'no-store'});
+  if(!safeEq(request.headers.get('X-AREX-Key'),env.AREX_INGEST_KEY)) return json({error:'unauthorized'},401,{'Cache-Control':'no-store'});
+  if(Number(request.headers.get('Content-Length')||0)>200000) return json({error:'payload_too_large'},413,{'Cache-Control':'no-store'});
+  let body; try{body=await request.json();}catch{return json({error:'invalid_json'},400,{'Cache-Control':'no-store'});}
+  const list=(Array.isArray(body)?body:body&&Array.isArray(body.deals)?body.deals:[body]).slice(0,100).map(cleanDeal).filter(Boolean);
+  await Promise.all(list.map(d=>env.AREX_INGEST.put(INGEST_PREFIX+(d.login||'0')+':'+d.ticket,JSON.stringify(d),{expirationTtl:60*60*24*30})));
+  return json({ok:true,accepted:list.length},200,{'Cache-Control':'no-store'});
+}
+async function handlePending(request, env, claims){
+  if(!env.AREX_INGEST) return json({error:'ingest_not_configured'},503,{'Cache-Control':'no-store'});
+  const listed=await env.AREX_INGEST.list({prefix:INGEST_PREFIX,limit:200});
+  const deals=(await Promise.all(listed.keys.map(async k=>{const v=await env.AREX_INGEST.get(k.name,'json'); return v?Object.assign({_key:k.name},v):null;}))).filter(Boolean);
+  if(request.method==='POST'){ let b; try{b=await request.json();}catch{b={};} const ack=(Array.isArray(b.ack)?b.ack:[]).filter(k=>typeof k==='string'&&k.startsWith(INGEST_PREFIX)).slice(0,200); await Promise.all(ack.map(k=>env.AREX_INGEST.delete(k))); return json({ok:true,deleted:ack.length},200,{'Cache-Control':'no-store'}); }
+  return json({deals},200,{'Cache-Control':'no-store'});
+}
 async function fetchQuotes(request, env){
   if(!env.TWELVEDATA_API_KEY) return json({error:'market_provider_not_configured',message:'Set TWELVEDATA_API_KEY as a Worker secret.'},503,{'Cache-Control':'no-store'});
-  const url=new URL(request.url), requested=(url.searchParams.get('symbols')||'EUR/USD,XAU/USD,DJI').split(',').map(s=>s.trim()).filter(Boolean).slice(0,5);
+  const url=new URL(request.url), requested=(url.searchParams.get('symbols')||'EUR/USD,XAU/USD,DJI').split(',').map(s=>s.trim()).filter(Boolean).slice(0,8);
   const symbols=requested.filter(s=>MARKET_SYMBOLS[s]); if(!symbols.length)return json({error:'no_supported_symbols'},400,{'Cache-Control':'no-store'});
   const quotes=await Promise.all(symbols.map(async symbol=>{
     try{
@@ -182,7 +209,7 @@ export default {
   async fetch(request,env,ctx){
     const url=new URL(request.url);
     if(request.method==='OPTIONS')return new Response(null,{status:204,headers:cors});
-    if(url.pathname==='/health'&&request.method==='GET')return json({ok:true,service:'AREX Edge Worker',routes:['/calendar','/market','/notify'],notificationDedupe:env.NOTIFY_DEDUPE?'kv':'isolate_best_effort',calendarSource:'Forex Factory weekly export',marketSource:env.TWELVEDATA_API_KEY?'Twelve Data configured':'not configured',telegramConfigured:!!(env.TELEGRAM_BOT_TOKEN&&env.TELEGRAM_CHAT_ID),emailConfigured:!!(env.RESEND_API_KEY&&env.ALERT_EMAIL_TO&&env.ALERT_EMAIL_FROM)},200,{'Cache-Control':'no-store'});
+    if(url.pathname==='/health'&&request.method==='GET')return json({ok:true,service:'AREX Edge Worker',routes:['/calendar','/market','/notify','/ingest','/ingest/pending'],notificationDedupe:env.NOTIFY_DEDUPE?'kv':'isolate_best_effort',calendarSource:'Forex Factory weekly export',marketSource:env.TWELVEDATA_API_KEY?'Twelve Data configured':'not configured',telegramConfigured:!!(env.TELEGRAM_BOT_TOKEN&&env.TELEGRAM_CHAT_ID),emailConfigured:!!(env.RESEND_API_KEY&&env.ALERT_EMAIL_TO&&env.ALERT_EMAIL_FROM)},200,{'Cache-Control':'no-store'});
     if((url.pathname==='/'||url.pathname==='/calendar')&&request.method==='GET'){try{return await fetchCalendar(ctx);}catch(e){return json({error:'calendar_unavailable',message:String(e?.message||e)},502,{'Cache-Control':'no-store'});}}
     if(url.pathname==='/market'&&request.method==='GET'){
       const ip=request.headers.get('CF-Connecting-IP')||'unknown';
@@ -190,6 +217,15 @@ export default {
       return fetchQuotes(request,env);
     }
     if(url.pathname==='/notify'&&request.method==='POST')return sendAlerts(request,env);
+    if(url.pathname==='/ingest'&&request.method==='POST')return handleIngest(request,env);
+    if(url.pathname==='/ingest/pending'&&(request.method==='GET'||request.method==='POST')){
+      const authorization=request.headers.get('Authorization')||'';
+      if(!authorization.startsWith('Bearer ')) return json({error:'unauthorized'},401,{'Cache-Control':'no-store'});
+      let claims; try{claims=await verifyGoogleAccessToken(authorization.slice(7),env);}catch(e){return json({error:String(e&&e.message)==='google_client_id_not_configured'?'auth_not_configured':'unauthorized'},String(e&&e.message)==='google_client_id_not_configured'?503:401,{'Cache-Control':'no-store'});}
+      const owner=String(env.ALERT_ALLOWED_GOOGLE_EMAIL||'').trim().toLowerCase();
+      if(!owner||claims.email!==owner) return json({error:'forbidden'},403,{'Cache-Control':'no-store'});
+      return handlePending(request,env,claims);
+    }
     return json({error:'not_found'},404,{'Cache-Control':'no-store'});
   }
 };

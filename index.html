@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<script>try{localStorage.setItem("arex_v57_tour_done","1");localStorage.setItem("arex_v965_tour_seen","1")}catch(e){}try{if(localStorage.getItem("arex-last-auth-uid")&&localStorage.getItem("arex-force-login")!=="1")document.documentElement.classList.add("arex-silent-entry")}catch(e){}</script>
+<style>html.arex-silent-entry #arexAuthGate{display:none!important}html.arex-silent-entry.arex-auth-open body>:not(#arexAuthGate):not(script):not(style){visibility:visible!important;pointer-events:auto!important}</style>
 <title>AREX V9.8.0</title>
 <meta name="description" content="AREX دستیار شخصی مدیریت معاملات است: ژورنال معاملاتی، مدیریت ریسک، قوانین استراتژی، تقویم اقتصادی، سشن‌های بازار، ثبت روان‌شناسی و تحلیل عملکرد در یک فضای کاری نصب‌شدنی.">
 <meta name="keywords" content="ژورنال معاملات فارکس, تریدینگ ژورنال, چک‌لیست بهبود عملکرد معاملاتی, مدیریت ریسک معاملات, ردیاب پراپ فرم, تقویم اقتصادی فارکس, forex trading journal, prop firm tracker">
@@ -1884,6 +1886,7 @@ body::before{opacity:var(--arex-wallpaper-strength)!important;background-image:l
   <div class="auth-layout"><div class="auth-story"><div class="auth-wordmark">AREX</div><p id="authTagline">A focused trading workspace for your journal, risk rules and performance.</p><div class="auth-market-line"><span>FOREX</span><span>GOLD</span><span>DOW JONES</span><span>RISK · JOURNAL · DISCIPLINE</span></div></div>
   <div class="auth-card"><div class="auth-logo"><img src="icon-192.png" alt="لوگوی AREX" width="76" height="76" decoding="async"></div><h2 id="authTitle">AREX</h2><p id="authDescription">دستیار هوشمند مدیریت معاملات، ریسک و عملکرد</p>
     <button class="auth-google" id="googleSignInBtn" type="button">ورود با Google Drive&nbsp; ↗</button>
+    <button class="btn ghost" id="arexLocalOnlyBtn" type="button" style="width:100%;margin-top:10px">ادامه بدون ورود (فقط روی این دستگاه)</button>
     <p id="authError" class="auth-error" role="status"></p>
     <p id="authSetupNote" class="auth-setup-note">برای ورود به AREX، حساب Google و دسترسی فضای اختصاصی Google Drive را تأیید کن.</p>
     <button class="auth-local" id="localPreviewBtn" type="button" style="display:none">ورود موقت برای تست محلی</button>
@@ -3217,6 +3220,11 @@ body::before{opacity:var(--arex-wallpaper-strength)!important;background-image:l
 <script src="js/core/ruleaudit.js"></script>
 <script src="js/core/pretrade.js"></script>
 <script src="js/core/brain.js"></script>
+<script src="js/core/tradecalc.js"></script>
+<script src="js/core/ledger.js"></script>
+<script src="js/core/quant.js"></script>
+<script src="js/core/mt5.js"></script>
+<script src="js/core/report.js"></script>
 <script src="js/ui/analytics.js"></script>
 <script src="js/i18n/v9.js"></script>
 <script src="js/ui/propguard.js"></script>
@@ -4584,9 +4592,11 @@ function notify(title, body, icon, opts){
   renderNotifLog();
   updateChangelogDot();
   if('Notification' in window && Notification.permission==='granted' && state.notifEnabled){
-    try{ new Notification(title, { body, icon:'icon-192.png' }); }catch(e){}
+    const nopts={ body, icon:'icon-192.png', badge:'icon-192.png', tag:opts.tag||('arex-'+Date.now()), data:{view:opts.view||''} };
+    if(navigator.serviceWorker&&navigator.serviceWorker.ready){ navigator.serviceWorker.ready.then(r=>r.showNotification(title,nopts)).catch(()=>{try{ new Notification(title,nopts); }catch(e){}}); }
+    else { try{ new Notification(title,nopts); }catch(e){} }
   }
-  if(window.arexSendTelegramNotification){
+  if(window.arexSendTelegramNotification && !opts.skipTelegram){
     const label=String(title||'').toLowerCase();
     let category='';
     if(/خبر اقتصادی|تقویم|economic event|calendar/.test(label))category='calendar';
@@ -6146,6 +6156,7 @@ function editTrade(id){
   goView('trades');editingTradeId=id;
   const map={trDate:t.date,trTime:t.time||'',trSymbol:t.symbol||'',trDir:t.dir||'buy',trEntry:t.entry||'',trSl:t.sl||'',trTp:t.tp||'',trExit:t.exit||'',trR:t.r||'',trUsd:t.usd||'',trSetup:t.setup||'',trNote:t.note||'',trRiskPct:t.riskPct==null?'':t.riskPct,trSlOrig:t.slOriginal==null?'':t.slOriginal,trEmoBefore:t.emotionBefore||'',trEmoAfter:t.emotionAfter||'',trTags:(t.tags||[]).join('، ')};
   Object.entries(map).forEach(([k,v])=>{const el=document.getElementById(k);if(el)el.value=v;});
+  if(window.arexTradeExtraLoad) window.arexTradeExtraLoad(t);
   trSelectedMistakes=[...(t.mistakes||[])];renderMistakeChips();document.querySelectorAll('#trMistakeChips .chip').forEach(b=>{if(trSelectedMistakes.includes(b.dataset.m))b.classList.add('active');});
   document.getElementById('addTradeBtn').textContent='ذخیره تغییرات معامله';document.getElementById('cancelTradeEditBtn').style.display='inline-flex';
   document.getElementById('trSymbol').scrollIntoView({behavior:'smooth',block:'center'});toast('حالت ویرایش فعال شد');
@@ -6184,6 +6195,7 @@ document.getElementById('addTradeBtn').addEventListener('click', async ()=>{
     nearNews: detectNearNews(date, time),
     hasShotEntry: pendingShot.entry ? true : !!(oldTrade&&oldTrade.hasShotEntry), hasShotExit: pendingShot.exit ? true : !!(oldTrade&&oldTrade.hasShotExit), hasVoice: !!(oldTrade&&oldTrade.hasVoice)
   });
+  if(window.arexTradeExtraApply) window.arexTradeExtraApply(trade);
   if(pendingShot.entry) await storage.set('tradeshot:'+id+':entry', pendingShot.entry).catch(()=>{});
   if(pendingShot.exit) await storage.set('tradeshot:'+id+':exit', pendingShot.exit).catch(()=>{});
   if(editingTradeId){ const ix=state.trades.findIndex(x=>x.id===editingTradeId); if(ix>=0) state.trades[ix]=trade; } else state.trades.unshift(trade);
@@ -6193,6 +6205,7 @@ document.getElementById('addTradeBtn').addEventListener('click', async ()=>{
   const dayLog=state.dailyLogs[date]||{date,status:'yes',mood:'',focus:3,discipline:3};dayLog.status='yes';dayLog.journalDone=true;state.dailyLogs[date]=dayLog;queueSave('assistantState');
   ['trSymbol','trEntry','trSl','trExit','trR','trUsd','trSetup','trNote','trTime','trTp','trRiskPct','trSlOrig','trTags','trEmoBefore','trEmoAfter'].forEach(i=>document.getElementById(i).value='');
   trSelectedMistakes = []; pendingShot = { entry:null, exit:null };
+  if(window.arexTradeExtraReset) window.arexTradeExtraReset();
   document.querySelectorAll('#trMistakeChips .chip').forEach(b=>b.classList.remove('active'));
   document.querySelectorAll('#trRulesBox input').forEach(i=>i.checked=false);
   ['trShotEntryPrev','trShotExitPrev'].forEach(i=>{ document.getElementById(i).style.display='none'; });
@@ -6330,7 +6343,7 @@ function renderTrades(){
     const pillClass = isNaN(r) ? 'neu' : (r>0?'win':(r<0?'loss':'neu'));
     const div = document.createElement('div'); div.className='entry-card';
     div.innerHTML =
-      '<div style="flex:1; min-width:160px;"><div class="meta">'+escapeHtml(t.date)+(t.time?' '+escapeHtml(t.time):'')+' · '+(t.dir==='buy'?'خرید':'فروش')+(t.setup?' · '+escapeHtml(t.setup):'')+
+      '<div style="flex:1; min-width:160px;"><div class="meta">'+escapeHtml(t.date)+(t.time?' '+escapeHtml(t.time):'')+' · '+(t.dir==='buy'?'خرید':'فروش')+(t.setup?' · '+escapeHtml(t.setup):'')+(window.arexTradeMeta?window.arexTradeMeta(t):'')+
       (t.sessions&&t.sessions.length?' · '+escapeHtml(t.sessions.join('/')):'')+(t.nearNews?' · 📰 نزدیک خبر':'')+'</div>'+
       '<div class="body"><b>'+escapeHtml(t.symbol)+'</b>'+(t.entry?' — ورود: '+escapeHtml(t.entry):'')+(t.sl?' · حدضرر: '+escapeHtml(t.sl):'')+(t.exit?' · خروج: '+escapeHtml(t.exit):'')+'</div>'+
       (t.ruleCompliance!==null&&t.ruleCompliance!==undefined?'<span class="compliance-badge '+(t.ruleCompliance===100?'full':'partial')+'">پایبندی به قانون: '+faDigits(t.ruleCompliance)+'٪</span>':'')+
@@ -8166,6 +8179,14 @@ body[data-bg="minimal"]{background-image:radial-gradient(ellipse at 80% 0%,rgba(
 <script src="js/core/extended.js"></script>
 <script src="js/core/ohlc-backtest.js"></script>
 <script src="js/ui/workspace.js"></script>
+<script src="js/ui/views.js"></script>
+<script src="js/ui/trade-form-v2.js"></script>
+<script src="js/ui/accounts.js"></script>
+<script src="js/ui/quant-ui.js"></script>
+<script src="js/ui/import-ui.js"></script>
+<script src="js/ui/market.js"></script>
+<script src="js/ui/reviewcenter.js"></script>
+<script src="js/ui/onboarding.js"></script>
 <script src="js/ui/brain-ui.js"></script>
 <script src="js/ui/mobile-shell.js"></script>
 <script src="js/ui/shell.js"></script>
