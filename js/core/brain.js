@@ -55,12 +55,14 @@
     const cfg = input.cfg || {}, limits = input.limits || {};
     const ev = (input.events || []).map(e => ({ id: e.id, name: e.name, country: e.country, impact: e.impact || e._impact, ms: e.date instanceof Date ? e.date.getTime() : Date.parse(e.date) })).filter(e => Number.isFinite(e.ms));
     const upcoming = ev.filter(e => e.ms >= now.getTime() - 30 * 60000 && e.ms <= now.getTime() + 24 * 3600000).sort((a, b) => a.ms - b.ms);
+    const sy = input.sync || {}, syncHour = num(sy.hour) !== null ? num(sy.hour) : 21, lastDay = sy.lastSyncAt ? iso(new Date(sy.lastSyncAt)) : '';
+    const syncDue = !!sy.enabled && now.getHours() >= syncHour && lastDay !== today;
     const missing = [];
     if (num(cfg.maxRiskPct) === null && num(limits.riskPerTradePct) === null) missing.push('maxRiskPct');
     if (num(cfg.maxTradesPerDay) === null) missing.push('maxTradesPerDay');
     if (num(limits.balance) === null) missing.push('balance');
     const rulesBy = input.rulesBy || {}, ruleCount = Object.keys(rulesBy).reduce((n, k) => n + (rulesBy[k] || []).length, 0);
-    return { today, now, allTrades: trades, hour: now.getHours(), weekday: WD[now.getDay()], hasData: trades.length > 0, total: trades.length,
+    return { today, now, allTrades: trades, hour: now.getHours(), weekday: WD[now.getDay()], hasData: trades.length > 0, total: trades.length, syncDue,
       todayStats: stats(todayTr), todayTrades: todayTr, weekStats: stats(weekTr), weekTrades: weekTr, all: stats(trades),
       open: trades.filter(isOpen), openNoSl: trades.filter(t => isOpen(t) && num(t.sl) === null),
       guard: input.guard && input.guard.rules ? input.guard : null, cfg, limits, missing,
@@ -95,6 +97,7 @@
     const A = [], add = (id, level, icon, title, body, view) => A.push({ id, level, icon, title, body, view: view || null });
     const g = s.guard && s.guard.rules;
     if (g) [['dailyLoss', 'ضرر روزانه'], ['totalLoss', 'ضرر کل']].forEach(([k, l]) => { const r = g[k]; if (!r) return; if (r.state === 'breach') add('guard-' + k + '-breach', 'danger', '⛔', 'سقف ' + l + ' نقض شد', 'معامله جدید نزن و وضعیت حساب را مرور کن.', 'propfirm'); else if (r.state === 'warn') add('guard-' + k + '-warn', 'warn', '⚠️', 'نزدیک سقف ' + l, fa(Math.round(r.usedFrac * 100)) + '٪ مصرف شده.', 'propfirm'); });
+    if (s.syncDue) add('sync-night', 'warn', '☁️', 'وقت همگام‌سازی امشب', 'دکمه‌ی Sync را بزن تا نسخه‌ی Google Drive به‌روز شود.', 'sync');
     const mt = num(s.cfg.maxTradesPerDay); if (mt !== null && s.todayTrades.length >= mt) add('trades-cap', 'warn', '🧱', 'سقف تعداد معامله امروز پر شد', fa(s.todayTrades.length) + ' از ' + fa(mt) + ' معامله.', 'risk');
     if (s.openNoSl.length) add('open-no-sl', 'danger', '🛑', 'معامله باز بدون حد ضرر', fa(s.openNoSl.length) + ' معامله باز SL ندارد.', 'trades');
     s.events.high.forEach(e => { const m = Math.round((e.ms - s.now.getTime()) / 60000); if (m <= 60 && m > 15) add('news-60-' + e.id, 'warn', '📰', 'خبر مهم تا ' + fa(m) + ' دقیقه دیگر', N(e.name) + (e.country ? ' · ' + e.country : ''), 'calendar'); else if (m <= 15 && m >= -5) add('news-15-' + e.id, 'danger', '📰', m > 0 ? 'خبر مهم تا ' + fa(m) + ' دقیقه دیگر' : 'خبر مهم همین حالا منتشر شد', N(e.name) + (e.country ? ' · ' + e.country : '') + ' — برای پوزیشن‌های باز ریسک نوسان را بررسی کن.', 'calendar'); });
@@ -108,6 +111,7 @@
   function nextAction(s) {
     if (s.openNoSl.length) return { text: 'برای ' + fa(s.openNoSl.length) + ' معامله‌ی باز، حد ضرر را مشخص کن.', view: 'trades' };
     const v = verdict(s); if (v.level === 'stop') return { text: v.reasons[0].text, view: v.reasons[0].view };
+    if (s.syncDue) return { text: 'امشب هنوز همگام‌سازی نکرده‌ای؛ دکمه‌ی Sync را بزن.', view: 'sync' };
     if (!s.hasData) return { text: 'اولین معامله (حتی قدیمی) را در ژورنال ثبت کن تا تحلیل‌ها شروع شود.', view: 'trades' };
     if (s.missing.includes('maxRiskPct') || s.missing.includes('balance')) return { text: 'موجودی و سقف ریسک هر معامله را در «مدیریت ریسک» تعریف کن.', view: 'risk' };
     if (s.ruleCount === 0) return { text: 'قوانین ورود/خروج استراتژی‌ات را در «استراتژی و قوانین» ثبت و تأیید کن.', view: 'strategy' };

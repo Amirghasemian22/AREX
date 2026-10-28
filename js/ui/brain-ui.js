@@ -24,10 +24,15 @@
     const d = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
     let guard = null; try { guard = typeof arexGuardMerged === 'function' ? arexGuardMerged() : null; } catch (e) {}
     let wk = false; try { wk = typeof isForexWeekend === 'function' ? isForexWeekend(now) : false; } catch (e) {}
-    return B().snapshot({ trades: st.trades || [], now, guard, cfg: window.__arexGuardCfg || {}, limits: st.riskLimits || {}, events: window.__arexFcEvents || [],
+    let v98 = null; try { v98 = window.arexV98 ? window.arexV98() : null; } catch (e) {}
+    const cfg = Object.assign({}, window.__arexGuardCfg || {}), plan = v98 && v98.weekPlans && v98.weekPlans[window.arexWeekKey ? window.arexWeekKey() : ''];
+    if (plan && plan.locked) { if (plan.maxTrades) cfg.maxTradesPerDay = plan.maxTrades; if (plan.maxRiskPct) cfg.maxRiskPct = plan.maxRiskPct; }
+    const limits = Object.assign({}, st.riskLimits || {}); if (v98 && v98.accounts && window.AREXCore && AREXCore.ledger) { try { const a = AREXCore.ledger.all(v98, st.trades || []).find(x => x.id === v98.activeAccountId); if (a && a.balance > 0) limits.balance = a.balance; } catch (e) {} }
+    return B().snapshot({ trades: st.trades || [], now, guard, cfg, limits, events: window.__arexFcEvents || [],
+      sync: { enabled: !window.AREX_LOCAL_TEST_MODE, lastSyncAt: st.lastSyncAt, hour: v98 && v98.prefs ? v98.prefs.syncHour : 21 },
       dailyLog: (st.dailyLogs || {})[d] || null, rulesBy: kbCache.rulesBy, strategies: kbCache.strategies, isWeekend: wk });
   }
-  const go = view => { const b = document.querySelector('.navbtn[data-view="' + view + '"]'); if (b) b.click(); const m = $('mascot'); if (m && window.matchMedia('(max-width:760px)').matches) m.classList.remove('open'); };
+  const go = view => { if (view === 'sync') { const sb = document.getElementById('driveQuickSyncBtn'); if (sb) sb.click(); return; } const b = document.querySelector('.navbtn[data-view="' + view + '"]'); if (b) b.click(); const m = $('mascot'); if (m && window.matchMedia('(max-width:760px)').matches) m.classList.remove('open'); };
   function mkBtn(label, fn, cls) { const b = document.createElement('button'); b.type = 'button'; b.className = cls || 'chip'; b.textContent = label; b.addEventListener('click', fn); return b; }
 
   /* ---------- chat ---------- */
@@ -93,10 +98,16 @@
     const next = document.createElement('div'); next.className = 'arex-brain-next'; next.textContent = '👉 ' + n.text; card.appendChild(next);
     const row = document.createElement('div'); row.className = 'arex-brain-actions';
     if (n.view) row.appendChild(mkBtn('برو', () => go(n.view), 'btn'));
+    if (s.syncDue && n.view !== 'sync') row.appendChild(mkBtn('☁️ Sync', () => go('sync'), 'btn'));
     row.appendChild(mkBtn('از آرکس بپرس', () => openBot(), 'btn ghost')); row.appendChild(mkBtn('مرور هفتگی', () => openBot('مرور هفتگی'), 'btn ghost')); card.appendChild(row);
   }
 
   /* ---------- proactive in-site alerts ---------- */
+  const CAT = a => /^guard|trades-cap|open-no-sl|loss-streak/.test(a.id) ? 'risk' : /^news/.test(a.id) ? 'calendar' : /^weekly/.test(a.id) ? 'weekly' : /^sync/.test(a.id) ? 'system' : /^journal/.test(a.id) ? 'daily' : '';
+  function external(a, day) {   // Telegram goes through the same Worker + category switches the user already configured
+    try { const p = (window.arexV98 && arexV98().prefs) || {}; if (a.level === 'info' || p.extAlerts === false) return; const c = CAT(a);
+      if (c && window.arexSendTelegramNotification) window.arexSendTelegramNotification(c, a.title, a.body, 'brain-' + a.id + '-' + day).catch(() => {}); } catch (e) {}
+  }
   const SEEN_KEY = 'arex-brain-seen-v1';
   function seenMap() { try { return JSON.parse(localStorage.getItem(SEEN_KEY) || '{}'); } catch (e) { return {}; } }
   function tick() {
@@ -106,7 +117,7 @@
       const s = snap(), seen = seenMap(), day = s.today, fresh = {};
       Object.keys(seen).forEach(k => { if (seen[k] === day) fresh[k] = day; });
       const order = { danger: 0, warn: 1, info: 2 };
-      B().proactive(s).filter(a => !fresh[a.id]).sort((a, b) => order[a.level] - order[b.level]).slice(0, 2).forEach(a => { notify(a.title, a.body, a.icon, { silent: a.level === 'info' }); fresh[a.id] = day; });
+      B().proactive(s).filter(a => !fresh[a.id]).sort((a, b) => order[a.level] - order[b.level]).slice(0, 2).forEach(a => { notify(a.title, a.body, a.icon, { silent: a.level === 'info', skipTelegram: true, tag: 'brain-' + a.id, view: a.view || '' }); fresh[a.id] = day; external(a, day); });
       try { localStorage.setItem(SEEN_KEY, JSON.stringify(fresh)); } catch (e) {}
       renderCard();
     });
