@@ -84,7 +84,7 @@
   function renderCard() {
     if (!B()) return; const dash = $('view-dashboard'); if (!dash) return;
     let card = $('arexBrainCard');
-    if (!card) { card = document.createElement('section'); card.id = 'arexBrainCard'; card.className = 'card arex-brain-card'; card.setAttribute('aria-live', 'polite'); const anchor = $('arexDailyRoadmap'); dash.insertBefore(card, anchor || dash.firstChild); }
+    if (!card) { card = document.createElement('section'); card.id = 'arexBrainCard'; card.className = 'card arex-brain-card'; card.setAttribute('aria-live', 'polite'); const ob = $('overdueBanner'); dash.insertBefore(card, (ob && ob.parentNode === dash ? ob.nextSibling : dash.firstChild)); }
     const s = snap(), v = B().verdict(s), n = B().nextAction(s); card.dataset.level = v.level; card.textContent = '';
     const head = document.createElement('div'); head.className = 'arex-brain-head';
     const t = document.createElement('b'); t.textContent = '🧠 وضعیت AREX'; const badge = document.createElement('span'); badge.className = 'arex-brain-badge ' + v.level; badge.textContent = v.label; head.append(t, badge); card.appendChild(head);
