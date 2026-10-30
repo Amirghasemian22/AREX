@@ -14,7 +14,7 @@
     { id: 'today', fa: 'امروز', en: 'Today', items: ['dashboard', 'roadmap', 'calendar', 'market', 'sessions'] },
     { id: 'trade', fa: 'معامله', en: 'Trade', items: ['trades', 'accounts', 'risk', 'assistant', 'scenarios'] },
     { id: 'analyze', fa: 'تحلیل', en: 'Analyze', items: ['analytics', 'reviewcenter', 'backtest', 'propfirm'] },
-    { id: 'discipline', fa: 'انضباط', en: 'Discipline', items: ['strategy', 'daily', 'psych', 'goals'] },
+    { id: 'discipline', fa: 'انضباط', en: 'Discipline', items: ['knowledge', 'strategy', 'daily', 'psych', 'goals'] },
     { id: 'tools', fa: 'ابزارها', en: 'Tools', items: ['workspace', 'obsidian'] },
     { id: 'system', fa: 'تنظیمات', en: 'Settings', items: ['settings'] }
   ];
@@ -23,7 +23,7 @@
     trades: ['ژورنال معاملات', 'Trade journal'], risk: ['مدیریت ریسک', 'Risk'], assistant: ['بررسی پیش از معامله', 'Pre-trade check'], scenarios: ['سناریوهای در انتظار', 'Pending scenarios'],
     analytics: ['تحلیل عملکرد', 'Performance'], backtest: ['بک‌تست', 'Backtest'], propfirm: ['پراپ‌فرم', 'Prop firm'],
     strategy: ['استراتژی و قوانین', 'Strategy & rules'], daily: ['گزارش روزانه', 'Daily review'], psych: ['روان‌شناسی', 'Psychology'], goals: ['اهداف', 'Goals'],
-    market: ['بازار و هشدارها', 'Market & alerts'], accounts: ['حساب‌ها و دفتر', 'Accounts & ledger'], reviewcenter: ['مرور و گزارش‌ها', 'Review & reports'],
+    market: ['بازار و هشدارها', 'Market & alerts'], knowledge: ['دانش‌نامه', 'Knowledge'], accounts: ['حساب‌ها و دفتر', 'Accounts & ledger'], reviewcenter: ['مرور و گزارش‌ها', 'Review & reports'],
     workspace: ['ابزارهای تکمیلی', 'Extra tools'], obsidian: ['اتصال Obsidian', 'Obsidian'], settings: ['تنظیمات', 'Settings']
   };
   const lbl = v => (LABEL[v] ? L(LABEL[v][0], LABEL[v][1]) : v);
@@ -53,7 +53,7 @@
     nav.innerHTML = tab('dashboard', '◧', L('امروز', 'Today')) + tab('trades', '☰', L('معاملات', 'Trades')) +
       '<button type="button" id="arexMobileBot" class="arex-tab-bot" aria-label="' + L('دستیار آرکس', 'AREX assistant') + '"><span class="mobile-nav-icon" aria-hidden="true">✦</span><span>' + L('آرکس', 'AREX') + '</span></button>' +
       tab('analytics', '◔', L('تحلیل', 'Analyze')) + tab('', '⋯', L('بیشتر', 'More'), 'id="arexMobileMore"');
-    nav.onclick = e => { const b = e.target.closest('button'); if (!b) return; e.preventDefault();
+    nav.onclick = e => { const b = e.target.closest('button'); if (!b) return; e.preventDefault(); e.stopPropagation();
       if (b.id === 'arexMobileBot') { closeMore(); window.arexBrainOpen && window.arexBrainOpen(); } else if (b.id === 'arexMobileMore') toggleMore(); else if (b.dataset.mobileView) go(b.dataset.mobileView); };
   }
   function moreSheet() {

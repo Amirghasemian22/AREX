@@ -23,17 +23,19 @@
     const st = (typeof state !== 'undefined' && state) || {}, now = new Date();
     const d = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
     let guard = null; try { guard = typeof arexGuardMerged === 'function' ? arexGuardMerged() : null; } catch (e) {}
+    try { const pg = window.arexPropGuard && window.arexPropGuard(); if (pg) { const rank = { ok: 0, warn: 1, breach: 2 }; if (!guard || rank[pg.overall] >= rank[guard.overall || 'ok']) guard = pg; } } catch (e) {}
     let wk = false; try { wk = typeof isForexWeekend === 'function' ? isForexWeekend(now) : false; } catch (e) {}
     let v98 = null; try { v98 = window.arexV98 ? window.arexV98() : null; } catch (e) {}
     const cfg = Object.assign({}, window.__arexGuardCfg || {}), plan = v98 && v98.weekPlans && v98.weekPlans[window.arexWeekKey ? window.arexWeekKey() : ''];
     if (plan && plan.locked) { if (plan.maxTrades) cfg.maxTradesPerDay = plan.maxTrades; if (plan.maxRiskPct) cfg.maxRiskPct = plan.maxRiskPct; }
     const limits = Object.assign({}, st.riskLimits || {}); if (v98 && v98.accounts && window.AREXCore && AREXCore.ledger) { try { const a = AREXCore.ledger.all(v98, st.trades || []).find(x => x.id === v98.activeAccountId); if (a && a.balance > 0) limits.balance = a.balance; } catch (e) {} }
     return B().snapshot({ trades: st.trades || [], now, guard, cfg, limits, events: window.__arexFcEvents || [],
+      kbReady: !!(window.arexKB && arexKB.ready()),
       sync: { enabled: !window.AREX_LOCAL_TEST_MODE, lastSyncAt: st.lastSyncAt, hour: v98 && v98.prefs ? v98.prefs.syncHour : 21 },
       dailyLog: (st.dailyLogs || {})[d] || null, rulesBy: kbCache.rulesBy, strategies: kbCache.strategies, isWeekend: wk });
   }
   const go = view => { if (view === 'sync') { const sb = document.getElementById('driveQuickSyncBtn'); if (sb) sb.click(); return; } const b = document.querySelector('.navbtn[data-view="' + view + '"]'); if (b) b.click(); const m = $('mascot'); if (m && window.matchMedia('(max-width:760px)').matches) m.classList.remove('open'); };
-  function mkBtn(label, fn, cls) { const b = document.createElement('button'); b.type = 'button'; b.className = cls || 'chip'; b.textContent = label; b.addEventListener('click', fn); return b; }
+  function mkBtn(label, fn, cls) { const b = document.createElement('button'); b.type = 'button'; b.className = cls || 'chip'; b.textContent = label; b.addEventListener('click', e => { e.stopPropagation(); fn(e); }); return b; }
 
   /* ---------- chat ---------- */
   function addMsg(role, text, extra) {
@@ -56,20 +58,41 @@
     window.arexAssertTrustedWorker(ep);
     const token = await window.arexGetDriveAccessToken();
     const res = await fetch(ep, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
-      body: JSON.stringify({ messages: hist.slice(-12), context: { app: 'AREX V9.8.0', language: 'fa', timezone: 'Asia/Tehran', brain: B().aiContext(s), instruction: 'Answer only from the supplied context. Do not invent prices, news or rules. No buy/sell signals. If data is missing, say what to add.' } }),
+      body: JSON.stringify({ messages: hist.slice(-12), context: { app: 'AREX V9.8.0', language: 'fa', timezone: 'Asia/Tehran', brain: B().aiContext(s), knowledge: window.arexKB && arexKB.ready() ? arexKB.context(text, 6) : [], userDecisions: window.arexKB ? arexKB.decisions() : [], instruction: 'Answer only from the supplied context. Do not invent prices, news or rules. No buy/sell signals. If data is missing, say what to add.' } }),
       signal: AbortSignal.timeout ? AbortSignal.timeout(30000) : undefined });
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json(), a = data.answer || data.reply || data.text;
     if (typeof a !== 'string' || !a.trim()) throw new Error('پاسخ خالی');
     return { text: a.trim() };
   }
+  const PERSONAL = /(وضعیت|امروز|این هفته|هفته (گذشته|پیش)|ژورنال من|معاملات من|عملکرد من|اشتباهات? من|حساب من|موجودی|مرور هفتگی|قدم بعدی|بهترین ستاپ|وین ?ریت|سود من|ضرر من)/;
+  const isPersonal = t => PERSONAL.test(t) || /(میتونم|می ?تونم|مجازم)\s+(الان\s+)?(معامله|ترید)\s*(کنم|بزنم)/.test(t);
+  function addKb(ka) {
+    addMsg('assistant', ka.text, { chips: ['تعارض‌ها', 'چک‌لیست قبل از ورود', 'ممیزی معاملات من'] });
+    const h = $('arexChatHistory'), last = h && h.lastElementChild; if (!last) return;
+    const row = document.createElement('div'); row.className = 'arex-brain-actions';
+    (ka.sources || []).forEach(sc => row.appendChild(mkBtn('📖 ' + sc.label, () => { window.arexKB.open(sc.id); }, 'chip arex-go-chip')));
+    if (ka.conflicts && ka.conflicts.length) row.appendChild(mkBtn('⚠️ تصمیم‌گیری درباره‌ی ابهام‌ها', () => { const m = $('mascot'); if (m) m.classList.remove('open'); arexKB.show('conflicts'); }, 'chip arex-go-chip'));
+    if (row.childElementCount) last.appendChild(row); h.scrollTop = h.scrollHeight;
+  }
+  function auditText() {
+    const r = arexKB.audit(), a = r.a, L = [];
+    L.push('🔍 ممیزی ' + (a.checked ? a.checked + ' معامله' : 'ژورنال') + ' با قوانین دانش‌نامه: ' + a.summary.violations + ' نقض صریح، ' + a.summary.warnings + ' هشدار، ' + a.summary.decisions + ' مورد نیازمند تصمیم تو.');
+    Object.keys(a.summary.byRule).sort((x, y) => a.summary.byRule[y] - a.summary.byRule[x]).slice(0, 5).forEach(k => { const R = AREXCore.behavior.RULES[k]; L.push('• ' + R.text + ' (' + R.source + ') — ' + a.summary.byRule[k] + ' مورد'); });
+    (r.an.insights || []).slice(0, 3).forEach(x => L.push(x)); if (!a.checked) L.push('معامله‌ای برای بررسی ثبت نشده.');
+    L.push('\nجزئیات کامل: دانش‌نامه ← ممیزی ژورنال.'); return L.join('\n');
+  }
   window.arexBrainAsk = async function (text) {
     if (busy || !text) return; busy = true;
     const send = $('arexChatSend'); if (send) send.disabled = true;
     try {
       await refreshKB(); addMsg('user', text);
-      const s = snap(), ans = B().answer(text, s);
+      const s = snap(), kbOn = window.arexKB && arexKB.ready(), personal = isPersonal(text);
+      if (kbOn && /ممیزی|نقض.*(قانون|دانش)|(رفتار|معاملات|ژورنال)\s*من.*(قانون|ریسک|درست|خلاف)|الگوی رفتاری|انتقام/.test(text)) { addMsg('assistant', auditText(), { nav: [], chips: ['تعارض‌ها', 'قدم بعدی چیه؟'], kbsrc: [], kbOpen: 'audit' }); return; }
+      let ka = null; if (kbOn && !personal) { ka = arexKB.ask(text); if (ka.confidence >= 0.34 && !ka.needs) { addKb(ka); return; } }
+      const ans = B().answer(text, s);
       if (!ans.needsAI) { addMsg('assistant', ans.text, ans); return; }
+      if (ka && !window.arexReadAiEndpoint()) { addKb(ka); return; }
       try {
         const ai = await askAI(text, s);
         if (ai.error === 'no_endpoint') addMsg('assistant', ans.text + '\nبرای پاسخ به سؤال‌های عمومی‌تر، آدرس AI Worker را در «تنظیمات ← دستیار» وصل کن. تا آن موقع می‌توانم از داده‌های خودت (وضعیت امروز، ریسک، اخبار، قوانین، مرور هفتگی) جواب بدهم.', ans);
@@ -82,7 +105,11 @@
     const s = snap(), n = B().nextAction(s);
     addMsg('assistant', B().answer('سلام', s).text + '\n\n👉 ' + n.text, { nav: n.view ? [{ label: (B().NAV && B().NAV[n.view]) || n.view, view: n.view }] : [], chips: B().defaultChips(s) });
   }
-  function openBot(q) { const m = $('mascot'); if (!m) return; m.classList.add('open'); greet().then(() => { if (q) window.arexBrainAsk(q); }); }
+  function openBot(q) {
+    const m = $('mascot'); if (!m) return;
+    // Opened on the next tick: the page has an "outside click closes the assistant" handler that would otherwise run on the very same tap and close it again.
+    setTimeout(() => { m.classList.add('open'); greet().then(() => { if (q) window.arexBrainAsk(q); }); }, 0);
+  }
   window.arexBrainOpen = openBot;
 
   /* ---------- dashboard card ---------- */
@@ -95,6 +122,7 @@
     const t = document.createElement('b'); t.textContent = '🧠 وضعیت AREX'; const badge = document.createElement('span'); badge.className = 'arex-brain-badge ' + v.level; badge.textContent = v.label; head.append(t, badge); card.appendChild(head);
     const ul = document.createElement('ul'); ul.className = 'arex-brain-list';
     (v.reasons.length ? v.reasons.slice(0, 3) : [{ text: 'مورد هشداردهنده‌ای در داده‌های ثبت‌شده نیست.' }]).forEach(r => { const li = document.createElement('li'); li.textContent = r.text; ul.appendChild(li); }); card.appendChild(ul);
+    const age = window.arexSyncAge && window.arexSyncAge(); if (!window.AREX_LOCAL_TEST_MODE) { const sy = document.createElement('div'); sy.className = 'calc-hint'; sy.textContent = '☁️ آخرین همگام‌سازی: ' + (age ? age + ' پیش' : 'هنوز انجام نشده') + (window.arexLock && arexLock.enabled() ? ' · 🔒 قفل فعال' : ''); card.appendChild(sy); }
     const next = document.createElement('div'); next.className = 'arex-brain-next'; next.textContent = '👉 ' + n.text; card.appendChild(next);
     const row = document.createElement('div'); row.className = 'arex-brain-actions';
     if (n.view) row.appendChild(mkBtn('برو', () => go(n.view), 'btn'));

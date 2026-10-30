@@ -62,7 +62,7 @@
     if (num(cfg.maxTradesPerDay) === null) missing.push('maxTradesPerDay');
     if (num(limits.balance) === null) missing.push('balance');
     const rulesBy = input.rulesBy || {}, ruleCount = Object.keys(rulesBy).reduce((n, k) => n + (rulesBy[k] || []).length, 0);
-    return { today, now, allTrades: trades, hour: now.getHours(), weekday: WD[now.getDay()], hasData: trades.length > 0, total: trades.length, syncDue,
+    return { today, now, allTrades: trades, hour: now.getHours(), weekday: WD[now.getDay()], hasData: trades.length > 0, total: trades.length, syncDue, kbReady: !!input.kbReady,
       todayStats: stats(todayTr), todayTrades: todayTr, weekStats: stats(weekTr), weekTrades: weekTr, all: stats(trades),
       open: trades.filter(isOpen), openNoSl: trades.filter(t => isOpen(t) && num(t.sl) === null),
       guard: input.guard && input.guard.rules ? input.guard : null, cfg, limits, missing,
@@ -86,7 +86,7 @@
     if (s.log && Number(s.log.discipline) > 0 && Number(s.log.discipline) <= 2) add('caution', 'انضباط امروز را پایین ثبت کرده‌ای؛ حجم را کم نگه دار و فقط ستاپ‌های تأییدشده', 'daily');
     if (s.weekend) add('info', 'بازار فارکس الان بسته است (آخر هفته)', 'sessions');
     if (s.missing.includes('maxRiskPct')) add('info', 'سقف ریسک هر معامله تعریف نشده؛ بررسی ریسک انجام نمی‌شود', 'risk');
-    if (s.ruleCount === 0) add('info', 'هنوز قانون رسمی در پایگاه استراتژی نداری؛ قوانین مختص ستاپ بررسی نمی‌شود', 'strategy');
+    if (s.ruleCount === 0 && !s.kbReady) add('info', 'هنوز قانون رسمی در پایگاه استراتژی نداری؛ قوانین مختص ستاپ بررسی نمی‌شود', 'strategy');
     const level = R.some(r => r.level === 'stop') ? 'stop' : R.some(r => r.level === 'caution') ? 'caution' : 'go';
     const order = { stop: 0, caution: 1, info: 2 };
     return { level, reasons: R.sort((a, b) => order[a.level] - order[b.level]), label: level === 'stop' ? '⛔ توقف' : level === 'caution' ? '⚠️ احتیاط' : '✅ شرایط ثبت‌شده مشکلی ندارد' };
@@ -114,7 +114,7 @@
     if (s.syncDue) return { text: 'امشب هنوز همگام‌سازی نکرده‌ای؛ دکمه‌ی Sync را بزن.', view: 'sync' };
     if (!s.hasData) return { text: 'اولین معامله (حتی قدیمی) را در ژورنال ثبت کن تا تحلیل‌ها شروع شود.', view: 'trades' };
     if (s.missing.includes('maxRiskPct') || s.missing.includes('balance')) return { text: 'موجودی و سقف ریسک هر معامله را در «مدیریت ریسک» تعریف کن.', view: 'risk' };
-    if (s.ruleCount === 0) return { text: 'قوانین ورود/خروج استراتژی‌ات را در «استراتژی و قوانین» ثبت و تأیید کن.', view: 'strategy' };
+    if (s.ruleCount === 0 && !s.kbReady) return { text: 'قوانین ورود/خروج استراتژی‌ات را در «استراتژی و قوانین» ثبت و تأیید کن.', view: 'strategy' };
     if (v.level === 'caution') return { text: v.reasons[0].text, view: v.reasons[0].view };
     if (!s.events.known) return { text: 'تقویم اقتصادی را باز کن تا خبرهای مهم امروز را ببینم.', view: 'calendar' };
     if (s.hour >= 20 && s.todayTrades.length && !(s.log && s.log.journalDone)) return { text: 'مرور روزانه را کامل کن.', view: 'daily' };

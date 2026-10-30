@@ -50,10 +50,15 @@
   /* ---- hooks called from the legacy save / edit / reset code ---- */
   window.arexTradeExtraApply = function (trade) {
     const v = arexV98(), n = id => num(val(id));
+    trade.updatedAt = new Date().toISOString();
     trade.accountId = val('trxAccount') || v.activeAccountId; trade.lots = n('trxLots'); trade.timeframe = val('trxTf') || ''; trade.quality = val('trxQuality') || '';
     trade.commission = n('trxComm') || 0; trade.swap = n('trxSwap') || 0; trade.mae = n('trxMae'); trade.mfe = n('trxMfe');
     trade.partials = partials.filter(p => num(p.price) !== null && num(p.lots) > 0).map(p => ({ price: num(p.price), lots: num(p.lots) }));
     trade.openedAt = val('trxOpen') || (trade.date ? trade.date + 'T' + (trade.time || '00:00') : ''); trade.closedAt = val('trxClose') || '';
+    const prev = (state.trades || []).find(x => x.id === trade.id);                          // editing: remember the ORIGINAL stop/target so changes are visible later
+    if (prev) { if (num(prev.sl) !== null && num(trade.sl) !== null && num(prev.sl) !== num(trade.sl) && !trade.slOriginal) trade.slOriginal = prev.slOriginal || prev.sl; else if (prev.slOriginal && !trade.slOriginal) trade.slOriginal = prev.slOriginal;
+      if (num(prev.tp) !== null && num(trade.tp) !== null && num(prev.tp) !== num(trade.tp)) trade.tpOriginal = prev.tpOriginal || prev.tp; else if (prev.tpOriginal) trade.tpOriginal = prev.tpOriginal; }
+    if (!trade.riskPct && $('trRiskPct') && $('trRiskPct').value) trade.riskPct = $('trRiskPct').value;
     trade.gross = String(trade.usd == null ? '' : trade.usd);                               // the typed P/L is the GROSS result
     const e = tc().enrich(trade);
     if (e.exit !== undefined && !trade.exit) trade.exit = String(e.exit);
