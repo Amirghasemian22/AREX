@@ -22,5 +22,5 @@ test('Google Drive OAuth config and adapter bridges are present in the current p
   assert.match(html, /window\.arexDriveStartOAuth\s*=/);
   assert.match(html, /<script type="module" src="auth-client\.js\?v=9\.8\.0"><\/script>/);
   assert.match(sw, /'\.\/auth-client\.js'/);
-  assert.match(sw, /const CACHE_VERSION = 'v9-8-0-brain-mobile-2026-10-27'/);
+  assert.match(sw, /const CACHE_VERSION = 'v9-8-0-brain-mobile-2026-10-29'/);
 });

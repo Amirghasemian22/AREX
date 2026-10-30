@@ -19,5 +19,5 @@ test('login actions meet minimum touch target sizing and reduced-motion is respe
 });
 test('version metadata and PWA cache match V9.8.0', () => {
   assert.equal(manifest.short_name, 'AREX');
-  assert.match(sw, /v9-8-0-brain-mobile-2026-10-27/);
+  assert.match(sw, /v9-8-0-brain-mobile-2026-10-29/);
 });

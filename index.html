@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <script>try{localStorage.setItem("arex_v57_tour_done","1");localStorage.setItem("arex_v965_tour_seen","1")}catch(e){}try{if(localStorage.getItem("arex-last-auth-uid")&&localStorage.getItem("arex-force-login")!=="1")document.documentElement.classList.add("arex-silent-entry")}catch(e){}</script>
 <style>html.arex-silent-entry #arexAuthGate{display:none!important}html.arex-silent-entry.arex-auth-open body>:not(#arexAuthGate):not(script):not(style){visibility:visible!important;pointer-events:auto!important}</style>
-<title>AREX V9.8.0</title>
+<title>AREX V9.9.0</title>
 <meta name="description" content="AREX دستیار شخصی مدیریت معاملات است: ژورنال معاملاتی، مدیریت ریسک، قوانین استراتژی، تقویم اقتصادی، سشن‌های بازار، ثبت روان‌شناسی و تحلیل عملکرد در یک فضای کاری نصب‌شدنی.">
 <meta name="keywords" content="ژورنال معاملات فارکس, تریدینگ ژورنال, چک‌لیست بهبود عملکرد معاملاتی, مدیریت ریسک معاملات, ردیاب پراپ فرم, تقویم اقتصادی فارکس, forex trading journal, prop firm tracker">
 <meta name="robots" content="index, follow">
@@ -3225,6 +3225,11 @@ body::before{opacity:var(--arex-wallpaper-strength)!important;background-image:l
 <script src="js/core/quant.js"></script>
 <script src="js/core/mt5.js"></script>
 <script src="js/core/report.js"></script>
+<script src="js/core/merge.js"></script>
+<script src="js/core/prop.js"></script>
+<script src="js/core/kb.js"></script>
+<script src="js/core/behavior.js"></script>
+<script src="data/kb-pack.js"></script>
 <script src="js/ui/analytics.js"></script>
 <script src="js/i18n/v9.js"></script>
 <script src="js/ui/propguard.js"></script>
@@ -6364,7 +6369,7 @@ function renderTrades(){
       if(!lifecycle){ toast('ماژول مدیریت معامله بارگذاری نشده؛ حذف انجام نشد.'); return; }
       const result = lifecycle.removeTrade(state.trades, t.id);
       if(!result.removed){ toast('این معامله دیگر در ژورنال وجود ندارد.'); return; }
-      state.trades = result.trades;
+      state.trades = result.trades; if(window.arexTombstone) window.arexTombstone('trades', t.id);
       const remainingForDay = state.trades.some(x=>x.date===t.date);
       if(state.dailyLogs[t.date]){
         const nextLog=lifecycle.reconcileDailyLog(state.dailyLogs[t.date],remainingForDay);
@@ -8182,6 +8187,9 @@ body[data-bg="minimal"]{background-image:radial-gradient(ellipse at 80% 0%,rgba(
 <script src="js/ui/views.js"></script>
 <script src="js/ui/trade-form-v2.js"></script>
 <script src="js/ui/accounts.js"></script>
+<script src="js/ui/sync-merge.js"></script>
+<script src="js/ui/lock.js"></script>
+<script src="js/ui/kb-ui.js"></script>
 <script src="js/ui/quant-ui.js"></script>
 <script src="js/ui/import-ui.js"></script>
 <script src="js/ui/market.js"></script>

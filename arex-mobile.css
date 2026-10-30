@@ -272,3 +272,15 @@ html.arex-sheet-lock body .arex-mobile-nav.arex-mobile-nav{display:none!importan
   html.arex-phone body .arex-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
   html.arex-phone body .arex-q-controls{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
+
+/* ---------- knowledge page, prop bars, lock screen (V9.8) ---------- */
+.arex-kb-answer{margin-top:12px;padding:12px;border:1px solid var(--border);border-radius:14px;background:var(--panel)}.arex-kb-srcs{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.arex-kb-src{font-size:12px}
+.arex-kb-row{display:flex;align-items:center;gap:8px;width:100%;padding:10px 4px;border:0;border-bottom:1px solid var(--border);background:none;color:var(--text);text-align:start;cursor:pointer;font:inherit;min-height:44px}.arex-kb-sec summary{cursor:pointer;min-height:44px;display:flex;align-items:center;gap:8px}
+.arex-kb-conf{display:grid;gap:8px}.arex-kb-conf.done{border-color:rgba(51,197,137,.45)}
+.arex-kb-reader{width:min(720px,100%)}.arex-kb-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:12px}.arex-kb-body{line-height:2;font-size:14px}.arex-kb-body p{margin:.3em 0}.arex-kb-li{padding:2px 0;padding-inline-start:4px}.arex-kb-body hr{border:0;border-top:1px dashed var(--border);margin:10px 0}
+.arex-kb-fig{margin:10px 0}.arex-kb-fig img{max-width:100%;border-radius:12px;border:1px solid var(--border)}.arex-kb-fig figcaption{font-size:12px;color:var(--muted);margin-top:4px}.arex-kb-fig.missing{padding:8px 10px;border:1px dashed var(--border);border-radius:10px}
+.arex-heat td{text-align:center;min-width:34px;font-size:11px}.arex-heat th{font-size:11px;white-space:nowrap}
+.arex-prop{display:grid;gap:8px;padding:10px;border:1px dashed var(--border);border-radius:12px}.arex-prop-head{display:flex;justify-content:space-between;align-items:center}.arex-prop-row{display:grid;gap:4px}.arex-prop-lbl{display:flex;justify-content:space-between;gap:8px;font-size:12px;flex-wrap:wrap}
+.arex-bar{height:8px;border-radius:8px;background:var(--border);overflow:hidden}.arex-bar i{display:block;height:100%;background:var(--green);border-radius:8px}.arex-bar i.warn{background:#e8c25a}.arex-bar i.breach{background:var(--red)}
+.arex-lock{position:fixed;inset:0;z-index:20000;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--bg)}.arex-lock-box{width:min(340px,100%);display:grid;gap:12px;text-align:center}.arex-lock-logo{font-size:46px}.arex-lock-box input{text-align:center;font-size:22px;letter-spacing:6px}
+html.arex-locked body>*:not(#arexLock){visibility:hidden!important}

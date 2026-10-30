@@ -69,3 +69,60 @@ test('mt5: parses MT5 positions, MT4 statements and generic CSV; dedupes by tick
   assert.equal(M.toNumber('1 234,56'), 1234.56); assert.equal(M.key('a', { ticket: 5 }), 'a:5');
   assert.deepEqual(M.parse('nothing useful'), []);
 });
+
+const BH = require('../js/core/behavior.js');
+test('behavior.audit: flags only what is machine-checkable, cites sections, marks open conflicts as decisions', () => {
+  const t = (o) => Object.assign({ id: Math.random(), date: '2026-10-27', time: '09:00', dir: 'buy', entry: '100', sl: '99', tp: '102', r: '-1', usd: '-10', symbol: 'X', mistakes: [] }, o);
+  const trades = [t({ time: '09:00' }), t({ time: '09:40' }), t({ time: '10:20' }), t({ time: '11:00', sl: '', slOriginal: '' }), t({ time: '11:30', slOriginal: '99.5', sl: '98.5', riskPct: 2, plannedRR: 1.2 })];
+  const a = BH.audit(trades, { balanceOf: () => 200 });
+  const rules = a.items.map(i => i.rule);
+  assert.ok(rules.includes('NO_SL') && rules.includes('SL_WIDENED') && rules.includes('RISK_CAP') && rules.includes('LOW_RR'));
+  assert.ok(a.items.find(i => i.rule === 'LOSS_STREAK_STOP' && i.level === 'decision'), 'the 2-3 losses rule is an open conflict (K4)');
+  assert.ok(a.items.find(i => i.rule === 'LOSS_STREAK_STOP' && i.level === 'violation'), 'after 3 straight losses it is a violation');
+  assert.ok(a.items.find(i => i.rule === 'DAY_LOSS_STOP'), '3% daily loss on a 200$ balance');
+  assert.ok(a.items.every(i => /^§\d+\.\d+$/.test(i.source)));
+  assert.equal(BH.audit([t({ riskPct: 0.5 })], {}).summary.violations, 0);
+  assert.ok(BH.audit(trades, { decisions: { K4: { text: 'x' } }, balanceOf: () => 200 }).items.find(i => i.rule === 'LOSS_STREAK_STOP' && i.level === 'info'));
+});
+
+test('behavior.analyze: revenge trades, SL widening and a bad hour are reported with numbers', () => {
+  const mk = (i, o) => Object.assign({ id: i, date: '2026-10-' + String(1 + (i % 20)).padStart(2, '0'), time: '10:00', dir: 'buy', entry: '100', sl: '99', r: '-1', usd: '-10', lots: 0.1 }, o);
+  const trades = []; for (let d = 1; d <= 6; d++) { const dd = '2026-10-' + String(d).padStart(2, '0'); trades.push(mk(d * 10, { date: dd, time: '10:00', closedAt: dd + 'T10:10:00' }), mk(d * 10 + 1, { date: dd, time: '10:15', lots: 0.3, r: '-1', usd: '-30' })); }
+  trades.push(mk(900, { slOriginal: '99', sl: '98', date: '2026-10-09' }));
+  const r = BH.analyze(trades, {}); assert.ok(r.revenge.length >= 6 && r.revenge[0].biggerLot); assert.equal(r.widened, 1); assert.ok(r.insights.some(x => /🔁/.test(x)) && r.insights.some(x => /SL/.test(x)));
+});
+
+const MG = require('../js/core/merge.js');
+test('merge: two devices union their trades, the newer edit wins, deletions are not resurrected, local prefs stay', () => {
+  const T = (id, o) => Object.assign({ id, date: '2026-10-0' + (id % 9 + 1), symbol: 'EURUSD', r: '1', usd: '100' }, o);
+  const assistant = (v98) => JSON.stringify({ workspaceState: { v98 } });
+  const A = { trades: JSON.stringify([T(1), T(2, { r: '1', updatedAt: '2026-10-05T10:00:00Z', note: 'old' }), T(3)]), settings: JSON.stringify({ theme: 'dark', lang: 'fa' }), assistantState: assistant({ accounts: [{ id: 'acc_main', name: 'A' }], deleted: { trades: { 3: '2026-10-06T00:00:00Z' } }, ledger: [{ id: 'l1', amount: 5 }] }), 'tradeshot:1:entry': 'dataA' };
+  const B = { trades: JSON.stringify([T(2, { updatedAt: '2026-10-07T10:00:00Z', note: 'new', r: '2' }), T(3), T(4)]), settings: JSON.stringify({ theme: 'light', extra: 1 }), assistantState: assistant({ accounts: [{ id: 'acc_main', name: 'A' }, { id: 'acc_prop', name: 'P' }], ledger: [{ id: 'l2', amount: 7 }], deleted: {} }), 'tradeshot:4:entry': 'dataB' };
+  const { data, report } = MG.mergeAll(A, B), trades = JSON.parse(data.trades);
+  assert.deepEqual(trades.map(t => t.id).sort(), [1, 2, 4]);                 // 3 was deleted on A -> stays deleted
+  assert.equal(trades.find(t => t.id === 2).note, 'new'); assert.equal(trades.find(t => t.id === 2).r, '2');
+  const v = JSON.parse(data.assistantState).workspaceState.v98; assert.equal(v.accounts.length, 2); assert.equal(v.ledger.length, 2); assert.ok(v.deleted.trades['3']);
+  const st = JSON.parse(data.settings); assert.equal(st.theme, 'dark'); assert.equal(st.extra, 1);   // local value wins, missing keys are filled
+  assert.equal(data['tradeshot:1:entry'], 'dataA'); assert.equal(data['tradeshot:4:entry'], 'dataB');
+  assert.ok(report.added >= 1 && report.updated >= 1);
+  assert.deepEqual(MG.mergeAll(A, A).data.trades, A.trades);                  // merging with itself changes nothing
+});
+test('merge: a stale device cannot erase newer trades (both directions give the same set)', () => {
+  const a = { trades: JSON.stringify([{ id: 1 }, { id: 2 }]) }, b = { trades: JSON.stringify([{ id: 2 }, { id: 3 }]) };
+  const ab = JSON.parse(MG.mergeAll(a, b).data.trades).map(t => t.id).sort(), ba = JSON.parse(MG.mergeAll(b, a).data.trades).map(t => t.id).sort();
+  assert.deepEqual(ab, [1, 2, 3]); assert.deepEqual(ba, [1, 2, 3]);
+});
+
+const PR = require('../js/core/prop.js');
+test('prop: daily and max drawdown, trailing floor, target progress and trading days', () => {
+  const acc = { start: 10000, propRules: Object.assign({}, PR.TEMPLATES.challenge10, { startDate: '' }) }, now = new Date(2026, 9, 27, 12);
+  const tr = (d, usd) => ({ date: d, time: '10:00', usd: String(usd) });
+  let c = PR.compute(acc, [tr('2026-10-25', 300), tr('2026-10-26', 400), tr('2026-10-27', -200)], [], now);
+  assert.equal(c.balance, 10500); assert.equal(c.rules.dailyLoss.limitUsd, 500); assert.equal(c.rules.dailyLoss.usedUsd, 200); assert.equal(c.rules.dailyLoss.remainingUsd, 300); assert.equal(c.rules.dailyLoss.state, 'ok');
+  assert.equal(c.target.usd, 1000); assert.equal(c.target.progress, .5); assert.equal(c.days.count, 3); assert.equal(c.days.ok, false); assert.equal(c.readyToPass, false);
+  c = PR.compute(acc, [tr('2026-10-27', -400)], [], now); assert.equal(c.rules.dailyLoss.state, 'warn'); assert.equal(c.overall, 'warn');
+  c = PR.compute(acc, [tr('2026-10-27', -500)], [], now); assert.equal(c.overall, 'breach');
+  const trail = { start: 10000, propRules: Object.assign({}, PR.TEMPLATES.trailing) };
+  c = PR.compute(trail, [tr('2026-10-20', 800), tr('2026-10-21', -500)], [], now); assert.equal(c.rules.totalLoss.type, 'trailing'); assert.equal(c.rules.totalLoss.usedUsd, 500); assert.equal(c.rules.totalLoss.floor, 10200);
+  assert.equal(PR.compute({ start: 0, propRules: {} }, [], [], now).error != null, true); assert.equal(PR.compute({ start: 1 }, [], [], now), null);
+});

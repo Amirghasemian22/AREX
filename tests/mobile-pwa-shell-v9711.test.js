@@ -26,5 +26,5 @@ test('mobile navigation retains the core views and the all-sections menu', () =>
 });
 test('PWA metadata and cache version are bumped for V9.8.0', () => {
   assert.equal(manifest.short_name, 'AREX');
-  assert.match(sw, /v9-8-0-brain-mobile-2026-10-27/);
+  assert.match(sw, /v9-8-0-brain-mobile-2026-10-29/);
 });
