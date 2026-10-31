@@ -77,7 +77,7 @@ test('behavior.audit: flags only what is machine-checkable, cites sections, mark
   const a = BH.audit(trades, { balanceOf: () => 200 });
   const rules = a.items.map(i => i.rule);
   assert.ok(rules.includes('NO_SL') && rules.includes('SL_WIDENED') && rules.includes('RISK_CAP') && rules.includes('LOW_RR'));
-  assert.ok(a.items.find(i => i.rule === 'LOSS_STREAK_STOP' && i.level === 'decision'), 'the 2-3 losses rule is an open conflict (K4)');
+  assert.ok(a.items.find(i => i.rule === 'LOSS_STREAK_STOP' && i.level === 'warning'), 'the 2-3 losses rule is an ambiguous rule (K4): warning only');
   assert.ok(a.items.find(i => i.rule === 'LOSS_STREAK_STOP' && i.level === 'violation'), 'after 3 straight losses it is a violation');
   assert.ok(a.items.find(i => i.rule === 'DAY_LOSS_STOP'), '3% daily loss on a 200$ balance');
   assert.ok(a.items.every(i => /^§\d+\.\d+$/.test(i.source)));

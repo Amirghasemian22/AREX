@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v9-8-0-brain-mobile-2026-10-29';
+const CACHE_VERSION = 'v9-8-0-brain-mobile-2026-10-31';
 const CACHE_NAME = 'arex-' + CACHE_VERSION;
 const APP_SHELL = [
   './',
@@ -61,14 +61,13 @@ const APP_SHELL = [
   './js/ui/trade-form-v2.js',
   './js/ui/accounts.js',
   './js/ui/quant-ui.js',
-  './js/ui/kb-ui.js',
+  './js/ui/kb-client.js',
+  './js/ui/dashboard-v2.js',
   './js/ui/sync-merge.js',
   './js/ui/lock.js',
   './js/core/merge.js',
   './js/core/prop.js',
-  './js/core/kb.js',
   './js/core/behavior.js',
-  './data/kb-pack.js',
   './js/ui/import-ui.js',
   './js/ui/market.js',
   './js/ui/reviewcenter.js',

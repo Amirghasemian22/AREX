@@ -25,5 +25,5 @@ test('V9.8.0 adds a topbar sync shortcut and drives a concrete next-step recomme
   assert.match(html,/function getArexNextTradingStep\(/);
   assert.match(html,/function renderArexNextStepNudge\(/);
   assert.match(html,/arexNextStepTimer=setTimeout\(/);
-  assert.match(sw,/v9-8-0-brain-mobile-2026-10-29/);
+  assert.match(sw,/v9-8-0-brain-mobile-2026-10-31/);
 });

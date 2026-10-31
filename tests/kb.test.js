@@ -4,7 +4,9 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const kb = require('../js/core/kb.js');
-const md = fs.readFileSync(path.join(__dirname, '..', 'data', 'Forex_Strategy_Knowledge_Base.md'), 'utf8');
+const KB_FILE = path.join(__dirname, '..', 'private-kb', 'Forex_Strategy_Knowledge_Base.md');
+if (!fs.existsSync(KB_FILE)) { test('KB engine tests skipped: private-kb/ is not present (it is deliberately not in the public repo)', { skip: true }, () => {}); return; }
+const md = fs.readFileSync(KB_FILE, 'utf8');
 const pack = kb.parse(md), ix = kb.buildIndex(pack), ask = (q, o) => kb.answer(ix, q, o || {});
 
 test('parser: structure, 13 conflicts, kinds and strategies are recognised', () => {

@@ -121,3 +121,28 @@ test('EA ingest: needs the shared secret, validates deals, and the owner (Google
   const stranger = loadWorker(async () => new Response(JSON.stringify({ aud: 'arex-client', sub: 'u2', email: 'someone@else.com', email_verified: 'true' }), { status: 200 }));
   assert.equal((await stranger.fetch(req('/ingest/pending', { headers: { Authorization: 'Bearer t' } }), env, ctx)).status, 403);
 });
+
+test('private KB: answers only (no files), needs a Google token, is rate limited, honours allow-list, and the embedded engine is in sync', { skip: !require('node:fs').existsSync(require('node:path').join(__dirname, '..', 'private-kb', 'Forex_Strategy_Knowledge_Base.md')) && 'private-kb/ not present' }, async () => {
+  const kbEngine = require('../js/core/kb.js'), mdText = require('node:fs').readFileSync(require('node:path').join(__dirname, '..', 'private-kb', 'Forex_Strategy_Knowledge_Base.md'), 'utf8');
+  const pack = kbEngine.parse(mdText); pack.decisions = { K1: { text: 'تصمیم مالک' } };
+  const store = kv(); store.m.set('pack', JSON.stringify(pack));
+  const env = { AREX_KB: store, GOOGLE_CLIENT_ID: 'arex-client' };
+  const worker = loadWorker(async url => new Response(JSON.stringify({ aud: 'arex-client', sub: String(url).includes('other') ? 'u2' : 'u1', email: 'user@example.com', email_verified: 'true' }), { status: 200 }));
+  const ask = (q, headers = { Authorization: 'Bearer t' }) => req('/kb', { method: 'POST', headers: Object.assign({ 'Content-Type': 'application/json' }, headers), body: JSON.stringify({ q }) });
+  assert.equal((await worker.fetch(ask('ریسک هر معامله', {}), env, ctx)).status, 401);
+  assert.equal((await worker.fetch(ask('ریسک هر معامله'), { GOOGLE_CLIENT_ID: 'arex-client' }, ctx)).status, 503);
+  const res = await worker.fetch(ask('ریسک هر معامله چقدر باشه'), env, ctx), data = await res.json();
+  assert.equal(res.status, 200); assert.ok(data.confidence >= 0.5 && /۱٪/.test(data.text));
+  assert.ok(data.context.length <= 5 && data.context.every(c => c.text.length <= 600)); assert.equal(JSON.stringify(data).includes('"chunks"'), false);   // never the pack itself
+  const d = await (await worker.fetch(ask('فیلتر خبر داوجونز چیه'), env, ctx)).json(); assert.match(d.text, /تصمیم تو: تصمیم مالک/);
+  const empty = await (await worker.fetch(ask('قیمت بیت کوین فردا'), env, ctx)).json(); assert.equal(empty.confidence, 0);
+  assert.equal((await worker.fetch(ask('   '), env, ctx)).status, 400);
+  assert.equal((await worker.fetch(ask('ریسک', { Authorization: 'Bearer t' }), { ...env, KB_ALLOWED_EMAILS: 'owner@example.com' }, ctx)).status, 403);
+  let last; for (let i = 0; i < 31; i++) last = await worker.fetch(ask('اسپرد چیه', { Authorization: 'Bearer other' }), env, ctx); assert.equal(last.status, 429);
+  const wsrc = require('node:fs').readFileSync(require('node:path').join(__dirname, '..', 'arex-edge-worker.js'), 'utf8'); assert.ok(wsrc.includes(require('node:fs').readFileSync(require('node:path').join(__dirname, '..', 'js/core/kb.js'), 'utf8')), 'run node scripts/build-workers.js');
+});
+test('the public site ships no knowledge data and no knowledge page', () => {
+  const fs = require('node:fs'), path = require('node:path'), root = path.join(__dirname, '..'), html = fs.readFileSync(path.join(root, 'index.html'), 'utf8'), sw = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
+  assert.equal(/kb-pack|Forex_Strategy|js\/core\/kb\.js/.test(html + sw), false); assert.equal(fs.existsSync(path.join(root, 'data')), false);
+  assert.match(fs.readFileSync(path.join(root, '.gitignore'), 'utf8'), /private-kb\//);
+});
