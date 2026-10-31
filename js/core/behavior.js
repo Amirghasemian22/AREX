@@ -49,7 +49,7 @@
       else if (L.length > 4) items.push(mk('DAY_COUNT', 'warning', L[4], { detail: '۵ معامله در یک روز (فقط شرایط استثنایی)' }));
       let loss = 0, streak = 0; const bal = ctx.balanceOf ? ctx.balanceOf(ctx.accountOf ? ctx.accountOf(L[0]) : null) : null;
       L.forEach((t, i) => {
-        if (i > 0) { if (bal > 0 && loss <= -0.03 * bal) items.push(mk('DAY_LOSS_STOP', 'violation', t, { detail: 'پس از ' + r2(-loss / bal * 100, 1) + '٪ ضرر روزانه ادامه داده‌ای' })); if (streak >= 3) items.push(mk('LOSS_STREAK_STOP', 'violation', t, { detail: 'پس از ' + streak + ' ضرر پشت‌سرهم ادامه دادی' })); else if (streak === 2) items.push(mk('LOSS_STREAK_STOP', k4 ? 'info' : 'decision', t, { detail: 'پس از ۲ ضرر پشت‌سرهم ادامه دادی؛ دانش‌نامه «۲ تا ۳» می‌گوید و ابهام K4 هنوز ' + (k4 ? 'تصمیم داده شده' : 'باز است') })); }
+        if (i > 0) { if (bal > 0 && loss <= -0.03 * bal) items.push(mk('DAY_LOSS_STOP', 'violation', t, { detail: 'پس از ' + r2(-loss / bal * 100, 1) + '٪ ضرر روزانه ادامه داده‌ای' })); if (streak >= 3) items.push(mk('LOSS_STREAK_STOP', 'violation', t, { detail: 'پس از ' + streak + ' ضرر پشت‌سرهم ادامه دادی' })); else if (streak === 2) items.push(mk('LOSS_STREAK_STOP', k4 ? 'info' : 'warning', t, { detail: 'پس از ۲ ضرر پشت‌سرهم ادامه دادی؛ دانش‌نامه «۲ تا ۳» می‌گوید و ابهام K4 هنوز ' + (k4 ? 'تصمیم داده شده' : 'باز است') })); }
         const u = num(t.usd), o = out(t); if (u !== null) loss += u; if (o < 0) streak++; else if (o > 0) streak = 0;
       });
     });

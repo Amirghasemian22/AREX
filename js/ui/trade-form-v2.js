@@ -10,7 +10,7 @@
   const HTML = `<div id="trV98" class="arex-trv98">
     <div class="arex-trv98-title">⚙️ جزئیات اجرا <small>(برای R و سود/زیان خودکار)</small></div>
     <div class="form-grid">
-      <div><div class="field-lbl">حساب</div><select class="txt-input" id="trxAccount"></select></div>
+      <select id="trxAccount" hidden></select>
       <div><div class="field-lbl">لات / حجم</div><input class="txt-input" id="trxLots" type="number" step="any" min="0" inputmode="decimal" placeholder="0.10"></div>
       <div><div class="field-lbl">تایم‌فریم</div><select class="txt-input" id="trxTf">${TF.map(t => `<option value="${t}">${t || '—'}</option>`).join('')}</select></div>
       <div><div class="field-lbl">کیفیت ستاپ</div><select class="txt-input" id="trxQuality">${QUAL.map(q => `<option value="${q[0]}">${q[1]}</option>`).join('')}</select></div>
@@ -45,12 +45,28 @@
     if (rEl && !rEl.value) rEl.placeholder = e.r ? 'خودکار: ' + e.r : 'مثلاً 1.5 یا -1';
     if (uEl && !uEl.value) uEl.placeholder = e.gross ? 'خودکار: ' + e.gross : '';
   }
-  function fillAccounts(sel) { const v = arexV98(); const s = $('trxAccount'); const cur = sel || s.value || v.activeAccountId; s.innerHTML = v.accounts.map(a => `<option value="${E(a.id)}">${E(a.name)} (${AREXCore.ledger.TYPES[a.type] || a.type})</option>`).join(''); s.value = v.accounts.some(a => a.id === cur) ? cur : v.activeAccountId; }
+  const ACCBOX = `<div id="trxAccBox" class="arex-trx-acc"><div class="field-lbl">ثبت در کدام حساب؟</div><div id="trxAccChips" class="arex-acc-chips" role="radiogroup" aria-label="حساب"></div><div id="trxAccStatus" class="arex-trx-accst" aria-live="polite"></div></div>`;
+  function accStatus(id) {
+    const v = arexV98(), a = v.accounts.find(x => x.id === id); if (!a) return '';
+    if (a.type === 'demo') return '🧪 حساب دمو: در آمار لایو/پراپ شما حساب نمی‌شود.';
+    if (a.type === 'live') return '💼 حساب لایو: سود و زیان خالص به موجودی این حساب اضافه می‌شود.';
+    const c = a.propRules ? AREXCore.prop.compute(a, AREXCore.ledger.tradesOf(state.trades || [], v, a.id), v.ledger, new Date()) : null;
+    if (!c || c.error) return '🏁 حساب پراپ: قوانین پراپ هنوز تنظیم نشده (حساب‌ها و دفتر ← تنظیم قوانین پراپ).';
+    const d = c.rules.dailyLoss, m = c.rules.totalLoss;
+    return '🏁 حساب پراپ — سود/زیان این معامله خودکار در قوانین پراپ حساب می‌شود. افت روزانه باقی‌مانده: ' + arexFmt.money(d.remainingUsd) + ' · افت کل باقی‌مانده: ' + arexFmt.money(m.remainingUsd) + (c.overall === 'warn' ? ' ⚠️ نزدیک حد' : c.overall === 'breach' ? ' ⛔ حد نقض شده' : '');
+  }
+  window.arexAccStatus = accStatus;
+  function paintAcc() {
+    const v = arexV98(), sel = $('trxAccount'), box = $('trxAccChips'); if (!sel || !box) return;
+    box.innerHTML = v.accounts.map(a => `<button type="button" role="radio" aria-checked="${sel.value === a.id}" class="arex-acc-chip ${sel.value === a.id ? 'on' : ''} t-${a.type}" data-acc="${E(a.id)}"><b>${E(a.name)}</b><span class="arex-badge ${a.type}">${AREXCore.ledger.TYPES[a.type] || a.type}</span></button>`).join('');
+    $('trxAccStatus').textContent = accStatus(sel.value);
+  }
+  function fillAccounts(sel) { const v = arexV98(); const s = $('trxAccount'); const cur = sel || s.value || v.activeAccountId; s.innerHTML = v.accounts.map(a => `<option value="${E(a.id)}">${E(a.name)} (${AREXCore.ledger.TYPES[a.type] || a.type})</option>`).join(''); s.value = v.accounts.some(a => a.id === cur) ? cur : v.activeAccountId; paintAcc(); }
 
   /* ---- hooks called from the legacy save / edit / reset code ---- */
   window.arexTradeExtraApply = function (trade) {
     const v = arexV98(), n = id => num(val(id));
-    trade.updatedAt = new Date().toISOString();
+    trade.updatedAt = new Date().toISOString(); const accTxt = accStatus(val('trxAccount') || v.activeAccountId); setTimeout(() => { const a = v.accounts.find(x => x.id === (val('trxAccount') || trade.accountId)) || {}; paintAcc(); if (window.arexHomeRefresh) arexHomeRefresh(); if (a.type === 'prop') toast('ثبت شد در «' + a.name + '» (پراپ) ✓ — ' + accStatus(a.id).replace(/^🏁 حساب پراپ[^.]*?\. /, '').slice(0, 90)); else if (a.name) toast('ثبت شد در «' + a.name + '» ✓'); }, 900);
     trade.accountId = val('trxAccount') || v.activeAccountId; trade.lots = n('trxLots'); trade.timeframe = val('trxTf') || ''; trade.quality = val('trxQuality') || '';
     trade.commission = n('trxComm') || 0; trade.swap = n('trxSwap') || 0; trade.mae = n('trxMae'); trade.mfe = n('trxMfe');
     trade.partials = partials.filter(p => num(p.price) !== null && num(p.lots) > 0).map(p => ({ price: num(p.price), lots: num(p.lots) }));
@@ -80,7 +96,8 @@
 
   function mount() {
     const sym = $('trSymbol'); if (!sym || $('trV98')) return; const grid = sym.closest('.form-grid'); if (!grid) return;
-    grid.insertAdjacentHTML('afterend', HTML); fillAccounts(); renderPartials(); preview();
+    grid.insertAdjacentHTML('beforebegin', ACCBOX); grid.insertAdjacentHTML('afterend', HTML); fillAccounts(); renderPartials(); preview();
+    $('trxAccChips').addEventListener('click', e => { const b = e.target.closest('[data-acc]'); if (!b) return; $('trxAccount').value = b.dataset.acc; paintAcc(); });
     const form = $('trV98');
     form.addEventListener('input', e => { const i = e.target.dataset && e.target.dataset.i; if (i !== undefined) partials[+i][e.target.dataset.k] = e.target.value; preview(); });
     $('trxAddPartial').addEventListener('click', () => { partials.push({ price: '', lots: '' }); renderPartials(); });

@@ -77,7 +77,7 @@
   function verdict(s) {
     const R = [], add = (level, text, view) => R.push({ level, text, view: view || null });
     const g = s.guard && s.guard.rules;
-    if (g) [['dailyLoss', 'سقف ضرر روزانه'], ['totalLoss', 'سقف ضرر کل']].forEach(([k, l]) => { const r = g[k]; if (!r) return; if (r.state === 'breach') add('stop', l + ' نقض شده؛ امروز معامله جدید نزن', 'propfirm'); else if (r.state === 'warn') add('caution', fa(Math.round(r.usedFrac * 100)) + '٪ از ' + l + ' مصرف شده' + (r.remainingUsd !== undefined ? ' (باقی‌مانده ' + money(r.remainingUsd) + ')' : ''), 'propfirm'); });
+    if (g) [['dailyLoss', 'سقف ضرر روزانه'], ['totalLoss', 'سقف ضرر کل']].forEach(([k, l]) => { const r = g[k]; if (!r) return; const who = r.account ? ' «' + r.account + '»' : ''; if (r.state === 'breach') add('stop', l + who + ' نقض شده؛ امروز معامله جدید نزن', 'accounts'); else if (r.state === 'warn') add('caution', fa(Math.round(r.usedFrac * 100)) + '٪ از ' + l + who + ' مصرف شده' + (r.remainingUsd !== undefined ? ' (باقی‌مانده ' + money(r.remainingUsd) + ')' : ''), 'propfirm'); });
     const mt = num(s.cfg.maxTradesPerDay); if (mt !== null && s.todayTrades.length >= mt) add('stop', 'سقف تعداد معامله امروز (' + fa(mt) + ') پر شده', 'risk');
     if (s.openNoSl.length) add('stop', fa(s.openNoSl.length) + ' معامله باز بدون حد ضرر داری؛ اول SL را مشخص کن', 'trades');
     const soon = s.events.high.find(e => e.ms - s.now.getTime() <= 3600000 && e.ms - s.now.getTime() >= -1800000);
@@ -96,7 +96,7 @@
   function proactive(s) {
     const A = [], add = (id, level, icon, title, body, view) => A.push({ id, level, icon, title, body, view: view || null });
     const g = s.guard && s.guard.rules;
-    if (g) [['dailyLoss', 'ضرر روزانه'], ['totalLoss', 'ضرر کل']].forEach(([k, l]) => { const r = g[k]; if (!r) return; if (r.state === 'breach') add('guard-' + k + '-breach', 'danger', '⛔', 'سقف ' + l + ' نقض شد', 'معامله جدید نزن و وضعیت حساب را مرور کن.', 'propfirm'); else if (r.state === 'warn') add('guard-' + k + '-warn', 'warn', '⚠️', 'نزدیک سقف ' + l, fa(Math.round(r.usedFrac * 100)) + '٪ مصرف شده.', 'propfirm'); });
+    if (g) [['dailyLoss', 'ضرر روزانه'], ['totalLoss', 'ضرر کل']].forEach(([k, l]) => { const r = g[k]; if (!r) return; const who = r.account ? ' «' + r.account + '»' : ''; if (r.state === 'breach') add('guard-' + k + '-breach', 'danger', '⛔', 'سقف ' + l + who + ' نقض شد', 'معامله جدید نزن و وضعیت حساب را مرور کن.', 'accounts'); else if (r.state === 'warn') add('guard-' + k + '-warn', 'warn', '⚠️', 'نزدیک سقف ' + l + who, fa(Math.round(r.usedFrac * 100)) + '٪ مصرف شده.', 'accounts'); });
     if (s.syncDue) add('sync-night', 'warn', '☁️', 'وقت همگام‌سازی امشب', 'دکمه‌ی Sync را بزن تا نسخه‌ی Google Drive به‌روز شود.', 'sync');
     const mt = num(s.cfg.maxTradesPerDay); if (mt !== null && s.todayTrades.length >= mt) add('trades-cap', 'warn', '🧱', 'سقف تعداد معامله امروز پر شد', fa(s.todayTrades.length) + ' از ' + fa(mt) + ' معامله.', 'risk');
     if (s.openNoSl.length) add('open-no-sl', 'danger', '🛑', 'معامله باز بدون حد ضرر', fa(s.openNoSl.length) + ' معامله باز SL ندارد.', 'trades');

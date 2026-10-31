@@ -53,12 +53,12 @@
     if (!box) { const form = $('arexChatForm'); if (!form) return; box = document.createElement('div'); box.id = 'arexBrainChips'; box.className = 'mascot-chips arex-brain-chips'; form.parentNode.insertBefore(box, form); }
     box.textContent = ''; (list || []).slice(0, 4).forEach(c => box.appendChild(mkBtn(c, () => window.arexBrainAsk(c))));
   }
-  async function askAI(text, s) {
+  async function askAI(text, s, knowledge) {
     const ep = window.arexReadAiEndpoint && window.arexReadAiEndpoint(); if (!ep) return { error: 'no_endpoint' };
     window.arexAssertTrustedWorker(ep);
     const token = await window.arexGetDriveAccessToken();
     const res = await fetch(ep, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
-      body: JSON.stringify({ messages: hist.slice(-12), context: { app: 'AREX V9.8.0', language: 'fa', timezone: 'Asia/Tehran', brain: B().aiContext(s), knowledge: window.arexKB && arexKB.ready() ? arexKB.context(text, 6) : [], userDecisions: window.arexKB ? arexKB.decisions() : [], instruction: 'Answer only from the supplied context. Do not invent prices, news or rules. No buy/sell signals. If data is missing, say what to add.' } }),
+      body: JSON.stringify({ messages: hist.slice(-12), context: { app: 'AREX V9.8.0', language: 'fa', timezone: 'Asia/Tehran', brain: B().aiContext(s), knowledge: Array.isArray(knowledge) ? knowledge : [], instruction: 'Answer only from the supplied context. Do not invent prices, news or rules. No buy/sell signals. If data is missing, say what to add.' } }),
       signal: AbortSignal.timeout ? AbortSignal.timeout(30000) : undefined });
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json(), a = data.answer || data.reply || data.text;
@@ -67,20 +67,17 @@
   }
   const PERSONAL = /(وضعیت|امروز|این هفته|هفته (گذشته|پیش)|ژورنال من|معاملات من|عملکرد من|اشتباهات? من|حساب من|موجودی|مرور هفتگی|قدم بعدی|بهترین ستاپ|وین ?ریت|سود من|ضرر من)/;
   const isPersonal = t => PERSONAL.test(t) || /(میتونم|می ?تونم|مجازم)\s+(الان\s+)?(معامله|ترید)\s*(کنم|بزنم)/.test(t);
+  const kbWorthy = t => t.trim().length >= 4 && !/^(سلام|درود|مرسی|ممنون|خسته نباشی|خداحافظ|hi|hello|thanks)\b/i.test(t.trim());
   function addKb(ka) {
-    addMsg('assistant', ka.text, { chips: ['تعارض‌ها', 'چک‌لیست قبل از ورود', 'ممیزی معاملات من'] });
-    const h = $('arexChatHistory'), last = h && h.lastElementChild; if (!last) return;
-    const row = document.createElement('div'); row.className = 'arex-brain-actions';
-    (ka.sources || []).forEach(sc => row.appendChild(mkBtn('📖 ' + sc.label, () => { window.arexKB.open(sc.id); }, 'chip arex-go-chip')));
-    if (ka.conflicts && ka.conflicts.length) row.appendChild(mkBtn('⚠️ تصمیم‌گیری درباره‌ی ابهام‌ها', () => { const m = $('mascot'); if (m) m.classList.remove('open'); arexKB.show('conflicts'); }, 'chip arex-go-chip'));
-    if (row.childElementCount) last.appendChild(row); h.scrollTop = h.scrollHeight;
+    const src = (ka.sources || []).map(x => x.label).filter(Boolean).slice(0, 2).join(' · ');
+    addMsg('assistant', ka.text + (src ? '\n\n📖 ' + src : ''), { chips: ['چک‌لیست قبل از ورود', 'ممیزی معاملات من', 'وضعیت امروز'] });
   }
   function auditText() {
     const r = arexKB.audit(), a = r.a, L = [];
-    L.push('🔍 ممیزی ' + (a.checked ? a.checked + ' معامله' : 'ژورنال') + ' با قوانین دانش‌نامه: ' + a.summary.violations + ' نقض صریح، ' + a.summary.warnings + ' هشدار، ' + a.summary.decisions + ' مورد نیازمند تصمیم تو.');
-    Object.keys(a.summary.byRule).sort((x, y) => a.summary.byRule[y] - a.summary.byRule[x]).slice(0, 5).forEach(k => { const R = AREXCore.behavior.RULES[k]; L.push('• ' + R.text + ' (' + R.source + ') — ' + a.summary.byRule[k] + ' مورد'); });
+    L.push('🔍 ممیزی ' + (a.checked ? a.checked + ' معامله' : 'ژورنال') + ' با قوانین انضباط: ' + a.summary.violations + ' نقض صریح و ' + a.summary.warnings + ' هشدار.');
+    Object.keys(a.summary.byRule).sort((x, y) => a.summary.byRule[y] - a.summary.byRule[x]).slice(0, 5).forEach(k => { const R = AREXCore.behavior.RULES[k]; L.push('• ' + R.text + ' — ' + a.summary.byRule[k] + ' مورد'); });
     (r.an.insights || []).slice(0, 3).forEach(x => L.push(x)); if (!a.checked) L.push('معامله‌ای برای بررسی ثبت نشده.');
-    L.push('\nجزئیات کامل: دانش‌نامه ← ممیزی ژورنال.'); return L.join('\n');
+    L.push('\nجزئیات کامل: مرور و گزارش‌ها ← ممیزی رفتار.'); return L.join('\n');
   }
   window.arexBrainAsk = async function (text) {
     if (busy || !text) return; busy = true;
@@ -88,13 +85,13 @@
     try {
       await refreshKB(); addMsg('user', text);
       const s = snap(), kbOn = window.arexKB && arexKB.ready(), personal = isPersonal(text);
-      if (kbOn && /ممیزی|نقض.*(قانون|دانش)|(رفتار|معاملات|ژورنال)\s*من.*(قانون|ریسک|درست|خلاف)|الگوی رفتاری|انتقام/.test(text)) { addMsg('assistant', auditText(), { nav: [], chips: ['تعارض‌ها', 'قدم بعدی چیه؟'], kbsrc: [], kbOpen: 'audit' }); return; }
-      let ka = null; if (kbOn && !personal) { ka = arexKB.ask(text); if (ka.confidence >= 0.34 && !ka.needs) { addKb(ka); return; } }
+      if (/ممیزی|نقض.*(قانون|دانش)|(رفتار|معاملات|ژورنال)\s*من.*(قانون|ریسک|درست|خلاف)|الگوی رفتاری|انتقام/.test(text)) { addMsg('assistant', auditText(), { nav: [{ label: 'مرور و گزارش‌ها', view: 'reviewcenter' }], chips: ['قدم بعدی چیه؟', 'وضعیت امروز'] }); return; }
+      let ka = null; if (kbOn && !personal && kbWorthy(text)) { ka = await arexKB.ask(text); if (ka.confidence >= 0.34 && !ka.needs) { addKb(ka); return; } }
       const ans = B().answer(text, s);
       if (!ans.needsAI) { addMsg('assistant', ans.text, ans); return; }
       if (ka && !window.arexReadAiEndpoint()) { addKb(ka); return; }
       try {
-        const ai = await askAI(text, s);
+        const ai = await askAI(text, s, ka && ka.context);
         if (ai.error === 'no_endpoint') addMsg('assistant', ans.text + '\nبرای پاسخ به سؤال‌های عمومی‌تر، آدرس AI Worker را در «تنظیمات ← دستیار» وصل کن. تا آن موقع می‌توانم از داده‌های خودت (وضعیت امروز، ریسک، اخبار، قوانین، مرور هفتگی) جواب بدهم.', ans);
         else addMsg('assistant', ai.text, { chips: ans.chips });
       } catch (e) { addMsg('assistant', ans.text + '\n(اتصال به AI ممکن نشد: ' + String(e.message || e).slice(0, 80) + ')', ans); }
@@ -145,7 +142,7 @@
       const s = snap(), seen = seenMap(), day = s.today, fresh = {};
       Object.keys(seen).forEach(k => { if (seen[k] === day) fresh[k] = day; });
       const order = { danger: 0, warn: 1, info: 2 };
-      B().proactive(s).filter(a => !fresh[a.id]).sort((a, b) => order[a.level] - order[b.level]).slice(0, 2).forEach(a => { notify(a.title, a.body, a.icon, { silent: a.level === 'info', skipTelegram: true, tag: 'brain-' + a.id, view: a.view || '' }); fresh[a.id] = day; external(a, day); });
+      B().proactive(s).concat(window.arexGuideAlerts ? window.arexGuideAlerts() : []).filter(a => !fresh[a.id]).sort((a, b) => order[a.level] - order[b.level]).slice(0, 2).forEach(a => { notify(a.title, a.body, a.icon, { silent: a.level === 'info', skipTelegram: true, tag: 'brain-' + a.id, view: a.view || '' }); fresh[a.id] = day; external(a, day); });
       try { localStorage.setItem(SEEN_KEY, JSON.stringify(fresh)); } catch (e) {}
       renderCard();
     });

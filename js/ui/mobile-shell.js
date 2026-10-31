@@ -39,7 +39,10 @@
     let n = 0; const t = setInterval(() => { const g = $('arexAuthGate'), btn = document.querySelector('.navbtn[data-view="' + go + '"]'); n++;
       if (btn && (!g || getComputedStyle(g).display === 'none')) { btn.click(); clearInterval(t); } else if (n > 40) clearInterval(t); }, 500);
   }
+  /* the bottom tab bar (+ raised assistant button + safe-area inset) must never cover the last items of any page */
+  function tabSpace() { const nav = document.querySelector('.arex-mobile-nav'); if (!nav) return; const h = nav.getBoundingClientRect().height; document.documentElement.style.setProperty('--arex-tab-space', (mq.matches && h ? Math.ceil(h + 22) : 0) + 'px'); }
   function init() {
+    tabSpace(); window.addEventListener('resize', tabSpace); window.addEventListener('orientationchange', tabSpace); if (window.ResizeObserver) { const n = document.querySelector('.arex-mobile-nav'); if (n) new ResizeObserver(tabSpace).observe(n); } setTimeout(tabSpace, 800);
     layout(); sheet(); tabState(); deepLink();
     (mq.addEventListener ? mq.addEventListener('change', layout) : mq.addListener(layout));
     const mo = new MutationObserver(tabState); document.querySelectorAll('.view').forEach(v => mo.observe(v, { attributes: true, attributeFilter: ['class'] }));

@@ -62,7 +62,11 @@
     $$('pe_off').onclick = () => { delete a.propRules; arexV98Save(); close(); render(); };
     $$('pe_ok').onclick = () => { a.propRules = { dailyDDPct: +$$('pe_d').value || 0, maxDDPct: +$$('pe_m').value || 0, ddType: $$('pe_ty').value, targetPct: +$$('pe_g').value || 0, minDays: +$$('pe_n').value || 0, startDate: $$('pe_s').value || '' }; arexV98Save(); close(); render(); toast('قوانین پراپ ذخیره شد ✓'); };
   }
-  window.arexPropGuard = function () { const v = arexV98(), a = v.accounts.find(x => x.id === v.activeAccountId); if (!a || a.type !== 'prop' || !a.propRules) return null; const c = AREXCore.prop.compute(a, AREXCore.ledger.tradesOf(state.trades || [], v, a.id), v.ledger, new Date()); return c && !c.error ? { overall: c.overall, rules: { dailyLoss: c.rules.dailyLoss, totalLoss: c.rules.totalLoss } } : null; };
+  window.arexPropGuard = function () {           // worst state across ALL prop accounts with rules (a breach matters even if another account is active)
+    const v = arexV98(), rank = { ok: 0, warn: 1, breach: 2 }; let worst = null;
+    v.accounts.forEach(a => { if (a.type !== 'prop' || !a.propRules) return; const c = AREXCore.prop.compute(a, AREXCore.ledger.tradesOf(state.trades || [], v, a.id), v.ledger, new Date()); if (!c || c.error) return; if (!worst || rank[c.overall] > rank[worst.overall] || (rank[c.overall] === rank[worst.overall] && c.rules.dailyLoss.usedFrac > worst.rules.dailyLoss.usedFrac)) worst = { overall: c.overall, rules: { dailyLoss: Object.assign({ account: a.name }, c.rules.dailyLoss), totalLoss: Object.assign({ account: a.name }, c.rules.totalLoss) } }; });
+    return worst;
+  };
   function render() {
     const v = arexV98(), LGR = LG(), trades = state.trades || [], sums = LGR.all(v, trades);
     const total = sums.reduce((a, s) => a + s.balance, 0), pnl = sums.reduce((a, s) => a + s.pnl, 0);

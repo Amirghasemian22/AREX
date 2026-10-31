@@ -4,7 +4,7 @@
   if (!window.arexRegisterView) return;
   const $ = id => document.getElementById(id), E = window.arexEscape, fa = arexFmt.fa, num = v => AREXCore.tradecalc.num(v);
   const rc = { tab: 'replay', idx: 0, list: [], acc: '__all', onlyNew: false };
-  const HTML = `<div class="arex-rc-tabs" role="tablist"><button class="chip active" data-tab="replay" type="button">🎞️ بازپخش و مرور معامله</button><button class="chip" data-tab="weekly" type="button">🗓️ مرور هفتگی</button><button class="chip" data-tab="report" type="button">📑 گزارش و خروجی</button></div>
+  const HTML = `<div class="arex-rc-tabs" role="tablist"><button class="chip active" data-tab="replay" type="button">🎞️ بازپخش و مرور معامله</button><button class="chip" data-tab="weekly" type="button">🗓️ مرور هفتگی</button><button class="chip" data-tab="audit" type="button">🔍 ممیزی رفتار</button><button class="chip" data-tab="report" type="button">📑 گزارش و خروجی</button></div>
   <div id="arexRcBody"></div>`;
   const day = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
   const download = (name, text, type) => { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], { type: type || 'text/plain;charset=utf-8' })); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 800); };
@@ -116,6 +116,24 @@
     if ($('arexWkUnlock')) $('arexWkUnlock').onclick = () => { const why = prompt('دلیل باز کردن قفل برنامه‌ی این هفته؟'); if (!why || why.trim().length < 5) { toast('دلیل باید حداقل ۵ حرف باشد.'); return; } plan.locked = false; (plan.unlockLog = plan.unlockLog || []).push({ at: new Date().toISOString(), why: why.trim() }); arexV98Save(); render(); };
   }
 
+
+  /* ================= behaviour audit (your own journal vs your discipline rules) ================= */
+  function renderAudit(b) {
+    const v = arexV98(), sel = rc.auAcc || '__all', per = rc.auPer || '30'; let tr = state.trades || []; if (sel !== '__all') tr = AREXCore.ledger.tradesOf(tr, v, sel);
+    if (per !== 'all') { const since = new Date(Date.now() - (+per) * 86400000).toISOString().slice(0, 10); tr = tr.filter(t => String(t.date) >= since); }
+    const full = arexKB.audit(), a = AREXCore.behavior.audit(tr, full.ctx), an = AREXCore.behavior.analyze(tr, {}), R = AREXCore.behavior.RULES, g = {};
+    a.items.forEach(i => { (g[i.rule] = g[i.rule] || []).push(i); });
+    const order = Object.keys(g).sort((x, y) => g[y].filter(i => i.level === 'violation').length - g[x].filter(i => i.level === 'violation').length);
+    const days = [6, 0, 1, 2, 3, 4, 5], hrs = [...new Set(an.cells.map(c => c.h))].sort((x, y) => x - y);
+    const heat = an.cells.length ? `<div style="overflow-x:auto"><table class="arex-table arex-heat"><thead><tr><th></th>${hrs.map(h => `<th>${fa(h)}</th>`).join('')}</tr></thead><tbody>${days.map(wd => `<tr><th>${AREXCore.behavior.WD[wd]}</th>${hrs.map(h => { const c = an.heat[wd + '-' + h]; if (!c) return '<td></td>'; const m = c.r / c.n; return `<td class="${m < 0 ? 'neg' : 'pos'}" title="${c.n}">${fa(Math.round(m * 10) / 10)}</td>`; }).join('')}</tr>`).join('')}</tbody></table></div>` : '<div class="calc-hint">برای نقشه‌ی ساعت × روز، در هر خانه چند معامله‌ی بسته لازم است.</div>';
+    b.innerHTML = `<div class="card"><div class="section-title">🔍 ممیزی رفتار معاملاتی</div><div class="arex-q-controls"><div><div class="field-lbl">حساب</div><select class="txt-input" id="arexAuAcc"><option value="__all">همه</option>${v.accounts.map(x => `<option value="${E(x.id)}" ${sel === x.id ? 'selected' : ''}>${E(x.name)}</option>`).join('')}</select></div><div><div class="field-lbl">بازه</div><select class="txt-input" id="arexAuPer">${[['7', '۷ روز'], ['30', '۳۰ روز'], ['90', '۹۰ روز'], ['all', 'همه']].map(([k, l]) => `<option value="${k}" ${per === k ? 'selected' : ''}>${l}</option>`).join('')}</select></div></div>
+      <div class="arex-kpis"><div class="arex-kpi"><small>معاملات بررسی‌شده</small><b>${fa(a.checked)}</b></div><div class="arex-kpi"><small>نقض صریح</small><b class="${a.summary.violations ? 'neg' : 'pos'}">${fa(a.summary.violations)}</b></div><div class="arex-kpi"><small>هشدار</small><b class="warn">${fa(a.summary.warnings)}</b></div></div>
+      <div class="calc-hint">فقط موارد قابل‌اندازه‌گیری بررسی می‌شوند (SL، RR، ریسک٪، تعداد معامله، توقف پس از ضرر). ${a.unknown.risk ? `برای ${fa(a.unknown.risk)} معامله «ریسک٪» ثبت نشده و بررسی نشد.` : ''}</div></div>` +
+      (order.length ? order.map(k => { const items = g[k], vio = items.filter(i => i.level === 'violation').length; return `<div class="card"><div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><b>${E(R[k].text)}</b><span class="muted">${fa(items.length)} مورد${vio ? ' (' + fa(vio) + ' نقض)' : ''}</span></div><div class="arex-imp-table">${items.slice(0, 6).map(i => `<div>${i.level === 'violation' ? '⛔' : '⚠️'} ${E(i.date)} ${E(i.detail || '')}</div>`).join('')}${items.length > 6 ? `<div class="muted">… و ${fa(items.length - 6)} مورد دیگر</div>` : ''}</div></div>`; }).join('') : '<div class="card"><div class="empty">در این بازه موردی خلاف قوانین قابل‌اندازه‌گیری پیدا نشد 👌</div></div>') +
+      `<div class="card"><div class="section-title">🧠 الگوهای رفتاری</div>${an.insights.length ? an.insights.map(x => `<div class="arex-q-note">${E(x)}</div>`).join('') : '<div class="calc-hint">الگوی رفتاری مشکل‌داری پیدا نشد (یا داده کم است).</div>'}<div class="section-title" style="margin-top:12px">میانگین R در هر روز و ساعت</div>${heat}</div>`;
+    $('arexAuAcc').onchange = e => { rc.auAcc = e.target.value; render(); }; $('arexAuPer').onchange = e => { rc.auPer = e.target.value; render(); };
+  }
+
   /* ================= monthly report + exports ================= */
   function renderReport(body) {
     const v = arexV98(), m = new Date(); const cur = m.getFullYear() + '-' + String(m.getMonth() + 1).padStart(2, '0');
@@ -133,7 +151,7 @@
     $('arexRpJson').onclick = () => download('AREX-backup-' + day(new Date()) + '.json', JSON.stringify({ exportedAt: new Date().toISOString(), version: '9.8.0', trades: state.trades || [], accounts: v.accounts, ledger: v.ledger, weeklyReviews: v.weeklyReviews, weekPlans: v.weekPlans }, null, 1), 'application/json');
   }
 
-  function render() { const body = $('arexRcBody'); if (!body) return; document.querySelectorAll('.arex-rc-tabs .chip').forEach(b => b.classList.toggle('active', b.dataset.tab === rc.tab)); (rc.tab === 'replay' ? renderReplay : rc.tab === 'weekly' ? renderWeekly : renderReport)(body); }
+  function render() { const body = $('arexRcBody'); if (!body) return; document.querySelectorAll('.arex-rc-tabs .chip').forEach(b => b.classList.toggle('active', b.dataset.tab === rc.tab)); (rc.tab === 'replay' ? renderReplay : rc.tab === 'weekly' ? renderWeekly : rc.tab === 'audit' ? renderAudit : renderReport)(body); }
   function mount() {
     const sec = arexRegisterView({ id: 'reviewcenter', title: 'مرور و گزارش‌ها', sub: 'بازپخش معامله، مرور هفتگی قفل‌شونده و گزارش ماهانه', html: HTML, icon: '<path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/>', onShow: render }); if (!sec) return;
     sec.querySelector('.arex-rc-tabs').addEventListener('click', e => { const b = e.target.closest('[data-tab]'); if (b) { rc.tab = b.dataset.tab; render(); } });
