@@ -336,3 +336,5 @@ html.arex-locked body>*:not(#arexLock){visibility:hidden!important}
   .arex-dash-rail:not(:has(*)){display:none}
   .arex-dash-main>.v5-primary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
+.arex-brain-badge.closed{background:rgba(139,149,167,.18);color:#9aa5b8}.arex-brain-card[data-level="closed"]{border-inline-start-color:#8b95a7}
+.arex-gd-closed{display:flex;gap:14px;align-items:center;padding:10px 4px}.arex-gd-closed-ic{font-size:40px}

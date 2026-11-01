@@ -126,3 +126,26 @@ test('prop: daily and max drawdown, trailing floor, target progress and trading 
   c = PR.compute(trail, [tr('2026-10-20', 800), tr('2026-10-21', -500)], [], now); assert.equal(c.rules.totalLoss.type, 'trailing'); assert.equal(c.rules.totalLoss.usedUsd, 500); assert.equal(c.rules.totalLoss.floor, 10200);
   assert.equal(PR.compute({ start: 0, propRules: {} }, [], [], now).error != null, true); assert.equal(PR.compute({ start: 1 }, [], [], now), null);
 });
+
+const MDY = require('../js/core/marketday.js'), BR = require('../js/core/brain.js');
+test('marketday: weekends, forex holidays, custom days, US index holidays and the exact reopening time', () => {
+  const at = (y, m, d) => new Date(y, m - 1, d, 12);
+  assert.equal(MDY.status(at(2026, 10, 31)).closed, true); assert.equal(MDY.status(at(2026, 11, 1)).closed, true); assert.equal(MDY.status(at(2026, 11, 2)).closed, false);
+  assert.equal(MDY.status(at(2026, 12, 25)).kind, 'holiday'); assert.equal(MDY.status(at(2026, 1, 1)).closed, true);
+  assert.equal(MDY.goodFriday(2026).getMonth(), 3); assert.equal(MDY.goodFriday(2026).getDate(), 3);
+  const gf = MDY.status(at(2026, 4, 3)); assert.equal(gf.closed, false); assert.equal(gf.limited, true);          // Good Friday: forex open, indices closed -> note only
+  assert.equal(MDY.status(at(2026, 7, 3)).limited, true);                                                          // 4 July falls on Saturday -> observed Friday
+  assert.equal(MDY.status(at(2026, 11, 26)).limited, true);                                                         // Thanksgiving
+  assert.equal(MDY.status(at(2026, 11, 2), { custom: { '2026-11-02': 'تعطیلی بروکر' } }).kind, 'custom');
+  assert.equal(MDY.status(at(2026, 10, 31), { closedWeekdays: [] }).closed, false);                                // trader can change the weekend
+  assert.equal(MDY.status(at(2026, 12, 25), { builtIn: false }).closed, false);
+  const reopen = MDY.nextOpen(new Date('2026-10-31T09:00:00Z'), { closedWeekdays: [] }); assert.equal(reopen.toISOString(), '2026-11-01T22:00:00.000Z');   // Sun 17:00 New York (EST after the DST change)
+});
+test('brain on a closed day: verdict "closed", no reminders (except a held position without a stop), no sync nag, calm next step', () => {
+  const sat = new Date(2026, 9, 31, 22, 0), market = MDY.status(sat), base = { now: sat, trades: [], market, reopen: 'بازگشایی: دوشنبه ۰۱:۳۰', sync: { enabled: true, hour: 21 }, events: [{ id: 'e', name: 'NFP', impact: 'high', date: new Date(sat.getTime() + 600000) }], guard: { rules: { dailyLoss: { state: 'breach' } } } };
+  const s = BR.snapshot(base), v = BR.verdict(s); assert.equal(v.level, 'closed'); assert.match(v.label, /تعطیل/); assert.match(v.reasons[0].text, /دوشنبه/);
+  assert.equal(s.syncDue, false); assert.deepEqual(BR.proactive(s), []); assert.match(BR.nextAction(s).text, /کاری لازم نیست/);
+  const held = BR.snapshot(Object.assign({}, base, { trades: [{ id: 1, date: '2026-10-30', sl: '', r: '', usd: '', exit: '' }] }));
+  assert.deepEqual(BR.proactive(held).map(a => a.id), ['open-no-sl']); assert.equal(BR.verdict(held).level, 'stop');
+  assert.notEqual(BR.verdict(BR.snapshot({ now: new Date(2026, 10, 2, 10), trades: [], market: MDY.status(new Date(2026, 10, 2, 10)) })).level, 'closed');   // Monday works normally
+});
