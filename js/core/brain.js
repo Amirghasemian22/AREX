@@ -62,7 +62,7 @@
     if (num(cfg.maxTradesPerDay) === null) missing.push('maxTradesPerDay');
     if (num(limits.balance) === null) missing.push('balance');
     const rulesBy = input.rulesBy || {}, ruleCount = Object.keys(rulesBy).reduce((n, k) => n + (rulesBy[k] || []).length, 0);
-    return { today, now, allTrades: trades, hour: now.getHours(), weekday: WD[now.getDay()], hasData: trades.length > 0, total: trades.length, syncDue, kbReady: !!input.kbReady,
+    return { today, now, allTrades: trades, hour: now.getHours(), weekday: WD[now.getDay()], hasData: trades.length > 0, total: trades.length, syncDue: syncDue && !(input.market && input.market.closed), kbReady: !!input.kbReady, market: input.market || null, reopen: input.reopen || '',
       todayStats: stats(todayTr), todayTrades: todayTr, weekStats: stats(weekTr), weekTrades: weekTr, all: stats(trades),
       open: trades.filter(isOpen), openNoSl: trades.filter(t => isOpen(t) && num(t.sl) === null),
       guard: input.guard && input.guard.rules ? input.guard : null, cfg, limits, missing,
@@ -76,6 +76,7 @@
   /* ---------- verdict ("can I trade now?") ---------- */
   function verdict(s) {
     const R = [], add = (level, text, view) => R.push({ level, text, view: view || null });
+    if (s.market && s.market.closed && !s.openNoSl.length) return { level: 'closed', label: '🛑 بازار تعطیل است', reasons: [{ level: 'info', text: s.market.name + (s.reopen ? ' · ' + s.reopen : '') + ' — امروز چیزی لازم نیست.', view: null }] };
     const g = s.guard && s.guard.rules;
     if (g) [['dailyLoss', 'سقف ضرر روزانه'], ['totalLoss', 'سقف ضرر کل']].forEach(([k, l]) => { const r = g[k]; if (!r) return; const who = r.account ? ' «' + r.account + '»' : ''; if (r.state === 'breach') add('stop', l + who + ' نقض شده؛ امروز معامله جدید نزن', 'accounts'); else if (r.state === 'warn') add('caution', fa(Math.round(r.usedFrac * 100)) + '٪ از ' + l + who + ' مصرف شده' + (r.remainingUsd !== undefined ? ' (باقی‌مانده ' + money(r.remainingUsd) + ')' : ''), 'propfirm'); });
     const mt = num(s.cfg.maxTradesPerDay); if (mt !== null && s.todayTrades.length >= mt) add('stop', 'سقف تعداد معامله امروز (' + fa(mt) + ') پر شده', 'risk');
@@ -85,6 +86,7 @@
     const st = s.todayStats; if (st.streak.type === 'loss' && st.streak.len >= 2) add('caution', fa(st.streak.len) + ' ضرر پشت‌سرهم امروز؛ پیشنهاد AREX: ۱۵ دقیقه استراحت و مرور پلن (این قانون تو نیست، توصیه‌ی رفتاری است)', 'psych');
     if (s.log && Number(s.log.discipline) > 0 && Number(s.log.discipline) <= 2) add('caution', 'انضباط امروز را پایین ثبت کرده‌ای؛ حجم را کم نگه دار و فقط ستاپ‌های تأییدشده', 'daily');
     if (s.weekend) add('info', 'بازار فارکس الان بسته است (آخر هفته)', 'sessions');
+    if (s.market && s.market.limited) add('info', 'امروز نیمه‌تعطیل است: ' + s.market.limitedName, 'sessions');
     if (s.missing.includes('maxRiskPct')) add('info', 'سقف ریسک هر معامله تعریف نشده؛ بررسی ریسک انجام نمی‌شود', 'risk');
     if (s.ruleCount === 0 && !s.kbReady) add('info', 'هنوز قانون رسمی در پایگاه استراتژی نداری؛ قوانین مختص ستاپ بررسی نمی‌شود', 'strategy');
     const level = R.some(r => r.level === 'stop') ? 'stop' : R.some(r => r.level === 'caution') ? 'caution' : 'go';
@@ -102,14 +104,16 @@
     if (s.openNoSl.length) add('open-no-sl', 'danger', '🛑', 'معامله باز بدون حد ضرر', fa(s.openNoSl.length) + ' معامله باز SL ندارد.', 'trades');
     s.events.high.forEach(e => { const m = Math.round((e.ms - s.now.getTime()) / 60000); if (m <= 60 && m > 15) add('news-60-' + e.id, 'warn', '📰', 'خبر مهم تا ' + fa(m) + ' دقیقه دیگر', N(e.name) + (e.country ? ' · ' + e.country : ''), 'calendar'); else if (m <= 15 && m >= -5) add('news-15-' + e.id, 'danger', '📰', m > 0 ? 'خبر مهم تا ' + fa(m) + ' دقیقه دیگر' : 'خبر مهم همین حالا منتشر شد', N(e.name) + (e.country ? ' · ' + e.country : '') + ' — برای پوزیشن‌های باز ریسک نوسان را بررسی کن.', 'calendar'); });
     const st = s.todayStats; if (st.streak.type === 'loss' && st.streak.len >= 3) add('loss-streak-' + st.streak.len, 'warn', '🧘', fa(st.streak.len) + ' ضرر پشت‌سرهم', 'استراحت کوتاه و مرور پلن بهتر از ادامه‌ی هیجانی است.', 'psych');
+    if (s.market && s.market.closed) return A.filter(a => a.id === 'open-no-sl');      // closed day: nothing is asked of the trader (a held position without a stop is the only exception)
     if (s.hour >= 20 && s.todayTrades.length && !(s.log && s.log.journalDone)) add('journal-evening', 'info', '📝', 'مرور امروز را کامل کن', 'معاملات امروز ثبت شده‌اند؛ مرور و احساسات را هم بنویس.', 'daily');
-    if ((s.weekday === 'جمعه' || s.weekday === 'شنبه') && s.weekStats.n >= 3) add('weekly-review', 'info', '📊', 'مرور هفتگی آماده است', 'از ربات بپرس: «مرور هفتگی».', 'assistant');
+    if (s.weekday === 'جمعه' && s.weekStats.n >= 3) add('weekly-review', 'info', '📊', 'مرور هفتگی آماده است', 'از ربات بپرس: «مرور هفتگی».', 'assistant');
     return A;
   }
 
   /* ---------- next best action ---------- */
   function nextAction(s) {
     if (s.openNoSl.length) return { text: 'برای ' + fa(s.openNoSl.length) + ' معامله‌ی باز، حد ضرر را مشخص کن.', view: 'trades' };
+    if (s.market && s.market.closed) return { text: 'امروز ' + s.market.name.replace(/ — .*/, '') + ' است؛ بازار بسته است و کاری لازم نیست.' + (s.reopen ? ' ' + s.reopen + '.' : ''), view: null };
     const v = verdict(s); if (v.level === 'stop') return { text: v.reasons[0].text, view: v.reasons[0].view };
     if (s.syncDue) return { text: 'امشب هنوز همگام‌سازی نکرده‌ای؛ دکمه‌ی Sync را بزن.', view: 'sync' };
     if (!s.hasData) return { text: 'اولین معامله (حتی قدیمی) را در ژورنال ثبت کن تا تحلیل‌ها شروع شود.', view: 'trades' };

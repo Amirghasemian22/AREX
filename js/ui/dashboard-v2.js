@@ -56,13 +56,15 @@
       A('open', 2, 'نتیجه‌ی معاملات باز را ثبت کن', D.open.length ? fa(D.open.length) + ' معامله‌ی باز بدون نتیجه' : 'معامله‌ی بازِ بی‌نتیجه نداری', 'trades', !D.open.length, true),
       A('tag', 2, 'اشتباهات و درس امروز را تگ کن', 'هر معامله: چه خوب بود، چه بد', 'trades', noTrade || !todayTr.length || todayTr.every(t => (t.mistakes || []).length || t.review || (t.note || '').length > 8) || s.tag, true),
       A('review', 2, 'مرور روزانه را کامل کن', 'خلاصه‌ی روز و احساسات', 'daily', !!(log && log.journalDone), true),
-      (wd === 5 || wd === 6) && A('weekly', 2, 'مرور هفتگی و قفل برنامه‌ی هفته‌ی بعد', 'امتیازدهی + قانون جدید + برنامه', 'reviewcenter:weekly', !!weekly, true),
+      (wd === 5) && A('weekly', 2, 'مرور هفتگی و قفل برنامه‌ی هفته‌ی بعد', 'امتیازدهی + قانون جدید + برنامه', 'reviewcenter:weekly', !!weekly, true),
       connected && A('sync2', 2, 'همگام‌سازی شبانه با Drive', 'نسخه‌ی امروز آپلود شود', 'sync', !!(st.lastSyncAt && Date.parse(st.lastSyncAt) >= new Date().setHours(20, 0, 0, 0)), true),
       A('tomorrow', 2, 'نگاهی به خبرهای فردا', 'برای برنامه‌ی فردا', 'calendar', s.tomorrow, false)
     ].filter(Boolean);
     const phase = h < 12 ? 0 : h < 18 ? 1 : 2; return { list, phase, noTrade, g };
   }
   function renderGuide(D) {
+    const mk = window.arexMarketStatus ? window.arexMarketStatus(new Date()) : null;
+    if (mk && mk.closed) { const ro = window.arexMarketReopen ? window.arexMarketReopen() : ''; return `<div class="arex-gd-closed"><div class="arex-gd-closed-ic">🛑</div><div><div class="arex-gd-title">امروز بازار تعطیل است</div><div class="muted" style="font-size:13px">${E(mk.name)}${ro ? ' · ' + E(ro) : ''}</div><div class="muted" style="font-size:12px;margin-top:6px">امروز چیزی از تو نمی‌خواهیم؛ استراحت کن. (آمار و ژورنال هر وقت خواستی در دسترس‌اند.)</div></div></div>`; }
     const { list, phase, noTrade, g } = guideSteps(D), done = list.filter(x => x.done).length, pct = list.length ? done / list.length : 0, PH = ['☀️ صبح · قبل از بازار', '📈 حین بازار', '🌙 عصر و شب · بستن روز'], cur = list.find(x => !x.done && x.ph <= phase) || list.find(x => !x.done);
     const ring = (() => { const R = 26, C = 2 * Math.PI * R; return `<svg viewBox="0 0 64 64" class="arex-ring"><circle cx="32" cy="32" r="${R}" fill="none" stroke="var(--border)" stroke-width="7"/><circle cx="32" cy="32" r="${R}" fill="none" stroke="${pct >= 1 ? '#33c589' : '#1e90ff'}" stroke-width="7" stroke-linecap="round" stroke-dasharray="${(pct * C).toFixed(1)} ${C.toFixed(1)}" transform="rotate(-90 32 32)"/><text x="32" y="37" text-anchor="middle" font-size="15" font-weight="800" fill="currentColor">${fa(done)}/${fa(list.length)}</text></svg>`; })();
     const rows = [0, 1, 2].map(p => { const items = list.filter(x => x.ph === p); if (!items.length) return ''; return `<div class="arex-gd-phase ${p === phase ? 'now' : ''}"><div class="arex-gd-ph">${PH[p]}${p === phase ? ' <i>الان</i>' : ''}</div>${items.map(x => `<div class="arex-gd-step ${x.done ? 'done' : ''} ${cur && cur.id === x.id ? 'cur' : ''} ${!x.done && x.ph < phase ? 'late' : ''}"><button class="arex-gd-chk" type="button" data-chk="${x.id}" aria-label="انجام شد" ${x.auto && x.done ? 'disabled' : ''}>${x.done ? '✓' : ''}</button><div class="arex-gd-txt"><b>${E(x.t)}</b><small>${E(x.hint)}</small></div>${x.done ? '' : `<button class="btn ghost arex-gd-go" type="button" data-go="${E(x.view)}">برو</button>${x.skip ? `<button class="btn ghost arex-gd-go" type="button" data-skip="1">امروز نمی‌کنم</button>` : ''}`}</div>`).join('')}</div>`; }).join('');
@@ -128,7 +130,7 @@
   setTimeout(() => { if (typeof window.queueSave === 'function' && !window.queueSave.__home) { const old = window.queueSave; window.queueSave = function () { const r = old.apply(this, arguments); setTimeout(schedule, 350); return r; }; window.queueSave.__home = true; } }, 1500);
   // reminders (used by the assistant's alert loop)
   window.arexGuideAlerts = function () {
-    try { if (typeof state === 'undefined' || !window.AREXCore) return []; const D = data(), { list, phase } = guideSteps(D), h = new Date().getHours(), out = [];
+    try { if (typeof state === 'undefined' || !window.AREXCore) return []; if (window.arexMarketClosed && window.arexMarketClosed()) return []; const D = data(), { list, phase } = guideSteps(D), h = new Date().getHours(), out = [];
       if (phase === 0 && h >= 7) { const n = list.filter(x => x.ph === 0 && !x.done).length; if (n) out.push({ id: 'guide-morning', level: 'info', icon: '☀️', title: 'شروع روز معاملاتی', body: fa(n) + ' کار صبحگاهی مانده؛ داشبورد را باز کن.', view: 'dashboard' }); }
       if (h >= 20) { const n = list.filter(x => x.ph === 2 && !x.done).length; if (n) out.push({ id: 'guide-night', level: 'warn', icon: '🌙', title: 'بستن روز', body: fa(n) + ' کار شبانه مانده (ثبت نتیجه، مرور روزانه، Sync).', view: 'dashboard' }); }
       return out; } catch (e) { return []; }

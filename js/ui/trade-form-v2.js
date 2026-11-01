@@ -66,6 +66,7 @@
   /* ---- hooks called from the legacy save / edit / reset code ---- */
   window.arexTradeExtraApply = function (trade) {
     const v = arexV98(), n = id => num(val(id));
+    if (trade.date && window.arexMarketClosed && arexMarketClosed(new Date(trade.date + 'T12:00:00'))) setTimeout(() => toast('ℹ️ تاریخ این معامله در روز تعطیل بازار است؛ اگر اشتباه تایپی نیست، مشکلی نیست.'), 2500);
     trade.updatedAt = new Date().toISOString(); const accTxt = accStatus(val('trxAccount') || v.activeAccountId); setTimeout(() => { const a = v.accounts.find(x => x.id === (val('trxAccount') || trade.accountId)) || {}; paintAcc(); if (window.arexHomeRefresh) arexHomeRefresh(); if (a.type === 'prop') toast('ثبت شد در «' + a.name + '» (پراپ) ✓ — ' + accStatus(a.id).replace(/^🏁 حساب پراپ[^.]*?\. /, '').slice(0, 90)); else if (a.name) toast('ثبت شد در «' + a.name + '» ✓'); }, 900);
     trade.accountId = val('trxAccount') || v.activeAccountId; trade.lots = n('trxLots'); trade.timeframe = val('trxTf') || ''; trade.quality = val('trxQuality') || '';
     trade.commission = n('trxComm') || 0; trade.swap = n('trxSwap') || 0; trade.mae = n('trxMae'); trade.mfe = n('trxMfe');
