@@ -338,3 +338,7 @@ html.arex-locked body>*:not(#arexLock){visibility:hidden!important}
 }
 .arex-brain-badge.closed{background:rgba(139,149,167,.18);color:#9aa5b8}.arex-brain-card[data-level="closed"]{border-inline-start-color:#8b95a7}
 .arex-gd-closed{display:flex;gap:14px;align-items:center;padding:10px 4px}.arex-gd-closed-ic{font-size:40px}
+.arex-ci-sum{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.arex-ci-moods,.arex-ci-go{display:flex;flex-wrap:wrap;gap:8px}.arex-ci-scale{display:flex;align-items:center;gap:6px}.arex-ci-scale span{font-size:11px;flex:0 0 auto}
+.arex-ci-scale button{flex:1;min-height:44px;border:1px solid var(--border);border-radius:12px;background:var(--panel);color:var(--text);font:800 15px inherit;cursor:pointer}.arex-ci-scale button.on{background:var(--gold);color:#fff;border-color:var(--gold)}
+.arex-ci-scale{direction:rtl}

@@ -149,3 +149,15 @@ test('brain on a closed day: verdict "closed", no reminders (except a held posit
   assert.deepEqual(BR.proactive(held).map(a => a.id), ['open-no-sl']); assert.equal(BR.verdict(held).level, 'stop');
   assert.notEqual(BR.verdict(BR.snapshot({ now: new Date(2026, 10, 2, 10), trades: [], market: MDY.status(new Date(2026, 10, 2, 10)) })).level, 'closed');   // Monday works normally
 });
+
+test('behavior.analyze: morning readiness vs results, and brain uses the morning check-in (separate from the daily report)', () => {
+  const trades = [], checkins = {};
+  for (let d = 1; d <= 8; d++) { const ds = '2026-10-' + String(d).padStart(2, '0'); const low = d <= 4; checkins[ds] = { readiness: low ? 2 : 5 }; trades.push({ id: d, date: ds, time: '10:00', r: low ? '-1' : '1.5', usd: '0', dir: 'buy' }); }
+  const a = BH.analyze(trades, { checkins }); assert.ok(a.readiness && a.readiness.low < 0 && a.readiness.high > 0); assert.ok(a.insights.some(x => /🌅/.test(x)));
+  assert.equal(BH.analyze(trades, {}).readiness, undefined);
+  const mon = new Date(2026, 10, 2, 10);
+  const v = BR.verdict(BR.snapshot({ now: mon, trades: [], checkin: { readiness: 1, mood: 'آرام و منضبط' }, market: MDY.status(mon), cfg: { maxRiskPct: 1, maxTradesPerDay: 3 }, limits: { balance: 1 } }));
+  assert.equal(v.level, 'caution'); assert.ok(v.reasons.some(r => /آمادگی/.test(r.text) && r.view === 'checkin'));
+  const f = BR.verdict(BR.snapshot({ now: mon, trades: [], checkin: { readiness: 4, mood: 'هیجان‌زدگی / FOMO' }, market: MDY.status(mon) }));
+  assert.ok(f.reasons.some(r => /FOMO/.test(r.text)));
+});

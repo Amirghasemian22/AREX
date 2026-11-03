@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v9-8-0-brain-mobile-2026-11-01';
+const CACHE_VERSION = 'v9-8-0-brain-mobile-2026-11-02';
 const CACHE_NAME = 'arex-' + CACHE_VERSION;
 const APP_SHELL = [
   './',
@@ -65,6 +65,7 @@ const APP_SHELL = [
   './js/core/marketday.js',
   './js/ui/marketday-ui.js',
   './js/ui/dashboard-v2.js',
+  './js/ui/checkin.js',
   './js/ui/sync-merge.js',
   './js/ui/lock.js',
   './js/core/merge.js',
