@@ -44,11 +44,11 @@
     const g = guideStore(), s = g.steps, now = new Date(), h = now.getHours(), today = D.today, st = state, log = (st.dailyLogs || {})[today] || null, wd = now.getDay(), wk = window.arexWeekKey ? arexWeekKey() : '';
     const todayTr = D.all.filter(t => t.date === today), noTrade = !!g.noTrade, sync = st.lastSyncAt && iso(new Date(st.lastSyncAt)) === today;
     const connected = !!(st.driveConnected || st.driveWasConnected) && !window.AREX_LOCAL_TEST_MODE, ev = (window.__arexFcEvents || []).filter(e => /high|3|red/i.test(String(e.impact || e._impact || ''))), evToday = ev.filter(e => e.date instanceof Date && iso(e.date) === today);
-    const plan = v98().weekPlans[wk], weekly = v98().weeklyReviews[wk];
+    const plan = v98().weekPlans[wk], weekly = v98().weeklyReviews[wk], ci = window.arexCheckin ? window.arexCheckin.get(today) : null;
     const A = (id, ph, t, hint, view, done, auto, extra) => Object.assign({ id, ph, t, hint, view, done: !!(done || s[id]), auto: !!auto }, extra || {});
     const list = [
       connected && A('sync', 0, 'همگام‌سازی با Google Drive', 'آخرین نسخه‌ی داده‌ها را از Drive بگیر', 'sync', sync, true),
-      A('mood', 0, 'حال و انضباط امروز را ثبت کن', 'ذهن آرام = تصمیم بهتر', 'daily', !!(log && (log.mood || log.focus || log.discipline)), true),
+      A('mood', 0, 'حال و آمادگی امروز را ثبت کن (۱۰ ثانیه)', ci ? window.arexCheckin.summary(ci) : 'جدا از گزارش پایان روز؛ بدون نیاز به ثبت معامله', 'checkin', !!ci, true),
       A('news', 0, 'اخبار مهم امروز را ببین' + (evToday.length ? ' (' + fa(evToday.length) + ' خبر مهم)' : ''), 'ساعت‌های پرنوسان را علامت بزن', 'calendar', s.newsViewed, true),
       A('plan', 0, 'سقف‌های روز را مرور کن', plan && plan.locked ? 'برنامه‌ی قفل‌شده: حداکثر ' + fa(plan.maxTrades) + ' معامله، ریسک ≤ ' + fa(plan.maxRiskPct) + '٪' : 'حداکثر معامله، ریسک هر معامله و افت روزانه', 'accounts', s.plan, false),
       A('trade', 1, 'معامله‌ها را همان لحظه ثبت کن', todayTr.length ? fa(todayTr.length) + ' معامله‌ی امروز ثبت شده' : 'هنوز معامله‌ای ثبت نشده', 'trades', todayTr.length > 0 || noTrade, true, { skip: 'trade' }),
@@ -98,12 +98,13 @@
     <section class="card arex-w arex-w-bars" id="arexHBars"><div class="arex-w-t">📊 سود/زیان ۱۴ روز اخیر</div><div id="arexHBarsB"></div></section>
     <section class="card arex-w arex-w-mist" id="arexHMist"><div class="arex-w-h"><div class="arex-w-t">⚠️ مهم‌ترین اشتباهات</div><button class="btn ghost" type="button" data-go="reviewcenter:audit">ممیزی</button></div><div id="arexHMistB"></div></section>
     <div class="arex-w-slot arex-w-cal" id="arexHCal"></div><div class="arex-w-slot arex-w-wrap" id="arexHWrap"></div></div>`;
-  function navTo(v) { if (v === 'sync') { const b = $('driveQuickSyncBtn'); b && b.click(); return; } if (v.startsWith('reviewcenter:')) { arexOpenReview(v.split(':')[1]); return; } goView(v); }
+  function navTo(v) { if (v === 'checkin') { window.arexCheckin && window.arexCheckin.open(); return; } if (v === 'sync') { const b = $('driveQuickSyncBtn'); b && b.click(); return; } if (v.startsWith('reviewcenter:')) { arexOpenReview(v.split(':')[1]); return; } goView(v); }
   function render() {
     const root = $('arexHome'); if (!root || !window.AREXCore || !AREXCore.ledger) return; const D = data(), W = widgets(D);
     $('arexHGuide').innerHTML = renderGuide(D); $('arexHHero').innerHTML = W.hero; $('arexHPerf').innerHTML = '<div class="arex-w-t">🎯 عملکرد</div>' + W.perf; $('arexHAccsB').innerHTML = W.accs;
     $('arexHCurveB').innerHTML = W.curve; $('arexHLatestB').innerHTML = W.latest; $('arexHBarsB').innerHTML = W.bars + '<div class="calc-hint">سبز = روز سودده، قرمز = روز زیان‌ده</div>'; $('arexHMistB').innerHTML = W.mist;
     $('arexHCurveMode').querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.m === curveMode));
+    if (window.arexBrainRefresh) try { window.arexBrainRefresh(); } catch (e) {}
   }
   const schedule = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => { try { render(); } catch (e) { console.error(e); } }); };
   function mount() {

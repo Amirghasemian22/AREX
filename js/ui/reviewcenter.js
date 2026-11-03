@@ -121,7 +121,7 @@
   function renderAudit(b) {
     const v = arexV98(), sel = rc.auAcc || '__all', per = rc.auPer || '30'; let tr = state.trades || []; if (sel !== '__all') tr = AREXCore.ledger.tradesOf(tr, v, sel);
     if (per !== 'all') { const since = new Date(Date.now() - (+per) * 86400000).toISOString().slice(0, 10); tr = tr.filter(t => String(t.date) >= since); }
-    const full = arexKB.audit(), a = AREXCore.behavior.audit(tr, full.ctx), an = AREXCore.behavior.analyze(tr, {}), R = AREXCore.behavior.RULES, g = {};
+    const full = arexKB.audit(), a = AREXCore.behavior.audit(tr, full.ctx), an = AREXCore.behavior.analyze(tr, { checkins: v.checkins }), R = AREXCore.behavior.RULES, g = {};
     a.items.forEach(i => { (g[i.rule] = g[i.rule] || []).push(i); });
     const order = Object.keys(g).sort((x, y) => g[y].filter(i => i.level === 'violation').length - g[x].filter(i => i.level === 'violation').length);
     const days = [6, 0, 1, 2, 3, 4, 5], hrs = [...new Set(an.cells.map(c => c.h))].sort((x, y) => x - y);

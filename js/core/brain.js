@@ -62,7 +62,7 @@
     if (num(cfg.maxTradesPerDay) === null) missing.push('maxTradesPerDay');
     if (num(limits.balance) === null) missing.push('balance');
     const rulesBy = input.rulesBy || {}, ruleCount = Object.keys(rulesBy).reduce((n, k) => n + (rulesBy[k] || []).length, 0);
-    return { today, now, allTrades: trades, hour: now.getHours(), weekday: WD[now.getDay()], hasData: trades.length > 0, total: trades.length, syncDue: syncDue && !(input.market && input.market.closed), kbReady: !!input.kbReady, market: input.market || null, reopen: input.reopen || '',
+    return { today, now, allTrades: trades, hour: now.getHours(), weekday: WD[now.getDay()], hasData: trades.length > 0, total: trades.length, syncDue: syncDue && !(input.market && input.market.closed), kbReady: !!input.kbReady, checkin: input.checkin || null, market: input.market || null, reopen: input.reopen || '',
       todayStats: stats(todayTr), todayTrades: todayTr, weekStats: stats(weekTr), weekTrades: weekTr, all: stats(trades),
       open: trades.filter(isOpen), openNoSl: trades.filter(t => isOpen(t) && num(t.sl) === null),
       guard: input.guard && input.guard.rules ? input.guard : null, cfg, limits, missing,
@@ -84,7 +84,10 @@
     const soon = s.events.high.find(e => e.ms - s.now.getTime() <= 3600000 && e.ms - s.now.getTime() >= -1800000);
     if (soon) { const m = Math.round((soon.ms - s.now.getTime()) / 60000); add('caution', 'خبر مهم «' + N(soon.name) + '» (' + (soon.country || '') + ') ' + (m >= 0 ? fa(m) + ' دقیقه دیگر' : 'تازه منتشر شده') + ' است؛ نوسان و اسپرد بالا می‌رود', 'calendar'); }
     const st = s.todayStats; if (st.streak.type === 'loss' && st.streak.len >= 2) add('caution', fa(st.streak.len) + ' ضرر پشت‌سرهم امروز؛ پیشنهاد AREX: ۱۵ دقیقه استراحت و مرور پلن (این قانون تو نیست، توصیه‌ی رفتاری است)', 'psych');
-    if (s.log && Number(s.log.discipline) > 0 && Number(s.log.discipline) <= 2) add('caution', 'انضباط امروز را پایین ثبت کرده‌ای؛ حجم را کم نگه دار و فقط ستاپ‌های تأییدشده', 'daily');
+    const rd = s.checkin && Number(s.checkin.readiness) > 0 ? Number(s.checkin.readiness) : (s.log && Number(s.log.discipline) > 0 ? Number(s.log.discipline) : null), mood = String((s.checkin && s.checkin.mood) || '');
+    if (rd !== null && rd <= 2) add('caution', 'آمادگی امروز را پایین ثبت کرده‌ای؛ حجم را کم نگه دار و فقط ستاپ‌های تأییدشده', 'checkin');
+    else if (/FOMO|انتقام|عصبانیت|طمع/.test(mood)) add('caution', 'حال امروز «' + mood + '» ثبت شده؛ پیش از هر ورود، یک نفس عمیق و مرور پلن', 'checkin');
+    if (s.checkin && s.checkin.go === 'rest') add('info', 'امروز را «بدون معامله» ثبت کرده‌ای', null);
     if (s.weekend) add('info', 'بازار فارکس الان بسته است (آخر هفته)', 'sessions');
     if (s.market && s.market.limited) add('info', 'امروز نیمه‌تعطیل است: ' + s.market.limitedName, 'sessions');
     if (s.missing.includes('maxRiskPct')) add('info', 'سقف ریسک هر معامله تعریف نشده؛ بررسی ریسک انجام نمی‌شود', 'risk');

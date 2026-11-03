@@ -74,6 +74,12 @@
     if (res.tpMoves) res.insights.push('⚠️ ' + res.tpMoves + ' بار TP را بعد از ورود تغییر داده‌ای.');
     if (res.overtradingDays.length) res.insights.push('📈 ' + res.overtradingDays.length + ' روز بیش از ۵ معامله داشته‌ای (سقف دانش‌نامه: ۳–۴ معمولی، ۵ استثنایی).');
     if (worst && worst.r / worst.n < 0 && cells.length >= 3) res.insights.push('🕒 ضعیف‌ترین بازه: ' + WD[worst.wd] + ' ساعت ' + worst.h + ' (میانگین ' + r2(worst.r / worst.n) + 'R در ' + worst.n + ' معامله)' + (best && best !== worst ? ' · بهترین: ' + WD[best.wd] + ' ساعت ' + best.h + ' (' + r2(best.r / best.n) + 'R)' : '') + '. ساعت‌ها به وقت ثبت‌شده در معامله‌اند.');
+    if (o.checkins) {            // does the morning state predict the day's result?
+      const byDate = {}; T.forEach(t => { const r = num(t.r); if (r !== null) (byDate[day(t)] = byDate[day(t)] || []).push(r); });
+      const lo = [], hi = []; Object.keys(o.checkins).forEach(d => { const rd = num(o.checkins[d] && o.checkins[d].readiness); if (rd === null || !byDate[d]) return; const m = byDate[d].reduce((a, b) => a + b, 0) / byDate[d].length; if (rd <= 2) lo.push(m); else if (rd >= 4) hi.push(m); });
+      const avg = a => a.reduce((x, y) => x + y, 0) / a.length;
+      if (lo.length >= 3 && hi.length >= 3) { res.readiness = { low: r2(avg(lo)), high: r2(avg(hi)), nLow: lo.length, nHigh: hi.length }; res.insights.push('🌅 روزهایی که آمادگی صبح را ≤۲ ثبت کرده‌ای (' + lo.length + ' روز) میانگین ' + r2(avg(lo)) + 'R داشتی، و روزهای با آمادگی ≥۴ (' + hi.length + ' روز) ' + r2(avg(hi)) + 'R' + (avg(hi) > avg(lo) ? ' — حال صبح روی نتیجه اثر دارد؛ در روز آمادگی پایین حجم را کم کن.' : '.')); }
+    }
     res.cells = cells; return res;
   }
   return { RULES, audit, analyze, WD };

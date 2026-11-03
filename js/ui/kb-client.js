@@ -21,6 +21,6 @@
     ask: async q => { try { return await remote(q); } catch (e) { return { text: 'اتصال به دانش‌نامه ممکن نشد (' + String(e && e.message || e).slice(0, 60) + '). اینترنت و ورود Google را بررسی کن.', confidence: 0, needs: 'offline', sources: [], context: [], tags: [] }; } },
     // behaviour audit of the user's OWN journal (client-side; shows findings, not the rule library)
     audit: () => { const tr = state.trades || [], v = arexV98(), L = AREXCore.ledger, sums = {}; L.all(v, tr).forEach(a => { sums[a.id] = a.balance; });
-      const ctx = { balanceOf: id => sums[id || v.activeAccountId] || null, accountOf: t => L.accountOf(t, v) }; return { a: AREXCore.behavior.audit(tr, ctx), an: AREXCore.behavior.analyze(tr, {}), ctx }; }
+      const ctx = { balanceOf: id => sums[id || v.activeAccountId] || null, accountOf: t => L.accountOf(t, v) }; return { a: AREXCore.behavior.audit(tr, ctx), an: AREXCore.behavior.analyze(tr, { checkins: v.checkins }), ctx }; }
   };
 })();

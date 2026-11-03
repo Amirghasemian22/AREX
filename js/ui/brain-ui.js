@@ -30,7 +30,7 @@
     if (plan && plan.locked) { if (plan.maxTrades) cfg.maxTradesPerDay = plan.maxTrades; if (plan.maxRiskPct) cfg.maxRiskPct = plan.maxRiskPct; }
     const limits = Object.assign({}, st.riskLimits || {}); if (v98 && v98.accounts && window.AREXCore && AREXCore.ledger) { try { const a = AREXCore.ledger.all(v98, st.trades || []).find(x => x.id === v98.activeAccountId); if (a && a.balance > 0) limits.balance = a.balance; } catch (e) {} }
     return B().snapshot({ trades: st.trades || [], now, guard, cfg, limits, events: window.__arexFcEvents || [],
-      kbReady: !!(window.arexKB && arexKB.ready()), market: window.arexMarketStatus ? window.arexMarketStatus(now) : null, reopen: window.arexMarketReopen ? window.arexMarketReopen() : '',
+      checkin: window.arexCheckin ? window.arexCheckin.get(d) : null, kbReady: !!(window.arexKB && arexKB.ready()), market: window.arexMarketStatus ? window.arexMarketStatus(now) : null, reopen: window.arexMarketReopen ? window.arexMarketReopen() : '',
       sync: { enabled: !window.AREX_LOCAL_TEST_MODE, lastSyncAt: st.lastSyncAt, hour: v98 && v98.prefs ? v98.prefs.syncHour : 21 },
       dailyLog: (st.dailyLogs || {})[d] || null, rulesBy: kbCache.rulesBy, strategies: kbCache.strategies, isWeekend: wk });
   }
@@ -127,6 +127,7 @@
     row.appendChild(mkBtn('از آرکس بپرس', () => openBot(), 'btn ghost')); row.appendChild(mkBtn('مرور هفتگی', () => openBot('مرور هفتگی'), 'btn ghost')); card.appendChild(row);
   }
 
+  window.arexBrainRefresh = renderCard;
   /* ---------- proactive in-site alerts ---------- */
   const CAT = a => /^guard|trades-cap|open-no-sl|loss-streak/.test(a.id) ? 'risk' : /^news/.test(a.id) ? 'calendar' : /^weekly/.test(a.id) ? 'weekly' : /^sync/.test(a.id) ? 'system' : /^journal/.test(a.id) ? 'daily' : '';
   function external(a, day) {   // Telegram goes through the same Worker + category switches the user already configured
